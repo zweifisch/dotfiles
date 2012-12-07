@@ -1,0 +1,48 @@
+#!/usr/bin/python2
+
+import sqlite3, codecs, sys
+
+operations_avail=['import','count','export']
+argv=sys.argv
+if len(argv) == 1:
+	print('usage: <%s> inputfile' % "|".join(operations_avail))
+	exit(1) 
+
+filename=argv.pop()
+c=sqlite3.connect('%s.db' % filename)
+
+operations=argv[1:]
+	
+if 'import' in operations:
+	print('import ...')
+	c.execute('create table lines(line text)')
+	i=codecs.open(filename,'r','utf-8')
+
+	for line in i:
+		c.execute('insert into lines (line) values("%s")' % line.strip())
+	i.close()
+	c.commit()
+	print('imported')
+
+if 'count' in operations:
+	print('count ...')
+	c.execute('create table lines_counted(c int,line text)')
+	c.commit()
+	cursor=c.execute('select count(*),line as c from lines group by line order by c')
+	row=cursor.fetchone()
+	while row:
+		c.execute('insert into lines_counted(c,line) values(%d,"%s")' % row)
+		row=cursor.fetchone()
+	c.commit()
+
+if 'export' in operations:
+	print('exporting ...')
+	o=open('%s-export' % filename,'w')
+	cursor=c.execute('select line, c from lines_counted order by c desc')
+	row=cursor.fetchone()
+	while row:
+		o.write(("%s\t%d\n" % row).encode('utf-8'))
+		row=cursor.fetchone()
+	o.close()
+
+c.close()

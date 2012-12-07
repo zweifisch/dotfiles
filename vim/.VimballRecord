@@ -1,0 +1,4 @@
+twitvim-0.6.3.vba: call delete('/home/cm/.vim/plugin/twitvim.vim')|call delete('/home/cm/.vim/doc/twitvim.txt')
+ZoomWin.vba: call delete('/home/cm/.vim/plugin/ZoomWinPlugin.vim')|call delete('/home/cm/.vim/doc/ZoomWin.txt')|call delete('/home/cm/.vim/autoload/ZoomWin.vim')
+RunView.vba: call delete('/home/cm/.vim/plugin/RunView.vim')|call delete('/home/cm/.vim/syntax/runview.vim')|call delete('/home/cm/.vim/plugin/cecutil.vim')|call delete('/home/cm/.vim/doc/RunView.txt')
+Mines.vba: call delete('/home/cm/.vim/plugin/MinesPlugin.vim')|call delete('/home/cm/.vim/autoload/Mines.vim')|call delete('/home/cm/.vim/plugin/Rndm.vim')|call delete('/home/cm/.vim/doc/Mines.txt')|call delete('/home/cm/.vim/plugin/cecutil.vim')

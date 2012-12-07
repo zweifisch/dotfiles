@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cat > /dev/shm/html.html
+
+firefox /dev/shm/html.html

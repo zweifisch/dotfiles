@@ -1,0 +1,13 @@
+#!/usr/bin/php -q
+<?php
+
+$image= $argv[1];
+if($fp = fopen($image,"rb", 0))
+{
+   $bytes = fread($fp,filesize($image));
+   fclose($fp);
+	// $base64 = base64_encode($bytes);
+   $base64 = chunk_split(base64_encode($bytes));
+   $tag = '<img src="data:image/gif;base64,'."\n".$base64 .'" />';
+   echo $tag;
+}

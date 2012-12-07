@@ -1,0 +1,4 @@
+#!/bin/sh
+
+phantomjs rasterize.coffee $1 $2 $3
+

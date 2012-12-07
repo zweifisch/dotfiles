@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -e ~/bin/php ] ; then
+	rm  ~/bin/php
+	php -v | head -1 | awk '{print $2}'
+else
+	ln -nsf ~/playground/php/php-src-5.4/sapi/cli/php ~/bin/php
+	php -v | head -1 | awk '{print $2}'
+fi
+
+
+# if php -v | head -1 | awk '{print $2}'

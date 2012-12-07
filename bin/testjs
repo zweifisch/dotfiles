@@ -1,0 +1,21 @@
+#!/bin/sh
+
+TMPFILE=`mktemp`
+
+SCRIPT_PATH=`dirname $0`
+
+if [ -n "$1" ]; then
+	cat $SCRIPT_PATH/test.js > $TMPFILE
+	echo "t=new T;" >> $TMPFILE
+	TARGET_NAME=$1
+	TARGET=$TARGET_NAME.js
+	if [ -f $TARGET ] || [ -L $TARGET ]; then 
+		cat $TARGET >> $TMPFILE
+	fi
+	TESTER="$TARGET_NAME-test.js"
+	if [ -f $TESTER ] || [ -L $TESTER ]; then 
+		cat $TESTER >> $TMPFILE
+	fi
+	echo 't.report();' >> $TMPFILE
+	node $TMPFILE
+fi

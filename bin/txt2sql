@@ -1,0 +1,50 @@
+#!/usr/bin/php -q
+<?php
+
+$file=$argv[1];
+$lines=array();
+$line_count=0;
+$handle = @fopen($file, 'r');
+if ($handle) {
+	$block=array();
+	$block_size=-1;
+	// while (!feof($handle)) {
+	// 	$line = trim(fgets($handle, 4096));
+	while(($line=fgets($handle,4096))!==false){
+		$line=trim($line);
+		$line_count++;
+		// echo $line_count;
+		// echo $line;
+		// echo "\n";
+		if(empty($line)){
+			if($block_size!=count($block)){
+				if($block_size==-1){
+					$block_size=count($block);
+				}else{
+					die("line $line_count: block size inconsistant");
+				}
+			}
+			$lines[]=$block;
+			$block=array();
+		}else{
+			$block[]=$line;
+		}
+	}
+	if(count($block)>0){
+		$lines[]=$block;
+	}
+	fclose($handle);
+}else{
+	die("can't open file");
+}
+
+// var_dump(array_pop($lines));
+// die();
+
+$sql="INSERT INTO table VALUES";
+foreach ($lines as $block) {
+	$sql.="\n(\"".implode('","',$block)."\"),";
+}
+$sql.=';';
+
+echo $sql;

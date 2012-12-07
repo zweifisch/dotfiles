@@ -1,0 +1,33 @@
+#!/usr/bin/env python
+import Image,os,sys
+from random import randint
+import re
+
+color = '002b36'
+
+if len(sys.argv) > 1:
+	color = sys.argv[1]
+	if len(color)> 4:
+		colors = re.findall(r"#(\w+)",color)
+		if len(colors)>0:
+			color = colors[0]
+	if len(color) == 3:
+		color = ''.join([c*2 for c in color])
+
+color = color[-2:]+color[2:4]+color[:2]
+color = int(color, 16)
+
+w,h=10,10
+
+img=Image.new('RGB',(w,h))
+
+def get_gray(l,h):
+	gray = randint(l,h)
+	return (gray<<16)+(gray<<8)+gray
+
+for x in range(w):
+	for y in range(h):
+		img.putpixel((x,y),color)
+
+img.save(os.path.expanduser('~/.wallpaper.png'))
+os.system('feh --bg-tile ~/.wallpaper.png')

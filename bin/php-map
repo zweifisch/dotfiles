@@ -1,0 +1,4 @@
+#! /usr/bin/php -q
+<?php
+
+echo call_user_func($argv[1],file_get_contents('php://stdin','r'));

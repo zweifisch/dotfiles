@@ -1,0 +1,430 @@
+"1.0b6 (created: 2011/03/09 09:25:18)
+
+"{{{ Options
+set novb
+set newtab=all
+" buggy
+" set hintkeys='ASDFGHJLK;'
+set hintkeys='asdfghjlk;'
+hi Hint -a text-transform: uppercase;
+
+loadplugins '\.(js|penta)$'
+group user
+
+set hlfind
+set go=sn
+colorscheme solarized-dark
+
+" set ds=yubnub
+" set private
+
+" so ~/.pentadactyl/scroll.css
+set nextpattern='(下|后)一?(页|頁|篇|章|张)|次のページ|次へ','^\bnext\b','\bnext\b','\bsuivant\b','^(>|›)$','^(>>|»)$','^(>|»)','(>|»)$','\bmore\b'
+
+set urlseparator=",,"
+set strictfocus=*:laissez-faire
+set passunknown=base
+set complete=sl
+
+" set defsearch=duckduckgo
+
+" set nobuftabs
+
+" change editor
+" set editor='/usr/local/bin/mvim -f +<line> +"sil! call cursor(0, <column>)" <file>'
+"}}}
+
+"{{{ PassKeys
+set passkeys+=mail.google.com:cjk<CR>,gi
+" set passkeys+='google\.com/search?':jk/<Enter><Return>
+" set passkeys+='mail\.google\.com':c/jkhnpovuelxsfra#`[]z?*nrtgidIU+-=<Tab><Return>
+" set passkeys+='mail\.google\.com/tasks/canvas':<Tab><S-Tab><Return>
+" set passkeys+='groups\.google\.com/forum':glmo<Enter>j<S-j>k<S-k>n<S-n>p<S-p>ufh<S-a>rc/?<Esc><Return>
+set passkeys+=google.com/reader:anpjkmovsSlteufOJKAM,gf,gu,gt,gs
+" set passkeys+='google\.com/reader':jkvnpbumoaAXNOVPJK?gehtl<Return>
+" set passkeys+='twitter\.com':jk<Space>/.frtmn?ghrpu<Return>
+" set passkeys+='rememberthemilk\.com/home/m':trsjkdhyucpgfinalez1234<Return>
+" set passkeys+='www\.google\.com/calendar':dwmxajkcnqetp?<Del>s12345<Return>
+" set passkeys+='springpadit\.com/springpad':?hgmfntljk/c<Return>
+" set passkeys+='toodledo\.com/':?fn*aitzwjklmocdgxpsheybr123456789<Esc><Return>
+" set passkeys+='duckduckgo\.com/':\!l'o<C-Return>jkh<Esc>\'v/rs1<Return>
+" set passkeys+='github\.com/':s?l<Return>
+" set passkeys+='readability\.com/articles/':<Shift><Space><S-Space><Return>
+set passkeys+=*:<Left><Right><Up><Down><Space>
+"}}}
+
+"{{{ Shortcuts
+map e :tabopen! 
+map K :tabopen! http://dict.bing.com.cn/#
+
+map <C-j> :set go=<CR>
+map <C-k> :set go=s<CR>
+
+map <C-l> :firebug close<CR>
+
+" ! is a search keyword for google's first result
+cmap -builtin <C-r> <C-a><A-Right> !<C-e>
+"}}}
+
+"{{{ Navigation
+nmap -builtin j 5j
+nmap -builtin k 5k
+map -builtin h gT
+map -builtin l gt
+map <M-S-C> gt
+map <M-S-X> gT
+nmap <C-e> 10<C-e>
+nmap <C-y> 10<C-y>
+cmap <C-P> <Up>
+cmap <C-N> <Down>
+cmap <C-b> <Left>
+cmap <C-f> <Right>
+imap <C-b> <Left>
+imap <C-f> <Right>
+imap <C-p> <Up>
+imap <C-n> <Down>
+map ,, <C-^>
+"}}}
+
+"{{{ Site Specific
+" Don't focus on Reddit frame
+autocmd LocationChange 'reddit\.com/tb/' -js buffer.focusElement(buffer.allFrames()[2]);
+" Focus on the Android docs
+autocmd PageLoad 'developer\.android\.com/' -js buffer.followLink(document.getElementById("doc-content"));
+"}}}
+
+"{{{ proxy
+command proxy -nargs=1 :set! network.proxy.type=<args>
+"}}}
+
+"{{{ Flashblock
+set fbwhitelist+=github.com
+set fbwhitelist+=dictionary.reference.com
+set fbwhitelist+=dictionary.com
+set fbwhitelist+=rubygems.org
+set fbwhitelist+=sae.sina.com.cn
+set fbwhitelist+=localhost
+set fbwhitelist+=local
+set fbwhitelist+=thefreedictionary.com
+set fbwhitelist+=youku.com
+set fbwhitelist+=silentneighbours.com
+set fbwhitelist+=iqiyi.com
+set fbwhitelist+=douban.fm
+set fbwhitelist+=coursera.org
+"}}}
+
+"{{{ Hint Style
+" hi Hint -a border:solid 1px #fff;color:#fff;background:#000;
+" hi HintElem background:#fff;color:#000;border-bottom:1px solid #000;
+" 
+" hi Hint[active] -a border:solid 1px #fff;color:#fff;background:#f00;
+" hi HintActive background:#fff;color:#000;border-bottom:1px solid #000;
+"}}}
+ 
+"{{{ Style
+map -g user <Leader>s -js styleit()
+javascript <<EOF
+var styleit;
+(function() {
+
+  styleit = function() {
+    var hide, item, items, remove, selector, site, style, styles, _i, _j, _len, _len2, _ref, _results;
+    style = {
+      '*': {
+        'background': '#232323',
+        'border-color': '#1a1a1a',
+        'color': '#797979',
+        'text-shadow': '0px 1px 1px #000'
+      },
+      'h1,h2,h3,h4,h5': {
+        'color': '#626262',
+        'text-shadow': '0px 1px 0 #000'
+      },
+      'h1,h2': {
+        'text-shadow': '0px 2px 2px #000'
+      },
+      'a': {
+        'color': '#0077cc',
+        'font-weight': 'normal',
+        'text-decoration': 'none',
+        'text-shadow': '0 1px 1px #000'
+      },
+      'b': {
+        'font-weight': 'normal'
+      },
+      'img': {
+        '-moz-opacity': '0.1',
+        'background': '#232323',
+        'box-shadow': 'inset 0 0 10px #000'
+      },
+      'hr': {
+        'color': '#1a1a1a',
+        'background-color': '#1a1a1a',
+        'height': '1px'
+      },
+      'table': {
+        'border-collapse': 'collapse'
+      },
+      'input': {
+        'border': '1px solid #232323',
+        'box-shadow': 'inset 0 0 4px #000',
+        'color': '#000',
+        'text-shadow': '0px 1px 1px #333'
+      },
+      'textarea': {
+        'border': '1px solid #232323',
+        'box-shadow': 'inset 0 0 4px #000',
+        'color': '#000',
+        'text-shadow': '0px 1px 1px #333'
+      },
+      'input:submit': {
+        'border': '1px solid #232323',
+        'box-shadow': '0 0px 1px #000',
+        'color': '#000',
+        'text-shadow': '0px 1px 1px #333'
+      }
+    };
+    for (selector in style) {
+      styles = style[selector];
+      $(selector).css(styles);
+    }
+    $('img').hover(function() {
+      return $(this).css({
+        '-moz-opacity': '1',
+        'box-shadow': '1px 1px 2px #232323'
+      });
+    }, function() {
+      return $(this).css({
+        '-moz-opacity': '0.1',
+        'background': '#232323'
+      });
+    });
+    _ref = $('img');
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      item = _ref[_i];
+      if ($(item).width() < 20) $(item).css('visibility', 'hidden');
+    }
+    hide = ['#gog', '#sfcnt'];
+    for (_j = 0, _len2 = hide.length; _j < _len2; _j++) {
+      item = hide[_j];
+      $(item).css('visibility', 'hidden');
+    }
+    remove = {
+      'general': ['object', 'iframe'],
+      'aside': ['aside'],
+      't3n.de': ['.abContent']
+    };
+    _results = [];
+    for (site in remove) {
+      items = remove[site];
+      _results.push((function() {
+        var _k, _len3, _results2;
+        _results2 = [];
+        for (_k = 0, _len3 = items.length; _k < _len3; _k++) {
+          item = items[_k];
+          _results2.push($(item).remove());
+        }
+        return _results2;
+      })());
+    }
+    return _results;
+  };
+
+}).call(this);
+EOF
+"}}}
+
+"{{{ Yank Trimed URL
+map -g user <Leader>y -js utm_trimmer(buffer.URL)
+
+javascript <<EOF
+function utm_trimmer (url) {
+    var utm = url.indexOf('?utm');
+    if ( utm > 0 ) {
+         url = url.substring(0, utm);
+         dactyl.clipboardWrite(url, true);
+    }
+}
+EOF
+"}}}
+
+"{{{ Editable
+map -g user <Leader>ed -js make_page_editable(buffer.doc)
+
+javascript <<EOF
+function make_page_editable(document){
+	document.body.contentEditable='true';
+	document.designMode='on';
+}
+EOF
+"}}}
+
+" yank title{{{
+map -g user <Leader>yt -js yank_title(buffer.doc)
+
+javascript <<EOF
+function yank_title(document){
+	dactyl.clipboardWrite(document.title,true);
+}
+EOF
+"}}}
+
+"{{{ dev
+map -g user <Leader>de -js inspect(document)
+
+javascript <<EOF
+
+function inspect_object(obj){
+	if(typeof obj == 'object'){
+		var output = '';
+		for (key in obj){
+			if(typeof obj == 'object'){
+				output+= key + ': '+ inspect_object(obj) + "\n";
+			}else{
+				output += key +': ' + obj[key]+"\n";
+			}
+		}
+		return "{\n"+output+"\n}";
+	}
+	return obj;
+}
+
+function get_keys(obj){
+	var keys = [];
+	for (key in obj){
+		keys.push(key);
+	}
+	return keys;
+}
+
+function inspect(obj){
+	dactyl.clipboardWrite(get_keys(obj), true);
+}
+EOF
+"}}}
+
+" status line
+hi -a StatusLine font-weight: normal;
+hi -a StatusLineNormal color:#657b83 !important; background:#073642 !important;
+
+" toggle global dark style
+map -builtin <F3> :styletoggle<Space>-name<Space>solarizeddark<CR>
+map -builtin <F4> :styletoggle<Space>-name<Space>solarizedlight<CR>
+" toggle minimalistic tabs
+map -builtin <leader>t :styletoggle<Space>-name<Space>minitabs<CR>
+map <Leader>P :se! extensions.autoproxy.proxyMode=auto<CR>:ec 'auto'<CR>
+" map <Leader>P :se! extensions.autoproxy.proxyMode=disabled<CR>:ec 'disabled'<CR>
+map <Leader>p :se! extensions.autoproxy.proxyMode=global<CR>:ec 'global'<CR>
+
+
+"{{{ font
+hi FontCode -a font-family: Terminus important; font-size: 9pt !important;
+hi FontFixed -a font-family: Terminus !important; font-size: 9pt !important;
+hi Normal -a font-family: Terminus !important; font-size: 9pt !important;
+"}}}
+
+" {{{ dark colors
+style -name solarizeddark http://*,https://*,file://*,about:blank <<EOM
+* {
+  color: #657b83 !important;
+  background: #002b36 !important;
+  border-color: #073642 !important;
+}
+
+a, a * {
+  color: #268bd2 !important;
+  text-decoration: none !important;
+}
+
+a:hover, a:hover * {
+  color: #b58900 !important;
+}
+
+a:visited, a:visited * {
+  color: #6c71c4 !important;
+}
+
+a:visited:hover, a:visited:hover * {
+  color: #b58900 !important;
+}
+EOM
+styledisable -name=solarizeddark
+" }}}
+
+"{{{ light colors
+style -name solarizedlight http://*,https://*,file://*,about:blank <<EOM
+* {
+  color: #839496 !important;
+  background: #fdf6e3 !important;
+  border-color: #eee8d5 !important;
+}
+
+a, a * {
+  color: #268bd2 !important;
+  text-decoration: none !important;
+}
+
+a:hover, a:hover * {
+  color: #b58900 !important;
+}
+
+a:visited, a:visited * {
+  color: #6c71c4 !important;
+}
+
+a:visited:hover, a:visited:hover * {
+  color: #b58900 !important;
+}
+
+EOM
+
+styledisable -name=solarizedlight
+"}}}
+
+"{{{ minimalistic tabs
+style -name minitabs chrome://* <<EOM
+#TabsToolbar toolbarbutton {
+  display: none !important;
+}
+ 
+.tabbrowser-tabs {
+  background: #073642 !important;
+}
+ 
+.tabbrowser-tab {
+  -moz-appearance: none !important;
+  background: #073642 !important;
+  border: none !important;
+  color: #657b83 !important;
+  font-family: Terminus; 
+  font-size: 9pt !important;
+  height: 18px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 0.5ex !important;
+  -moz-border-radius: 0 !important;
+}
+ 
+.tabbrowser-tab:not([pinned]) {
+  min-width: 100px !important;
+  max-width: 100px !important;
+}
+
+.tabbrowser-tab:not([fadein]) {
+  min-width: 1px !important;
+  max-width: 1px !important;
+}
+
+.tabbrowser-tab:hover {
+  background: #b58900 !important;
+  color: #002b36 !important;
+}
+ 
+.tabbrowser-tab[selected] {
+  background: #073642 !important;
+  color: #b58900 !important;
+}
+EOM
+"}}}
+
+" vim: set ft=vim:

@@ -1,0 +1,43 @@
+#!/bin/sh
+
+dump=/dev/shm/word.html
+case $# in
+	0)
+		return 1;;
+	1)
+		sdcv -n $1 |\
+			# remove [ color="#xxx">  and the ] at tail
+			sed -e 's/\[ color[^>]*>//g'|\
+			sed -e 's/\]$//g' |\
+			# remove tags resotre < & >
+			sed -e 's/<[^>]*>//g' |\
+			sed -e 's/&lt;/\</g' |\
+			sed -e 's/&gt;/\>/g' |\
+			# splite items
+			sed -e 's/\([0-9]\.\)/\n\1/g'|\
+			sed -e 's/\(\s[a-z])\)/\n\t\1/g'
+			;;
+	2)
+		echo "<!DOCTYPE HTML> <head> <meta charset=\"UTF-8\"> </head>" > $dump
+		echo "<body style=\"background:#333;color:#eee\">" >> $dump
+		sdcv -n $2 |\
+			sed -e 's/-->/<hr\/>/g' |\
+			sed -e 's/\[ color/<font color/g' |\
+			sed -e 's/\]$//g' |\
+			# split items
+			sed -e 's/\([0-9]\.\)/<br\/><br\/>\1/g'|\
+			sed -e 's/\(\s[a-z])\)/<li>\1<\/li>/g' \
+			>> $dump
+		case $1 in
+			chrome|c)
+				xdg-open $dump;;
+			elinks|e)
+				elinks $dump;;
+			w3m|w)
+				w3m $dump;;
+			firefox|f)
+				firefox $dump;;
+		esac;;
+esac
+
+# return 0

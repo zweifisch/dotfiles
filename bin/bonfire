@@ -1,0 +1,17 @@
+#!/bin/sh
+
+
+if [ -n "$1" ]; then
+	case $1 in
+		fix)
+			chmod 777 ./bonfire/application/cache
+			chmod 777 ./bonfire/application/logs
+			chmod 777 ./bonfire/application/config
+			chmod 777 ./bonfire/application/archives
+			chmod 777 ./bonfire/application/db/backups
+			chmod 777 ./bonfire/application/db/migrations
+			chmod 777 ./assets/cache
+			chmod 777 ./bonfire/application/config/application.php;;
+	esac
+fi
+

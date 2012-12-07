@@ -1,0 +1,22 @@
+#!/bin/sh
+
+TMPFILE=`mktemp`
+
+SCRIPT_PATH=`dirname $0`
+
+if [ -n "$1" ]; then
+	TARGET_NAME=$1
+	for tester in $TARGET_NAME*.js; do
+		[[ -f "$tester" ]] || continue
+		echo > "$tester.benchmark"
+		all_times=( 10 100 1000 10000 100000 100000 )
+		for times in ${all_times[@]}; do
+			cat $SCRIPT_PATH/test.js > $TMPFILE
+			cat $tester >> $TMPFILE
+			echo "t=new T;" >> $TMPFILE
+			echo "t.benchmark(benchmark,$times);" >> $TMPFILE
+			node $TMPFILE >> "$tester.benchmark"
+		done
+	done
+	plot *.benchmark
+fi

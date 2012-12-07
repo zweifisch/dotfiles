@@ -1,0 +1,22 @@
+#!/bin/sh
+
+read -r -d '' begin << 'EOF'
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+EOF
+
+read -r -d '' end << 'EOF'
+	</script>
+</body>
+</html>
+EOF
+
+echo $begin
+coffee --stdio -p
+echo $end

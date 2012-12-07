@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+$content = file_get_contents('php://stdin');
+
+echo $content;
+
+echo "/*------------------------------------------------------------------------------\n";
+$content=trim($content,"\n;");
+eval("var_dump($content);");
+echo "------------------------------------------------------------------------------*/";
+

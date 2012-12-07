@@ -1,0 +1,172 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+import urllib3
+import tempfile
+from io import StringIO
+import subprocess
+
+smart_hosts_url = 'https://smarthosts.googlecode.com/svn/trunk/hosts'
+
+help = """
+usage:
+
+	hosts status          show status
+			st
+	hosts update          update smart hosts
+	hosts list <host>     list matched hsots
+			ls
+	hosts add <ip> <host> add line to /etc/hosts
+	hosts add <host>      add host to 127.0.0.1
+	hosts del <host>      remove line from /etc/hosts
+
+"""
+
+
+class alias(object):
+
+	def __init__(self, *aliases):
+		self.aliases = set(aliases)
+
+	def __call__(self, f):
+		f._aliases = self.aliases
+		return f
+
+
+def aliased(aliased_class):
+	original_methods = aliased_class.__dict__.copy()
+	for name, method in original_methods.items():
+		if hasattr(method, '_aliases'):
+			for alias in method._aliases - set(original_methods):
+				setattr(aliased_class, alias, method)
+	return aliased_class
+
+
+class Commands:
+
+	def __init__(self):
+		pass
+
+	def execute(self, args):
+		if(len(args)):
+			cmd = args[0]
+			args = args[1:]
+		else:
+			cmd = self.default_cmd
+			args = []
+
+		executor = getattr(self, cmd, None)
+		if(executor):
+			return executor(*args)
+		else:
+			self.cmd_not_implemented(cmd, *args)
+
+	def cmd_not_implemented(self, cmd, *args):
+		pass
+
+
+@aliased
+class Hosts(Commands):
+
+	def __enter__(self):
+		self.dirty = False
+		with open('/etc/hosts') as fp:
+			self.domains = self.parse(fp)
+		try:
+			with open(os.path.expanduser('~/.smarthosts')) as fp:
+				self.smart_hosts_domains = self.parse(fp)
+		except:
+			self.smart_hosts_domains = {}
+		return self
+
+	def __exit__(self, exception_type, exception_value, traceback):
+		if self.dirty:
+
+			if os.geteuid() == 0:
+				with open('/etc/hosts', 'w') as fp:
+					self.write(fp, self.domains)
+			else:
+				fd, tmpfile = tempfile.mkstemp()
+				with os.fdopen(fd, 'w') as fp:
+					self.write(fp, self.domains)
+					subprocess.call(['sudo', 'mv', tmpfile, '/etc/hosts'])
+
+	def parse(self, fp):
+		domains = {}
+		line = fp.readline()
+		while(line):
+			line = line.strip()
+			if not (line.startswith('#')) and len(line):
+				tokens = line.split()
+				if (len(tokens) > 1):
+					ip = tokens[0]
+					for domain in tokens[1:]:
+						domains[domain] = ip
+			line = fp.readline()
+		return domains
+
+	def write(self, fp, domains):
+		for domain, ip in domains.items():
+			fp.write("%s %s\n" % (ip, domain))
+
+	@alias('list')
+	def ls(self, host=None):
+		items = ((domain, ip) for domain, ip in self.domains.items() if domain not in self.smart_hosts_domains)
+		if host is not None:
+			items = ((domain, ip) for domain, ip in items if domain.find(host) != -1)
+		for domain, ip in items:
+			print("%s %s" % (ip, domain))
+
+	@alias('add')
+	def add(self, ip=None, host=None):
+		if not ip is None:
+			if host is None:
+				host = ip
+				ip = '127.0.0.1'
+			self.domains[host] = ip
+			self.dirty = True
+		else:
+			domains = self.parse(sys.stdin)
+			for host, ip in domains.items():
+				self.domains[host] = ip
+				self.dirty = True
+
+	@alias('delete', 'del')
+	def remove(self, *hosts):
+		if len(hosts) == 0:
+			domains = self.parse(sys.stdin)
+			hosts = (domain for domain, _ in domains.items())
+		for host in hosts:
+			if host in self.domains:
+				del self.domains[host]
+				print("deleting %s " % host)
+				self.dirty = True
+			else:
+				print("%s not found" % host)
+
+	@alias('update')
+	def update_smart_hosts(self):
+		fp = StringIO.StringIO(urllib3.urlopen(smart_hosts_url).read())
+		self.smart_hosts_domains = self.parse(fp)
+		if len(self.smart_hosts_domains) > 0:
+			with open(os.path.expanduser('~/.smart_hosts'), 'w') as fp:
+				self.write(fp, self.smart_hosts_domains)
+			for domain, ip in self.smart_hosts_domains.items():
+				self.domains[domain] = ip
+			self.dirty = True
+		print("got domains: %d" % len(self.smart_hosts_domains))
+
+	@alias('st')
+	def status(self):
+		print('hosts       : %d' % len(self.domains))
+		print('smart hosts : %d' % len(self.smart_hosts_domains))
+		print('your hosts  : %d' % (len(self.domains) - len(self.smart_hosts_domains)))
+
+if __name__ == '__main__':
+	if len(sys.argv) > 1:
+		action = sys.argv[1]
+		with Hosts() as hosts:
+			hosts.execute(sys.argv[1:])
+	else:
+		print

@@ -1,0 +1,37 @@
+remove Lock = Caps_Lock
+keysym Caps_Lock = Escape
+
+! xmodmap ~/.Xmodmap in .xinitrc
+
+! disable capslock
+! remove lock = Caps_Lock 
+! remove mod1 = ISO_Level3_Shift
+! add mod4 = Super_L
+
+! remap the "Print"-key to "F13"
+!keycode 111 = F13
+
+! remap the "MULTIMEDIA"-keys"
+!keycode 237 = F21
+!keycode 162 = F22
+!keycode 160 = F23
+!keycode 176 = F24
+!keycode 174 = F25
+!keycode 230 = F26
+!keycode 236 = F27
+!keycode 178 = F28
+!keycode 78 = anykey
+
+! mx510 logitech, reorder mousebuttons
+!pointer = 1 2 3 6 7 8 4 5
+
+!testing (from the manual)
+!xmodmap -e 'keycode 94 = Delete' \
+!        -e 'keycode 117 = Menu' \
+!        -e 'remove Shift = Shift_L' \
+!        -e 'remove Control = Control_L' \
+!        -e 'keysym Control_L = Shift_L' \
+!        -e 'keysym Shift_L = Control_L' \
+!        -e 'add Shift = Shift_L' \
+!        -e 'add Control = Control_L'
+		

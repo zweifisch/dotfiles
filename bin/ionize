@@ -1,0 +1,17 @@
+#!/bin/sh
+
+
+if [ -n "$1" ]; then
+	case $1 in
+		fix)
+			chmod 777 application/config
+			chmod 777 files
+			chmod 777 themes
+			chmod 777 application/config/config.php
+			chmod 777 application/config/database.php
+			chmod 777 application/config/email.php
+			chmod 777 application/config/language.php
+			chmod 777 application/config/modules.php;;
+	esac
+fi
+

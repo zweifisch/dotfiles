@@ -1,0 +1,12 @@
+# ~/.tmuxinator/z.yml
+
+project_name: z
+project_root: ~/
+tabs:
+  - repl:
+      # layout: main-vertical
+      layout: 1c66,194x50,0,0{127x50,0,0,66x50,128,0}
+      panes:
+        - cd ~/playground/repl && vim
+        - cd ~/playground/repl && watchr watch.rb
+

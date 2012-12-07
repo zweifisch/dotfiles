@@ -1,0 +1,111 @@
+#http://news.ycombinator.net/rss
+# http://rss.slashdot.org/Slashdot/slashdot
+# http://www.readwriteweb.com/rss.xml
+#http://www.reddit.com/.rss
+#http://digg.com/news.rss
+
+# http://www.cnbeta.com/backend.php
+http://www.thegeekstuff.com/feed linux
+http://feeds.feedburner.com/linuxcommando linux
+http://blog.padowi.se/feed/ linux
+
+# cn
+http://feed.feedsky.com/aqee-net programmer cn
+http://solidot.org.feedsportal.com/c/33236/f/556826/index.rss cn
+http://www.wangxiaofeng.net/?feed=rss2 fun cn
+http://www.bullogger.com/Entry/RssHandler.ashx?selectedA=1&selectedB=1 cn
+# http://www.mcgeek.com.cn/?feed=rss2 cn
+
+# book
+http://feeds.feedburner.com/wowebook book
+http://www.ebookshare.net/feed/ book
+http://www.cnshare.org/index.php/feed/ book
+# http://shytex.com/feed
+# http://feeds.feedburner.com/shared4u
+# http://www.filebeta.com/feed/
+
+# php
+http://huoding.com/feed php
+http://juan.boxfi.com/feed/ php
+http://philsturgeon.co.uk/news/rss/all.rss php
+http://www.planet-php.net/rdf/ php
+http://www.phpdeveloper.org/phpdev.rdf php
+
+# http://www.tsingfeng.com/?feed=rss2
+# http://sinolog.it/?feed=rss2
+http://feeds.feedburner.com/catswhocode web
+http://feeds.feedburner.com/webresourcesdepot web
+http://feeds.feedburner.com/SixRevisions web
+http://www.1stwebdesigner.com/feed/ web
+
+http://feeds2.feedburner.com/nihilogic
+
+# linux
+http://feeds.feedburner.com/linuxtoy linux cn
+# http://feeds.feedburner.com/d0od
+# http://feeds2.feedburner.com/Command-line-fu
+# http://wowubuntu.com/feed linux cn
+http://feeds.feedburner.com/vpsee linux cn
+http://www.linuxgem.org/index.rss linux cn
+
+# http://www.blogkid.net/index.xml
+http://www.dbanotes.net/index.xml cn
+http://feed.feedsky.com/bukop cn
+# http://rss.dw-world.de/xml/podcast_nachrichten
+
+http://net.tutsplus.com/feed/ daily
+
+http://blog.yjl.im/feeds/posts/default misc
+http://feeds.feedburner.com/yannespositocomen misc
+
+# http://www.xiazai.de/feed/
+http://www.deluxeblogtips.com/feed/ misc
+
+# german
+http://www.dradio.de/rss/podcast/nachrichten/ de
+# http://audio.zeit.de/podcast/wissen.xml de
+http://t3n.de/news/feed/ de
+http://rivva.de/rss.xml de
+
+http://www.oschina.net/news/rss cn
+
+# python
+# http://feeds.feedburner.com/mathematism python
+http://greendalecs.wordpress.com/feed/ python
+
+# ruby
+http://www.rubyinside.com/feed/ ruby
+
+# podcasts
+http://radiofreepython.com/medium_quality.rss podcast
+http://feeds.feedburner.com/yuiblog/yui-theater podcast
+http://creativecodingpodcast.com/?feed=podcast podcast
+http://feeds.feedburner.com/lostdecadegames/blog podcast
+http://feeds.feedburner.com/thirdavenue-django-podcast podcast
+http://musicforprogramming.net/rss.php podcast
+http://www.npr.org/rss/podcast.php?id=510289 podcast # http://www.npr.org/blogs/money/
+http://chaosradio.ccc.de/chaosradio-latest.rss podcast
+http://feeds.feedburner.com/JavascriptJabber podcast
+
+# clojure
+http://feeds.feedburner.com/disclojure clojure
+http://sunng.info/blog/feed/ clojure
+
+http://www.thisisthegreenroom.com/feed/ misc
+http://lilydjwg.is-programmer.com/posts.rss programmer
+http://www.artima.com/weblogs/feeds/weblogs.rss programmer
+
+# personal
+http://blog.sina.com.cn/rss/1788858481.xml personal
+
+# js
+http://blog.alexmaccaw.com/feed js
+http://feeds.feedburner.com/KnockMeOut js
+http://howtonode.org/feed.xml js
+http://feeds.feedburner.com/html5rocks js
+
+http://jasonwryan.com/atom.xml linux
+
+http://feeds.feedburner.com/Python/pyjobo job
+
+http://s-expressions.com/feed/ clojure

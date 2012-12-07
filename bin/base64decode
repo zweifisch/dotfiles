@@ -1,0 +1,6 @@
+#!/usr/bin/php -q
+<?php
+$file=$argv[1];
+$encoded_str= file_get_contents($file);
+$str = base64_decode($encoded_str);
+echo chunk_split($str);

@@ -1,0 +1,47 @@
+#!/bin/sh
+
+METHOD=$1
+
+case $METHOD in
+	mysql2csv)
+		sed -n '
+			1 d
+			3 d
+			$ d
+			{
+				s/^[^|]*|\(.*\)|[^|]*$/\1/
+				s/|/,/g
+				p
+			}
+		';;
+	mysql2tsv)
+		sed -n '
+			1 d
+			3 d
+			$ d
+			{
+				s/^[^|]*|\(.*\)|[^|]*$/\1/
+				s/|/\t/g
+				p
+			}
+		';;
+	mysql2insert)
+		table_name=$2
+		[ -n "$table_name" ] || table_name=table_name
+		sed -n "
+			1 d
+			3 d
+			$ d
+			4,$ {
+				s/^[^|]*| *\(.*\) *|[^|]*$/('\1'),/
+				s/ *| */','/g
+				s/ *')/')/g
+				p
+			}
+			2 {
+				s/^[^|]*|\(.*\)|[^|]*$/insert into $table_name\n(\1)\nvalues/
+				s/|/,/g
+				p
+			}
+		";;
+esac

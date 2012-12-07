@@ -1,0 +1,23 @@
+#! /usr/bin/php -q
+<?php
+
+if($argc == 1){
+	// $args=explode(' ',fgets(STDIN));
+	$args=explode(' ',array_shift(explode("\n", file_get_contents('php://stdin','r'))));
+}else{
+	$args=array_slice($argv,1);
+}
+
+print_r($args);
+
+// php://stdin
+// php://stderr
+// php://stdout
+// php:output
+
+fwrite(STDOUT,"out\n");
+echo `echo\n`;
+fwrite(STDOUT,"out\n");
+
+file_put_contents('php://stderr', "error message\n");
+// http://phpadvent.org/2011/php-for-all-the-things-by-matt-graham

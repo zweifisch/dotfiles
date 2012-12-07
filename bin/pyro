@@ -1,0 +1,16 @@
+#!/bin/bash
+
+case $1 in
+	permission|fix)
+		find -type d -exec chmod 755 {} \;
+		find -type f -exec chmod 644 {} \;
+		chmod 777 system/cms/cache
+		chmod 777 system/cms/config
+		chmod 777 uploads
+		chmod 666 system/cms/config/config.php
+		echo 'folder/file permission done'
+		;;
+	clearcache|clear)
+		rm -rf system/cms/cache/pages_m/
+		rm -rf system/cms/cache/navigation_m/ ;;
+esac	

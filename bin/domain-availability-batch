@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ "$1" == "--host" ]; then
+	while read DOMAIN; do
+		host $DOMAIN | grep -q 'has address' 
+		if [ $? -eq 1 ]; then 
+			echo "$DOMAIN" 
+		fi 
+	done
+else
+	while read DOMAIN; do
+		whois $DOMAIN | egrep -q '^No match|^NOT FOUND|^Not fo|AVAILABLE|^No Data Fou|has not been regi|No entri' 
+		if [ $? -eq 0 ]; then 
+			echo "$DOMAIN" 
+		fi 
+		sleep $(( $RANDOM % 10 ))
+	done
+fi

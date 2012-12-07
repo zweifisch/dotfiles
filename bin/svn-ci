@@ -1,0 +1,7 @@
+#!/bin/bash
+NULL="_"
+for f in `svn st --ignore-externals -q | sed -n '/^[^X]/ s/.\ *//p'`; 
+	do LIST="${LIST} $f $NULL on"; 
+done
+dialog --checklist "Select files to commit" 30 60 30 $LIST 2>/tmp/svnlist.txt
+[ $? -eq 0 ] && svn ci `cat /tmp/svnlist.txt|sed 's/"//g'`

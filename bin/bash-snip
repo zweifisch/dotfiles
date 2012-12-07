@@ -1,0 +1,11 @@
+#!/bin/sh
+
+longstr=$(cat << EOF
+this      
+is a 
+long long
+string
+EOF
+)
+
+echo $longstr

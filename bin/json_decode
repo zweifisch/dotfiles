@@ -1,0 +1,20 @@
+#! /usr/bin/php -q
+<?php
+
+$input =file_get_contents('php://stdin','r');
+$lines = explode("\r\n",$input);
+foreach($lines as $line){
+	if (isset($line[0]) and $line[0] == '{'){
+		if ($body = json_decode($line,true)){
+			var_export($body);
+		}else{
+			echo "invalid body:\n";
+			echo $line;
+		}
+	}else{
+		echo "$line\n";
+	}
+}
+
+
+

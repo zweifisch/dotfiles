@@ -1,0 +1,24 @@
+project_name: bg
+project_root: ~/
+tabs:
+  - proxy:
+      layout: main-horizontal
+      panes:
+        - t cal
+        - nohup xwrits typetime=40 finger after 15 clock multiply=5:1.4 &
+  - readme:
+      layout: main-vertical
+      panes:
+        - cd ~/notes; vim README.md
+        - rem
+        - cd ~/notes/otl; vim routine.otl
+  - todo:
+      layout: main-vertical
+      panes:
+        - cd ~/notes/otl && vim todo.otl
+        - task
+  - courses:
+      layout: main-vertical
+      panes:
+        - cd ~/notes/courses
+

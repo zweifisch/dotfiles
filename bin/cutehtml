@@ -1,0 +1,34 @@
+#!/bin/sh
+
+siteroot=$HOME/sites/s/md
+
+mkdir -p $siteroot
+
+filename=$(basename $1)
+extension=${filename##*.}
+
+if [ "$extension" = "md" ]; then
+	html=`pandoc -f markdown -t html $1`
+else
+	pandoc -f html -t markdown "$1" > "$2.md"
+	html=`pandoc -f markdown -t html "$2.md"`
+fi
+
+cat > "$siteroot/$2.html" << EOF
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>$2</title>
+	<link href="markdown.css" rel="stylesheet" />
+</head>
+<body>
+$html
+</body>
+</html>
+EOF
+
+xdg-open "$siteroot/$2.html"
+
+# markdown < $1 >> $siteroot/$1.html
+# pandoc -f markdown -t html $1 >> $siteroot/$1.html

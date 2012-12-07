@@ -1,0 +1,22 @@
+#!/bin/sh
+
+TMPFILE=`mktemp`
+
+SCRIPT_PATH=`dirname $0`
+
+if [ -n "$1" ]; then
+	TARGET_NAME=$1
+	TIMES=1
+	if [ -n "$2" ]; then
+		TIMES=$2
+	fi
+	for tester in `shuf -e $TARGET_NAME*.js`; do
+		[[ -f "$tester" ]] || continue
+		cat $SCRIPT_PATH/test.js > $TMPFILE
+		cat $tester >> $TMPFILE
+		echo "benchmark: $tester"
+		echo "t=new T;" >> $TMPFILE
+		echo "t.time(benchmark,$TIMES);" >> $TMPFILE
+		node $TMPFILE
+	done
+fi

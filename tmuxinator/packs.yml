@@ -1,0 +1,5 @@
+project_name: packs
+project_root: ~/playground/work/packs
+tabs:
+  - main: 
+  - doc: vim doc.otl

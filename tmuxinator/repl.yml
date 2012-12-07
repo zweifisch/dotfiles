@@ -1,0 +1,8 @@
+project_name: repl
+project_root: ~/playground/repl
+tabs:
+  - repl:
+      layout: 1c66,194x50,0,0{127x50,0,0,66x50,128,0}
+      panes:
+        - vim
+        - watchr watch.rb

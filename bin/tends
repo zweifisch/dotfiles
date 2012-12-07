@@ -1,0 +1,23 @@
+#! /usr/bin/php -q
+<?php
+
+if($argc == 1){
+	// $args=explode(' ',fgets(STDIN));
+	$args=explode(' ',array_shift(explode("\n", file_get_contents('php://stdin','r'))));
+}else{
+	$args=array_slice($argv,1);
+}
+
+count($args) < 2 and die("input at least 2 numbers\n");
+
+$tends=array();
+for($i=0;$i<count($args)-1;$i++){
+	if($args[$i]==0)die("zero not allowed");
+
+	echo $i+1,' to ',$i+2,' : ',$tends[]=($args[$i+1]-$args[$i])/$args[$i],"\n";
+}
+
+echo 'max:',array_search(max($tends),$tends)+1,' value:',max($tends),"\n";
+echo 'min:',array_search(min($tends),$tends)+1,' value:',min($tends),"\n";
+
+echo 'next:',array_pop($args)*(1+array_pop($tends)) ,"\n";

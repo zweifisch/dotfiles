@@ -1,0 +1,95 @@
+#!/bin/sh
+# for dir in $(ls -d */);do
+# 	#mv "$dir" /usr/share/stardict/dic/
+# 	mv "$dir" ~/.stardict/dic/
+# 	echo "$dir moved"
+# done
+
+dic_root=~/.stardict/dic
+dicall_root=~/.stardict/dicall
+
+if [ $# -eq 0 ]; then
+	cmd=list
+fi
+
+if [ $# -ge 1 ]; then 
+	cmd=$1
+fi
+
+for dir in $dic_root $dicall_root; do
+	if [ ! -d $dir ]
+	then
+		mkdir -p $dir
+	fi
+done
+
+find_dic(){
+	mached_dics=$(find $dicall_root -maxdepth 1 -name "*$input_dic*" -print)
+	if [ ${#mached_dics} -eq 0 ]; then
+		echo "$input_dic not found"
+		exit 1
+	fi
+	local count=0
+	for dic in mached_dics; do
+		count=$(($count+1))
+	done
+
+	if [ $count -gt 1 ]; then
+		echo "which one?"
+		count=1
+		for dic in mached_dics; do
+			count=$(($count+1))
+			echo count
+			echo "${dic#$dicall_root/}"
+		done;
+		exit 0
+	fi
+
+	# return "${mached_dics#$dicall_root/}"
+	dic_path=$mached_dics;
+	dic="${dic_path#$dicall_root/}"
+	dic_link="$dic_root/$dic"
+
+}
+
+find_info(){
+	return 0
+}
+
+check_var(){
+	echo $dic_link
+	echo 
+	echo $dic_path
+	exit 0
+}
+
+
+case $cmd in
+	list|ls)
+		ls $dic_root;;
+	installed|all)
+		ls $dicall_root;;
+	desc)
+		cat $dicall_root/*$2*/*.ifo;;
+	add)
+		echo unpacking "$2"
+		tar xvjf "$2" -C $dicall_root;;
+	enable|en)
+		input_dic=$2
+		find_dic
+		# check_var
+		ln -s "$dic_path" "$dic_link" 
+		echo "$dic enabled";;
+	disable|dis)
+		input_dic=$2
+		find_dic
+		rm $dic_link
+		echo "$dic disabled";;
+	remove|rm)
+		input_dic=$2
+		find_dic
+		rm -r $dic_path
+		echo "$dic removed";;
+esac
+
+exit 0

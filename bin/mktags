@@ -1,0 +1,43 @@
+#! /bin/sh
+
+if [ -z $1 ]; then
+language=php
+else
+language=$1
+fi
+
+echo 'remove old tags file...'
+rm -f tags TAGS
+rm -f cscope.*
+
+case $language in
+'php')
+# find ../system -type d \( -name "compile" -o -name ".svn" -o -name "sql" \) -prune -o -name "*.${language}" -print >files
+find . -type d \( -name "compile" -o -name ".svn" -o -name "sql" -o -name "phpsso_server" \) -prune -o -name "*.${language}" -print >files
+ctags -L files \
+   --exclude="\.svn" \
+   --totals=yes \
+   --tag-relative=yes \
+   --PHP-kinds=+cfd-vj
+
+# 'java')
+# find . -type d \( -name "compile" -o -name ".svn" -o -name "sql" -o -name "phpsso_server" \) -prune -o -name "*.${language}" -print >files
+# ctags -L files \
+#    --exclude="\.svn" \
+#    --totals=yes \
+#    --tag-relative=yes \
+#    --PHP-kinds=+cfd-vj
+
+
+# ctags -f ./tags -h ".php" \
+# 	-R --exclude="\.hg" --totals=yes --tag-relative=yes \
+# 	--PHP-kinds=+cf --regex-PHP='/abstract class ([^ ]*)/\1/c/' \
+# 	--regex-PHP='/interface ([^ ]*)/\1/c/' \
+# 	--regex-PHP='/(public \|static \|abstract \|protected \|private )+function ([^ (]*)/\2/f/' \
+# 	--exclude="*.js" 
+
+cscope -bkq -i files
+rm files
+;;
+esac
+echo 'generate completed...'

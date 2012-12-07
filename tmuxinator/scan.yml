@@ -1,0 +1,4 @@
+project_name: scan
+project_root: /home/cm/playground/play/scan
+tabs:
+  - shell:

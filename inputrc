@@ -1,0 +1,9 @@
+set editing-mode vi
+set keymap vi
+
+set keymap vi-insert
+"\C-l": clear-screen
+
+# IPython needs this to appear at the bottom of the
+# file for clear-screen to work
+set keymap vi

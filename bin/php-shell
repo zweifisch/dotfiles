@@ -1,0 +1,16 @@
+#! /usr/bin/php -q
+<?php
+
+$shortopts = 'x:X:';
+$shortopts .= 'p';
+
+$longopts=array(
+	'required:',
+	'optional::',
+	'bool', // --bool options['bool'] will be set to false
+	// --bool --bool options['bool'] will be an array
+);
+
+$options=getopt($shortopts,$longopts);
+
+var_dump($options);

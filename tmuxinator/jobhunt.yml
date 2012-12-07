@@ -1,0 +1,6 @@
+project_name: hunt
+project_root: ~/playground/scraping/job/
+tabs:
+  - main: source venv/bin/activate && vim
+  - repl: source venv/bin/activate && bpython
+  - doc: vim list.otl

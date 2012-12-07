@@ -1,0 +1,8 @@
+project_name: bubble
+project_root: ~/playground/draw/canvas-01/
+tabs:
+  - gap:
+      layout: main-horizontal
+      panes:
+        - vim
+        - foreman start

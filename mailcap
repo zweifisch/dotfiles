@@ -1,0 +1,16 @@
+# text/html;      lynx -dump %s; copiousoutput; nametemplate=%s.html
+text/enriched;  enriched.sh  ; copiousoutput
+image/*;        anytopnm %s | pnmscale -xsize 80 -ysize 50 | ppmtopgm | pgmtopbm | pbmtoascii ; copiousoutput
+application/x-gunzip;   gzcat; copiousoutput
+application/x-tar-gz; gunzip -c %s | tar -tf - ; copiousoutput
+application/postscript; ps2ascii %s; copiousoutput
+
+# text/html; firefox %s; test=RunningX
+
+# text/html; w3m -dump %s; nametemplate=%s.html; copiousoutput
+text/html; w3m -I %{charset} -T text/html -dump; copiousoutput
+
+# text/html; elinks -default-mime-type text/html %s; needsterminal;
+text/html; elinks -dump -dump-charset %{charset} -default-mime-type text/html %s; needsterminal; copiousoutput;
+
+

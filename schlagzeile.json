@@ -1,0 +1,49 @@
+{
+  "solidot": {
+    "pattern": {
+      "block": ".article",
+      "title": ".title h3",
+      "link": ".storylinks .more a"
+    },
+    "mapper": {
+      "link": [
+        [
+          "prepend",
+          "http:"
+        ]
+      ]
+    },
+    "type": "sibling",
+    "url": "http://solidot.org"
+  },
+  "spiegel": {
+    "pattern": {
+      "block": ".spTopThema",
+      "link": "p a",
+      "supertitle": "span.spCpTopic",
+      "title": "span.spCpHdln"
+    },
+    "type": "hierachical",
+    "url": "http://www.spiegel.de"
+  },
+  "zeit": {
+    "pattern": {
+      "block": ".innerteaser",
+      "link": "p a",
+      "supertitle": ".supertitle",
+      "title": ".title"
+    },
+    "type": "hierachical",
+    "url": "http://zeit.de"
+  },
+  "linux-journal": {
+    "pattern": {
+      "block": ".node-teaser",
+      "link": ".links a",
+      "title": ".title",
+      "supertitle": ""
+    },
+    "type": "hierachical",
+    "url": "http://www.linuxjournal.com"
+  }
+}

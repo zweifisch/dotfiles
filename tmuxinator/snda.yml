@@ -1,0 +1,11 @@
+project_name: snda
+project_root: ~/snda
+tabs:
+  - proxy:
+      layout: main-horizontal
+      panes:
+        - cd ~/.openvpn/wuxi-pre; sudo openvpn config.ovpn
+        - cd ~/.openvpn/wuxi; sudo openvpn config.ovpn
+        - cd ~/.openvpn/beijing; sudo openvpn config.ovpn
+  - notes:
+      notes: vim notes.otl

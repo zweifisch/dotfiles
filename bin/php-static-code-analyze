@@ -1,0 +1,47 @@
+#!/usr/bin/env coffee
+
+glob = require 'glob'
+fs = require 'fs'
+
+
+getAllFunctions = (cb)->
+	ret = {}
+	glob '**/*.php', (err,files)->
+		numToProcess = files.length
+		console.log "files to process: #{numToProcess}"
+		for file in files
+			fs.readFile file,'utf8',(err,content)->
+				fns = content.match /function +(\w+) *\([^)]*\)/gi
+				if fns then for fn in fns
+					[_,f] = fn.match /function +(\w+) *\([^)]*\)/i
+					ret[f] = true
+				numToProcess -= 1
+				if numToProcess is 0
+					cb Object.keys ret
+
+sortObject = (obj)->
+	ret = ([k,v] for k,v of obj)
+	ret.sort (a,b)-> a[1] - b[1]
+
+countCalls = (fns,cb)->
+	allCalls = {}
+	for fn in fns then allCalls[fn] = 0
+	glob '**/*.php', (err,files)->
+		numToProcess = files.length
+		console.log "files to process: #{numToProcess}"
+		for file in files
+			fs.readFile file,'utf8',(err,content)->
+
+				for fn in fns
+					calls = content.match new RegExp "#{fn}\\([^)]*\\)"
+					if calls then allCalls[fn] += calls.length
+
+				numToProcess -= 1
+				if numToProcess is 0
+					cb allCalls
+
+getAllFunctions (fns)->
+	countCalls fns, (counts)->
+		console.log sortObject counts
+
+# vim: set ft=coffee:

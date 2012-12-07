@@ -1,0 +1,8 @@
+project_name: jobs
+project_root: ~/playground/scraping/jobs-enlive/
+tabs:
+  - main:
+      layout: 1c66,194x50,0,0{127x50,0,0,66x50,128,0}
+      panes:
+        - git st
+        - lein repl

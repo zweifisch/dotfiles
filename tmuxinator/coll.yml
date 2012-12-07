@@ -1,0 +1,17 @@
+project_name: coll
+project_root: ~/playground/work/collections/
+pre: sudo rc.d restart mongodb nginx uwsgid
+tabs:
+  - main: 
+      layout: 1c66,194x50,0,0{127x50,0,0,66x50,128,0}
+      panes:
+        - source venv/bin/activate && git st
+        - watchr watch.rb
+  - repl: source venv/bin/activate && bpython
+  - doc: vim list.otl
+  - log:
+      layout: main-horizontal
+      panes:
+        - tail -f /var/log/coll-web.log 
+        - sudo tail -f /var/log/uwsgi/coll.log 
+

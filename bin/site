@@ -1,0 +1,19 @@
+#!/bin/sh
+
+LOCAL=~/sites/local
+
+cmd="$1"
+
+if [ -n "$cmd" ]; then
+	case $cmd in
+		en|enable)
+			# ln -nsf "$2" $LOCAL
+			ln -nsf `pwd` $LOCAL;;
+		fix)
+			find -type f -exec chmod 644 {} \;
+			find -type d -exec chmod 755 {} \;;;
+	esac
+else
+	readlink $LOCAL
+fi
+

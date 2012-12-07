@@ -1,0 +1,43 @@
+proxy localhost:9050
+# use-proxy yes
+
+browser firefox
+
+bind-key r reload-all
+bind-key h quit
+bind-key l open
+bind-key j down
+bind-key k up
+bind-key O open-in-browser-and-mark-read
+
+max-items 200
+
+color listnormal color244 default
+color listfocus color166 black
+color info color136 black
+color article color244 default
+color background color244 default
+
+# no automatic reloading
+refresh-on-startup no
+auto-reload no
+reload-time 360 # minutes
+
+# reloading
+reload-threads 4
+reload-only-visible-feeds yes
+show-read-feeds no
+download-retries 4
+
+# article-sort-order date-desc
+# feedlist-format "%S%n %11u %t"
+# articlelist-format "%D %f %?T?;%-17T; ?%t"
+# datetime-format %m-%d
+
+confirm-exit yes
+
+# podcast
+download-path ~/podcasts
+player mplayer
+save-path ~/feeds
+podcast-auto-enqueue no

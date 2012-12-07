@@ -1,0 +1,87 @@
+#!/usr/bin/env python2
+#
+# make image folder browserable
+# 10/22/2010	opt --clear added
+#
+
+from glob import glob
+import os
+from optparse import OptionParser
+
+html='''<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" media="screen" href="%sstyle.css"/>
+	<title>img</title>
+</head>
+<body>
+<div class="wrap">
+	<div class="linkarea clearfix">%s</div>
+	<div class="imgs">%s</div>
+	<div class="linkarea clearfix">%s</div>
+</div>
+</body>
+</html>
+'''
+
+
+def generate_html(path,depth=0):
+	links,style='',''
+	dirs=[f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
+	child_imgs = 0;
+	for dir in dirs:
+		num=generate_html(os.path.join(path,dir),depth+1)
+		if num>0:
+			links+='<span class="button"><a class="button" href="%s">%s:%s</a></span>' % (dir+'/index.html',dir,num)
+		child_imgs+=num
+	if depth:
+		links+='<span class="button"><a class="button" href="../index.html">up</a></span>'
+		style='../'*depth;
+			
+	content=''
+	jpgs=glob(os.path.join(path,'*.jpg'))
+	pngs=glob(os.path.join(path,'*.png'))
+	gifs=glob(os.path.join(path,'*.gif'))
+	imgs=jpgs+pngs+gifs
+	for img in imgs:
+		filepath, filename = os.path.split(img)
+		content+='<img src="'+filename+'"/>'
+		
+	if len(dirs)>0 or len(imgs)>0:
+		html_file_path=os.path.join(path,'index.html')
+		f=open(html_file_path,'w')
+		f.write(html % (style,links,content,links))
+		f.close()
+		
+		os.utime(html_file_path,(0,0))
+		
+	return len(imgs)+child_imgs;
+		
+		
+def clear_index_file(path):
+	count=0
+	dirs=[f for f in os.listdir(path) if os.path.isdir(os.path.join(path, f))]
+	for dir in dirs:
+		count=count+clear_index_file(os.path.join(path,dir))
+	path = os.path.join(path,'index.html')
+	if(os.path.isfile(path)):
+		os.unlink(path)
+		count+=1
+	return count
+	
+#----------------------------------------------------------------------------#
+#start here
+#----------------------------------------------------------------------------#
+USAGE="%prog	[--clear]"
+VERSION="%prog 0.2"
+p = OptionParser(usage=USAGE, version=VERSION)
+p.add_option("-c","--clear",action="store_true",dest="clear", default=False, help="clear index.html")
+
+opts, args = p.parse_args()
+
+if opts.clear:
+	count=clear_index_file('.')
+	print('%s cleared' % count)
+else:
+	generate_html('.')

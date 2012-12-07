@@ -1,0 +1,58 @@
+#!/usr/bin/env python2
+
+import os
+import re
+import glob
+
+nginx_confpath = '/etc/nginx/conf/nginx.conf'
+hosts_path = '/etc/hosts'
+servernames_in_hosts = []
+
+
+def get_all_nginx_servername():
+	skip = ['mime.types', 'fastcgi_params']
+	scan_list = [nginx_confpath]
+	with open(nginx_confpath, 'r') as f:
+		content = f.read()
+	include_files = re.findall('^\s*include\s+(.*)\s*;', content, re.M)
+	scan_list.extend(i for i in include_files if i not in skip)
+	for scan_location in scan_list:
+		for f in glob.glob(scan_location):
+			with open(f) as fp:
+				names = re.findall('^\s*server_name\s+([^ ;]*)\s*;', fp.read(), re.M)
+				for name in names:
+					yield name
+
+
+def servernames_in_hosts():
+	with open(hosts_path, 'r') as f:
+		lines = f.readlines()
+	return reduce(merge, map(lambda l: l.strip().split(' ')[1:], lines))
+
+
+def merge(l, l2):
+	l.extend(l2)
+	return l
+
+
+def insert_to_hosts(line):
+	with open(hosts_path, 'r') as f:
+		content = f.read()
+	insert_block = "# begin nginx\n" + line + "\n# end nginx\n"
+	new_content = insert_block + content
+	with open(hosts_path, 'w') as f:
+		f.write(new_content)
+
+
+def main():
+	servernames = servernames_in_hosts()
+	servernames_to_append = filter(lambda x: x not in servernames, get_all_nginx_servername())
+	if len(servernames_to_append):
+		line = "127.0.0.1 " + " ".join(servernames_to_append)
+		insert_to_hosts(line)
+		os.system('head %s' % hosts_path)
+	else:
+		print('nothing to do')
+
+if __name__ == '__main__':
+	main()

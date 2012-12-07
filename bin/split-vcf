@@ -1,0 +1,51 @@
+#!/usr/bin/perl
+#
+# vcf-split - split a .list.vcf file into many small .vcf files.
+# Copyright (C) 2004  Raphael J. Schmid.
+# Tweaked by Frank Goossens ("futtta") in 2011
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 1, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+# -- raphael.schmid@gmx.de
+# -- futtta@gmail.com
+
+use File::Basename;
+
+if ($ARGV[0] eq "") {
+  print "Usage: vcard-split <file to split>\n\n";
+  exit;
+}
+
+$input=$ARGV[0];
+$counter=0;
+
+print $input;
+
+open INPUT, $input or die $!;
+
+while (<INPUT>) {
+  open OUTPUT, ">> ".$counter."-".basename($input) or die $!;
+
+  if ($_ =~ /END:VCARD/ ) {
+    print OUTPUT $_;
+    $counter+=1;
+    close OUTPUT;
+  } else {
+    print OUTPUT $_;
+  }
+}
+
+close OUTPUT;
+close INPUT;
