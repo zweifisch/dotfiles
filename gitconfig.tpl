@@ -22,3 +22,5 @@
 [http]
 [color]
 	ui = true
+[push]
+	default = simple
