@@ -283,13 +283,21 @@ function uncommited(){
 	done
 }
 
-export PATH=~/.bin:~/bin:$PATH
-export PATH=$PATH:/opt/android-sdk/platform-tools
+export PATH=~/.bin:$PATH
+
+if [ -d $HOME/bin ]; then
+	export PATH=~/bin:$PATH
+fi
+
+if [ -d /opt/android-sdk/platform-tools ]; then
+	export PATH=$PATH:/opt/android-sdk/platform-tools
+fi
+
+if [ -d $HOME/.gem/ruby/1.9.1/bin ]; then
+	export PATH=$PATH:$HOME/.gem/ruby/1.9.1/bin 
+fi
 
 eval `dircolors ~/.dir_colors`
-
-export WORKON_HOME=$HOME/.virtualenvs
-[ -e /usr/bin/virtualenvwrapper.sh ] && source /usr/bin/virtualenvwrapper.sh 
 
 export PATH=~/.rbenv/bin:$PATH
 if [[ -x $(which rbenv) ]]; then

@@ -72,9 +72,7 @@ end
 
 desc "init"
 task :init do
-	puts `mkdir repos`
-	puts `git clone https://github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme repos/.oh-my-zsh-powerline-theme`
-	puts `cp repos/.oh-my-zsh-powerline-theme/powerline.zsh-theme zsh/`
+	puts `git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh`
 end
 
 desc "update"
