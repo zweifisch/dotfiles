@@ -82,6 +82,8 @@ alias bc='bc -ql'
 alias droid='adb shell busybox'
 alias dbox='dropbox'
 
+alias psc='ps xawf -eo pid,user,cgroup,args'
+
 alias cling='cling  -Wc++11-extensions -std=c++11'
 
 alias notebook='ipython notebook --pylab=inline'
@@ -307,6 +309,13 @@ fi
 # local settings
 if [ -f $HOME/.zshrc_local ]; then
 	source $HOME/.zshrc_local
+fi
+
+if [ -e /usr/bin/systemctl ]; then
+	alias start='sudo systemctl start'
+	alias stop='sudo systemctl stop'
+	alias status='sudo systemctl status'
+	alias restart='sudo systemctl restart'
 fi
 
 alias getjquery='wget http://code.jquery.com/jquery-1.8.3.min.js'
