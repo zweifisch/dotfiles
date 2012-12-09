@@ -77,6 +77,7 @@ end
 
 desc "update"
 task :update do
-	puts `wget https://raw.github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme/master/powerline.zsh-theme -O ~/.zsh/powerline.zsh-theme`
+	# puts `wget https://raw.github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme/master/powerline.zsh-theme -O ~/.zsh/powerline.zsh-theme`
+	puts `git --work-tree ~/.oh-my-zsh --git-dir ~/.oh-my-zsh/.git pull`
 end
 

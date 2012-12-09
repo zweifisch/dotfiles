@@ -1,7 +1,0 @@
-#!/usr/bin/expect
-# exp_internal 1
-set timeout 100
-
-spawn ssh -D 9050 zf.pascal@209.141.60.168
-expect "zf.pascal@209.141.60.168's password:" { send "/+TgESZn\r" }
-interact

@@ -1,6 +1,6 @@
 #======================================================#
 # Boring details
-set realname = "#{fullname}"
+set realname = "#{realname}"
 set from = "#{email}"
 set use_from = yes
 set envelope_from ="yes"
@@ -15,7 +15,7 @@ set signature="curl --silent http://hackersays.com/quote | json c a|"
 set sendmail="/usr/bin/msmtp"   
 
 # If not set in ~/.bashrc:
-set spoolfile = /var/spool/mail/#{username}
+# set spoolfile = /var/spool/mail/#{username}
 
 #======================================================#
 # Folders
@@ -51,7 +51,7 @@ set edit_headers=yes      # See the headers when editing
 # Aliases
 
 set alias_file = ~/mail/mutt_aliases # In their own file
-source ~/mail/mutt_aliases           # Source them
+# source ~/mail/mutt_aliases           # Source them
 set sort_alias=alias                 # Sort alphabetically
 
 #======================================================#
