@@ -597,7 +597,8 @@ let wiki_settings={
 \   'sh': 'sh',
 \   'nginx': 'nginx',
 \   'apache': 'apache',
-\   'jade': 'jade'
+\   'jade': 'jade',
+\   'actionscript': 'actionscript'
 \ }}
 
 let wikis=["linux","web","logs","game","projects","nlp","de","geld","cs","misc"]
