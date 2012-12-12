@@ -136,6 +136,7 @@ alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-fi
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias play='mplayer'
+alias shot='mplayer -vo jpeg -frames 1 tv://'
 
 function whichweek(){
 	week=`date -d "now" +%U`
