@@ -24,7 +24,7 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(vi-mode lein archlinux cap gem gnu-utils npm pip python node rake ruby svn taskwarrior rbenv zsh-syntax-highlighting history-substring-search zaw vagrant supervisor django bundler)
+plugins=(vi-mode lein archlinux cap gem gnu-utils npm pip python node rake ruby svn taskwarrior rbenv zsh-syntax-highlighting history-substring-search vagrant supervisor django bundler)
 source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all
@@ -131,8 +131,8 @@ function _bright(){
 compdef _bright bright
 
 alias chrome='z google-chrome --disk-cache-dir="/dev/shm/chrome/" &'
+alias chrome-proxy='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --proxy-server="socks5://localhost:7070" &'
 alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-file-access-from-files  --disable-web-security --remote-debugging-port=9222 &'
-
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias play='mplayer'

@@ -1,5 +1,5 @@
-proxy localhost:7070
-use-proxy no
+proxy localhost:7171
+use-proxy yes
 
 browser firefox
 

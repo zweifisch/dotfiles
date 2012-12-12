@@ -1,0 +1,34 @@
+#!/usr/bin/env coffee
+
+http = require 'http'
+
+port = process.argv[2] ? 8080
+
+server = http.createServer (req, res)->
+	opts =
+		host: req.headers.host
+		method: req.method
+		path: req.path
+		headers: req.headers
+	preq = http.request opts, (pres)->
+
+		pres.addListener 'data', (chunk)->
+			res.write chunk, 'binary'
+		pres.addListener 'end', ->
+			console.log "done: #{req.url}"
+			res.end()
+
+		res.writeHead res.statusCode, pres.headers
+
+	preq.on 'error', (e)->
+		console.log "error:\n  #{req.url}\n  #{e.message}"
+
+	req.addListener 'data', (chunk)->
+		preq.write chunk, 'binary'
+
+	req.addListener 'end', ->
+		preq.end()
+
+console.log "listening at #{port}"
+
+server.listen port
