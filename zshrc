@@ -90,6 +90,15 @@ alias notebook='ipython notebook --pylab=inline'
 
 alias composer='composer.phar'
 
+github-clone(){
+	git clone git@github.com:$1/$2.git
+}
+
+bitbucket-clone(){
+	git clone git@bitbucket.org:$1/$2.git
+}
+
+
 # Automatically background processes (no output to terminal etc)
 alias 'z=echo $RANDOM > /dev/null; zz'
 zz () {
