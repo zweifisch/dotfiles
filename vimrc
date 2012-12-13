@@ -843,7 +843,7 @@ au FileType markdown   vm <buffer> <space> :!pipe2eval markdown<CR>
 au FileType xml        vm <buffer> <space> :!pipe2eval xml<CR>
 au FileType json       vm <buffer> <space> :!python -mjson.tool<CR>
 
-au BufRead *.html vm <buffer> <space> :!html2text<CR>
+au BufRead *.html  vm <buffer> <space> :!html2text<CR>
 au BufRead *.mongo vm <buffer> <space> :!pipe2eval mongo<CR>
 
 au FileType vim setlocal fdm=marker

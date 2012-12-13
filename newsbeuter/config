@@ -1,4 +1,5 @@
-proxy localhost:7171
+proxy-type socks5
+proxy localhost:7070
 use-proxy yes
 
 browser firefox
