@@ -10,7 +10,7 @@ ReadTags		= no
 # Directory in which you store music files. If you specify it you will be able
 # to quickly go to this directory with the '-m' parameter or the 'm' command.
 # This can also point to a playlist.
-MusicDir		= "/home/cm/music"
+MusicDir		= "/home/#{user}/music"
 
 # How to sort? FileName is the only option for now.
 Sort			= FileName
