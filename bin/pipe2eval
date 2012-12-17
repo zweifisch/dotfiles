@@ -189,9 +189,8 @@ markdown_eval(){
 # mongo ------------------------------------------------------------------------
 
 mongo_eval(){
-	db=$(sed -ne 's/^use \([a-z0-9_-]\+\)$/\1/ip' < $TMP_FILE.new)
+	db=$(sed -ne '1 s/^use \([a-z0-9_-]\+\)$/\1/ip' < $TMP_FILE.new)
 	if [ -n "$db" ]; then
-		sed -i 's/^use \([a-z0-9_-]\+\)$//i' $TMP_FILE.new
 		echo $db > $TMP_FILE.db
 		exit 0
 	fi

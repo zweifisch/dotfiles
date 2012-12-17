@@ -65,3 +65,8 @@ merge vimwiki diaries from diffrent wiki folder, won't be used again..
 
 * https://github.com/flatland/drip
 
+### tty2gif
+
+* https://bitbucket.org/antocuni/tty2gif
+* needs imagemagick and opster(install using pip)
+* buggy

@@ -275,3 +275,42 @@ bitbucket-clone(){
 	git clone git@bitbucket.org:$1/$2.git
 }
 
+mxmlc-build(){
+	output=$3
+	if [ -z "$output" ]; then
+		output=output.swf
+	fi
+	libpath=$2
+	if [ -z "$libpath" ]; then
+		libpath=''
+	fi
+	mxmlc $1\
+	 -external-library-path $libpath\
+	 -output $output\
+	 -default-size=600,400\
+	 -default-frame-rate=24\
+	 -default-background-color=0xffffff\
+	 -static-link-runtime-shared-libraries\
+	 -optimize=true\
+	 -debug=false
+}
+
+mxmlc-debug(){
+	output=$3
+	if [ -z "$output" ]; then
+		output=output.swf
+	fi
+	libpath=$2
+	if [ -z "$libpath" ]; then
+		libpath=''
+	fi
+	mxmlc $1\
+	 -external-library-path $libpath\
+	 -output $output\
+	 -default-size=600,400\
+	 -default-frame-rate=24\
+	 -default-background-color=0xffffff\
+	 -static-link-runtime-shared-libraries\
+	 -optimize=false\
+	 -debug=true
+}
