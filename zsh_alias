@@ -28,6 +28,8 @@ alias bc='bc -ql'
 alias droid='adb shell busybox'
 alias dbox='dropbox'
 
+alias dbox-crazy='echo 100000 | sudo tee /proc/sys/fs/inotify/max_user_watches'
+
 alias psc='ps xawf -eo pid,user,cgroup,args'
 
 alias cling='cling  -Wc++11-extensions -std=c++11'
@@ -93,7 +95,6 @@ alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-fi
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias play='mplayer'
-alias shot='mplayer -vo jpeg -frames 1 tv://'
 
 whichweek(){
 	week=`date -d "now" +%U`
@@ -275,7 +276,7 @@ bitbucket-clone(){
 	git clone git@bitbucket.org:$1/$2.git
 }
 
-mxmlc-build(){
+mxmlc-release(){
 	output=$3
 	if [ -z "$output" ]; then
 		output=output.swf
@@ -314,3 +315,12 @@ mxmlc-debug(){
 	 -optimize=false\
 	 -debug=true
 }
+
+rename-after-time(){
+	target="$(dirname $1)/$(date -d now +%Y-%m-%d-%H-%M-%S).${1##*.}"
+	mv "$1" "$target"
+	echo "$1 => $target"
+}
+
+alias shot='mplayer -vo jpeg -frames 1 tv:// &> /dev/null && rename-after-time 00000001.jpg'
+
