@@ -248,6 +248,7 @@ set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 
 let html_number_lines = 1
+let g:netrw_liststyle= 1
 " }}}
 
 " }}}1

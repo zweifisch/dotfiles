@@ -95,6 +95,7 @@ alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-fi
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias play='mplayer'
+alias play-mute='mplayer -ao null -idx'
 
 whichweek(){
 	week=`date -d "now" +%U`
@@ -201,10 +202,11 @@ runc(){
 gitignore(){
 	touch .gitignore
 	cat  >> .gitignore <<EOF
-node_modules
+*.swp
 venv
 *.pyc
-*.swp
+node_modules
+npm-debug.log
 EOF
 }
 
