@@ -21,14 +21,6 @@
 
 ## scripts
 
-### nginx-sites
-
-```sh
-nginx-sites add project-name php
-```
-
-### nginx-updatehosts
-
 ### hosts
 
 ```sh
@@ -70,3 +62,12 @@ merge vimwiki diaries from diffrent wiki folder, won't be used again..
 * https://bitbucket.org/antocuni/tty2gif
 * needs imagemagick and opster(install using pip)
 * buggy
+
+## alias
+
+```sh
+get-jquery
+get-mocha
+...
+```
+

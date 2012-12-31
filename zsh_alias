@@ -1,19 +1,15 @@
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias mkdir='mkdir -p'
 
 alias vi="vim"
 alias e='emacs -nw'
 alias j="jobs -l"
 alias grep='grep --colour --exclude-dir=".svn"'
 
-alias rm='rm -i'
-alias mv='mv -i'
-alias cp='cp -i'
-
-alias mkdir='mkdir -p'
-
 alias leiser='amixer -q -c 0 sset Master 5%- unmute'
 alias lauter='amixer -q -c 0 sset Master 5%+ unmute'
-
-alias phplint='find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected in"'
 
 alias total-play-time='bc <<< "$(find -name "*.mp3" -print0 | xargs -0 mp3info -p "%S\n" | paste -sd+ | bc) / 60" '
 
@@ -32,12 +28,6 @@ alias dbox-crazy='echo 100000 | sudo tee /proc/sys/fs/inotify/max_user_watches'
 
 alias psc='ps xawf -eo pid,user,cgroup,args'
 
-alias cling='cling  -Wc++11-extensions -std=c++11'
-
-alias notebook='ipython notebook --pylab=inline'
-
-alias composer='composer.phar'
-
 if [ -e /usr/bin/systemctl ]; then
 	alias start='sudo systemctl start'
 	alias stop='sudo systemctl stop'
@@ -45,24 +35,19 @@ if [ -e /usr/bin/systemctl ]; then
 	alias restart='sudo systemctl restart'
 fi
 
-alias get-jquery='wget http://code.jquery.com/jquery-1.8.3.min.js'
-alias get-mustache='wget https://raw.github.com/janl/mustache.js/master/mustache.js'
-
-
 # Automatically background processes (no output to terminal etc)
 alias z='echo $RANDOM > /dev/null; zz'
-zz () {
-    echo $*
-    $* &> "/tmp/z-$1-$RANDOM" &!
+zz() {
+	echo $*
+	$* &> "/tmp/z-$1-$RANDOM" &!
 }
 
-
 GRC=`which grc`
-if [ -n GRC ]; then
+if [ $? = 0 ]; then
 	alias colourify="$GRC -es --colour=auto"
 	alias diff='colourify diff'
 	alias make='colourify make'
-	alias gcc='colourify gcc'
+	# alias gcc='colourify gcc'
 	alias g++='colourify g++'
 	alias as='colourify as'
 	alias ld='colourify ld'
@@ -97,11 +82,25 @@ alias play2='mplayer -ao alsa:device=hw=2.0'
 alias play='mplayer'
 alias play-mute='mplayer -ao null -idx'
 
+alias datafart='curl --data-binary @- datafart.com'
+
+alias notebook='ipython notebook --pylab=inline'
+alias cling='cling  -Wc++11-extensions -std=c++11'
+alias composer='composer.phar'
+alias phplint='find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected in"'
+
+alias get-jquery='wget http://code.jquery.com/jquery-1.8.3.min.js'
+alias get-mustache='wget https://raw.github.com/janl/mustache.js/master/mustache.js'
+alias get-hammer='wget https://raw.github.com/EightMedia/hammer.js/master/hammer.js'
+alias get-zepto='wget http://zeptojs.com/zepto.min.js'
+alias get-mocha='wget https://raw.github.com/visionmedia/mocha/master/mocha.js'
+alias get-chai='wget https://raw.github.com/chaijs/chai/master/chai.js'
+
+
 whichweek(){
 	week=`date -d "now" +%U`
 	echo "$week + 1" | bc
 }
-
 
 svn-add-all(){
 	svn st | grep '^?' | sed 's/^?[ \t]\+//' | xargs -i svn add {}
@@ -285,7 +284,7 @@ mxmlc-release(){
 	fi
 	libpath=$2
 	if [ -z "$libpath" ]; then
-		libpath=''
+		libpath=$FLEX_LIB_PATH
 	fi
 	mxmlc $1\
 	 -external-library-path $libpath\
@@ -305,7 +304,7 @@ mxmlc-debug(){
 	fi
 	libpath=$2
 	if [ -z "$libpath" ]; then
-		libpath=''
+		libpath=$FLEX_LIB_PATH
 	fi
 	mxmlc $1\
 	 -external-library-path $libpath\
@@ -321,8 +320,17 @@ mxmlc-debug(){
 rename-after-time(){
 	target="$(dirname $1)/$(date -d now +%Y-%m-%d-%H-%M-%S).${1##*.}"
 	mv "$1" "$target"
-	echo "$1 => $target"
+	echo "$target"
 }
 
-alias shot='mplayer -vo jpeg -frames 1 tv:// &> /dev/null && rename-after-time 00000001.jpg'
+shot(){
+	mplayer -vo jpeg -frames 2 tv:// &> /dev/null
+	rm -f 00000001.jpg
+	img="$(rename-after-time 00000002.jpg)"
+	if [ -n "$1" ]; then
+		mv "$img" "$1"
+		img="$1/$img"
+	fi
+	echo "$img"
+}
 

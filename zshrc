@@ -77,12 +77,11 @@ if [ -d $HOME/.rbenv/bin ]; then
 	fi
 fi
 
-
 eval `dircolors ~/.dir_colors`
+
+source $HOME/.zsh_alias
 
 # local settings
 if [ -f $HOME/.zshrc_local ]; then
 	source $HOME/.zshrc_local
 fi
-
-source $HOME/.zsh_alias
