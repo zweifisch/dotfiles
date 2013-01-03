@@ -21,6 +21,12 @@
 
 ## scripts
 
+### memtop
+
+1.0.2
+
+http://code.google.com/p/memtop/
+
 ### hosts
 
 ```sh
@@ -65,9 +71,6 @@ merge vimwiki diaries from diffrent wiki folder, won't be used again..
 
 ## alias
 
-```sh
-get-jquery
-get-mocha
-...
-```
-
+* `shot` take snaphot using webcam
+* `get-jquery` down load jquery, `get-<tab>` for more
+* `svn-url`

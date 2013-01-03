@@ -94,6 +94,7 @@ alias get-mustache='wget https://raw.github.com/janl/mustache.js/master/mustache
 alias get-hammer='wget https://raw.github.com/EightMedia/hammer.js/master/hammer.js'
 alias get-zepto='wget http://zeptojs.com/zepto.min.js'
 alias get-mocha='wget https://raw.github.com/visionmedia/mocha/master/mocha.js'
+alias get-mocha-css='wget https://raw.github.com/visionmedia/mocha/master/mocha.css'
 alias get-chai='wget https://raw.github.com/chaijs/chai/master/chai.js'
 
 
@@ -211,10 +212,26 @@ EOF
 
 chpwd(){
 	if [ -f venv/bin/activate ] ; then
-		source venv/bin/activate
+		echo "activate virtualenv?"
+		select yn in "Yes" "No"; do
+			case $yn in
+				Yes)
+					source venv/bin/activate;break;;
+				No)
+					break;;
+			 esac
+		done
 	fi
 	if [ -f env.sh ] ; then
-		source env.sh # might be dangerous...
+		echo "soruce env.sh?"
+		select yn in "Yes" "No"; do
+			case $yn in
+				Yes)
+					source env.sh;break;;
+				No)
+					break;;
+			 esac
+		done
 	fi
 }
 
