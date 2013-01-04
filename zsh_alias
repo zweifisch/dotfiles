@@ -28,6 +28,8 @@ alias dbox-crazy='echo 100000 | sudo tee /proc/sys/fs/inotify/max_user_watches'
 
 alias psc='ps xawf -eo pid,user,cgroup,args'
 
+alias mem-usage="ps aux | awk '{sum +=\$4}; END {print sum}'"
+
 if [ -e /usr/bin/systemctl ]; then
 	alias start='sudo systemctl start'
 	alias stop='sudo systemctl stop'

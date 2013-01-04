@@ -74,3 +74,4 @@ merge vimwiki diaries from diffrent wiki folder, won't be used again..
 * `shot` take snaphot using webcam
 * `get-jquery` down load jquery, `get-<tab>` for more
 * `svn-url`
+* `mem-usage` print memory usage in percent
