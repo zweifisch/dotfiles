@@ -30,6 +30,13 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 
 alias mem-usage="ps aux | awk '{sum +=\$4}; END {print sum}'"
 
+if [ -e /usr/bin/service ]; then
+	start(){ service $1 start }
+	status(){ service $1 status }
+	stop(){ service $1 stop }
+	restart(){ service $1 restart }
+fi
+
 if [ -e /usr/bin/systemctl ]; then
 	alias start='sudo systemctl start'
 	alias stop='sudo systemctl stop'
