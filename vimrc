@@ -8,13 +8,13 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
-Bundle 'maxbrunsfeld/vim-yankstack'
-Bundle 'ehamberg/vim-cute-python'
+" Bundle 'maxbrunsfeld/vim-yankstack'
+" Bundle 'ehamberg/vim-cute-python'
 
-Bundle 'foldsearch'
+" Bundle 'foldsearch'
 Bundle 'jade.vim'
 Bundle 'troydm/easybuffer.vim'
-Bundle 'epeli/slimux'
+" Bundle 'epeli/slimux'
 
 Bundle 'benmills/vimux'
 Bundle 'ctrlp.vim'
@@ -28,22 +28,22 @@ Bundle 'delimitMate.vim'
 " Bundle 'VimOutliner'
 Bundle 'vimoutliner/vimoutliner'
 " Bundle 'Gundo'
-Bundle 'paster.vim'
+" Bundle 'paster.vim'
 " Bundle 'bufkill.vim'
 Bundle 'vim-coffee-script'
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'NrrwRgn'
+" Bundle 'NrrwRgn'
 Bundle 'Lokaltog/vim-powerline'
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'mattn/zencoding-vim'
-Bundle 'godlygeek/tabular.git'
+" Bundle 'godlygeek/tabular.git'
 Bundle 'tomtom/tcomment_vim.git'
 Bundle 'git://repo.or.cz/vcscommand'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-vividchalk'
+" Bundle 'tpope/vim-haml'
+" Bundle 'tpope/vim-vividchalk'
 Bundle 'unimpaired.vim'
 Bundle 'speeddating.vim'
 Bundle 'ervandew/supertab.git'
@@ -52,7 +52,7 @@ Bundle 'VimClojure'
 Bundle 'derekwyatt/vim-scala.git'
 Bundle 'timcharper/textile.vim'
 Bundle 'nginx.vim'
-Bundle 'DrawIt'
+" Bundle 'DrawIt'
 " Bundle 'gnupg.vim'
 Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
 " Bundle 'jslint.vim'
@@ -95,7 +95,6 @@ Bundle 'AndrewRadev/switch.vim.git'
 " vimroom
 " fcitx
 " css-color
-" cute-python
 " conque
 " yankering
 
@@ -636,7 +635,7 @@ let g:user_zen_expandabbr_key='<c-e>'
 "}}}1
 " Key Mappings {{{1
 
-call yankstack#setup()
+" call yankstack#setup()
 
 imap jj <esc>
 " nmap <space> :
@@ -738,6 +737,7 @@ au BufNewFile,BufRead *.hx set ft=haxe
 au BufNewFile,BufRead *.mongo set ft=javascript
 au BufRead,BufNewFile *.rs set ft=rust
 au BufRead,BufNewFile *.hist set ft=sh
+au BufRead,BufNewFile *.pgsql set ft=pgsql
 
 au BufReadCmd *.epub call zip#Browse(expand("<amatch>"))
 
@@ -842,6 +842,7 @@ au FileType coffee     vm <buffer> <space> :!pipe2eval coffee<CR>
 au FileType go         vm <buffer> <space> :!pipe2eval go<CR>
 au FileType markdown   vm <buffer> <space> :!pipe2eval markdown<CR>
 au FileType xml        vm <buffer> <space> :!pipe2eval xml<CR>
+au FileType pgsql      vm <buffer> <space> :!pipe2eval pgsql<CR>
 au FileType json       vm <buffer> <space> :!python -mjson.tool<CR>
 
 au BufRead *.html  vm <buffer> <space> :!html2text<CR>

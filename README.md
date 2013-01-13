@@ -11,9 +11,9 @@
 
 ## pentadactyl
 
-* :dict
+* [dict](https://github.com/grassofhust/dict.js)
+* [buftabs](https://github.com/grassofhust/buftabs)
 * :freeze
-* buftabs
 
 ## mutt
 
@@ -63,15 +63,15 @@ merge vimwiki diaries from diffrent wiki folder, won't be used again..
 
 * https://github.com/flatland/drip
 
-### tty2gif
-
-* https://bitbucket.org/antocuni/tty2gif
-* needs imagemagick and opster(install using pip)
-* buggy
-
 ## alias
 
 * `shot` take snaphot using webcam
-* `get-jquery` down load jquery, `get-<tab>` for more
-* `svn-url`
+* `get-jquery` download jquery, `get-<tab>` for more
 * `mem-usage` print memory usage in percent
+* `start/stop/restart/status mongodb` for ubuntu and arch
+
+## svn
+
+* `svn-url`
+* `svn-add-all`
+* `svn-diff-by-extension`

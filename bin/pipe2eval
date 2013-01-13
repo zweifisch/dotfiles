@@ -313,6 +313,55 @@ sql_eval(){
 	fi
 }
 
+# pgsql ------------------------------------------------------------------------
+
+pgsql_eval(){
+	host=`sed -ne 's/^-- host \([a-zA-Z0-9._-]\+\)$/\1/p' < $TMP_FILE.new`
+	user=`sed -ne 's/^-- user \([a-zA-Z0-9._-]\+\)$/\1/p' < $TMP_FILE.new`
+	password=`sed -ne 's/^-- password \([a-zA-Z0-9._#$-]\+\)$/\1/p' < $TMP_FILE.new`
+	db=`sed -ne 's/^use \([a-z0-9_-]\+\);\?$/\1/ip' < $TMP_FILE.new`
+	if [ -z "$db" ]; then
+		db=`sed -ne 's/^-- database \([a-z0-9_-]\+\)$/\1/ip' < $TMP_FILE.new`
+	fi
+
+	HOST_SAVED=$TMP_FILE.host
+	USER_SAVED=$TMP_FILE.user
+	PASSWORD_SAVED=$TMP_FILE.password
+	DB_SAVED=$TMP_FILE.db
+
+	if [ -n "$host" ]; then
+		echo $host > $HOST_SAVED
+		> $DB_SAVED
+	fi
+	if [ -n "$user" ]; then
+		echo $user > $USER_SAVED
+	fi
+	if [ -n "$password" ]; then
+		echo $password > $PASSWORD_SAVED
+	fi
+	if [ -n "$db" ]; then
+		echo $db > $DB_SAVED
+	fi
+
+	_USER="`cat $USER_SAVED`"
+	_PASSWORD="`cat $PASSWORD_SAVED`"
+	_HOST="`cat $HOST_SAVED`"
+	if [ -f "$DB_SAVED" ]; then
+		_DB="`cat $DB_SAVED`"
+	fi
+
+	#TODO use || ?
+	_PIPE=`sed -n '$ s/[^|]*|\(.*\)/\1/p' < $TMP_FILE.new`
+	if [ -n "$_PIPE" ]; then
+		sed -i '$ s/\([^|]*\).*/\1/' $TMP_FILE.new
+		# mysql -t -u$_USER -p$_PASSWORD -h$_HOST $_DB < $TMP_FILE.new | $_PIPE
+	else
+		psql $_DB -U $_USER -f $TMP_FILE.new | sed -e 's/^\(.*\)$/-- \1/'
+		# psql -U $_USER -p$_PASSWORD -h$_HOST $_DB < $TMP_FILE.new |\
+		# 	sed -e 's/^\(.*\)$/-- \1/'
+	fi
+}
+
 # xml --------------------------------------------------------------------------
 
 xml_eval(){
