@@ -30,6 +30,8 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 
 alias mem-usage="ps aux | awk '{sum +=\$4}; END {print sum}'"
 
+alias privoxy-socks="privoxy $HOME/.privoxy.conf"
+
 if [ -e /usr/bin/service ]; then
 	start(){ service $1 start }
 	status(){ service $1 status }
