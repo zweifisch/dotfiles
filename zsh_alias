@@ -53,6 +53,8 @@ zz() {
 	$* &> "/tmp/z-$1-$RANDOM" &!
 }
 
+alias zathura='zz zathura'
+
 GRC=`which grc`
 if [ $? = 0 ]; then
 	alias colourify="$GRC -es --colour=auto"
@@ -335,7 +337,7 @@ mxmlc-debug(){
 		libpath=$FLEX_LIB_PATH
 	fi
 	mxmlc $1\
-	 -external-library-path $libpath\
+	 -external-library-path+=$libpath\
 	 -output $output\
 	 -default-size=600,400\
 	 -default-frame-rate=24\

@@ -2,10 +2,10 @@
 
 import sys
 import os
-import urllib3
 import tempfile
 from io import StringIO
 import subprocess
+# import urllib3
 
 smart_hosts_url = 'https://smarthosts.googlecode.com/svn/trunk/hosts'
 
@@ -145,17 +145,17 @@ class Hosts(Commands):
 			else:
 				print("%s not found" % host)
 
-	@alias('update')
-	def update_smart_hosts(self):
-		fp = StringIO.StringIO(urllib3.urlopen(smart_hosts_url).read())
-		self.smart_hosts_domains = self.parse(fp)
-		if len(self.smart_hosts_domains) > 0:
-			with open(os.path.expanduser('~/.smart_hosts'), 'w') as fp:
-				self.write(fp, self.smart_hosts_domains)
-			for domain, ip in self.smart_hosts_domains.items():
-				self.domains[domain] = ip
-			self.dirty = True
-		print("got domains: %d" % len(self.smart_hosts_domains))
+	# @alias('update')
+	# def update_smart_hosts(self):
+	# 	fp = StringIO.StringIO(urllib3.urlopen(smart_hosts_url).read())
+	# 	self.smart_hosts_domains = self.parse(fp)
+	# 	if len(self.smart_hosts_domains) > 0:
+	# 		with open(os.path.expanduser('~/.smart_hosts'), 'w') as fp:
+	# 			self.write(fp, self.smart_hosts_domains)
+	# 		for domain, ip in self.smart_hosts_domains.items():
+	# 			self.domains[domain] = ip
+	# 		self.dirty = True
+	# 	print("got domains: %d" % len(self.smart_hosts_domains))
 
 	@alias('st')
 	def status(self):
