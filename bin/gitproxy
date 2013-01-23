@@ -1,18 +1,16 @@
 #!/bin/sh
 
-
-_proxy=localhost
+host=127.0.0.1
+port=7070
 
 # socat
-# _proxyport=8118
-# exec socat STDIO PROXY:$_proxy:$1:$2,proxyport=$_proxyport
+# exec socat STDIO PROXY:$host:$1:$2,proxyport=8118
 
 # corkscrew
-_proxyport=7070
-# exec corkscrew $_proxy $_proxyport $*
+# exec corkscrew $host $port $*
 
 # nc
-# nc -x$_proxy:$_proxyport -X5 $*
+nc -x$host:$port -X5 $*
 
 # connnect
-connect -S 127.0.0.1:7070 "$@"
+# connect -S $host:$port "$@"
