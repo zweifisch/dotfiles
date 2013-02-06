@@ -8,6 +8,12 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+" Bundle 'Valloric/YouCompleteMe'
+" run cmake -G 'Unix Makefiles' . ~/.vim/bundle/YouCompleteMe/cpp
+" to generate a Makefile
+" run make ycm_core
+" to build
+
 " Bundle 'maxbrunsfeld/vim-yankstack'
 " Bundle 'ehamberg/vim-cute-python'
 
@@ -36,7 +42,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-powerline'
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'mattn/zencoding-vim'
-" Bundle 'godlygeek/tabular.git'
+Bundle 'godlygeek/tabular.git'
 Bundle 'tomtom/tcomment_vim.git'
 Bundle 'git://repo.or.cz/vcscommand'
 Bundle 'tpope/vim-surround'
@@ -598,7 +604,9 @@ let wiki_settings={
 \   'nginx': 'nginx',
 \   'apache': 'apache',
 \   'jade': 'jade',
-\   'actionscript': 'actionscript'
+\   'actionscript': 'actionscript',
+\   'tex': 'tex',
+\   'hs': 'haskell'
 \ }}
 
 let wikis=["linux","web","logs","game","projects","nlp","de","geld","cs","misc"]
@@ -654,9 +662,9 @@ map <C-J> <C-W>j
 " map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k
 " map <C-K> <C-W>k<C-W>_
-" map <C-L> <C-W>l
-" map <C-H> <C-W>h
-map <C-H> <C-W>W
+map <C-L> <C-W>l
+map <C-H> <C-W>h
+" map <C-H> <C-W>W
 " nmap j gj
 " nmap k gk
 
@@ -696,7 +704,7 @@ imap <C-S-H> <esc>:b#<cr>
 nmap + <C-a>
 nmap - <C-x>
 
-nmap <C-L> :redraw!<cr>
+" nmap <C-S-L> :redraw!<cr>
 
 nnoremap Q gqap
 vnoremap Q gq
