@@ -8,11 +8,20 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
-" Bundle 'Valloric/YouCompleteMe'
-" run cmake -G 'Unix Makefiles' . ~/.vim/bundle/YouCompleteMe/cpp
-" to generate a Makefile
-" run make ycm_core
-" to build
+Bundle 'Valloric/YouCompleteMe'
+" run cmake -G 'Unix Makefiles' . ~/.vim/bundle/YouCompleteMe/cpp to generate a Makefile
+" run make ycm_core to build
+
+" latest vim
+" hg clone https://code.google.com/p/vim/
+" cd vim
+" ./configure --with-features=huge \
+            " --enable-rubyinterp \
+            " --enable-pythoninterp \
+            " --enable-perlinterp \
+            " --enable-gui=gtk2 --enable-cscope --prefix=/usr
+" make VIMRUNTIMEDIR=/usr/share/vim/vim73
+" ./src/vim
 
 " Bundle 'maxbrunsfeld/vim-yankstack'
 " Bundle 'ehamberg/vim-cute-python'
