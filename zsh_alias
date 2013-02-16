@@ -223,8 +223,8 @@ npm-debug.log
 EOF
 }
 
-chpwd(){
-	if [ -f venv/bin/activate ] ; then
+activate_venv(){
+	if [ -z "$VENV_ACTIVATED" ]; then
 		echo "activate virtualenv?"
 		select yn in "Yes" "No"; do
 			case $yn in
@@ -234,17 +234,35 @@ chpwd(){
 					break;;
 			 esac
 		done
+	else
+		echo "venv (from $VENV_ACTIVATED) already activated"
 	fi
-	if [ -f env.sh ] ; then
+}
+
+load_env_sh(){
+	if [ -z "$ENVSH_SOURCED" ]; then
 		echo "soruce env.sh?"
 		select yn in "Yes" "No"; do
 			case $yn in
 				Yes)
-					source env.sh;break;;
+					source env.sh;
+					export ENVSH_SOURCED="$(pwd)";
+					break;;
 				No)
 					break;;
 			 esac
 		done
+	else
+		echo "env.sh (from $ENVSH_SOURCED) already sourced"
+	fi
+}
+
+chpwd(){
+	if [ -f venv/bin/activate ]; then
+		activate_venv
+	fi
+	if [ -f env.sh ]; then
+		load_env_sh
 	fi
 }
 
