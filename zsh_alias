@@ -53,7 +53,9 @@ zz() {
 	$* &> "/tmp/z-$1-$RANDOM" &!
 }
 
-alias zathura='zz zathura'
+for i in mupdf zathura firefox; do
+	alias "$i=z $i"
+done
 
 GRC=`which grc`
 if [ $? = 0 ]; then
@@ -101,6 +103,10 @@ alias notebook='ipython notebook --pylab=inline'
 alias cling='cling  -Wc++11-extensions -std=c++11'
 alias composer='composer.phar'
 alias phplint='find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected in"'
+
+ghc-run(){
+	ghc --make $1 && "./${1%.*}"
+}
 
 alias get-jquery='wget http://code.jquery.com/jquery-1.8.3.min.js'
 alias get-mustache='wget https://raw.github.com/janl/mustache.js/master/mustache.js'
