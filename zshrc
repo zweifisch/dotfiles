@@ -49,29 +49,26 @@ setopt NOCLOBBER
 export VIDIR_EDITOR_ARGS='-c :set nolist | :set ft=vidir-ls'
 
 
-if [[ -x $(which ondir) ]]; then
-	cd() { builtin cd "$@" && eval "`ondir \"$OLDPWD\" \"$PWD\"`" }
-fi
+# if [[ -x $(which ondir) ]]; then
+# 	cd() { builtin cd "$@" && eval "`ondir \"$OLDPWD\" \"$PWD\"`" }
+# fi
 
+pathes=(
+/opt/android-sdk/platform-tools 
+$HOME/bin
+$HOME/.cabal/bin
+$HOME/.gem/ruby/1.9.1/bin 
+$HOME/.bin
+)
 
-if [ -d $HOME/.bin ]; then
-	export PATH=~/.bin:$PATH
-fi
-
-if [ -d $HOME/bin ]; then
-	export PATH=~/bin:$PATH
-fi
-
-if [ -d /opt/android-sdk/platform-tools ]; then
-	export PATH=$PATH:/opt/android-sdk/platform-tools
-fi
-
-if [ -d $HOME/.gem/ruby/1.9.1/bin ]; then
-	export PATH=$PATH:$HOME/.gem/ruby/1.9.1/bin 
-fi
-
+for p in pathes; do
+	if [ -d $p ]; then
+		export PATH=$p:$PATH
+	fi
+done
+	
 if [ -d $HOME/.rbenv/bin ]; then
-	export PATH=~/.rbenv/bin:$PATH
+	export PATH=$HOME/.rbenv/bin:$PATH
 	if [[ -x $(which rbenv) ]]; then
 		eval "$(rbenv init -)"
 	fi
