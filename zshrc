@@ -61,7 +61,7 @@ $HOME/.gem/ruby/1.9.1/bin
 $HOME/.bin
 )
 
-for p in pathes; do
+for p in $pathes; do
 	if [ -d $p ]; then
 		export PATH=$p:$PATH
 	fi
