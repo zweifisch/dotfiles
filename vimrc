@@ -9,8 +9,10 @@ call vundle#rc()
 " Bundle 'gmarik/vundle'
 
 Bundle 'Valloric/YouCompleteMe'
-" run cmake -G 'Unix Makefiles' . ~/.vim/bundle/YouCompleteMe/cpp to generate a Makefile
-" run make ycm_core to build
+" generate a Makefile
+" cd /tmp && cmake -G 'Unix Makefiles' . ~/.vim/bundle/YouCompleteMe/cpp
+" build
+" make ycm_core
 
 " latest vim
 " hg clone https://code.google.com/p/vim/

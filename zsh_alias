@@ -75,6 +75,10 @@ wow(){
 	unrar x $1 && rm -f Readme.png $1
 }
 
+view-tex(){
+	xelatex "$1" && mupdf "${1%.*}.pdf"
+}
+
 uname -a | grep -i ubuntu > /dev/null && alias 'yaourt=sudo apt-get install'
 
 bright(){
