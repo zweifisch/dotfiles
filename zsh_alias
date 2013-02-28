@@ -125,6 +125,7 @@ alias get-mocha-css='wget https://raw.github.com/visionmedia/mocha/master/mocha.
 alias get-chai='wget https://raw.github.com/chaijs/chai/master/chai.js'
 alias get-pathjs='wget https://raw.github.com/mtrpcic/pathjs/master/path.js'
 alias get-knockout='wget http://knockoutjs.com/downloads/knockout-2.2.1.js'
+alias get-moment='wget https://raw.github.com/timrwood/moment/2.0.0/min/moment.min.js'
 
 whichweek(){
 	week=`date -d "now" +%U`
