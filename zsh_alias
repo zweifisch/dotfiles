@@ -21,6 +21,8 @@ alias svn-url='svn info | grep -i url | cut -d " " -f 2'
 
 alias bc='bc -ql'
 
+alias unrar-anyway='unrar x -kb -y'
+
 alias droid='adb shell busybox'
 alias dbox='dropbox'
 
