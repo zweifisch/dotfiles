@@ -23,7 +23,7 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(vi-mode lein archlinux cap gem gnu-utils npm pip python node rake ruby svn taskwarrior rbenv zsh-syntax-highlighting history-substring-search vagrant supervisor django bundler)
+plugins=(vi-mode lein archlinux fabric cap gem gnu-utils npm pip python node rake ruby svn taskwarrior rbenv zsh-syntax-highlighting history-substring-search vagrant supervisor django bundler)
 source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all

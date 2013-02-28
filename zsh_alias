@@ -113,13 +113,16 @@ ghc-run(){
 }
 
 alias get-jquery='wget http://code.jquery.com/jquery-1.8.3.min.js'
+alias get-jquery='wget http://code.jquery.com/jquery-1.9.1.min.js'
+alias get-bootstrap-datepicker='wget https://raw.github.com/eternicode/bootstrap-datepicker/master/js/bootstrap-datepicker.js'
 alias get-mustache='wget https://raw.github.com/janl/mustache.js/master/mustache.js'
 alias get-hammer='wget https://raw.github.com/EightMedia/hammer.js/master/hammer.js'
 alias get-zepto='wget http://zeptojs.com/zepto.min.js'
 alias get-mocha='wget https://raw.github.com/visionmedia/mocha/master/mocha.js'
 alias get-mocha-css='wget https://raw.github.com/visionmedia/mocha/master/mocha.css'
 alias get-chai='wget https://raw.github.com/chaijs/chai/master/chai.js'
-
+alias get-pathjs='wget https://raw.github.com/mtrpcic/pathjs/master/path.js'
+alias get-knockout='wget http://knockoutjs.com/downloads/knockout-2.2.1.js'
 
 whichweek(){
 	week=`date -d "now" +%U`
