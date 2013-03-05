@@ -126,6 +126,10 @@ alias get-chai='wget https://raw.github.com/chaijs/chai/master/chai.js'
 alias get-pathjs='wget https://raw.github.com/mtrpcic/pathjs/master/path.js'
 alias get-knockout='wget http://knockoutjs.com/downloads/knockout-2.2.1.js'
 alias get-moment='wget https://raw.github.com/timrwood/moment/2.0.0/min/moment.min.js'
+alias get-uikit='wget http://visionmedia.github.com/uikit/build/ui.js'
+alias get-uikit-css="wget http://visionmedia.github.com/uikit/build/ui.css"
+alias get-chosen="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.jquery.js"
+alias get-chosen-css="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.css"
 
 whichweek(){
 	week=`date -d "now" +%U`
@@ -403,4 +407,8 @@ mount-ntfs(){
 	mkdir -p $2
 	ntfs-3g /dev/$1 $2
 	# mount -t ntfs -o nls=utf8,umask=0022,gid=$(id -g),uid=$(id -u)  /dev/$1 $2
+}
+
+compress-pdf(){
+	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
 }

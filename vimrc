@@ -8,7 +8,7 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
-Bundle 'Valloric/YouCompleteMe'
+" Bundle 'Valloric/YouCompleteMe'
 " generate a Makefile
 " cd /tmp && cmake -G 'Unix Makefiles' . ~/.vim/bundle/YouCompleteMe/cpp
 " build
