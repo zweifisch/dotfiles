@@ -25,6 +25,8 @@ call vundle#rc()
 " make VIMRUNTIMEDIR=/usr/share/vim/vim73
 " ./src/vim
 
+" Bundle 'airblade/vim-gitgutter'
+
 " Bundle 'maxbrunsfeld/vim-yankstack'
 " Bundle 'ehamberg/vim-cute-python'
 
