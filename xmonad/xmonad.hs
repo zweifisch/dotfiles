@@ -32,9 +32,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- , ((modm, xK_p ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm, xK_p ), spawn "exe=`dmenu_run -nb '#000' -nf '#fff' -sb '#333' -sf '#fff'` && eval \"exec $exe\"")
 
-    -- launch gmrun
-    , ((modm .|. shiftMask, xK_p ), spawn "gmrun")
-
     , ((modm , xK_Up ), spawn "amixer -q sset Master 10%+ unmute")
     , ((modm , xK_Down ), spawn "amixer -q sset Master 10%- unmute")
 
