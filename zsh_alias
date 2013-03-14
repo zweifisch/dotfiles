@@ -130,6 +130,7 @@ alias get-uikit='wget http://visionmedia.github.com/uikit/build/ui.js'
 alias get-uikit-css="wget http://visionmedia.github.com/uikit/build/ui.css"
 alias get-chosen="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.jquery.js"
 alias get-chosen-css="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.css"
+alias get-spin="wget http://fgnass.github.com/spin.js/dist/spin.js"
 
 whichweek(){
 	week=`date -d "now" +%U`
