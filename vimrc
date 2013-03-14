@@ -51,7 +51,7 @@ Bundle 'vimoutliner/vimoutliner'
 " Bundle 'bufkill.vim'
 Bundle 'vim-coffee-script'
 Bundle 'altercation/vim-colors-solarized'
-" Bundle 'NrrwRgn'
+Bundle 'NrrwRgn'
 Bundle 'Lokaltog/vim-powerline'
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'mattn/zencoding-vim'

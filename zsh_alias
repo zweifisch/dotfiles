@@ -345,6 +345,10 @@ bitbucket-clone(){
 	git clone git@bitbucket.org:$1/$2.git
 }
 
+bitbucket-add(){
+	git remote add origin ssh://git@bitbucket.org/$1/$2.git
+}
+
 mxmlc-release(){
 	output=$3
 	if [ -z "$output" ]; then
