@@ -1,0 +1,14 @@
+#!/usr/bin/env coffee
+
+url = require 'url'
+
+process.stdin.resume()
+process.stdin.setEncoding 'utf8'
+
+input = ''
+process.stdin.on 'data', (chunk)->
+	input += chunk
+
+process.stdin.on 'end', ->
+	console.log url.parse input,yes
+
