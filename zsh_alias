@@ -110,6 +110,8 @@ alias cling='cling  -Wc++11-extensions -std=c++11'
 alias composer='composer.phar'
 alias phplint='find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected in"'
 
+alias last-ips="last | awk '{print \$3}' | sort | uniq -c | sort -rnk1"
+
 ghc-run(){
 	ghc --make $1 && "./${1%.*}"
 }
