@@ -111,6 +111,8 @@ alias cling='cling  -Wc++11-extensions -std=c++11'
 alias composer='composer.phar'
 alias phplint='find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected in"'
 
+alias last-ips="last | awk '{print \$3}' | sort | uniq -c | sort -rnk1"
+
 ghc-run(){
 	ghc --make $1 && "./${1%.*}"
 }
@@ -132,6 +134,7 @@ alias get-uikit-css="wget http://visionmedia.github.com/uikit/build/ui.css"
 alias get-chosen="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.jquery.js"
 alias get-chosen-css="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.css"
 alias get-spin="wget http://fgnass.github.com/spin.js/dist/spin.js"
+alias get-es5-shim="wget https://raw.github.com/kriskowal/es5-shim/master/es5-shim.js"
 
 whichweek(){
 	week=`date -d "now" +%U`

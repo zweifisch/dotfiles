@@ -19,6 +19,18 @@
 
 * [mutt-solarized-github](https://github.com/altercation/mutt-colors-solarized)
 
+## nvm
+
+* https://github.com/creationix/nvm
+
+```sh
+nvm install 0.8
+nvm ls
+nvm use 0.8
+nvm ls-remote
+nvm alias default 0.8
+```
+
 ## scripts
 
 ### memtop
