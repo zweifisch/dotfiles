@@ -81,7 +81,8 @@ view-tex(){
 	xelatex "$1" && mupdf "${1%.*}.pdf"
 }
 
-uname -a | grep -i ubuntu > /dev/null && alias 'yaourt=sudo apt-get install'
+uname -a | grep -i ubuntu > /dev/null && alias 'pkg-install=sudo apt-get install'
+uname -a | grep -i ubuntu > /dev/null && alias 'pkg-search=apt-cache search'
 
 bright(){
 	brightness=`echo "$1 * 0.1" | bc`

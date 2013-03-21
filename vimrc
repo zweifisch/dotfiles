@@ -307,19 +307,19 @@ command -nargs=1 C CoffeeCompile | :<args>
 command CM CoffeeMake
 " }}}
 " coffeetags {{{
-let g:tagbar_type_coffee = {
-  \ 'kinds' : [
-  \   'f:functions',
-  \   'o:object'
-  \ ],
-  \ 'kind2scope' : {
-  \   'f' : 'object',
-  \   'o' : 'object'
-  \},
-  \ 'sro' : ".",
-  \ 'ctagsbin' : 'coffeetags',
-  \ 'ctagsargs' : ' ',
-  \}
+" let g:tagbar_type_coffee = {
+"   \ 'kinds' : [
+"   \   'f:functions',
+"   \   'o:object'
+"   \ ],
+"   \ 'kind2scope' : {
+"   \   'f' : 'object',
+"   \   'o' : 'object'
+"   \},
+"   \ 'sro' : ".",
+"   \ 'ctagsbin' : 'coffeetags',
+"   \ 'ctagsargs' : ' ',
+"   \}
 " }}}
 " commandt {{{
 " nnoremap <leader>tt :CommandT<CR>
