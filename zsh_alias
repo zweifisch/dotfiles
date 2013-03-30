@@ -422,3 +422,13 @@ mount-ntfs(){
 compress-pdf(){
 	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
 }
+
+concat-pdf(){
+	for pdf in $*; do
+		pdf2ps $pdf
+	done
+	rm merged.ps
+	cat *.ps > merged.ps
+	ps2pdf merged.ps
+}
+
