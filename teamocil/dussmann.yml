@@ -20,7 +20,7 @@ session:
       root: "~/pg/dussmann/dussmann-client"
       panes:
         - cmd: "vim"
-    - name: "dussmann-workers"
+    - name: "workers"
       layout: main-vertical
       root: "~/pg/dussmann/dussmann-workers"
       panes:
