@@ -1,0 +1,9 @@
+project_name: dussmann-client
+project_root: ~/pg/dussmann/dussmann-client
+tabs:
+  - main:
+      layout: main-vertical
+      panes:
+        - vim
+        - coffee -wc .
+        - fab dev serve

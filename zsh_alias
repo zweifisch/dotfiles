@@ -432,3 +432,8 @@ concat-pdf(){
 	ps2pdf merged.ps
 }
 
+
+_mux(){
+	_arguments ":::($(mux ls | tail -n +2))"
+}
+compdef _mux mux
