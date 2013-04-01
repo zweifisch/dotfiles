@@ -75,8 +75,11 @@ if [ -d $HOME/.rbenv/bin ]; then
 fi
 
 # git clone https://github.com/creationix/nvm ~/.nvm
-if [ -d $HOME/.nvm ]; then
-	source $HOME/.nvm/nvm.sh
+if [ -z "$NVM_SOURCED" ]; then
+	export NVM_SOURCED=1
+	if [ -d $HOME/.nvm ]; then
+		source $HOME/.nvm/nvm.sh
+	fi
 fi
 
 eval `dircolors ~/.dir_colors`

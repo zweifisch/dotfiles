@@ -47,6 +47,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Resize viewed windows to the correct size
     , ((modm, xK_n ), refresh)
 
+    , ((0, xK_Print), spawn "scrot -e 'mv $f ~/screenshots/'")
+
     -- Move focus to the next window
     , ((modm, xK_Tab ), windows W.focusDown)
 
