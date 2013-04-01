@@ -103,6 +103,7 @@ alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-fi
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias play='mplayer'
 alias play-mute='mplayer -ao null -idx'
+alias playlist="find . -iname '*.mp3'"
 
 alias datafart='curl --data-binary @- datafart.com'
 
@@ -421,3 +422,18 @@ mount-ntfs(){
 compress-pdf(){
 	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
 }
+
+concat-pdf(){
+	for pdf in $*; do
+		pdf2ps $pdf
+	done
+	rm merged.ps
+	cat *.ps > merged.ps
+	ps2pdf merged.ps
+}
+
+
+_mux(){
+	_arguments ":::($(mux ls | tail -n +2))"
+}
+compdef _mux mux
