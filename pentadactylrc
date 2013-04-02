@@ -112,6 +112,8 @@ set fbwhitelist+=iqiyi.com
 set fbwhitelist+=douban.fm
 set fbwhitelist+=coursera.org
 set fbwhitelist+=udacity.com
+set fbwhitelist+=duolingo.com
+set fbwhitelist+=tv.sohu.com
 "}}}
 
 "{{{ Hint Style
