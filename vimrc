@@ -206,7 +206,7 @@ set smartcase
 
 set autowrite
 
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.apk,*.png,*.jpg,*.gif,*.dex,*.swf,*.swc,*.jar,*.ttf,node_modules,build,venv,*.egg-info
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.apk,*.png,*.jpg,*.gif,*.dex,*.swf,*.swc,*.jar,*.ttf,node_modules,build,venv,*.egg-info,cabal-dev
 
 " change the terminal's title
 set title
@@ -759,6 +759,7 @@ au BufNewFile,BufRead *.mongo set ft=javascript
 au BufRead,BufNewFile *.rs set ft=rust
 au BufRead,BufNewFile *.hist set ft=sh
 au BufRead,BufNewFile *.pgsql set ft=pgsql
+au BufRead,BufNewFile *.hamlet set ft=hamlet
 
 au BufReadCmd *.epub call zip#Browse(expand("<amatch>"))
 
