@@ -594,6 +594,7 @@ let wiki_settings={
 \ 'template_path': vimwiki_export_path.'vimwiki-assets/',
 \ 'template_default': 'default',
 \ 'template_ext': '.html',
+\ 'syntax': 'markdown',
 \ 'auto_export': 0,
 \ 'nested_syntaxes': {
 \   'js':'javascript',

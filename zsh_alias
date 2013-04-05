@@ -81,8 +81,22 @@ view-tex(){
 	xelatex "$1" && mupdf "${1%.*}.pdf"
 }
 
-uname -a | grep -i ubuntu > /dev/null && alias 'pkg-install=sudo apt-get install'
-uname -a | grep -i ubuntu > /dev/null && alias 'pkg-search=apt-cache search'
+# uname -a | grep -i ubuntu > /dev/null && alias 'pkg-install=sudo apt-get install'
+# uname -a | grep -i ubuntu > /dev/null && alias 'pkg-search=apt-cache search'
+
+which apt-get &> /dev/null
+if [ $? = 0 ]; then
+	yaourt(){
+		results="$(apt-cache search $1)"
+		echo "$results" | cat -n
+		echo -n "==> "
+		read num
+		selected=$(sed -n "$num s/\([^ ]\) .*/\1/p" <<< "$results")
+		echo "selected package: $selected"
+		sudo apt-get install $selected
+	}
+fi
+
 
 bright(){
 	brightness=`echo "$1 * 0.1" | bc`
