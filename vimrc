@@ -761,6 +761,7 @@ au BufRead,BufNewFile *.rs set ft=rust
 au BufRead,BufNewFile *.hist set ft=sh
 au BufRead,BufNewFile *.pgsql set ft=pgsql
 au BufRead,BufNewFile *.hamlet set ft=hamlet
+au BufRead,BufNewFile *.pl set ft=prolog
 
 au BufReadCmd *.epub call zip#Browse(expand("<amatch>"))
 
