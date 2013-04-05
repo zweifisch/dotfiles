@@ -88,12 +88,14 @@ which apt-get &> /dev/null
 if [ $? = 0 ]; then
 	yaourt(){
 		results="$(apt-cache search $1)"
-		echo "$results" | cat -n
-		echo -n "==> "
+		echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
+		echo -n "===> "
 		read num
-		selected=$(sed -n "$num s/\([^ ]\) .*/\1/p" <<< "$results")
-		echo "selected package: $selected"
-		sudo apt-get install $selected
+		if [ -n "$num" ]; then
+			selected=$(sed -n "$num s/\([^ ]\) .*/\1/p" <<< "$results")
+			echo "selected package: $selected"
+			sudo apt-get install $selected
+		fi
 	}
 fi
 
