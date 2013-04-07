@@ -35,10 +35,11 @@ alias mem-usage="ps aux | awk '{sum +=\$4}; END {print sum}'"
 alias privoxy-socks="privoxy $HOME/.privoxy.conf"
 
 if [ -e /usr/bin/service ]; then
-	start(){ service $1 start }
-	status(){ service $1 status }
-	stop(){ service $1 stop }
-	restart(){ service $1 restart }
+	start(){ sudo service $1 start }
+	status(){ sudo service $1 status }
+	stop(){ sudo service $1 stop }
+	restart(){ sudo service $1 restart }
+	reload(){ sudo service $1 reload }
 fi
 
 if [ -e /usr/bin/systemctl ]; then
