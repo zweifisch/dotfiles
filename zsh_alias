@@ -86,7 +86,7 @@ view-tex(){
 
 which apt-get &> /dev/null
 if [ $? = 0 ]; then
-	yaourt(){
+	yaourt-install(){
 		results="$(apt-cache search $1)"
 		echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
 		echo -n "===> "
@@ -96,6 +96,32 @@ if [ $? = 0 ]; then
 			echo "selected package: $selected"
 			sudo apt-get install $selected
 		fi
+	}
+	yaourt-remove(){
+		results="$(dpkg --get-selections | grep -i $1 | grep -v deinstall | cut -f 1)"
+		echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
+		echo -n "===> "
+		read num
+		if [ -n "$num" ]; then
+			selected=$(sed -n "$num p" <<< "$results")
+			echo "selected package: $selected"
+			sudo apt-get remove $selected
+		fi
+	}
+	yaourt-upgrade(){
+		sudo apt-get upgrade
+	}
+	yaourt(){
+		case $1 in
+			-R)
+				yaourt-remove $2
+				;;
+			-Syu)
+				yaourt-upgrade
+				;;
+			*)
+				yaourt-install $1
+		esac
 	}
 fi
 
