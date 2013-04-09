@@ -2,7 +2,7 @@
 	email = #{email}
 	name = #{fullname}
 [alias]
-	st = status
+	st = status -sb
 	ci = commit
 	br = branch
 	co = checkout
@@ -20,6 +20,8 @@
 	publish = !legit publish \"$@\"
 	graft = !legit graft \"$@\"
 	d = difftool
+	purr = pull --rebase
+	standup = "!git log –since yesterday –author `git config user.email` –pretty=short"
 [http]
 [color]
 	ui = true
