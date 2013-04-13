@@ -1,0 +1,29 @@
+#!/usr/bin/env coffee
+# vim: set ft=coffee:
+
+url = require 'url'
+
+process.stdin.resume()
+process.stdin.setEncoding 'utf8'
+
+input = ''
+process.stdin.on 'data', (chunk)->
+	input += chunk
+
+process.stdin.on 'end', ->
+	console.log parseCookie input
+
+zip = (kvPairs)->
+	ret = {}
+	for [k,v] in kvPairs
+		ret[k] = v
+	ret
+
+trim = (x)->
+	x.trim()
+
+split = (x)->
+	x.split '='
+
+parseCookie = (input)->
+	zip input.split(';').map(trim).map(decodeURIComponent).map(split)

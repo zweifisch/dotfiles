@@ -285,18 +285,27 @@ runc(){
 	rm -f $1.out
 }
 
-gitignore(){
+ignore(){
 	touch .gitignore
 	cat  >> .gitignore <<EOF
-*.swp
-venv
 *.pyc
+venv
 node_modules
 npm-debug.log
 EOF
 }
 
-activate_venv(){
+init-venv2(){
+	virtualenv -p $(which python2) venv
+	activate-venv
+}
+
+init-venv(){
+	virtualenv -p $(which python3) venv
+	activate-venv
+}
+
+activate-venv(){
 	if [ -z "$VENV_ACTIVATED" ]; then
 		echo "activate virtualenv?"
 		select yn in "Yes" "No"; do
@@ -332,7 +341,7 @@ load_env_sh(){
 
 chpwd(){
 	if [ -f venv/bin/activate ]; then
-		activate_venv
+		activate-venv
 	fi
 	if [ -f env.sh ]; then
 		load_env_sh
@@ -484,3 +493,19 @@ _mux(){
 	_arguments ":::($(mux ls | tail -n +2))"
 }
 compdef _mux mux
+
+wget-proxy(){
+	host=$1
+	name="/tmp/wget-$2"
+	url="$3"
+	ssh $host "wget -O $name '$url'"
+	scp $host:$name $2
+}
+
+youtube-dl-proxy(){
+	host=$1
+	name="/tmp/youtube-dl-$2"
+	url="$3"
+	ssh $host "youtube-dl -o $name '$url'"
+	scp $host:$name $2
+}
