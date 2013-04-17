@@ -8,6 +8,9 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'terryma/vim-expand-region'
+
 " Bundle 'Valloric/YouCompleteMe'
 " generate a Makefile
 " cd /tmp && cmake -G 'Unix Makefiles' . ~/.vim/bundle/YouCompleteMe/cpp
