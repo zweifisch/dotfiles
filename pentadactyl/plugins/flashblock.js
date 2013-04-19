@@ -1,84 +1,75 @@
-/* use strict */
-XML.ignoreWhitespace = false;
-XML.prettyPrinting = false;
+"use strict";
 var INFO =
-<plugin name="flashblock" version="1.1"
-        href="http://dactyl.sf.net/pentadactyl/plugins#flashblock-plugin"
-        summary="Flash Blocker"
-        xmlns={NS}>
-    <author email="maglione.k@gmail.com">Kris Maglione</author>
-    <license href="http://opensource.org/licenses/mit-license.php">MIT</license>
-    <project name="Pentadactyl" min-version="1.0"/>
-    <p>
-        This plugin provides the same features as the ever popular FlashBlock
-        Firefox add-on. Place holders are substituted for flash animations and
-        embedded videos. When clicked, the original embedded content is
-        restored. Additionally, this plugin provides options to control which
-        sites can play animations without restrictions and triggers to toggle
-        the playing of animations on the current page.
-    </p>
-    <item>
-        <tags>'fb' 'flashblock'</tags>
-        <spec>'flashblock' 'fb'</spec>
-        <type>boolean</type>
-        <default>true</default>
-        <description>
-            <p>
-                Controls the blocking of flash animations. When true, place
-                holders are substituted for flash animations on untrusted sites.
-            </p>
-        </description>
-    </item>
-    <item>
-        <tags>'fbw' 'fbwhitelist'</tags>
-        <spec>'fbwhitelist' 'fbw'</spec>
-        <type>sitelist</type>
-        <default></default>
-        <description>
-            <p>
-                Controls which sites may play flash animations without user
-                intervention. See <ex>:mk{config.name.toLowerCase()}rc</ex>.
-            </p>
-        </description>
-    </item>
-    <item>
-        <tags>:flashplay :flp</tags>
-        <strut/>
-        <spec>:flashplay</spec>
-        <description>
-            <p>
-                Plays any blocked flash animations on the current page.
-            </p>
-        </description>
-    </item>
-    <item>
-        <tags>:flashstop :fls</tags>
-        <strut/>
-        <spec>:flashstop</spec>
-        <description>
-            <p>
-                Stops any currently playing flash animations on the current
-                page.
-            </p>
-        </description>
-    </item>
-    <item>
-        <tags>:flashtoggle :flt</tags>
-        <strut/>
-        <spec>:flashtoggle</spec>
-        <description>
-            <p>
-                Toggles the playing of all animations on the current page. If
-                any flash animations are currently blocked, all may begin
-                playing. Otherwise, all animations are stopped.
-            </p>
-            <example><ex>:map</ex> -silent <k name="A-p" link="false"/> <ex>:flashtoggle</ex><k name="CR"/></example>
-        </description>
-    </item>
-</plugin>;
+["plugin", { name: "flashblock",
+             version: "1.1",
+             href: "http://dactyl.sf.net/pentadactyl/plugins#flashblock-plugin",
+             summary: "Flash Blocker",
+             xmlns: "dactyl" },
+    ["author", { email: "maglione.k@gmail.com" },
+        "Kris Maglione"],
+    ["license", { href: "http://opensource.org/licenses/mit-license.php" },
+        "MIT"],
+    ["project", { name: "Pentadactyl", "min-version": "1.0" }],
+    ["p", {},
+        "This plugin provides the same features as the ever popular FlashBlock ",
+        "Firefox add-on. Place holders are substituted for flash animations and ",
+        "embedded videos. When clicked, the original embedded content is ",
+        "restored. Additionally, this plugin provides options to control which ",
+        "sites can play animations without restrictions and triggers to toggle ",
+        "the playing of animations on the current page."],
 
-if ("noscriptOverlay" in window)
-    noscriptOverlay.safeAllow("dactyl:", true, false);
+    ["item", {},
+        ["tags", {}, "'fb' 'flashblock'"],
+        ["spec", {}, "'flashblock' 'fb'"],
+        ["type", {}, "boolean"],
+        ["default", {}, "true"],
+        ["description", {},
+            ["p", {},
+                "Controls the blocking of flash animations. When true, place ",
+                "holders are substituted for flash animations on untrusted sites."]]],
+
+    ["item", {},
+        ["tags", {}, "'fbw' 'fbwhitelist'"],
+        ["spec", {}, "'fbwhitelist' 'fbw'"],
+        ["type", {}, "sitelist"],
+        ["default", {}, ""],
+        ["description", {},
+            ["p", {},
+                "Controls which sites may play flash animations without user ",
+                "intervention. See ", ["ex", {}, ":mk" + config.name.toLowerCase() + "rc"], "."]]],
+
+    ["item", {},
+        ["tags", {}, ":flashplay :flp"],
+        ["strut"],
+        ["spec", {}, ":flashplay"],
+        ["description", {},
+            ["p", {},
+                "Plays any blocked flash animations on the current page."]]],
+
+    ["item", {},
+        ["tags", {}, ":flashstop :fls"],
+        ["strut"],
+        ["spec", {}, ":flashstop"],
+        ["description", {},
+            ["p", {},
+                "Stops any currently playing flash animations on the current ",
+                "page."]]],
+
+    ["item", {},
+        ["tags", {}, ":flashtoggle :flt"],
+        ["strut"],
+        ["spec", {}, ":flashtoggle"],
+        ["description", {},
+            ["p", {},
+                "Toggles the playing of all animations on the current page. If ",
+                "any flash animations are currently blocked, all may begin ",
+                "playing. Otherwise, all animations are stopped."],
+
+            ["example", {},
+                ["ex", {}, ":map"], " -silent ",
+                ["k", { name: "A-p", link: "false" }],
+                " ", ["ex", {}, ":flashtoggle"],
+                ["k", { name: "CR" }]]]]];
 
 group.options.add(["flashblock", "fb"],
     "Enable blocking of flash animations",
@@ -128,7 +119,7 @@ function postMessage(content, message) {
 function reload(values) {
     //for (let [,t] in tabs.browsers)
     //    t.contentWindow.postMessage("flashblockReload", "*");
-    postMessage(window.content, "flashblockReload");
+    postMessage(gBrowser.mCurrentBrowser.contentWindow, "flashblockReload");
     return values;
 }
 
@@ -149,11 +140,9 @@ group.events.listen(window, "flashblockCheckLoad",
         event.stopPropagation();
     }, true, true);
 
-XML.ignoreWhitespace = true;
-XML.prettyPrinting = false;
 var data = {
     bindings: "dactyl://data/text/xml," + encodeURIComponent('<?xml version="1.0"?>' +
-      <e4x>
+      literal(/*
         <bindings
            xmlns="http://www.mozilla.org/xbl"
            xmlns:xbl="http://www.mozilla.org/xbl"
@@ -182,7 +171,7 @@ var data = {
                             var node = document.createElement("style");
                             node.setAttribute("type", "text/css");
                             head.insertBefore(node, head.firstChild);
-                            document.flashblockStyle = document.styleSheets[0];
+                            document.flashblockStyle = node.sheet;
                         }
 
                         document.flashblockIdx = (document.flashblockIdx || 0) + 1;
@@ -259,20 +248,20 @@ var data = {
                     checkReplace();
                     myWindow.addEventListener("message", checkReplace, false);
 
-                    if(this.src == this.ownerDocument.location)
-                        myWindow.location = 'dactyl://data/application/xhtml+xml,' + encodeURIComponent('<?xml version="1.0" encoding="UTF-8"?>' +
-                                            '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">' +
-                            <html xmlns="http://www.w3.org/1999/xhtml">
-                                <head><title></title></head>
-                                <body>{new XML(parent.innerHTML)}</body>
-                            </html>);
+                    // if(this.src == this.ownerDocument.location)
+                    //     myWindow.location = 'dactyl://data/application/xhtml+xml,' + encodeURIComponent('<?xml version="1.0" encoding="UTF-8"?>' +
+                    //                         '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">' +
+                    //         <html xmlns="http://www.w3.org/1999/xhtml">
+                    //             <head><title></title></head>
+                    //             <body>{new XML(parent.innerHTML)}</body>
+                    //         </html>);
                 ]]>
               </constructor>
             </implementation>
           </binding>
         </bindings>
-      </e4x>.*.toXMLString()),
-    flash: <![CDATA[data:image/png;base64,
+      */)),
+    flash: literal(/*data:image/png;base64,
         iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAABGdBTUEAALGOfPtRkwAAACBjSFJN
         AAB6JQAAgIMAAPn/AACA6AAAdTAAAOpgAAA6lwAAF2+XqZnUAAANkklEQVR4nGL8//8/w1AAAAHE
         QqF+ZiAWyKntl3/9/oPkp09fhIF8Rqjcfz4+njdiYhIvJtdl3gPyPwHxP3ItAgggRjJDVNw3qdTp
@@ -336,8 +325,8 @@ var data = {
         Z1L8nH1LZvSABheITuAAAUTOGD7IIXzAENb8+OV7+cdfjKC+NzcbFy/QnRzc7MyM4E4VMF3//P7r
         x9df3z5/+f7j71dgkfdWQpi/CxiCoIYGqGokyWKAACJ3sgEGQHUoqAPPX1zVIPzj198SKB8EvnGw
         Mff0tjWAxjtBFT+ohYJR7BALAAKIUofSDQAEEEbNNFgBQIABABWRKc05F+/jAAAAAElFTkSuQmCC
-    ]]>,
-    play: <![CDATA[data:image/png;base64,
+    */),
+    play: literal(/*data:image/png;base64,
         iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAABGdBTUEAALGOfPtRkwAAACBjSFJN
         AAB6JQAAgIMAAPn/AACA6AAAdTAAAOpgAAA6lwAAF2+XqZnUAAANqUlEQVR4nGL8//8/w1AAAAHE
         QqF+RiAWzKnt13j9/oPKp09f5JEl+fh4HoqJSdyZXJd5Gcj9AsRkhwpAADGSGaJivkmlcXcfPcv+
@@ -402,10 +391,10 @@ var data = {
         wBA2+Pjl+6GPvyBpj42LF9gpA/Z1mCF8YLpm+P7rB8Ovb58Zvv/4y8DP/odBQpgfFIIXSHEgDAAE
         ELkOhQFQEwsUhPzFVQ1iP379PYssycHGbNzb1vAKyHwLxKAcRnyCRgMAAUSpQ+kGAAKIcNtrkACA
         AAMACHALg12qSjsAAAAASUVORK5CYII
-    ]]>,
+    */),
 };
 
-var CSS = <![CDATA[ /* <css> */
+var CSS =
     /*
      * Flash Click to View by Ted Mielczarek (luser_mozilla@perilith.com)
      * Original code by Jesse Ruderman (jruderman@hmc.edu)
@@ -413,6 +402,7 @@ var CSS = <![CDATA[ /* <css> */
      *
      * Change XBL binding for <object> tags, click to view flash
      */
+    literal(/*
 
     pseudoembed {
             display: inline-block;
@@ -439,11 +429,9 @@ var CSS = <![CDATA[ /* <css> */
             -moz-binding: url("{bindings}") !important;
     }
 
-    /* TODO: Could do better. */
-    /*
-     * NoScript is incredibly annoying. The binding can't execute JS on
-     * untrusted sites.
-     */
+    /// TODO: Could do better.
+    /// NoScript is incredibly annoying. The binding can't execute JS on
+    /// untrusted sites.
     video:not([flashblock]),
     object[classid*=":D27CDB6E-AE6D-11cf-96B8-444553540000"]:not([flashblock]),
     object[codebase*="swflash.cab"]:not([flashblock]),
@@ -455,23 +443,22 @@ var CSS = <![CDATA[ /* <css> */
         display: none !important;
     }
 
-    /*
-     * Java identifiers.
-     * TODO: Make this work.
-    applet,
-    object[classid*=":8AD9C840-044E-11D1-B3E9-00805F499D93"],
-    object[classid^="clsid:CAFEEFAC-"],
-    object[classid^="java:"],
-    object[type="application/x-java-applet"],
-    embed[classid*=":8AD9C840-044E-11D1-B3E9-00805F499D93"],
-    embed[classid^="clsid:CAFEEFAC-"],
-    embed[classid^="java:"],
-    embed[type="application/x-java-applet"]
-    {
-         -moz-binding: url("{bindings}") !important;
-    }
-     */
-]]>.toString().replace(/\{(\w+)\}/g, function($0, $1) String(data[$1]).replace(/\s+/g, ""));
+    /// Java identifiers.
+    /// TODO: Make this work.
+    /// applet,
+    /// object[classid*=":8AD9C840-044E-11D1-B3E9-00805F499D93"],
+    /// object[classid^="clsid:CAFEEFAC-"],
+    /// object[classid^="java:"],
+    /// object[type="application/x-java-applet"],
+    /// embed[classid*=":8AD9C840-044E-11D1-B3E9-00805F499D93"],
+    /// embed[classid^="clsid:CAFEEFAC-"],
+    /// embed[classid^="java:"],
+    /// embed[type="application/x-java-applet"]
+    /// {
+    ///      -moz-binding: url("{bindings}") !important;
+    /// }
+*/).replace(/\/\/\/.*/gm, "")
+   .replace(/\{(\w+)\}/g, function($0, $1) String(data[$1]).replace(/\s+/g, ""));
 
 styles.system.add("flashblock", "*", CSS);
 data = null;
