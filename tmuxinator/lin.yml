@@ -1,8 +1,0 @@
-project_name: lin
-project_root: /home/cm/playground/work/wanglinglong
-tabs:
-  - server:
-     layout: 1c66,194x50,0,0{127x50,0,0,66x50,128,0}
-     panes:
-        - vim hist.sh
-        - term=XTERM && ssh lin

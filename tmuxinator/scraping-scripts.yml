@@ -1,8 +1,0 @@
-project_name: scraping-scripts
-project_root: ~/playground/scraping/jsdom
-tabs:
-  - main:
-      layout: 1c66,194x50,0,0{127x50,0,0,66x50,128,0}
-      panes:
-        - git st
-        - 

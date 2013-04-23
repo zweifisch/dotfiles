@@ -624,7 +624,8 @@ let wiki_settings={
 \   'jade': 'jade',
 \   'actionscript': 'actionscript',
 \   'tex': 'tex',
-\   'hs': 'haskell'
+\   'hs': 'haskell',
+\   'monit': 'monit'
 \ }}
 
 let wikis=["linux","web","logs","game","projects","nlp","de","geld","cs","misc"]

@@ -1,8 +1,0 @@
-project_name: canvas
-project_root: ~/playground/draw/valina-canvas/
-tabs:
-  - gap:
-      layout: main-horizontal
-      panes:
-        - vim
-        - foreman start

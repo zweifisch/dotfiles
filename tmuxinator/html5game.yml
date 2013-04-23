@@ -1,9 +1,0 @@
-project_name: html5game
-project_root: ~/pg/html5game
-tabs:
-  - main:
-      layout: main-vertical
-      panes:
-        - git st
-        - python -mhttp.server 2001
-        - coffee -wc .

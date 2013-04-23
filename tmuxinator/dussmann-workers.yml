@@ -1,8 +1,0 @@
-project_name: dussmann-workers
-project_root: ~/pg/dussmann/dussmann-workers
-tabs:
-  - main:
-      layout: main-vertical
-      panes:
-        - vim
-        - coffee -wc .

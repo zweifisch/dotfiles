@@ -1,7 +1,0 @@
-# ~/.tmuxinator/acc.yml
-# you can make as many tabs as you wish...
-
-project_name: acc
-project_root: ~/snda/account/
-tabs:
-  - zsh: 

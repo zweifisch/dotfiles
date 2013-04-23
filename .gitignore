@@ -10,3 +10,4 @@ xmonad/xmonad.o
 repos
 muttrc
 gitconfig
+bin/composer.phar
