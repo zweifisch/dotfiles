@@ -479,7 +479,7 @@ bitbucket-delete(){
 }
 
 bitbucket-clone(){
-	git clone git@bitbucket.org:$1/$2.git
+	git clone git@bitbucket.org:$(bitbucket-username)/$1.git
 }
 
 bitbucket-add(){
