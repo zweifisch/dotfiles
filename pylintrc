@@ -72,7 +72,7 @@ max-locals = 35
 # W0212 - Access to a protected member ... of a client class
 # W0613 - Unused argument
 # E1101 - Has no member (countless false-positives)
-disable-msg=R0903,W0142,W0105,W0212,W0613,E1101,W191
+disable-msg=R0903,W0142,W0105,W0212,W0613,E1101,W191,E501,W806,E122,W404,E101
 
 [REPORTS]
 

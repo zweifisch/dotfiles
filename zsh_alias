@@ -157,6 +157,9 @@ alias phplint='find . -name "*.php" -exec php -l {} \; | grep -v "No syntax erro
 
 alias last-ips="last | awk '{print \$3}' | sort | uniq -c | sort -rnk1"
 
+
+alias secure="chmod 600 $1"
+
 ghc-run(){
 	ghc --make $1 && "./${1%.*}"
 }
@@ -179,6 +182,7 @@ alias get-chosen="wget https://raw.github.com/harvesthq/chosen/master/chosen/cho
 alias get-chosen-css="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.css"
 alias get-spin="wget http://fgnass.github.com/spin.js/dist/spin.js"
 alias get-es5-shim="wget https://raw.github.com/kriskowal/es5-shim/master/es5-shim.js"
+alias get-angular="wget http://code.angularjs.org/1.0.6/angular.min.js"
 
 whichweek(){
 	week=`date -d "now" +%U`
@@ -425,6 +429,53 @@ share-stop(){
 
 github-clone(){
 	git clone git@github.com:$1/$2.git
+}
+
+bitbucket-username(){
+	if [ -z "$BITBUCKET_USERNAME" ]; then
+		export BITBUCKET_USERNAME=$(cat $HOME/.bitbucket-username)
+	fi
+	echo $BITBUCKET_USERNAME
+}
+
+bitbucket-passwd(){
+	if [ -z "$BITBUCKET_PASSWD" ]; then
+		export BITBUCKET_PASSWD=$(cat $HOME/.bitbucket-passwd)
+	fi
+	echo $BITBUCKET_PASSWD
+}
+
+bitbucket-setup(){
+	echo -n "username: "
+	read username
+	echo -n "passwd: "
+	read -s password
+	echo $username >! $HOME/.bitbucket-username
+	echo $password >! $HOME/.bitbucket-passwd
+	chmod 600 $HOME/.bitbucket-username
+	chmod 600 $HOME/.bitbucket-passwd
+}
+
+bitbucket-list(){
+	curl -s --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/user/repositories | sed -n '/name/ s/^[^:]\+\: \"\([a-zA-Z0-9_-]\+\)\"\,/\1/p'
+}
+
+bitbucket-new(){
+	name=$1
+	is_private=$2
+	if [ -z "$is_private" ]; then
+		is_private='true'
+	fi
+	scm=$3
+	if [ -z "$scm" ]; then
+		scm='git'
+	fi
+	curl -s --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/repositories/ --data "name=$name;is_private=$is_private;scm=$scm"
+}
+
+bitbucket-delete(){
+	repo_name=$1
+	curl -s -X DELETE --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/repositories/$(bitbucket-username)/$repo_name
 }
 
 bitbucket-clone(){
