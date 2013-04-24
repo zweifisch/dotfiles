@@ -152,8 +152,11 @@ alias datafart='curl --data-binary @- datafart.com'
 
 alias notebook='ipython notebook --pylab=inline'
 alias cling='cling  -Wc++11-extensions -std=c++11'
-alias composer='composer.phar'
+
 alias phplint='find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected in"'
+# alias composer='composer.phar'
+alias get-composer='curl -s https://getcomposer.org/installer | php'
+alias composer='php composer.phar'
 
 alias last-ips="last | awk '{print \$3}' | sort | uniq -c | sort -rnk1"
 
@@ -482,8 +485,8 @@ bitbucket-clone(){
 	git clone git@bitbucket.org:$(bitbucket-username)/$1.git
 }
 
-bitbucket-add(){
-	git remote add origin ssh://git@bitbucket.org/$1/$2.git
+bitbucket-add-remote(){
+	git remote add origin ssh://git@bitbucket.org/$(bitbucket-username)/$1.git
 }
 
 mxmlc-release(){
