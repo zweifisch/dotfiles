@@ -5,6 +5,8 @@ alias mkdir='mkdir -p'
 
 alias lt='tree -L 1'
 
+alias //=''
+
 alias vi="vim"
 alias e='emacs -nw'
 alias j="jobs -l"
