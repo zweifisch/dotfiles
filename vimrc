@@ -625,6 +625,7 @@ let wiki_settings={
 \   'actionscript': 'actionscript',
 \   'tex': 'tex',
 \   'hs': 'haskell',
+\   'xml': 'xml',
 \   'monit': 'monit'
 \ }}
 
