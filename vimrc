@@ -481,6 +481,7 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,E101"
 " E101 mixed spaces and tabs, even in string!?
 let g:pymode_indent = 0
+let g:pymode_lint_checker = "pyflakes"
 " }}}
 " restart {{{
 let g:restart_command = 'Restart'
