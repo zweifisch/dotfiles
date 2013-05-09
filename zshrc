@@ -48,6 +48,7 @@ setopt NOCLOBBER
 
 export VIDIR_EDITOR_ARGS='-c :set nolist | :set ft=vidir-ls'
 
+export PRO_BASE=$HOME/pg
 
 # if [[ -x $(which ondir) ]]; then
 # 	cd() { builtin cd "$@" && eval "`ondir \"$OLDPWD\" \"$PWD\"`" }

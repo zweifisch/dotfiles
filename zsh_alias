@@ -6,6 +6,7 @@ alias mkdir='mkdir -p'
 alias lt='tree -L 1'
 
 alias //=''
+alias \#=''
 
 alias vi="vim"
 alias e='emacs -nw'
@@ -158,9 +159,9 @@ alias notebook='ipython notebook --pylab=inline'
 alias cling='cling  -Wc++11-extensions -std=c++11'
 
 alias phplint='find . -name "*.php" -exec php -l {} \; | grep -v "No syntax errors detected in"'
-# alias composer='composer.phar'
+alias composer='composer.phar'
 alias get-composer='curl -s https://getcomposer.org/installer | php'
-alias composer='php composer.phar'
+# alias composer='php composer.phar'
 
 alias last-ips="last | awk '{print \$3}' | sort | uniq -c | sort -rnk1"
 
