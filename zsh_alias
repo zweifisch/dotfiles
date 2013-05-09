@@ -592,3 +592,7 @@ youtube-dl-proxy(){
 	ssh $host "youtube-dl -o $name '$url'"
 	scp $host:$name $2
 }
+
+redis-eval(){
+	redis-cli eval "$(cat $1)" "${@:2}"
+}

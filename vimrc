@@ -858,26 +858,15 @@ augroup php
 	" au BufRead,BufNewFile *.php vm <leader><space> :!eval-php-dump<CR>
 augroup end
 
-au FileType r          vm <buffer> <space> :!pipe2eval r<CR>
-au FileType php        vm <buffer> <space> :!pipe2eval php<CR>
-au FileType javascript vm <buffer> <space> :!pipe2eval javascript<CR>
-au FileType sql        vm <buffer> <space> :!pipe2eval sql<CR>
-au FileType mysql      vm <buffer> <space> :!pipe2eval sql<CR>
-au FileType vimwiki    vm <buffer> <space> :!pipe2eval bash<CR>
-au FileType sh         vm <buffer> <space> :!pipe2eval bash<CR>
-au FileType vo_base    vm <buffer> <space> :!pipe2eval bash<CR>
-au FileType python     vm <buffer> <space> :!pipe2eval python<CR>
-au FileType perl       vm <buffer> <space> :!pipe2eval perl<CR>
-au FileType ruby       vm <buffer> <space> :!pipe2eval ruby<CR>
-au FileType coffee     vm <buffer> <space> :!pipe2eval coffee<CR>
-au FileType go         vm <buffer> <space> :!pipe2eval go<CR>
-au FileType markdown   vm <buffer> <space> :!pipe2eval markdown<CR>
-au FileType xml        vm <buffer> <space> :!pipe2eval xml<CR>
-au FileType pgsql      vm <buffer> <space> :!pipe2eval pgsql<CR>
-au FileType json       vm <buffer> <space> :!python -mjson.tool<CR>
 
-au BufRead *.html  vm <buffer> <space> :!html2text<CR>
-au BufRead *.mongo vm <buffer> <space> :!pipe2eval mongo<CR>
+com! -nargs=+ Pipe2eval call Pipe2eval(<f-args>)
+
+function! Pipe2eval(lang)
+	execute "vm <buffer> <space> :!pipe2eval ". a:lang . "<CR>"
+endfunction
+
+au FileType * call Pipe2eval(&filetype)
+
 
 au FileType vim setlocal fdm=marker
 au FileType html,xml setlocal fdm=indent
