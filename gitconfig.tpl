@@ -22,6 +22,7 @@
 	d = difftool
 	purr = pull --rebase
 	standup = "!git log –since yesterday –author `git config user.email` –pretty=short"
+	unstage = 'reset HEAD --'
 [http]
 [color]
 	ui = true

@@ -8,6 +8,12 @@ alias lt='tree -L 1'
 alias //=''
 alias \#=''
 
+alias timestamp='date +%s'
+
+datetime(){
+	date -d@$1 +%Y-%m-%d\ %H:%M:%S
+}
+
 alias vi="vim"
 alias e='emacs -nw'
 alias j="jobs -l"
