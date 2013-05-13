@@ -1,6 +1,6 @@
 proxy-type socks5
 proxy localhost:7070
-use-proxy no
+use-proxy yes
 
 browser firefox
 

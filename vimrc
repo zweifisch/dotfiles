@@ -10,6 +10,7 @@ call vundle#rc()
 
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'terryma/vim-expand-region'
+Bundle 'b4winckler/vim-objc'
 
 " Bundle 'Valloric/YouCompleteMe'
 " generate a Makefile
@@ -627,6 +628,8 @@ let wiki_settings={
 \   'tex': 'tex',
 \   'hs': 'haskell',
 \   'xml': 'xml',
+\   'objc': 'objc',
+\   'erl': 'erlang',
 \   'monit': 'monit'
 \ }}
 
