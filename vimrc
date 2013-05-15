@@ -8,6 +8,8 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'jimenezrick/vimerl'
+
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'terryma/vim-expand-region'
 Bundle 'b4winckler/vim-objc'
