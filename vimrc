@@ -13,6 +13,7 @@ Bundle 'jimenezrick/vimerl'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'terryma/vim-expand-region'
 Bundle 'b4winckler/vim-objc'
+Bundle 'plasticboy/vim-markdown'
 
 " Bundle 'Valloric/YouCompleteMe'
 " generate a Makefile
@@ -588,7 +589,7 @@ let VimuxUseNearestPane = 1
 " }}}
 " wiki {{{
 let g:vimwiki_camel_case = 0
-let g:vimwiki_folding=1
+let g:vimwiki_folding='expr'
 " let g:vimwiki_use_mouse = 1
  
 " let g:vimwiki_rxEqIn = '\$[^$`]\+\$'
