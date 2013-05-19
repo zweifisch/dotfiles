@@ -589,11 +589,9 @@ let VimuxUseNearestPane = 1
 " }}}
 " wiki {{{
 let g:vimwiki_camel_case = 0
-let g:vimwiki_folding='expr'
+let g:vimwiki_folding = 'expr'
+let g:vimwiki_url_maxsave = 0
 " let g:vimwiki_use_mouse = 1
- 
-" let g:vimwiki_rxEqIn = '\$[^$`]\+\$'
-" let g:vimwiki_char_eqin = '\$'
 
 nmap <silent> <leader>stupidmap <Plug>VimwikiNormalizeLinkVisualCR
 
