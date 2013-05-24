@@ -7,6 +7,7 @@ alias lt='tree -L 1'
 
 alias //=''
 alias \#=''
+alias gg='google -s 8'
 
 alias timestamp='date +%s'
 

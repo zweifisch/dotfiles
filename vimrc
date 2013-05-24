@@ -482,7 +482,7 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 " hi MBENormal guifg=#808080 guibg=fg
 " }}}
 " python mode {{{
-let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,E101"
+let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,E101,W402"
 " E101 mixed spaces and tabs, even in string!?
 let g:pymode_indent = 0
 let g:pymode_lint_checker = "pyflakes"
