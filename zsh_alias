@@ -603,3 +603,17 @@ youtube-dl-proxy(){
 redis-eval(){
 	redis-cli eval "$(cat $1)" "${@:2}"
 }
+
+command_not_found_handler() {
+	case ${1: -1} in
+		\?)
+			man "${1:0: -1}"
+			;;
+		!)
+			ssh server "${1:0: -1} ${@:2}"
+			;;
+		*)
+			echo 'command not found'
+			exit 1
+	esac
+}
