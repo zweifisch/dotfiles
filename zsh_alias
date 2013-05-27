@@ -604,16 +604,21 @@ redis-eval(){
 	redis-cli eval "$(cat $1)" "${@:2}"
 }
 
+# setopt NO_GLOB
 command_not_found_handler() {
 	case ${1: -1} in
 		\?)
-			man "${1:0: -1}"
+			man ${1:0: -1}
 			;;
 		!)
-			ssh server "${1:0: -1} ${@:2}"
+			tsocks ${1:0: -1} ${@:2}
 			;;
-		*)
-			echo 'command not found'
-			exit 1
+		+)
+			;;
+	esac
+	case ${1:0:1} in
+		@)
+			ssh ${1:1} "${@:2}"
+			;;
 	esac
 }
