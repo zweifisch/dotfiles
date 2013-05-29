@@ -27,6 +27,7 @@ plugins=(vi-mode lein archlinux fabric cap gem gnu-utils npm pip rake svn taskwa
 source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all
+unsetopt correct
 
 export TERM=screen-256color
 export EDITOR="vim"
