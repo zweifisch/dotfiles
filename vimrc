@@ -629,6 +629,7 @@ let wiki_settings={
 \   'tex': 'tex',
 \   'hs': 'haskell',
 \   'xml': 'xml',
+\   'yaml': 'yaml',
 \   'objc': 'objc',
 \   'erl': 'erlang',
 \   'monit': 'monit'
