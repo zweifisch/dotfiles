@@ -162,7 +162,9 @@ javascript_merge(){
 
 ruby_eval(){
 	cat $TMP_FILE $TMP_FILE.new | sed -e '/^$/d' |\
-		sed '$ s/^\([ \t]*\)\(.*\)$/\
+		sed '$! b
+			/^[ \t]*end/ b
+			s/^\([ \t]*\)\(.*\)$/\
 			\1____ =\2\
 			\1puts ____.inspect\
 			\1____/' |\

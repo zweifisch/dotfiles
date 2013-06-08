@@ -8,6 +8,7 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'elixir-lang/vim-elixir'
 Bundle 'jimenezrick/vimerl'
 
 Bundle 'terryma/vim-multiple-cursors'
@@ -213,7 +214,7 @@ set smartcase
 
 set autowrite
 
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.apk,*.png,*.jpg,*.gif,*.dex,*.swf,*.swc,*.jar,*.ttf,node_modules,build,venv,*.egg-info,cabal-dev
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.apk,*.png,*.jpg,*.gif,*.dex,*.swf,*.swc,*.jar,*.ttf,node_modules,build,venv,*.egg-info,cabal-dev,vendor
 
 " change the terminal's title
 set title
