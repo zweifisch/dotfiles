@@ -11,6 +11,8 @@ alias gg='google -s 8'
 
 alias timestamp='date +%s'
 
+alias iex='rlwrap -a iex'
+
 datetime(){
 	date -d@$1 +%Y-%m-%d\ %H:%M:%S
 }

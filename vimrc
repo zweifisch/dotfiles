@@ -633,6 +633,7 @@ let wiki_settings={
 \   'yaml': 'yaml',
 \   'objc': 'objc',
 \   'erl': 'erlang',
+\   'ex': 'elixir',
 \   'monit': 'monit'
 \ }}
 
