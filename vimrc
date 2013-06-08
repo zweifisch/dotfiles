@@ -8,6 +8,8 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'nelstrom/vim-visual-star-search'
+
 Bundle 'elixir-lang/vim-elixir'
 Bundle 'jimenezrick/vimerl'
 
@@ -66,6 +68,7 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'godlygeek/tabular.git'
 Bundle 'tomtom/tcomment_vim.git'
 Bundle 'git://repo.or.cz/vcscommand'
+Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-fugitive'
