@@ -222,6 +222,16 @@ svn-diff-by-extension(){
 	svn diff $(eval "find -type f $exts")
 }
 
+svn-export-changed()
+{
+	url=$3
+	for i in $(svn diff --summarize -r $1:$2 $url| awk '{ print $2 }'); do
+		p=$(echo $i | sed -e 's{'$url/'{{');
+		mkdir -p $(dirname $p);
+		svn export $i $p;
+	done 
+}
+
 start-wicd(){
 	sudo wicd
 	wicd-cli --wireless -c
