@@ -8,7 +8,13 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'tpope/vim-fireplace'
+Bundle 'tpope/vim-dispatch'
+
 Bundle 'nelstrom/vim-visual-star-search'
+
+Bundle 'shawncplus/phpcomplete.vim'
+Bundle 'StanAngeloff/php.vim'
 
 Bundle 'elixir-lang/vim-elixir'
 Bundle 'jimenezrick/vimerl'
