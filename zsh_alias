@@ -12,6 +12,7 @@ alias gg='google -s 8'
 alias timestamp='date +%s'
 
 alias iex='rlwrap -a iex'
+alias pry='rlwrap -a pry'
 
 datetime(){
 	date -d@$1 +%Y-%m-%d\ %H:%M:%S
@@ -225,7 +226,7 @@ svn-diff-by-extension(){
 svn-export-changed()
 {
 	url=$3
-	for i in $(svn diff --summarize -r $1:$2 $url| awk '{ print $2 }'); do
+	for i in $(svn diff --summarize -r $1:$2 $url| awk '{ print $2 }' | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | xargs echo -e); do
 		p=$(echo $i | sed -e 's{'$url/'{{');
 		mkdir -p $(dirname $p);
 		svn export $i $p;
