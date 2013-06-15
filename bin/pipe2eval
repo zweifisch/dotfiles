@@ -119,9 +119,9 @@ python_eval(){
 			sed -e 's/^\(.*\)$/# \1/'
 	else
 		cat $TMP_FILE $TMP_FILE.new | sed -e '/^$/d' |\
-			sed '$ s/^\([ \t]*\)\(.*\)$/\1____ =\2\
-\1pprint.pprint(____)\
-\1____/' | $INPUT_LANG - 2> $TMP_FILE.error |\
+			sed '$ s/^[^ \t].*$/____ =&\
+\pprint.pprint(____)\
+\____/' | $INPUT_LANG - 2> $TMP_FILE.error |\
 			sed -e 's/^\(.*\)$/# \1/'
 	fi
 }

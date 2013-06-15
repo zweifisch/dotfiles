@@ -16,6 +16,8 @@ Bundle 'nelstrom/vim-visual-star-search'
 Bundle 'shawncplus/phpcomplete.vim'
 Bundle 'StanAngeloff/php.vim'
 
+Bundle '2072/PHP-Indenting-for-VIm'
+
 Bundle 'elixir-lang/vim-elixir'
 Bundle 'jimenezrick/vimerl'
 
