@@ -321,10 +321,12 @@ ignore(){
 	touch .gitignore
 	cat  >> .gitignore <<EOF
 *.pyc
-venv
-node_modules
-npm-debug.log
+/venv/
+/node_modules/
+/npm-debug.log
+/vendor/
 EOF
+	$EDITOR .gitignore
 }
 
 init-venv2(){
