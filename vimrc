@@ -60,6 +60,9 @@ Bundle 'vim-stylus'
 " Bundle 'UltiSnips'
 Bundle 'vim-indent-object'
 Bundle 'vimwiki'
+
+Bundle 'tpope/vim-markdown'
+
 Bundle 'Tagbar'
 Bundle 'delimitMate.vim'
 " Bundle 'VimOutliner'

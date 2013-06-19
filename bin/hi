@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 if [ ! -t 0 ];then
 	file=/dev/stdin
 elif [[ -f $1 ]];then
