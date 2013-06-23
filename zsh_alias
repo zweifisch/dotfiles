@@ -599,6 +599,11 @@ _mux(){
 }
 compdef _mux mux
 
+_pman(){
+	_arguments ":::($(php -r 'echo implode(PHP_EOL,get_defined_functions()["internal"]);'))"
+}
+compdef _pman pman
+
 wget-proxy(){
 	host=$1
 	name="/tmp/wget-$2"

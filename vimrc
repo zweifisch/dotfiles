@@ -24,7 +24,7 @@ Bundle 'jimenezrick/vimerl'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'terryma/vim-expand-region'
 Bundle 'b4winckler/vim-objc'
-Bundle 'plasticboy/vim-markdown'
+" Bundle 'plasticboy/vim-markdown'
 
 " Bundle 'Valloric/YouCompleteMe'
 " generate a Makefile
