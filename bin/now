@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# https://github.com/apankrat/now.sh
+
+read -t 1 <&1
+timeout=$?
+
+while true
+do
+	while true
+	do
+		IFS= read -r -t 1 line; rc=$?
+		if [ $rc != 0 ]; then break; fi
+		echo "$line"
+	done
+	if [ $rc != $timeout ]; then break; fi
+
+	now=`date ${1:++"$1"}`
+	echo -ne "$now\r" >&2
+done
