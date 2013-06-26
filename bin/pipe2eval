@@ -249,33 +249,41 @@ markdown_eval(){
 
 # mongo ------------------------------------------------------------------------
 
+mongo_exec(){
+	mongo --quiet --host $(cat $TMP_FILE.host) "$(cat $TMP_FILE.db)" $TMP_FILE.eval
+}
+
 mongo_eval(){
-	db=$(sed -ne '1 s/^use \([a-z0-9_-]\+\)$/\1/ip' < $TMP_FILE.new)
+	db=$(sed -ne '1 s/^db \([a-z0-9_-]\+\)$/\1/ip' < $TMP_FILE.new)
+	host=$(sed -ne '1 s/^\/\/ host \([a-zA-Z0-9._-]\+\)$/\1/p' < $TMP_FILE.new)
+	if [ -n "$host" ]; then
+		echo $host > $TMP_FILE.host
+		exit 0
+	fi
 	if [ -n "$db" ]; then
 		echo $db > $TMP_FILE.db
 		exit 0
 	fi
 	if [ -f $TMP_FILE.db ]; then
-		_DB="$(cat $TMP_FILE.db)"
 		sed -e 's/^\(db\..*\)/var ____ = \1/' \
 		-e '$ a \
-			if("undefined" != typeof ____){\
-				if("function" == typeof ____.toArray){\
-					____ = ____.toArray()\
-					if (____.length == 1){\
-						____ = ____[0]\
-					}else{\
-						print("items:" + ____.length)\
-					}\
-				}\
-				if(____.length > 20){\
-					printjson(____.slice(0,20))\
-					print("...")\
-				}else{\
-					printjson(____)\
-				}\
-			}' > $TMP_FILE.eval < $TMP_FILE.new
-		mongo --quiet $_DB $TMP_FILE.eval
+if("undefined" != typeof ____ && null != ____){\
+	if("function" == typeof ____.toArray){\
+		____ = ____.toArray()\
+		if (____.length == 1){\
+			____ = ____[0]\
+		}else{\
+			print("items:" + ____.length)\
+		}\
+	}\
+	if(____.length > 20){\
+		printjson(____.slice(0,20))\
+		print("...")\
+	}else{\
+		printjson(____)\
+	}\
+}' > $TMP_FILE.eval < $TMP_FILE.new
+		mongo_exec
 	else
 		echo '// which db?'
 	fi
@@ -283,21 +291,22 @@ mongo_eval(){
 
 mongo_command_version(){
 	echo 'print(db.version())' > $TMP_FILE.eval
-	mongo --quiet $TMP_FILE.eval
+	mongo_exec
 }
 
 mongo_command_dbs(){
 	echo 'printjson(db.getMongo().getDBNames())' > $TMP_FILE.eval
-	mongo --quiet $TMP_FILE.eval
+	mongo_exec
 }
 
 mongo_command_collections(){
 	echo 'printjson(db.getCollectionNames())' > $TMP_FILE.eval
-	mongo --quiet $TMP_FILE.eval
+	mongo_exec
 }
 
 mongo_command_config(){
 	echo "use $(cat $TMP_FILE.db)"
+	echo "--host $(cat $TMP_FILE.host)"
 }
 
 mongo_command_status(){
@@ -306,7 +315,7 @@ mongo_command_status(){
 	else
 		echo "printjson(db.serverStatus())" > $TMP_FILE.eval
 	fi
-	mongo --quiet $TMP_FILE.eval
+	mongo_exec
 }
 
 # sql --------------------------------------------------------------------------

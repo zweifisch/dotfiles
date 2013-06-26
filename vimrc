@@ -88,7 +88,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'unimpaired.vim'
 Bundle 'speeddating.vim'
 Bundle 'ervandew/supertab.git'
-" Bundle 'scrooloose/syntastic.git'
+Bundle 'scrooloose/syntastic.git'
 Bundle 'VimClojure'
 Bundle 'derekwyatt/vim-scala.git'
 Bundle 'timcharper/textile.vim'
@@ -538,11 +538,12 @@ let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_quiet_warnings=1
-let g:syntastic_disabled_filetypes = ['tex','coffee','sql','php']
+let g:syntastic_disabled_filetypes = ['tex','coffee','sql']
 
 let g:syntastic_mode_map = { 'mode': 'active',
-									 \ 'active_filetypes': ['ruby'],
-									 \ 'passive_filetypes': ['php'] }
+									 \ 'active_filetypes': ['ruby', 'php'],
+									 \ 'passive_filetypes': []
+									 \ }
 "}}}
 " tagbar {{{
 nmap <leader>l :TagbarToggle<CR>
