@@ -254,7 +254,7 @@ mongo_exec(){
 }
 
 mongo_eval(){
-	db=$(sed -ne '1 s/^db \([a-z0-9_-]\+\)$/\1/ip' < $TMP_FILE.new)
+	db=$(sed -ne '1 s/^\/\/ db \([a-z0-9_-]\+\)$/\1/ip' < $TMP_FILE.new)
 	host=$(sed -ne '1 s/^\/\/ host \([a-zA-Z0-9._-]\+\)$/\1/p' < $TMP_FILE.new)
 	if [ -n "$host" ]; then
 		echo $host > $TMP_FILE.host
