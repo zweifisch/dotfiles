@@ -538,11 +538,11 @@ let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_quiet_warnings=1
-let g:syntastic_disabled_filetypes = ['tex','coffee','sql']
+let g:syntastic_disabled_filetypes = ['tex','coffee','sql','sh']
 
 let g:syntastic_mode_map = { 'mode': 'active',
 									 \ 'active_filetypes': ['ruby', 'php'],
-									 \ 'passive_filetypes': []
+									 \ 'passive_filetypes': ['sh']
 									 \ }
 "}}}
 " tagbar {{{
@@ -621,6 +621,7 @@ let wiki_settings={
 \ 'auto_export': 0,
 \ 'nested_syntaxes': {
 \   'js':'javascript',
+\   'javascript':'javascript',
 \   'python': 'python',
 \   'py': 'python',
 \   'lisp':'lisp',
@@ -638,6 +639,7 @@ let wiki_settings={
 \   'php': 'php',
 \   'sql': 'sql',
 \   'sh': 'sh',
+\   'bash': 'sh',
 \   'nginx': 'nginx',
 \   'apache': 'apache',
 \   'jade': 'jade',
