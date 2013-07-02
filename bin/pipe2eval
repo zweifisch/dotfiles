@@ -25,8 +25,8 @@ fn_call(){
 }
 
 process_commands(){
-	cmd="$(sed -n '1 s/^#:\([a-zA-Z0-9_-]\+\) \?\(.*\)\?$/\1/p' < $TMP_FILE.new)"
-	args="$(sed -n '1 s/^#:\([^ ]\+\) \(.*\)$/\2/p' < $TMP_FILE.new)"
+	cmd="$( sed -n '1 s/^[#\/;-]\{1,2\}> \([a-zA-Z0-9_-]\+\) \?\(.*\)\?$/\1/p' < $TMP_FILE.new)"
+	args="$(sed -n '1 s/^[#\/;-]\{1,2\}> \([^ ]\+\) \(.*\)$/\2/p' < $TMP_FILE.new)"
 	if [ -n "$cmd" ]; then
 		fn_call command_$cmd "$args"
 		exit 0
@@ -250,22 +250,23 @@ markdown_eval(){
 # mongo ------------------------------------------------------------------------
 
 mongo_exec(){
-	mongo --quiet --host $(cat $TMP_FILE.host) "$(cat $TMP_FILE.db)" $TMP_FILE.eval
+	[ -f $TMP_FILE.host ] && host=$(cat $TMP_FILE.host) || host=127.0.0.1
+	[ -f $TMP_FILE.port ] && port=$(cat $TMP_FILE.port) || port=27017
+	[ -f $TMP_FILE.db ] && db=$(cat $TMP_FILE.db) 
+	mongo --quiet --host $host --port $port $db $TMP_FILE.eval
 }
 
 mongo_eval(){
-	db=$(sed -ne '1 s/^\/\/ db \([a-z0-9_-]\+\)$/\1/ip' < $TMP_FILE.new)
-	host=$(sed -ne '1 s/^\/\/ host \([a-zA-Z0-9._-]\+\)$/\1/p' < $TMP_FILE.new)
-	if [ -n "$host" ]; then
-		echo $host > $TMP_FILE.host
-		exit 0
-	fi
-	if [ -n "$db" ]; then
-		echo $db > $TMP_FILE.db
-		exit 0
-	fi
-	if [ -f $TMP_FILE.db ]; then
-		sed -e 's/^\(db\..*\)/var ____ = \1/' \
+
+	db=$(sed -ne 's/^\/\/ db \([a-z0-9_-]\+\)$/\1/ip' < $TMP_FILE.new)
+	host=$(sed -ne 's/^\/\/ host \([a-zA-Z0-9._-]\+\)$/\1/p' < $TMP_FILE.new)
+	port=$(sed -ne 's/^\/\/ port \([a-zA-Z0-9._-]\+\)$/\1/p' < $TMP_FILE.new)
+
+	[ -n "$host" ] && echo $host > $TMP_FILE.host
+	[ -n "$port" ] && echo $port > $TMP_FILE.port
+	[ -n "$db" ] && echo $db > $TMP_FILE.db
+
+	sed -e 's/^\(db\..*\)/var ____ = \1/' \
 		-e '$ a \
 if("undefined" != typeof ____ && null != ____){\
 	if("function" == typeof ____.toArray){\
@@ -283,10 +284,7 @@ if("undefined" != typeof ____ && null != ____){\
 		printjson(____)\
 	}\
 }' > $TMP_FILE.eval < $TMP_FILE.new
-		mongo_exec
-	else
-		echo '// which db?'
-	fi
+	mongo_exec
 }
 
 mongo_command_version(){
@@ -304,9 +302,19 @@ mongo_command_collections(){
 	mongo_exec
 }
 
-mongo_command_config(){
-	echo "use $(cat $TMP_FILE.db)"
-	echo "--host $(cat $TMP_FILE.host)"
+mongo_command_connections(){
+	echo 'db.currentOp(true).inprog.forEach(function(o){print(o.client)});' > $TMP_FILE.eval
+   mongo_exec | cut -d ':' -f 1 | sort | uniq -c | sort -rn
+}
+
+mongo_command_session(){
+	[ -f $TMP_FILE.host ] && host=$(cat $TMP_FILE.host) || host=127.0.0.1
+	[ -f $TMP_FILE.port ] && port=$(cat $TMP_FILE.port) || port=27017
+	[ -f $TMP_FILE.db ] && db=$(cat $TMP_FILE.db) 
+
+	echo "host $host"
+	echo "port $port"
+	echo "db $db"
 }
 
 mongo_command_status(){

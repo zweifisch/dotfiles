@@ -8,6 +8,8 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'zweifisch/pipe2eval'
+
 Bundle 'tpope/vim-fireplace'
 Bundle 'tpope/vim-dispatch'
 
@@ -881,16 +883,6 @@ augroup php
 	" au FileType php inoremap <buffer> @ $this->
 	" au BufRead,BufNewFile *.php vm <leader><space> :!eval-php-dump<CR>
 augroup end
-
-
-com! -nargs=+ Pipe2eval call Pipe2eval(<f-args>)
-
-function! Pipe2eval(lang)
-	execute "vm <buffer> <space> :!pipe2eval ". a:lang . "<CR>"
-endfunction
-
-au FileType * call Pipe2eval(&filetype)
-
 
 au FileType vim setlocal fdm=marker
 au FileType html,xml setlocal fdm=indent
