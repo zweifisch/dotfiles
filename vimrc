@@ -75,6 +75,8 @@ Bundle 'vimoutliner/vimoutliner'
 Bundle 'vim-coffee-script'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'NrrwRgn'
+
+" Bundle 'bling/vim-airline'
 Bundle 'Lokaltog/vim-powerline'
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'mattn/zencoding-vim'
@@ -590,20 +592,13 @@ nmap ,,hT :!otl2html.py % > <c-r>=expand("%:r")<cr>.html && firefox <c-r>=expand
 nnoremap <silent> <Leader>vr :VimroomToggle<CR>
 " }}}
 " vimux {{{
-map <Leader>rq :CloseVimTmuxRunner<CR>
-map <Leader>rx :CloseVimTmuxPanes<CR>
-map <Leader>rs :InterruptVimTmuxRunner<CR>
-map <Leader>rl :RunLastVimTmuxCommand<CR>
-map <Leader>ri :InspectVimTmuxRunner<CR>
-map <Leader>rp :PromptVimTmuxCommand<CR>
+map <Leader>rx :VimuxClosePanes<CR>
 
-map <Leader>rw :call RunVimTmuxCommand("clear; watchr watch.rb")<CR>
-map <Leader>rm :call RunVimTmuxCommand("clear; foreman start")<CR>
-vmap <silent> <CR> "vy:call RunVimTmuxCommand(@v, 0)<CR>
+vmap <silent> <CR> "vy:call VimuxRunCommand(@v, 0)<CR>
 
-let VimuxHeight = "40"
-let VimuxOrientation = "h"
-let VimuxUseNearestPane = 1
+let g:VimuxHeight = "40"
+let g:VimuxOrientation = "h"
+let g:VimuxUseNearestPane = 1
 " }}}
 " wiki {{{
 let g:vimwiki_camel_case = 0
