@@ -200,7 +200,7 @@ alias get-chosen="wget https://raw.github.com/harvesthq/chosen/master/chosen/cho
 alias get-chosen-css="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.css"
 alias get-spin="wget http://fgnass.github.com/spin.js/dist/spin.js"
 alias get-es5-shim="wget https://raw.github.com/kriskowal/es5-shim/master/es5-shim.js"
-alias get-angular="wget http://code.angularjs.org/1.0.6/angular.min.js"
+alias get-angular="wget http://code.angularjs.org/1.1.5/angular.min.js"
 
 whichweek(){
 	week=`date -d "now" +%U`
