@@ -71,7 +71,7 @@ zz() {
 	$* &> "/tmp/z-$1-$RANDOM" &!
 }
 
-for i in mupdf zathura firefox; do
+for i in mupdf zathura; do
 	alias "$i=z $i"
 done
 
@@ -161,7 +161,7 @@ alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-fi
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias play='mplayer'
 alias play-mute='mplayer -ao null -idx'
-alias play-shuffle='mplayer -shuffle -playlist $(find $(pwd) -iname "*.mp3")'
+alias play-shuffle='mplayer -shuffle -playlist <(find $(pwd) -iname \*.mp3)'
 
 alias datafart='curl --data-binary @- datafart.com'
 
@@ -641,4 +641,18 @@ command_not_found_handler() {
 			ssh ${1:1} "${@:2}"
 			;;
 	esac
+}
+
+urls()
+{
+	results="$(tmux capture-pane \; show-buffer -b0 \; delete-buffer -b0 \
+		| grep -P -o '(?:https?://|\bwww\.)[a-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27,~#]*(\([a-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27,~#]*\)|[a-zA-Z0-9\-\@;\/?:&=%\$_+*~])+' \
+		| sort | uniq)"
+	echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
+	echo -n "===> "
+	read num
+	if [ -n "$num" ]; then
+		selected=$(sed -n "$num p" <<< "$results")
+		xdg-open $selected
+	fi
 }
