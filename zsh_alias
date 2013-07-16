@@ -656,3 +656,11 @@ urls()
 		xdg-open $selected
 	fi
 }
+
+memcached-flush(){
+	php -r '$m = new Memcached; $m->addServer("localhost",11211); $m->deleteMulti($m->getAllKeys());'
+}
+
+memcached-keys(){
+	php -r '$m = new Memcached; $m->addServer("localhost",11211); echo implode("\n",$m->getAllKeys());'
+}
