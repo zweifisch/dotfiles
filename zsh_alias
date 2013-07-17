@@ -318,8 +318,7 @@ runc(){
 }
 
 ignore(){
-	touch .gitignore
-	cat  >> .gitignore <<EOF
+	cat >> .gitignore <<EOF
 *.pyc
 /venv/
 /node_modules/
@@ -327,6 +326,11 @@ ignore(){
 /vendor/
 EOF
 	$EDITOR .gitignore
+	cat >> .gitattributes <<EOF
+*.py diff=python
+*.php diff=php
+EOF
+	$EDITOR .gitattributes
 }
 
 init-venv2(){
