@@ -107,7 +107,7 @@ if [ $? = 0 ]; then
 		echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
 		echo -n "===> "
 		read num
-		if [ -n "$num" ]; then
+		if [[ "$num" =~ ^[0-9]+$ ]]; then
 			selected=$(sed -n "$num s/\([^ ]\) .*/\1/p" <<< "$results")
 			echo "selected package: $selected"
 			sudo apt-get install $selected
@@ -118,7 +118,8 @@ if [ $? = 0 ]; then
 		echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
 		echo -n "===> "
 		read num
-		if [ -n "$num" ]; then
+		if [[ "$num" =~ ^[0-9]+$ ]]; then
+			selected=$(sed -n "$num s/\([^ ]\) .*/\1/p" <<< "$results")
 			selected=$(sed -n "$num p" <<< "$results")
 			echo "selected package: $selected"
 			sudo apt-get remove $selected
@@ -318,6 +319,7 @@ runc(){
 }
 
 ignore(){
+	touch .gitignore
 	cat >> .gitignore <<EOF
 *.pyc
 /venv/
@@ -326,6 +328,7 @@ ignore(){
 /vendor/
 EOF
 	$EDITOR .gitignore
+	touch .gitattributes
 	cat >> .gitattributes <<EOF
 *.py diff=python
 *.php diff=php
@@ -655,7 +658,7 @@ urls()
 	echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
 	echo -n "===> "
 	read num
-	if [ -n "$num" ]; then
+	if [[ "$num" =~ ^[0-9]+$ ]]; then
 		selected=$(sed -n "$num p" <<< "$results")
 		xdg-open $selected
 	fi
