@@ -41,6 +41,8 @@ alias unrar-anyway='unrar x -kb -y'
 alias droid='adb shell busybox'
 alias dbox='dropbox'
 
+alias start-adb='sudo `which adb` start-server'
+
 alias dbox-crazy='echo 100000 | sudo tee /proc/sys/fs/inotify/max_user_watches'
 
 alias psc='ps xawf -eo pid,user,cgroup,args'
@@ -92,6 +94,10 @@ fi
 wow(){
 	unrar x $1 && rm -f Readme.png $1
 }
+
+wowurl(){                                                                                                                                                                                     
+	curl -s "$1" | grep prefiles | grep rar | awk '{print $3}'                                                                                                                                 
+}                                           
 
 view-tex(){
 	xelatex "$1" && mupdf "${1%.*}.pdf"
@@ -670,4 +676,9 @@ memcached-flush(){
 
 memcached-keys(){
 	php -r '$m = new Memcached; $m->addServer("localhost",11211); echo implode("\n",$m->getAllKeys());'
+}
+
+haxe-js(){
+	class=${1%.*}
+	haxe -js $class.js -main $class $1 && node $class.js
 }

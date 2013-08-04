@@ -24,7 +24,8 @@ framedrop="1" # For slow machines
 # sub-bg-color="0" # Black to white.
 # subfont-text-scale="3.7" # Truetype font scaling.
 # subfont-blur="1" # Slight blur.
-unicode = 1
+unicode=1
+utf8=yes
 
 # # This sets the postprocessing into overdrive using all possible spare cpu cycles to make the movie look better.
 # autoq = 100
@@ -41,7 +42,7 @@ unicode = 1
 # heartbeat-cmd="xscreensaver-command -deactivate >&- 2>&- &"
 
 font= "Microsoft YaHei"
-subcp=cp936
+# subcp=cp936
 subfont-autoscale=2
 subfont-text-scale=4
 subfont-autoscale=2
