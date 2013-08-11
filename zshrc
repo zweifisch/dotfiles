@@ -78,7 +78,7 @@ fi
 
 # git clone https://github.com/creationix/nvm ~/.nvm
 if [ -z "$NVM_SOURCED" ]; then
-	export NVM_SOURCED=1
+	# export NVM_SOURCED=1
 	if [ -d $HOME/.nvm ]; then
 		source $HOME/.nvm/nvm.sh
 	fi

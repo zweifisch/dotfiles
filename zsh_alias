@@ -690,3 +690,7 @@ dual () {
 single () {
     xrandr --output VGA1 --off
 }
+
+upsidedown(){
+	LD_PRELOAD=/usr/lib/i386-linux-gnu/libv4l/v4l1compat.so $*
+}
