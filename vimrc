@@ -59,7 +59,7 @@ Bundle 'troydm/easybuffer.vim'
 
 Bundle 'benmills/vimux'
 Bundle 'ctrlp.vim'
-Bundle 'mru.vim'
+" Bundle 'mru.vim'
 Bundle 'vim-stylus'
 " Bundle 'UltiSnips'
 Bundle 'vim-indent-object'
@@ -81,7 +81,7 @@ Bundle 'NrrwRgn'
 " Bundle 'bling/vim-airline'
 Bundle 'Lokaltog/vim-powerline'
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'mattn/zencoding-vim'
+Bundle 'mattn/emmet-vim'
 Bundle 'godlygeek/tabular.git'
 Bundle 'tomtom/tcomment_vim.git'
 Bundle 'git://repo.or.cz/vcscommand'
@@ -682,7 +682,7 @@ nmap <leader>yt :YRShow<CR>
 let g:yankring_history_file = '.yankring_history'
 "}}}
 " zen code {{{
-let g:user_zen_expandabbr_key='<c-e>'
+let g:user_emmet_leader_key = '<c-e>'
 "}}}
 "}}}1
 " Key Mappings {{{1

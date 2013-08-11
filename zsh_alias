@@ -682,3 +682,11 @@ haxe-js(){
 	class=${1%.*}
 	haxe -js $class.js -main $class $1 && node $class.js
 }
+
+dual () {
+    xrandr --output LVDS1 --primary --left-of VGA1 --output VGA1 --auto
+}
+
+single () {
+    xrandr --output VGA1 --off
+}
