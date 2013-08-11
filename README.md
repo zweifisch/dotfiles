@@ -1,19 +1,25 @@
-## tmux
-
-* tmux-powerline
-
 ## zsh
 
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 * [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search)
 * [oh-my-zsh-powerline-theme](https://github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme)
-* oh-my-zsh
+* [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
+
+```sh
+git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
+```
 
 ## pentadactyl
 
 * [dict](https://github.com/grassofhust/dict.js)
 * [buftabs](https://github.com/grassofhust/buftabs)
 * :freeze
+
+## tmux
+
+* tmux-powerline
+* [tmux-open-url](http://chneukirchen.org/dotfiles/bin/tmux-open-url)
+* [tmux-compress](https://github.com/chneukirchen/tools/)
 
 ## mutt
 
@@ -24,6 +30,10 @@
 * https://github.com/creationix/nvm
 
 ```sh
+git clone https://github.com/creationix/nvm ~/.nvm
+```
+
+```sh
 nvm install 0.8
 nvm ls
 nvm use 0.8
@@ -31,59 +41,20 @@ nvm ls-remote
 nvm alias default 0.8
 ```
 
-## scripts
-
-### memtop
-
-1.0.2
-
-http://code.google.com/p/memtop/
-
-### hosts
-
-```sh
-hosts ls
-hosts add project-name.local
-hosts add ip host
-hosts rm host
-```
-
-### inxi
-
-```sh
-wget --no-check-certificate https://inxi.googlecode.com/svn/trunk/inxi
-```
-
-```
-inxi -c0 -v7
-```
-
-### merge-diary
-
-```sh
-merge-diary wiki1/diary wiki2/diary
-```
-
-merge vimwiki diaries from diffrent wiki folder, won't be used again..
-
-### tmux-open-url & tmux-compress
-
-* http://chneukirchen.org/dotfiles/bin/tmux-open-url
-* https://github.com/chneukirchen/tools/
-
-### drip
-
-* https://github.com/flatland/drip
-
-## alias
-
-* `shot` take snaphot using webcam
-* `get-jquery` download jquery, `get-<tab>` for more
-* `mem-usage` print memory usage in percent
-* `start/stop/restart/status mongodb` for ubuntu and arch
-
 ## svn
 
 * `svn-url`
 * `svn-add-all`
 * `svn-diff-by-extension`
+* `svn-export-changed <r1> <r2> <url>`
+
+## miscs
+
+* `shot` take snaphot using webcam
+* `get-jquery` download jquery, `get-<tab>` for more
+* `mem-usage` print memory usage in percent
+* `start/stop/restart/status/reload <service>` for ubuntu and arch
+* `box` [dropbox uploader](https://github.com/andreafabrizi/Dropbox-Uploader)
+* [drip](https://github.com/flatland/drip)
+* `inxi -c0 -v7` [inxi](https://inxi.googlecode.com/svn/trunk/inxi)
+* `memtop` http://code.google.com/p/memtop/ 1.0.2 
