@@ -41,6 +41,14 @@ nvm ls-remote
 nvm alias default 0.8
 ```
 
+## git
+
+install [git-extra](https://github.com/visionmedia/git-extras)
+
+```sh
+cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
+```
+
 ## svn
 
 * `svn-url`

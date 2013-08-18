@@ -8,6 +8,8 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'juvenn/mustache.vim'
+
 Bundle 'jnwhiteh/vim-golang'
 
 Bundle 'zweifisch/pipe2eval'
