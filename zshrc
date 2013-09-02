@@ -92,3 +92,5 @@ source $HOME/.zsh_alias
 if [ -f $HOME/.zshrc_local ]; then
 	source $HOME/.zshrc_local
 fi
+
+export ANSIBLE_HOSTS=hosts

@@ -26,6 +26,8 @@ alias grep='grep --colour --exclude-dir=".svn"'
 alias leiser='amixer -q -c 0 sset Master 5%- unmute'
 alias lauter='amixer -q -c 0 sset Master 5%+ unmute'
 
+alias g='google'
+
 alias total-play-time='bc <<< "$(find -name "*.mp3" -print0 | xargs -0 mp3info -p "%S\n" | paste -sd+ | bc) / 60" '
 
 alias vbox='VBoxManage startvm'

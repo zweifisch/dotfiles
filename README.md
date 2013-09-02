@@ -41,6 +41,13 @@ nvm ls-remote
 nvm alias default 0.8
 ```
 
+## virtualenv
+
+```sh
+pip install virtualenv
+init-venv
+```
+
 ## git
 
 install [git-extra](https://github.com/visionmedia/git-extras)
