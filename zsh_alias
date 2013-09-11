@@ -336,12 +336,6 @@ ignore(){
 /vendor/
 EOF
 	$EDITOR .gitignore
-	touch .gitattributes
-	cat >> .gitattributes <<EOF
-*.py diff=python
-*.php diff=php
-EOF
-	$EDITOR .gitattributes
 }
 
 init-venv2(){
@@ -686,13 +680,29 @@ haxe-js(){
 }
 
 dual () {
-    xrandr --output LVDS1 --primary --left-of VGA1 --output VGA1 --auto
+	xrandr --output LVDS1 --primary --left-of VGA1 --output VGA1 --auto
 }
 
 single () {
-    xrandr --output VGA1 --off
+	xrandr --output VGA1 --off
 }
 
 upsidedown(){
 	LD_PRELOAD=/usr/lib/i386-linux-gnu/libv4l/v4l1compat.so $*
+}
+
+bd(){
+	cd $(pwd | sed 's|\(.*/'$1'[^/]*/\).*|\1|')
+}
+
+git-date()
+{
+	commit=$1
+	date="$2"
+	git filter-branch --env-filter \
+		'if [ $GIT_COMMIT = $commit ]
+		 then
+			export GIT_AUTHOR_DATE="$date"
+			export GIT_COMMITTER_DATE="$date"
+		 fi'
 }

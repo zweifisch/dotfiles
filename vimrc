@@ -8,9 +8,10 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
-Bundle 'juvenn/mustache.vim'
-
-Bundle 'jnwhiteh/vim-golang'
+Bundle 'sotte/presenting.vim'
+Bundle 'itchyny/thumbnail.vim'
+Bundle 'mhinz/vim-startify'
+Bundle 'kana/vim-arpeggio'
 
 Bundle 'zweifisch/pipe2eval'
 
@@ -19,9 +20,12 @@ Bundle 'tpope/vim-dispatch'
 
 Bundle 'nelstrom/vim-visual-star-search'
 
+Bundle 'avakhov/vim-yaml'
+Bundle 'juvenn/mustache.vim'
+Bundle 'jnwhiteh/vim-golang'
+
 Bundle 'shawncplus/phpcomplete.vim'
 Bundle 'StanAngeloff/php.vim'
-
 Bundle '2072/PHP-Indenting-for-VIm'
 
 Bundle 'elixir-lang/vim-elixir'
@@ -315,12 +319,8 @@ let g:acp_mappingDriven = 1
 " let g:acp_completeOption = '.,w,b,k,t'
 " }}}
 " arpeggio {{{
-" call arpeggio#load()
-" Arpeggio inoremap jk <Esc>
-" Arpeggio inoremap fh <Esc>
-" Arpeggio inoremap hj <Esc>
-" Arpeggio inoremap fj <Esc>
-" Arpeggio inoremap asdf <Esc>
+call arpeggio#load()
+Arpeggio inoremap jk <Esc>
 " }}}
 " bexec {{{
 let bexec_script_types = ['coffee']
@@ -587,6 +587,9 @@ let g:vimim_map='no-gi'
 " let g:vimim_plugin = '~/.vim/plugin'  
 " let g:vimim_cloud = -1
 " }}}
+" vim-markdown {{{
+let g:markdown_github_languages = ['ruby', 'javascript', 'php', 'coffee', 'python']
+" }}}
 " vimoutline {{{
 nmap ,,ht :!otl2html.py % > <c-r>=expand("%:r")<cr>.html<CR>
 nmap ,,hT :!otl2html.py % > <c-r>=expand("%:r")<cr>.html && firefox <c-r>=expand("%:r")<cr>.html<CR>
@@ -596,9 +599,11 @@ nmap ,,hT :!otl2html.py % > <c-r>=expand("%:r")<cr>.html && firefox <c-r>=expand
 nnoremap <silent> <Leader>vr :VimroomToggle<CR>
 " }}}
 " vimux {{{
-map <Leader>rx :VimuxClosePanes<CR>
+map <Leader>vc :VimuxClosePanes<CR>
 
 vmap <silent> <CR> "vy:call VimuxRunCommand(@v, 0)<CR>
+
+map <Leader>vl :VimuxRunLastCommand<CR>
 
 let g:VimuxHeight = "40"
 let g:VimuxOrientation = "h"
