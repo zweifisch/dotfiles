@@ -2,6 +2,7 @@ import XMonad
 import Data.Monoid
 import System.Exit
 import XMonad.Hooks.SetWMName
+import XMonad.Actions.CycleWS
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
@@ -75,6 +76,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Expand the master area
     , ((modm, xK_l ), sendMessage Expand)
+
+    -- Prev workspace
+    , ((modm .|. shiftMask, xK_h), prevWS)
+
+    -- Next workspace
+    , ((modm .|. shiftMask, xK_l), nextWS)
 
     -- Push window back into tiling
     , ((modm, xK_t ), withFocused $ windows . W.sink)

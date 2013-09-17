@@ -1,3 +1,29 @@
+## keybindings
+
+xmonad
+
+* prev workspace `mod4-H`
+* next workspace `mod4-L`
+
+tmux
+
+* prev session `alt-K`
+* next session `alt-J`
+* prev window `alt-H`
+* next window `alt-L`
+* left/lower/upper/right panel `alt-h/j/k/l`
+
+vim
+
+* prev buffer `H`
+* list buffer `L`
+* left/lower/upper/right window `ctrl-h/j/k/l`
+
+pentadactyl
+
+* left/right tab `h/l`
+* backward/forward 'H/L'
+
 ## zsh
 
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)

@@ -61,6 +61,7 @@ $HOME/bin
 $HOME/.cabal/bin
 $HOME/.gem/ruby/1.9.1/bin 
 $HOME/.bin
+$HOME/.composer/vendor/bin
 )
 
 for p in $pathes; do
