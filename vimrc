@@ -8,6 +8,11 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'rfc-syntax'
+
+" Bundle 'dag/vim2hs'
+Bundle 'lukerandall/haskellmode-vim'
+
 Bundle 'sotte/presenting.vim'
 Bundle 'itchyny/thumbnail.vim'
 Bundle 'mhinz/vim-startify'
@@ -321,9 +326,10 @@ let g:acp_mappingDriven = 1
 " arpeggio {{{
 call arpeggio#load()
 Arpeggio inoremap jk <Esc>
-" }}}
-" bexec {{{
-let bexec_script_types = ['coffee']
+Arpeggio nnoremap wl <C-W>l
+Arpeggio nnoremap wj <C-W>j
+Arpeggio nnoremap wk <C-W>k
+Arpeggio nnoremap wh <C-W>h
 " }}}
 " bufexplorer {{{
 let g:bufExplorerDetailedHelp=0
@@ -335,31 +341,6 @@ com! Cal :Calendar
 " coffee {{{
 command -nargs=1 C CoffeeCompile | :<args>
 command CM CoffeeMake
-" }}}
-" coffeetags {{{
-" let g:tagbar_type_coffee = {
-"   \ 'kinds' : [
-"   \   'f:functions',
-"   \   'o:object'
-"   \ ],
-"   \ 'kind2scope' : {
-"   \   'f' : 'object',
-"   \   'o' : 'object'
-"   \},
-"   \ 'sro' : ".",
-"   \ 'ctagsbin' : 'coffeetags',
-"   \ 'ctagsargs' : ' ',
-"   \}
-" }}}
-" commandt {{{
-" nnoremap <leader>tt :CommandT<CR>
-nnoremap <leader>tc :CommandT %:p:h<CR>
-nnoremap <leader>tf :CommandTFlush<CR>:CommandT<CR>
-nnoremap <leader>tb :CommandTBuffer<CR>
-" }}}
-" conque {{{
-nnoremap <leader>ba :ConqueTerm bash<CR>
-nnoremap <leader>zs :ConqueTerm zsh<CR>
 " }}}
 " cscope {{{
 nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
@@ -398,53 +379,11 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.git,.hg"
 let g:EclimBrowser = 'firefox'
 nmap <Leader>jm :JavaImport<CR>
 "}}}
-" fuzzyfinder {{{
-" let g:fuf_modesDisable = []
-" let g:fuf_mrufile_maxItem = 400
-" let g:fuf_mrucmd_maxItem = 400
-" nnoremap <silent> sj     :FufBuffer<CR>
-" nnoremap <silent> sk     :FufFileWithCurrentBufferDir<CR>
-" nnoremap <silent> sK     :FufFileWithFullCwd<CR>
-" nnoremap <silent> s<C-k> :FufFile<CR>
-" nnoremap <silent> sl     :FufCoverageFileChange<CR>
-" nnoremap <silent> sL     :FufCoverageFileChange<CR>
-" nnoremap <silent> s<C-l> :FufCoverageFileRegister<CR>
-" nnoremap <silent> sd     :FufDirWithCurrentBufferDir<CR>
-" nnoremap <silent> sD     :FufDirWithFullCwd<CR>
-" nnoremap <silent> s<C-d> :FufDir<CR>
-" nnoremap <silent> sn     :FufMruFile<CR>
-" nnoremap <silent> sN     :FufMruFileInCwd<CR>
-" nnoremap <silent> sm     :FufMruCmd<CR>
-" nnoremap <silent> su     :FufBookmarkFile<CR>
-" nnoremap <silent> s<C-u> :FufBookmarkFileAdd<CR>
-" vnoremap <silent> s<C-u> :FufBookmarkFileAddAsSelectedText<CR>
-" nnoremap <silent> si     :FufBookmarkDir<CR>
-" nnoremap <silent> s<C-i> :FufBookmarkDirAdd<CR>
-" nnoremap <silent> st     :FufTag<CR>
-" nnoremap <silent> sT     :FufTag!<CR>
-" nnoremap <silent> s<C-]> :FufTagWithCursorWord!<CR>
-" nnoremap <silent> s,     :FufBufferTag<CR>
-" nnoremap <silent> s<     :FufBufferTag!<CR>
-" vnoremap <silent> s,     :FufBufferTagWithSelectedText!<CR>
-" vnoremap <silent> s<     :FufBufferTagWithSelectedText<CR>
-" nnoremap <silent> s}     :FufBufferTagWithCursorWord!<CR>
-" nnoremap <silent> s.     :FufBufferTagAll<CR>
-" nnoremap <silent> s>     :FufBufferTagAll!<CR>
-" vnoremap <silent> s.     :FufBufferTagAllWithSelectedText!<CR>
-" vnoremap <silent> s>     :FufBufferTagAllWithSelectedText<CR>
-" nnoremap <silent> s]     :FufBufferTagAllWithCursorWord!<CR>
-" nnoremap <silent> sg     :FufTaggedFile<CR>
-" nnoremap <silent> sG     :FufTaggedFile!<CR>
-" nnoremap <silent> so     :FufJumpList<CR>
-" nnoremap <silent> sp     :FufChangeList<CR>
-" nnoremap <silent> sq     :FufQuickfix<CR>
-" nnoremap <silent> sy     :FufLine<CR>
-" nnoremap <silent> sh     :FufHelp<CR>
-" nnoremap <silent> se     :FufEditDataFile<CR>
-" nnoremap <silent> sr     :FufRenewCache<CR>
-" }}}
 " gundo {{{
 nnoremap <leader>uu :GundoToggle<CR>
+" }}}
+" haskell {{{
+let g:haddock_browser="/usr/bin/firefox"
 " }}}
 " indent-guides {{{
 " hi IndentGuidesOdd  ctermbg=black
@@ -546,22 +485,30 @@ let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_quiet_warnings=1
-let g:syntastic_disabled_filetypes = ['tex','coffee','sql','sh','go']
+let g:syntastic_disabled_filetypes = ['tex', 'coffee', 'sql', 'sh', 'go']
 
 let g:syntastic_mode_map = { 'mode': 'active',
 									 \ 'active_filetypes': ['ruby', 'php'],
-									 \ 'passive_filetypes': ['sh','go']
+									 \ 'passive_filetypes': ['sh', 'go', 'javascript']
 									 \ }
 "}}}
 " tagbar {{{
 nmap <leader>l :TagbarToggle<CR>
 let g:tagbar_compact = 1
+let g:tagbar_sort = 0
 let g:tagbar_type_php = {
 	 \ 'kinds' : [
 		  \ 'c:classes',
 		  \ 'f:functions',
 		  \ 'v:variables:1'
 	 \ ]
+\ }
+let g:tagbar_type_markdown = {
+	\ 'ctagstype' : 'markdown',
+	\ 'kinds' : [
+		\ 'h:headings'
+	\ ],
+	\ 'sort' : 0,
 \ }
 let g:tagbar_ctags_bin='/usr/bin/ctags'
 "}}}
@@ -626,11 +573,12 @@ let wiki_settings={
 \ 'syntax': 'markdown',
 \ 'auto_export': 0,
 \ 'nested_syntaxes': {
-\   'js':'javascript',
-\   'javascript':'javascript',
+\   'js': 'javascript',
+\   'javascript': 'javascript',
 \   'python': 'python',
 \   'py': 'python',
-\   'lisp':'lisp',
+\   'prolog': 'prolog',
+\   'lisp': 'lisp',
 \   'clojure': 'clojure',
 \   'clj': 'clojure',
 \   'c++': 'cpp',
@@ -738,8 +686,6 @@ map ,l <C-W>l
 map ,h <C-W>h
 
 map L :BufExplorer<cr>
-" map t :CommandTBuffer<cr>
-" map F :CommandT<cr>
 
 " map <S-H> gT
 " map <S-H> :bp<cr>

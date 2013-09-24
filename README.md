@@ -22,7 +22,11 @@ vim
 pentadactyl
 
 * left/right tab `h/l`
-* backward/forward 'H/L'
+* backward/forward `H/L`
+
+## vim
+
+* tagbar `\l`
 
 ## zsh
 
@@ -88,6 +92,11 @@ cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && 
 * `svn-add-all`
 * `svn-diff-by-extension`
 * `svn-export-changed <r1> <r2> <url>`
+
+## bitbucket
+
+* bitbucket-setup
+* bitbucket-<tab>
 
 ## miscs
 

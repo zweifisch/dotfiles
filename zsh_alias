@@ -496,7 +496,7 @@ bitbucket-setup(){
 }
 
 bitbucket-list(){
-	curl -s --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/user/repositories | sed -n '/name/ s/^[^:]\+\: \"\([a-zA-Z0-9_-]\+\)\"\,/\1/p'
+	curl -s --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/user/repositories | json | sed -n '/name/ s/^[^:]\+\: \"\([a-zA-Z0-9_-]\+\)\"\,/\1/p'
 }
 
 bitbucket-new(){
@@ -705,4 +705,9 @@ git-date()
 			export GIT_AUTHOR_DATE="$date"
 			export GIT_COMMITTER_DATE="$date"
 		 fi'
+}
+
+nocolor()
+{
+	sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
 }
