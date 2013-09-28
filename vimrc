@@ -8,89 +8,71 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
-Bundle 'rfc-syntax'
+Bundle 'ctrlp.vim'
+Bundle 'bufexplorer.zip'
+" Bundle 'troydm/easybuffer.vim'
+Bundle 'vimwiki'
+Bundle 'benmills/vimux'
+" Bundle 'epeli/slimux'
 
-" Bundle 'dag/vim2hs'
-Bundle 'lukerandall/haskellmode-vim'
-
+Bundle 'vim-indent-object'
+Bundle 'terryma/vim-multiple-cursors'
+" Bundle 'Valloric/YouCompleteMe'
+" Bundle 'maxbrunsfeld/vim-yankstack'
+" Bundle 'bling/vim-airline'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'mhinz/vim-startify'
 Bundle 'sotte/presenting.vim'
 Bundle 'itchyny/thumbnail.vim'
-Bundle 'mhinz/vim-startify'
 Bundle 'kana/vim-arpeggio'
-
 Bundle 'zweifisch/pipe2eval'
 
-Bundle 'tpope/vim-fireplace'
-Bundle 'tpope/vim-dispatch'
-
-Bundle 'nelstrom/vim-visual-star-search'
-
+Bundle 'rfc-syntax'
+" Bundle 'dag/vim2hs'
+Bundle 'lukerandall/haskellmode-vim'
+Bundle 'wting/rust.vim'
 Bundle 'avakhov/vim-yaml'
 Bundle 'juvenn/mustache.vim'
 Bundle 'jnwhiteh/vim-golang'
-
 Bundle 'shawncplus/phpcomplete.vim'
 Bundle 'StanAngeloff/php.vim'
 Bundle '2072/PHP-Indenting-for-VIm'
-
 Bundle 'elixir-lang/vim-elixir'
 Bundle 'jimenezrick/vimerl'
-
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'terryma/vim-expand-region'
 Bundle 'b4winckler/vim-objc'
-" Bundle 'plasticboy/vim-markdown'
-
-" Bundle 'Valloric/YouCompleteMe'
-" generate a Makefile
-" cd /tmp && cmake -G 'Unix Makefiles' . ~/.vim/bundle/YouCompleteMe/cpp
-" build
-" make ycm_core
-
-" latest vim
-" hg clone https://code.google.com/p/vim/
-" cd vim
-" ./configure --with-features=huge \
-            " --enable-rubyinterp \
-            " --enable-pythoninterp \
-            " --enable-perlinterp \
-            " --enable-gui=gtk2 --enable-cscope --prefix=/usr
-" make VIMRUNTIMEDIR=/usr/share/vim/vim73
-" ./src/vim
-
-" Bundle 'airblade/vim-gitgutter'
-
-" Bundle 'maxbrunsfeld/vim-yankstack'
-" Bundle 'ehamberg/vim-cute-python'
-
-" Bundle 'foldsearch'
 Bundle 'jade.vim'
-Bundle 'troydm/easybuffer.vim'
-" Bundle 'epeli/slimux'
-
-Bundle 'benmills/vimux'
-Bundle 'ctrlp.vim'
-" Bundle 'mru.vim'
 Bundle 'vim-stylus'
-" Bundle 'UltiSnips'
-Bundle 'vim-indent-object'
-Bundle 'vimwiki'
-
 Bundle 'tpope/vim-markdown'
+Bundle 'vim-coffee-script'
+" Bundle 'tpope/vim-haml'
+Bundle 'klen/python-mode'
+Bundle 'pangloss/vim-javascript'
+" Bundle 'johnhamelink/blade.vim'
+" Bundle 'jceb/vim-orgmode'
+" Bundle 'hsitz/VimOrganizer'
+Bundle 'VimClojure'
+Bundle 'derekwyatt/vim-scala.git'
+Bundle 'timcharper/textile.vim'
+Bundle 'nginx.vim'
 
+Bundle 'tpope/vim-fireplace'
+Bundle 'tpope/vim-dispatch'
+Bundle 'nelstrom/vim-visual-star-search'
+
+Bundle 'terryma/vim-expand-region'
+" Bundle 'airblade/vim-gitgutter'
+" Bundle 'ehamberg/vim-cute-python'
+" Bundle 'foldsearch'
+" Bundle 'mru.vim'
+" Bundle 'UltiSnips'
 Bundle 'Tagbar'
 Bundle 'delimitMate.vim'
-" Bundle 'VimOutliner'
 Bundle 'vimoutliner/vimoutliner'
 " Bundle 'Gundo'
 " Bundle 'paster.vim'
 " Bundle 'bufkill.vim'
-Bundle 'vim-coffee-script'
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'NrrwRgn'
-
-" Bundle 'bling/vim-airline'
-Bundle 'Lokaltog/vim-powerline'
 " Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
 Bundle 'mattn/emmet-vim'
 Bundle 'godlygeek/tabular.git'
@@ -101,51 +83,29 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-unimpaired'
-" Bundle 'tpope/vim-haml'
 " Bundle 'tpope/vim-vividchalk'
 Bundle 'speeddating.vim'
 Bundle 'ervandew/supertab.git'
 Bundle 'scrooloose/syntastic.git'
-Bundle 'VimClojure'
-Bundle 'derekwyatt/vim-scala.git'
-Bundle 'timcharper/textile.vim'
-Bundle 'nginx.vim'
 " Bundle 'DrawIt'
 " Bundle 'gnupg.vim'
 Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
 " Bundle 'jslint.vim'
-Bundle 'jceb/vim-orgmode'
-" Bundle 'hsitz/VimOrganizer'
-Bundle 'klen/python-mode'
-Bundle 'pangloss/vim-javascript'
 " Bundle 'nathanaelkane/vim-indent-guides'
 " Bundle 'gregsexton/gitv'
 Bundle 'slimv.vim'
-Bundle 'johnhamelink/blade.vim'
 " Bundle 'spolu/dwm.vim'
 " Bundle 'roman/golden-ratio'
 Bundle 'VimIM'
 Bundle 'DirDiff.vim'
-Bundle 'bufexplorer.zip'
 Bundle 'matchit.zip'
 " Bundle 'AnsiEsc.vim'
-
 Bundle 'Valloric/MatchTagAlways.git'
 Bundle 'AndrewRadev/switch.vim.git'
-
-" Bundle 'quickrun'
-" Bundle 'vim-l9'
-" Bundle 'vst'
-
-" Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'tpope/vim-rails.git'
-" Bundle 'FuzzyFinder'
-" Bundle 'Align'
+Bundle 'Lokaltog/vim-easymotion'
 " Bundle 'scrooloose/nerdtree.git'
 " Bundle 'scrooloose/nerdcommenter'
-" Bundle 'Shougo/neocomplcache.git'
 " ack
-" bexec
 " eunuch
 " clam
 " ragtag
@@ -153,7 +113,6 @@ Bundle 'AndrewRadev/switch.vim.git'
 " vimroom
 " fcitx
 " css-color
-" conque
 " yankering
 
 filetype plugin indent on
@@ -422,7 +381,7 @@ let g:EasyMotion_leader_key = '-'
 let g:EasyMotion_mapping_w = ')'
 let g:EasyMotion_mapping_b = '('
 let g:EasyMotion_mapping_f = 'f'
-" let g:EasyMotion_mapping_F = 'F'
+let g:EasyMotion_mapping_F = 'F'
 " }}}
 " neocomplcache {{{
 " }}}
@@ -852,19 +811,6 @@ au BufWritePost *.scss !sass %\:%:t:r.css
 autocmd BufReadCmd *.doc,*.xls,*.ppt exe ":silent 1,$!gsf-dump %" | setlocal buftype=nofile
 " }}}
 " Scripts {{{1
-" misc {{{
-com! Weather :r !cliweather shanghai
-com! IP :r !curl --silent ifconfig.me
-" }}}
-" define {{{
-" Dic
-" com! -nargs=1 Def :r !sdcv -n <f-args> |
-" 	\sed -e 's/\[ color[^>]*>//g'|
-" 	\sed -e 's/\]$//g' |
-" 	\elinks
-com! -nargs=1 Def :r !define <f-args>
-nm <leader>df :Def <c-r>=expand("<cword>")<cr><cr>
-" }}}
 " folders and files {{{
 nmap ,td :e ~/notes/otl/todo.otl<cr>
 nmap ,l :e ~/notes/otl<cr>
@@ -875,7 +821,6 @@ nmap ,sc :!scrot <c-r>=expand("%:t")<cr>.png
 " rcs {{{
 " autocmd bufwritepost .vimrc source $MYVIMRC
 nmap ,vrc :e $MYVIMRC<cr>
-" nmap ,grc :e $MYGVIMRC<cr>
 nmap ,grc :e .gvimrc<cr>
 nmap ,zrc :e $HOME/.zshrc<cr>
 nmap ,trc :e $HOME/.tmux.conf<cr>
@@ -883,188 +828,12 @@ nmap ,prc :e $HOME/.pentadactylrc<cr>
 nmap ,rem :e $HOME/.reminders<cr>
 nmap ,arc :e $HOME/.config/awesome/rc.lua<cr>
 "}}}
-" fetch file {{{
-nmap <leader>ge :!wget -c <c-r>=expand("<cfile>")<cr><cr>
-nmap <leader>fe :!aria2c -c -s3 <c-r>=expand("<cfile>")<cr><cr>
-" }}}
-" openfetion {{{
-" nmap ;ss :!ss <c-r>=getline('.')<cr><cr>
-nmap ,ss :!sslp "<c-r>=getline('.')<cr>"
-" }}}
-" run current line {{{
-nmap ,rl :! <c-r>=getline('.')<cr><cr>
-nmap ,rr :echo "<c-r>=getline('.')"<cr>!bash<cr>
-nmap ,rL :r !<c-r>=getline('.')<cr><cr>
-nmap ,RL :!sudo <c-r>=getline('.')<cr><cr>
-"}}}
-" run current file {{{
-" nmap ,rr :! <c-r>=expand("%:p")<cr><cr>
-" nmap ,rR :! chmod +x % && <c-r>=expand("%:p")<cr><cr>
-"}}}
-" txt2tags {{{
-au BufNewFile,BufRead *.t2t set ft=txt2tags
-nnoremap <leader>xh :!txt2tags -t html -o ~/web/s/%:t:r.html %<CR>
-" nnoremap <leader>xh :!txt2tags -t html -o ~/web/html/%:t:r.html --encoding utf-8 --toc %<CR>
-" nnoremap <leader>xh :!txt2tags -t html --toc %<cr>
-com! Html2Txt :so ~/.vim/unhtml.vim
-" }}}
-" decode base64 encoded string {{{
-command! -range=% Decode64 :w | <line1>,<line2>delete | let foo = @"
- \| perl -MMIME::Base64 my $foo=VIM::Eval(foo); my ($r, $c)=$curwin->Cursor(); $curbuf->Append($r-1, split '\n', MIME::Base64::decode($foo));
-
-command! -range=% DecodeQP :w | <line1>,<line2>delete | let foo = @"
- \| perl my $foo=VIM::Eval(foo); my ($r, $c)=$curwin->Cursor(); $curbuf->Append($r-1, split '\n', MIME::QuotedPrint::decode_qp($foo));
-" }}}
 " firefox {{{
 " open current file
 nnoremap <leader>ff :!firefox <c-r>=expand("%:p" )<cr><cr>
 " open current link
 nnoremap ,ff :!firefox <c-r>=expand("<cWORD>")<cr><cr>
-" google current word
-nnoremap ,gg :!firefox 'http://google.com/search?as_q=<c-r>=expand("<cword>")<cr>'<cr>
-" nnoremap ,gg :!firefox 'http://google.com.hk/?q=<c-r>=expand("<cword>")<cr>'<cr>
-" nnoremap R :RefreshFirefox<cr>
-
-" autocmd BufWriteCmd *.html,*.css :call RefreshFirefox()
-com! RefreshFirefox call RefreshFirefox()
-function! RefreshFirefox()
-	if &modified
-		write
-	endif
-	call NC('localhost',4242,'BrowserReload();repl.quit();')
-endfunction
-
-" autocmd BufWriteCmd *.html,*.css :call Refresh_firefox()
-function! Refresh_firefox()
-  if &modified
-    write
-    silent !echo  'vimYo = content.window.pageYOffset;
-          \ vimXo = content.window.pageXOffset;
-          \ BrowserReload();
-          \ content.window.scrollTo(vimXo,vimYo);
-          \ repl.quit();'  |
-          \ nc -w 1 localhost 4242 2>&1 > /dev/null
-  endif
-endfunction
 "}}}
-" penta{{{
-
-if (!exists('g:firefox_execute') || empty(g:firefox_execute))
-	let g:firefox_execute = 'firefox'
-endif
-fun! DactylComplete(A, L, P) "{{{
-	if (!exists('g:DactylCompleteLoaded'))
-		let l:tmp = tempname()
-		let l:getListCommands = 'js let hives = modules.commands.allHives;'
-					\ .'var names = [];'
-					\ .'Array.forEach(hives, function(hive) {'
-					\ .' let lists = hive._list;'
-					\ .' Array.forEach(lists, function(list) {'
-					\ .' names = names.concat(list.names);'
-					\ .' });'
-					\ .'});'
-					\ .'names.sort();'
-					\ .'uniqueNames = names.filter(function(elem, pos) names.indexOf(elem) == pos);'
-					\ .'names = uniqueNames;'
-					\ .'var localFile = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);'
-					\ .'try {'
-					\ .printf(' localFile.initWithPath("%s");', l:tmp)
-					\ .' if (!localFile.exists() || (!localFile.isDirectory())) {'
-					\ .' Components.utils.import("resource://gre/modules/NetUtil.jsm");'
-					\ .' Components.utils.import("resource://gre/modules/FileUtils.jsm");'
-					\ .' var ostream = FileUtils.openSafeFileOutputStream(localFile);'
-					\ .' var converter = Components.classes["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Components.interfaces.nsIScriptableUnicodeConverter);'
-					\ .' converter.charset = "UTF-8";'
-					\ .' var istream = converter.convertToInputStream(names.join("\n"));'
-					\ .' NetUtil.asyncCopy(istream, ostream, function(status) {'
-					\ .' if (!Components.isSuccessCode(status)) {'
-					\ .' return;'
-					\ .' }'
-					\ .' });'
-					\ .' } else {'
-					\ .' dactyl.echoerr("Unable to save file!");'
-					\ .' }'
-					\ .'} catch (e) {'
-					\ .' dactyl.echoerr("failed!");'
-					\ ."}"
-		sil call system(printf("%s -pentadactyl-remote \"%s\"", shellescape(g:firefox_execute, 1), escape(l:getListCommands, "\"")))
-
-		try
-			let g:DactylCommands = readfile(l:tmp)
-			let g:DactylCompleteLoaded = 1
-		catch
-			echoerr "Completion failed, maybe firefox isn't running."
-			return []
-		endtry
-	endif
-	let l:args = g:DactylCommands
-	let l:valid_completes = []
-	for l:arg in l:args
-		if stridx(l:arg, a:A) == 0
-			let l:valid_completes += [l:arg]
-		endif
-	endfor
-	return l:valid_completes
-endfunction "}}}
-" FIXME: :Dactyl echo <></>
-" FIXME: let it work on Windows
-command! -complete=customlist,DactylComplete -nargs=* Dactyl sil call system(printf("%s -pentadactyl-remote \"%s\"", shellescape(g:firefox_execute, 1), escape(<q-args>, "\"")))
-
-"}}}
-" npd {{{
-com! -nargs=+ Mp call NC("localhost",6600,<f-args>)
-"}}}
-" netcat {{{
-com! -nargs=+ NC call NC(<f-args>)
-function! NC(host,port,cmd)
-	execute "!echo ".shellescape(a:cmd)." | nc -c ".shellescape(a:host)." ".shellescape(a:port)." 2>&1 > /dev/null"
-endfunction
-"}}}
-" fold with tab {{{
-" setlocal foldmethod=expr
-" setlocal foldexpr=(getline(v:lnum)=~'^$')?-1:((indent(v:lnum)<indent(v:lnum+1))?('>'.indent(v:lnum+1)):indent(v:lnum))
-" set foldtext=getline(v:foldstart)
-" set fillchars=fold:\ "(there's a space after that \)
-" highlight Folded ctermfg=DarkGreen ctermbg=Black
-" }}}
-" template {{{
-autocmd BufNewFile * silent! 0r $VIMHOME/template/%:e.tpl
-autocmd BufNewFile *.php silent! 0r $VIMHOME/template/php.tpl
-" }}}
-" markdown {{{
-vmap md :!Markdown.pl --html4tags<CR>
-" }}}
-" dump {{{
-nmap <leader>dm vip:w! ~/tmp/buffer/index.html
-" }}}
-" FocusMode {{{
-function! ToggleFocusMode()
-  if (&foldcolumn != 12)
-    set laststatus=0
-    set numberwidth=10
-    set foldcolumn=12
-    set noruler
-    hi FoldColumn ctermbg=none
-    hi LineNr ctermfg=0 ctermbg=none
-    hi NonText ctermfg=0
-  else
-    set laststatus=2
-    set numberwidth=4
-    set foldcolumn=0
-    set ruler
-    execute 'colorscheme ' . g:colors_name
-  endif
-endfunc
-nnoremap <F1> :call ToggleFocusMode()<cr>
-" }}}
-" Codeigniter {{{
-function! CIEnv()
-	" system(shellescape("sed -n '/^[ \t]*define(\'ENV/ p' index.php"))
-	let env = system("sed -n ". shellescape('/^[ \t]*define(.*ENV/ s/^.*,\(.*\));$/\1/p'). " index.php")
-	echo env
-endfunc
-com! CIEnv :call CIEnv()
-" }}}
 " Mysql {{{
 function! Mysql()
 	let env = system("cat /dev/shm/repl.sql.*")
