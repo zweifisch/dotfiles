@@ -13,6 +13,7 @@ alias timestamp='date +%s'
 
 alias iex='rlwrap -a iex'
 alias pry='rlwrap -a pry'
+alias erl='rlwrap -a erl'
 
 datetime(){
 	date -d@$1 +%Y-%m-%d\ %H:%M:%S

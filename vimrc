@@ -35,11 +35,11 @@ Bundle 'wting/rust.vim'
 Bundle 'avakhov/vim-yaml'
 Bundle 'juvenn/mustache.vim'
 Bundle 'jnwhiteh/vim-golang'
-Bundle 'shawncplus/phpcomplete.vim'
+" Bundle 'shawncplus/phpcomplete.vim'
 Bundle 'StanAngeloff/php.vim'
-Bundle '2072/PHP-Indenting-for-VIm'
+" Bundle '2072/PHP-Indenting-for-VIm'
 Bundle 'elixir-lang/vim-elixir'
-Bundle 'jimenezrick/vimerl'
+" Bundle 'jimenezrick/vimerl'
 Bundle 'b4winckler/vim-objc'
 Bundle 'jade.vim'
 Bundle 'vim-stylus'
@@ -97,7 +97,7 @@ Bundle 'slimv.vim'
 " Bundle 'spolu/dwm.vim'
 " Bundle 'roman/golden-ratio'
 Bundle 'VimIM'
-Bundle 'DirDiff.vim'
+" Bundle 'DirDiff.vim'
 Bundle 'matchit.zip'
 " Bundle 'AnsiEsc.vim'
 Bundle 'Valloric/MatchTagAlways.git'
@@ -603,6 +603,8 @@ let g:user_emmet_leader_key = '<c-e>'
 
 " call yankstack#setup()
 
+imap <c-z> <esc>:stop<cr>
+
 imap jj <esc>
 " nmap <space> :
 nmap <space> za
@@ -783,14 +785,8 @@ function! JavaScriptFold()
 endfunction
 
 augroup php
-	au BufRead,BufNewFile *.php nm ,rl :!php -r '<C-R>=getline('.')<cr>'<cr>
-	au BufRead,BufNewFile *.php nm ,rL :r !php -r '<C-R>=getline('.')<cr>'<cr>
-	au BufRead,BufNewFile *.php nm <leader>r :!php <c-r>=expand("%:p")<CR><CR>
-	au BufRead,BufNewFile *.php nm <leader>R :r !php <c-r>=expand("%:p")<CR><CR>
 	au BufRead,BufNewFile *.php setlocal keywordprg=pman\ -s
-	" au FileType php setlocal keywordprg=pman\ -s
-	" au FileType php inoremap <buffer> @ $this->
-	" au BufRead,BufNewFile *.php vm <leader><space> :!eval-php-dump<CR>
+	au FileType php inoremap <buffer> >> $this->
 augroup end
 
 au FileType vim setlocal fdm=marker

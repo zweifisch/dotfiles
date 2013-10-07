@@ -41,7 +41,7 @@ utf8=yes
 # # Prevent xscreensaver from locking.
 # heartbeat-cmd="xscreensaver-command -deactivate >&- 2>&- &"
 
-font= "Microsoft YaHei"
+font= "WenQuanYi Micro Hei"
 # subcp=cp936
 subfont-autoscale=2
 subfont-text-scale=4
