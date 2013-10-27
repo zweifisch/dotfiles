@@ -698,8 +698,7 @@ bd(){
 	cd $(pwd | sed 's|\(.*/'$1'[^/]*/\).*|\1|')
 }
 
-git-date()
-{
+git-date(){
 	commit=$1
 	date="$2"
 	git filter-branch --env-filter \
@@ -710,7 +709,17 @@ git-date()
 		 fi'
 }
 
-nocolor()
-{
+nocolor(){
 	sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
 }
+
+ranger-cd(){
+	tempfile='/tmp/ranger-chosendir'
+	ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+	test -f "$tempfile" && if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+		cd -- "$(cat "$tempfile")"
+	fi
+	rm -f -- "$tempfile"
+}
+
+alias rcd=ranger-cd

@@ -24,6 +24,10 @@ pentadactyl
 * left/right tab `h/l`
 * backward/forward `H/L`
 
+ranger
+
+* `DD` move to ~/.trash
+
 ## vim
 
 * tagbar `\l`
