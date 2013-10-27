@@ -57,12 +57,15 @@ app =
 		helpers.requireCSS(res.solarized)
 	fun: ->
 		for tag in document.getElementsByTagName '*' then tag?.parentNode?.removeChild tag
+	jquery: ->
+		helpers.inject 'http://code.jquery.com/jquery-1.10.2.min.js'
 
 group.commands.add ['whatfont', 'wf'], "what font", app.whatFont
 group.commands.add ['freeze'], "export urls", app.urls
 group.commands.add ['visualevent'], "visual event", app.toggleVisualEvent
 group.commands.add ['readability'], "improve readability", app.readability
 group.commands.add ['solarized'], "solarized", app.solarized
+group.commands.add ['jquery', 'jq'], "inject jquery", app.jquery
 group.commands.add ['hack'], "hack", app.hack
 
 

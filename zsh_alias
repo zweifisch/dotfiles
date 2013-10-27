@@ -54,6 +54,8 @@ alias mem-usage="ps aux | awk '{sum +=\$4}; END {print sum}'"
 
 alias privoxy-socks="privoxy $HOME/.privoxy.conf"
 
+alias playbook="ansible-playbook"
+
 if [ -e /usr/bin/service ]; then
 	start(){ sudo service $1 start }
 	status(){ sudo service $1 status }

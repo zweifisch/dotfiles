@@ -3,6 +3,7 @@ history
 .moc/pid
 .moc/last_directory
 *.pyc
+*.pyo
 xmonad/xmonad-i386-linux
 xmonad/xmonad.hi
 xmonad/xmonad.errors
