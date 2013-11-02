@@ -22,7 +22,12 @@ datetime(){
 alias vi="vim"
 alias e='emacs -nw'
 alias j="jobs -l"
-alias grep='grep --colour --exclude-dir=".svn"'
+alias grep='grep --colour'
+alias grep-coffee='grep --include="*.coffee"'
+alias grep-php='grep --include="*.php"'
+alias grep-js='grep --include="*.js"'
+
+alias short-line='awk "length < 200"'
 
 alias leiser='amixer -q -c 0 sset Master 5%- unmute'
 alias lauter='amixer -q -c 0 sset Master 5%+ unmute'
