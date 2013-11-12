@@ -597,11 +597,11 @@ mount-ntfs(){
 	# mount -t ntfs -o nls=utf8,umask=0022,gid=$(id -g),uid=$(id -u)  /dev/$1 $2
 }
 
-compress-pdf(){
+pdf-compress(){
 	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
 }
 
-concat-pdf(){
+pdf-concat(){
 	for pdf in $*; do
 		pdf2ps $pdf
 	done

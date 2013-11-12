@@ -95,3 +95,6 @@ if [ -f $HOME/.zshrc_local ]; then
 fi
 
 export ANSIBLE_HOSTS=hosts
+
+# tmuxp
+export DISABLE_AUTO_TITLE='true'

@@ -22,8 +22,8 @@ Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'bling/vim-airline'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-powerline'
-Bundle 'mhinz/vim-startify'
-Bundle 'sotte/presenting.vim'
+" Bundle 'mhinz/vim-startify'
+" Bundle 'sotte/presenting.vim'
 Bundle 'itchyny/thumbnail.vim'
 Bundle 'kana/vim-arpeggio'
 Bundle 'zweifisch/pipe2eval'
@@ -204,7 +204,7 @@ set smartcase
 
 set autowrite
 
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.apk,*.png,*.jpg,*.gif,*.dex,*.swf,*.swc,*.jar,*.ttf,node_modules,build,venv,*.egg-info,cabal-dev,vendor
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.apk,*.png,*.jpg,*.gif,*.dex,*.swf,*.swc,*.jar,*.ttf,node_modules,build,venv,*.egg-info,cabal-dev,vendor,deps
 
 " change the terminal's title
 set title
