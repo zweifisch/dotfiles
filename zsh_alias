@@ -37,6 +37,7 @@ alias g='google'
 alias total-play-time='bc <<< "$(find -name "*.mp3" -print0 | xargs -0 mp3info -p "%S\n" | paste -sd+ | bc) / 60" '
 
 alias vbox='VBoxManage startvm'
+alias vbox-list="VBoxManage -nologo list vms"
 alias nb='newsbeuter'
 alias pb='podbeuter'
 
@@ -652,11 +653,14 @@ command_not_found_handler() {
 			;;
 		+)
 			;;
-	esac
-	case ${1:0:1} in
-		@)
-			ssh ${1:1} "${@:2}"
-			;;
+		*)
+			case ${1:0:1} in
+				@)
+					ssh ${1:1} "${@:2}"
+					;;
+				*)
+					google "$*"
+			esac
 	esac
 }
 
@@ -712,6 +716,10 @@ git-date(){
 			export GIT_AUTHOR_DATE="$date"
 			export GIT_COMMITTER_DATE="$date"
 		 fi'
+}
+
+git-amend-date() {
+	GIT_COMMITTER_DATE="$1 +0800" git commit --amend -C HEAD --date "$1 +0800"
 }
 
 nocolor(){
