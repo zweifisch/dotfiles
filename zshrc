@@ -56,12 +56,11 @@ export PRO_BASE=$HOME/pg
 # fi
 
 pathes=(
-/opt/android-sdk/platform-tools 
 $HOME/bin
 $HOME/.cabal/bin
 $HOME/.gem/ruby/1.9.1/bin 
-$HOME/.bin
 $HOME/.composer/vendor/bin
+$HOME/.bin
 )
 
 for p in $pathes; do
@@ -77,7 +76,6 @@ if [ -d $HOME/.rbenv/bin ]; then
 	fi
 fi
 
-# git clone https://github.com/creationix/nvm ~/.nvm
 if [ -z "$NVM_SOURCED" ]; then
 	# export NVM_SOURCED=1
 	if [ -d $HOME/.nvm ]; then

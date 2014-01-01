@@ -106,10 +106,6 @@ wow(){
 	unrar x $1 && rm -f Readme.png $1
 }
 
-wowurl(){                                                                                                                                                                                     
-	curl -s "$1" | grep prefiles | grep rar | awk '{print $3}'                                                                                                                                 
-}                                           
-
 view-tex(){
 	xelatex "$1" && mupdf "${1%.*}.pdf"
 }
@@ -736,3 +732,13 @@ ranger-cd(){
 }
 
 alias rcd=ranger-cd
+
+setup-rbenv() {
+	git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+	mkdir -p ~/.rbenv/plugins
+	git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+}
+
+setup-nvm() {
+	git clone https://github.com/creationix/nvm ~/.nvm
+}

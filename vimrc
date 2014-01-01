@@ -39,11 +39,14 @@ Bundle 'jnwhiteh/vim-golang'
 Bundle 'StanAngeloff/php.vim'
 " Bundle '2072/PHP-Indenting-for-VIm'
 Bundle 'elixir-lang/vim-elixir'
+Bundle 'Neurogami/mirah-vim'
 " Bundle 'jimenezrick/vimerl'
 Bundle 'b4winckler/vim-objc'
 Bundle 'jade.vim'
 Bundle 'vim-stylus'
-Bundle 'tpope/vim-markdown'
+" Bundle 'tpope/vim-markdown'
+Bundle 'plasticboy/vim-markdown'
+" Bundle 'nelstrom/vim-markdown-folding'
 Bundle 'vim-coffee-script'
 " Bundle 'tpope/vim-haml'
 Bundle 'klen/python-mode'
@@ -204,7 +207,7 @@ set smartcase
 
 set autowrite
 
-set wildignore=*.swp,*.bak,*.pyc,*.class,*.apk,*.png,*.jpg,*.gif,*.dex,*.swf,*.swc,*.jar,*.ttf,node_modules,build,venv,*.egg-info,cabal-dev,vendor,deps,components
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.apk,*.png,*.jpg,*.gif,*.dex,*.swf,*.swc,*.jar,*.ttf,node_modules,build,venv,*.egg-info,cabal-dev,vendor,deps
 
 " change the terminal's title
 set title

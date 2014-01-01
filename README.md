@@ -64,7 +64,15 @@ git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
 * https://github.com/creationix/nvm
 
 ```sh
-git clone https://github.com/creationix/nvm ~/.nvm
+setup-nvm
+```
+
+```sh
+nvm ls
+nvm ls-remote
+nvm install v0.11
+nvm alias default v0.11
+nvm use v0.10
 ```
 
 ```sh
@@ -80,6 +88,20 @@ nvm alias default 0.8
 ```sh
 pip install virtualenv
 init-venv
+```
+
+## rbenv
+
+```sh
+setup-rbenv
+```
+
+```sh
+rbenv install jruby-<tab>
+rbenv rehash
+
+rbenv versions
+rbenv global <tab>
 ```
 
 ## git
@@ -99,8 +121,8 @@ cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && 
 
 ## bitbucket
 
-* bitbucket-setup
-* bitbucket-<tab>
+* `bitbucket-setup`
+* `bitbucket-<tab>`
 
 ## miscs
 
