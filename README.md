@@ -75,14 +75,6 @@ nvm alias default v0.11
 nvm use v0.10
 ```
 
-```sh
-nvm install 0.8
-nvm ls
-nvm use 0.8
-nvm ls-remote
-nvm alias default 0.8
-```
-
 ## virtualenv
 
 ```sh
