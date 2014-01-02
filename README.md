@@ -30,18 +30,20 @@ ranger
 
 ## vim
 
-* tagbar `\l`
+```
+:Bundle install
+```
 
 ## zsh
+
+```sh
+setup-zsh
+```
 
 * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 * [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search)
 * [oh-my-zsh-powerline-theme](https://github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme)
 * [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
-
-```sh
-git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
-```
 
 ## pentadactyl
 
