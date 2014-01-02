@@ -1,0 +1,12 @@
+email: yourname@mail.com
+fullname: Your Name
+user: username
+~/.muttrc:
+   realname: realname
+~/.gitconfig:
+~/.fetchmailrc:
+   passwd: secret
+~/.msmtprc:
+   passwd: secret
+~/.procmailrc:
+~/.moc/config:

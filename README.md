@@ -1,3 +1,30 @@
+## setup
+
+clone and link
+
+```sh
+git clone https://github.com/zweifisch/dotfiles ~/.dotfiles
+cd !$
+rake install # or make install
+```
+
+ohmyzsh/rbenv...
+
+```
+setup-zsh
+setup-rbenv
+setup-nvm
+setup-git
+```
+
+github/gmail and mutt...
+
+```
+sudo pip install redact
+vi redact.yaml
+redact redact.yaml
+```
+
 ## keybindings
 
 xmonad
