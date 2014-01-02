@@ -100,10 +100,10 @@ rbenv global <tab>
 
 ## git
 
-install [git-extra](https://github.com/visionmedia/git-extras)
+* [git-extra](https://github.com/visionmedia/git-extras)
 
 ```sh
-cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
+setup-git
 ```
 
 ## svn

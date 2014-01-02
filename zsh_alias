@@ -746,3 +746,7 @@ setup-nvm() {
 setup-zsh() {
 	git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
 }
+
+setup-git() {
+	cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
+}
