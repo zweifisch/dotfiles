@@ -23,7 +23,7 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(vi-mode lein rebar fabric gnu-utils rake svn taskwarrior zsh-syntax-highlighting history-substring-search)
+plugins=(vi-mode lein mix rebar fabric gnu-utils rake svn taskwarrior zsh-syntax-highlighting history-substring-search)
 source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all
