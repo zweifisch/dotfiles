@@ -54,12 +54,17 @@ Bundle 'pangloss/vim-javascript'
 " Bundle 'johnhamelink/blade.vim'
 " Bundle 'jceb/vim-orgmode'
 " Bundle 'hsitz/VimOrganizer'
-Bundle 'VimClojure'
+
+" Bundle 'VimClojure'
+Bundle 'tpope/vim-fireplace'
+Bundle 'tpope/vim-classpath'
+Bundle 'guns/vim-clojure-static'
+Bundle 'kien/rainbow_parentheses.vim'
+
 Bundle 'derekwyatt/vim-scala.git'
 Bundle 'timcharper/textile.vim'
 Bundle 'nginx.vim'
 
-Bundle 'tpope/vim-fireplace'
 Bundle 'tpope/vim-dispatch'
 Bundle 'nelstrom/vim-visual-star-search'
 
@@ -411,6 +416,28 @@ let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,E101,W402,W0401"
 let g:pymode_indent = 0
 let g:pymode_lint_checker = "pyflakes"
 " }}}
+" rainbow {{{
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+" }}}
 " restart {{{
 let g:restart_command = 'Restart'
 "}}}
@@ -484,12 +511,6 @@ let Tlist_File_Fold_Auto_Close=1
 let Tlist_Compact_Format=1
 let tlist_php_settings = 'php;c:class;f:function'
 "}}}
-" vimclojure {{{
-let vimclojure#WantNaigun = 1
-let vimclojure#NailgunClient = "/home/cm/bin/ng"
-let vimclojure#SplitPos = "left"
-let g:vimclojure#ParenRainbow = 1
-"}}}
 " vimim {{{
 let g:vimim_map='c-bslash'
 let g:vimim_map='no-gi'
@@ -510,7 +531,7 @@ nnoremap <silent> <Leader>vr :VimroomToggle<CR>
 " vimux {{{
 map <Leader>vc :VimuxClosePanes<CR>
 
-vmap <silent> <CR> "vy:call VimuxRunCommand(@v, 0)<CR>
+vmap <silent> <CR> "vy:call VimuxRunCommand(escape(@v, '$`'), 0)<CR>
 
 map <Leader>vl :VimuxRunLastCommand<CR>
 
@@ -800,6 +821,13 @@ augroup wiki
 	" au BufRead,BufNewFile *.wiki :call Voom vimwiki<cr>
 	" au BufRead,BufNewFile *.wiki set ft=markdown
 	au BufRead,BufNewFile *.wiki setl foldlevel=1
+augroup end
+
+augroup clojure
+    au VimEnter *.clj RainbowParenthesesToggle
+    au Syntax *.clj RainbowParenthesesLoadRound
+    " au Syntax *.clj RainbowParenthesesLoadSquare
+    " au Syntax *.clj RainbowParenthesesLoadBraces
 augroup end
 
 au BufWritePost *.scss !sass %\:%:t:r.css
