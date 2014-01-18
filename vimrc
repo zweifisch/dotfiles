@@ -712,8 +712,6 @@ nmap ,dt a<C-R>=strftime("%Y-%m-%d %H:%M:%S %a")<CR>
 nmap ,da a<C-R>=strftime("%Y-%m-%d")<CR>
 nmap ,ti a<C-R>=strftime("%H:%M:%S")<CR>
 
-nmap K :!man <C-R>=expand('<cword>')<CR><CR>
-
 " }}}1
 " ft {{{
 au BufRead,BufNewFile *.go set ft=go
@@ -809,7 +807,7 @@ function! JavaScriptFold()
 endfunction
 
 augroup php
-	au BufRead,BufNewFile *.php setlocal keywordprg=pman\ -s
+	au BufRead,BufNewFile *.php setlocal keywordprg=pman
 	au FileType php inoremap <buffer> >> $this->
 augroup end
 

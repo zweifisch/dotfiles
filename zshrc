@@ -96,3 +96,5 @@ export ANSIBLE_HOSTS=hosts
 
 # tmuxp
 export DISABLE_AUTO_TITLE='true'
+
+export GOPATH=$HOME/.golang
