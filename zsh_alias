@@ -1,3 +1,5 @@
+alias reload-alias='source $HOME/.zsh_alias'
+
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
@@ -179,7 +181,6 @@ alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-fi
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias play='mplayer'
-alias play-mute='mplayer -ao null -idx'
 alias play-shuffle='mplayer -shuffle -playlist <(find $(pwd) -iname \*.mp3)'
 
 alias datafart='curl --data-binary @- datafart.com'
@@ -345,6 +346,8 @@ ignore(){
 /npm-debug.log
 /vendor/
 bower_components/
+.lock.pid
+.module-cache/
 EOF
 	$EDITOR .gitignore
 }
@@ -661,7 +664,7 @@ command_not_found_handler() {
 					ssh ${1:1} "${@:2}"
 					;;
 				*)
-					google "$*"
+					exit 1
 			esac
 	esac
 }
@@ -755,4 +758,22 @@ setup-zsh() {
 
 setup-git() {
 	cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
+}
+
+html-coffee() {
+	cat > $1.html << EOF
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	
+<script src="$1.js"></script>
+</body>
+</html>
+EOF
+
+touch $1.{coffee,js}
 }

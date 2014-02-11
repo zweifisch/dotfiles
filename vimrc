@@ -413,7 +413,7 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 " python mode {{{
 let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,E101,W402,W0401"
 " E101 mixed spaces and tabs, even in string!?
-let g:pymode_indent = 0
+" let g:pymode_indent = 0
 let g:pymode_lint_checker = "pyflakes"
 " }}}
 " rainbow {{{
@@ -693,6 +693,8 @@ vnoremap Q gq
 
 " Go to the middle of the line
 nmap gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
+
+nmap gf :e <cfile><CR>
 
 "Clear all spaces at the end of the line
 nmap <Leader>s :%s/\s\+$//g<CR>
