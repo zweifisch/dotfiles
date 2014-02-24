@@ -73,7 +73,7 @@ Bundle 'terryma/vim-expand-region'
 " Bundle 'ehamberg/vim-cute-python'
 " Bundle 'foldsearch'
 " Bundle 'mru.vim'
-" Bundle 'UltiSnips'
+Bundle 'SirVer/ultisnips'
 Bundle 'Tagbar'
 Bundle 'delimitMate.vim'
 Bundle 'vimoutliner/vimoutliner'
@@ -411,10 +411,12 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 " hi MBENormal guifg=#808080 guibg=fg
 " }}}
 " python mode {{{
-let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,E101,W402,W0401"
-" E101 mixed spaces and tabs, even in string!?
+let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,W402,W0401,E302,E701"
+" E302 two blank line
+" E701 multiple statements on one line
 " let g:pymode_indent = 0
 let g:pymode_lint_checker = "pyflakes"
+" let g:pymode_python = 'python3'
 " }}}
 " rainbow {{{
 let g:rbpt_colorpairs = [
