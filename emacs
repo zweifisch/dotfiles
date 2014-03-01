@@ -1,10 +1,9 @@
 ;; Prevent the cursor from blinking
-; (blink-cursor-mode 0)
-;; Don't use messages that you don't read
-(setq initial-scratch-message "")
-(setq inhibit-startup-message t)
-;; Don't let Emacs hurt your ears
-(setq visible-bell t)
+(blink-cursor-mode -1)
+
+(setq initial-scratch-message ""
+      inhibit-startup-message t
+      visible-bell t)
 
 (ido-mode t)
 (setq ido-enable-flex-matching t)
@@ -30,6 +29,7 @@
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
 (show-paren-mode 1)
+(setq-default tab-width 3)
 (setq-default indent-tabs-mode nil)
 (setq x-select-enable-clipboard t
       x-select-enable-primary t
@@ -61,79 +61,164 @@
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
-(defvar
-  my-packages '(subatomic-theme
-                 evil
-                 evil-indent-textobject
-                 evil-matchit
-                 evil-nerd-commenter
-                 evil-leader
-                 python
-                 flycheck))
-
+(defvar my-packages '(evil
+                      evil-indent-textobject
+                      evil-matchit
+                      evil-nerd-commenter
+                      evil-leader
+                      subatomic-theme
+                      virtualenvwrapper
+                      flycheck))
 (dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
+  (when (not (package-installed-p p)) (package-install p)))
 
 (setq my:el-get-packages
-      '(org-mode
-         jedi
-         coffee-mode
-         fiplr
-         projectile
-         helm
-         ; undo-tree
-         ; clojure-mode
-         ; slime-repl
-         ; swank-clojure
-         ; yasnippet
-         ; anything
-         ; emms
-         ; dired-sort
-         ; auto-dictionnary
-         ; autopair
-         ; dired+
-         ; google-maps
-         ; org2blog
-         ; rainbow-mode
-         ; switch-window
-         ; sr-speedbar
-         ; typopunct
-         ))
-
+      '(org-mode deft
+        python jedi ein
+        projectile
+        help-fns+
+        evil-surround
+        coffee-mode
+        zencoding-mode
+        markdown-mode
+        mustache-mode
+        yaml-mode
+        auto-complete
+        magit))
 (el-get 'sync my:el-get-packages)
+
+;; powerline fiplr helm clojure-mode slime-repl swank-clojure
+;; yasnippet anything emms dired-sort dired+ auto-dictionnary
+;; autopair google-maps org2blog rainbow-mode switch-window
+;; sr-speedbar typopunct solarized-theme
 
 ;; theme and modes
 
 (load-theme 'subatomic t)
+;; (load-theme 'solarized-dark t)
+;; (load-theme 'zenburn t)
 
+; powerline
+;; (powerline-default-theme)
+
+; evil
 (evil-mode)
 
-(global-evil-leader-mode)
+(setq-default evil-symbol-word-search t)
 
-; fiplr (replaced with projectile)
-(setq fiplr-root-markers '(".git" ".svn"))
-(global-set-key (kbd "C-x p") 'fiplr-find-file)
-(setq fiplr-ignored-globs '((directories (".git" ".svn"))
-                            (files ("*.jpg" "*.png" "*.zip" "*~"))))
+(define-key evil-normal-state-map " " 'evil-toggle-fold)
+(define-key evil-normal-state-map ";" 'evil-ex)
 
-; jedi
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
+(defun minibuffer-keyboard-quit ()
+  "Abort recursive edit.
+In Delete Selection mode, if the mark is active, just deactivate it;
+then it takes a second \\[keyboard-quit] to abort the minibuffer."
+  (interactive)
+  (if (and delete-selection-mode transient-mark-mode mark-active)
+      (setq deactivate-mark t)
+    (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+    (abort-recursive-edit)))
 
-; projectile
-(projectile-global-mode)
-(setq projectile-completion-system 'grizzl)
-
-; helm (not necessary..)
-(global-set-key (kbd "C-c h") 'helm-projectile)
+(define-key evil-normal-state-map [escape] 'keyboard-quit)
+(define-key evil-visual-state-map [escape] 'keyboard-quit)
+(define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+(define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+(global-set-key [escape] 'evil-exit-emacs-state)
 
 ; evil-leader
 
 (evil-leader/set-key
-  "f" 'projectile-find-file
+  "F" 'projectile-find-file
   "b" 'projectile-switch-to-buffer
-  "s" 'projectile-switch-project)
+  "R" 'projectile-recentf
+  "g" 'projectile-grep
 
-; nerd-commenter
+  "f" 'ido-find-file
+  "B" 'ido-switch-buffer
+  "r" 'recentf-open-files
+
+  "s" 'projectile-switch-project
+  "e" 'eshell
+  "i" 'ein:notebooklist-open
+  "c" 'org-capture
+  "d" 'deft)
+(global-evil-leader-mode)
+
+; evil-nerd-commenter
 (evilnc-default-hotkeys)
+
+; jedi
+(add-hook 'python-mode-hook 'jedi:setup)
+(add-hook 'python-mode-hook 'auto-complete-mode)
+(add-hook 'python-mode-hook 'jedi:ac-setup)
+(setq jedi:complete-on-dot t)
+
+(add-hook 'python-mode-hook 'flycheck-mode)
+
+;; (setq flycheck-check-syntax-automatically '(mode-enabled save))
+
+; recentf
+(recentf-mode 1)
+(setq recentf-max-saved-items 256)
+
+; projectile
+(projectile-global-mode)
+(setq projectile-completion-system 'grizzl
+      projectile-remember-window-configs t)
+
+;; virtualenv
+(require 'virtualenvwrapper)
+(venv-initialize-eshell)
+(setq venv-location "~/.venv/")
+(setq eshell-prompt-function
+      (lambda ()
+        (concat venv-current-name " $ ")))
+;; virtualenv in modline
+(setq-default mode-line-format (cons '(:exec venv-current-name) mode-line-format))
+
+; ein
+
+; python
+(setq python-shell-interpreter "ipython3"
+      python-shell-interpreter-args ""
+      python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+      python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+      python-shell-completion-setup-code
+      "from IPython.core.completerlib import module_completion"
+      python-shell-completion-module-string-code
+      "';'.join(module_completion('''%s'''))\n"
+      python-shell-completion-string-code
+      "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+
+; org-mode
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+(setq org-directory "~/notes/org")
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+
+(setq org-capture-templates
+      '(("t" "Tasks" entry (file+headline (concat org-directory "/todo.org") "Tasks")
+         "* TODO %?")
+        ("c" "Collection" entry (file+datetree (concat org-directory "/collect.org") "Collections")
+         "* %x")
+        ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a"))))
+
+(custom-set-variables '(org-agenda-files (quote ("~/notes/org/journal.org"))))
+(setq org-agenda-files (list "~/notes/org/journal.org" "~/notes/org/zf.org" ))  
+
+(setq org-todo-keywords
+      '((sequence "TODO" "NEXT" "|" "DONE" "ABORTED")))
+
+; deft
+(setq deft-extension "org"
+      deft-directory org-directory
+      deft-text-mode 'org-mode)
+
+; evil-org-mode
+

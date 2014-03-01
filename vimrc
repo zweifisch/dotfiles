@@ -24,8 +24,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'Lokaltog/vim-powerline'
 " Bundle 'mhinz/vim-startify'
 " Bundle 'sotte/presenting.vim'
-Bundle 'itchyny/thumbnail.vim'
-Bundle 'kana/vim-arpeggio'
+" Bundle 'itchyny/thumbnail.vim'
 Bundle 'zweifisch/pipe2eval'
 
 Bundle 'rfc-syntax'
@@ -277,77 +276,20 @@ let g:netrw_liststyle= 1
 
 " }}}1
 " Plugin Settings {{{1
-" acp {{{
-" disable auto start
-let g:acp_enableAtStartup = 1
-nmap <leader>al :AcpLock<CR>a
-nmap <leader>au :AcpUnlock<CR>a
-
-let g:acp_behaviorSnipmateLength=1
-
-" CursorMovedI will make Conque slow
-let g:acp_mappingDriven = 1
-" complete
-" let g:acp_completeOption = '.,w,b,k,t'
-" }}}
-" arpeggio {{{
-call arpeggio#load()
-Arpeggio inoremap jk <Esc>
-Arpeggio nnoremap wl <C-W>l
-Arpeggio nnoremap wj <C-W>j
-Arpeggio nnoremap wk <C-W>k
-Arpeggio nnoremap wh <C-W>h
-" }}}
 " bufexplorer {{{
 let g:bufExplorerDetailedHelp=0
-" }}}
-" calendar {{{
-" nnoremap <leader>cl :Calendar<cr>
-com! Cal :Calendar
 " }}}
 " coffee {{{
 command -nargs=1 C CoffeeCompile | :<args>
 command CM CoffeeMake
-" }}}
-" cscope {{{
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-" search tag files first
-set cscopetagorder=1
-" search both tag and db
-set cscopetag
-" silent
-set nocscopeverbose
-if filereadable("cscope.out")
-    cs add cscope.out .
-endif
-" reset
-set cscopeverbose
 " }}}
 " ctrlp {{{
 let g:ctrlp_working_path_mode = 0
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.out,*.in,tags
 " let g:ctrlp_map = 'F'
 " }}}
-" dbext {{{
-" use pipe2eval mysql
-" }}}
 " dirdiff{{{
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.git,.hg" 
-" }}}
-" eclim {{{
-let g:EclimBrowser = 'firefox'
-nmap <Leader>jm :JavaImport<CR>
-"}}}
-" gundo {{{
-nnoremap <leader>uu :GundoToggle<CR>
 " }}}
 " haskell {{{
 let g:haddock_browser="/usr/bin/firefox"
@@ -391,25 +333,6 @@ let g:EasyMotion_mapping_b = '('
 let g:EasyMotion_mapping_f = 'f'
 let g:EasyMotion_mapping_F = 'F'
 " }}}
-" neocomplcache {{{
-" }}}
-" nerdtree {{{
-" nnoremap <leader>n :NERDTreeToggle<cr>
-" nnoremap <leader><leader>n :NERDTreeFind<cr>
-" }}}
-" minibufexplorer {{{
-let g:miniBufExplMapWindowNavVim = 1
-" let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-" let g:miniBufExplModSelTarget = 1 
-" MiniBufExpl Colors
-" hi MBEVisibleActive guifg=#A6DB29 guibg=fg
-" hi MBEVisibleChangedActive guifg=#F1266F guibg=fg
-" hi MBEVisibleChanged guifg=#F1266F guibg=fg
-" hi MBEVisibleNormal guifg=#5DC2D6 guibg=fg
-" hi MBEChanged guifg=#CD5907 guibg=fg
-" hi MBENormal guifg=#808080 guibg=fg
-" }}}
 " python mode {{{
 let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,W402,W0401,E302,E701"
 " E302 two blank line
@@ -446,13 +369,6 @@ let g:restart_command = 'Restart'
 " screen{{{
 let g:ScreenImpl = 'Tmux'
 " }}}
-" showmarks {{{
-hi ShowMarksHLl guifg=NONE guibg=NONE gui=NONE ctermfg=white ctermbg=NONE
-hi ShowMarksHLu guifg=NONE guibg=NONE gui=NONE ctermfg=DarkBlue ctermbg=NONE
-hi ShowMarksHLo guifg=NONE guibg=NONE gui=NONE ctermfg=DarkGray ctermbg=NONE
-let g:showmarks_enable=0
-nmap <leader>mc :ShowMarksClearMark<CR>
-"}}}
 " spell check {{{
 nmap <leader>ee <Esc>:setlocal spell spelllang=en<CR>
 nmap <leader>dd <Esc>:setlocal spell spelllang=de_20<CR>
@@ -628,7 +544,6 @@ let g:user_emmet_leader_key = '<c-e>'
 " Key Mappings {{{1
 
 " call yankstack#setup()
-
 imap <c-z> <esc>:stop<cr>
 
 imap jj <esc>
