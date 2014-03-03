@@ -84,6 +84,8 @@
         mustache-mode
         yaml-mode
         auto-complete
+        web-mode
+        jade-mode
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -222,3 +224,55 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; evil-org-mode
 
+(define-minor-mode evil-org-mode
+  "Buffer local minor mode for evil-org"
+  :init-value nil
+  :lighter " EvilOrg"
+  :keymap (make-sparse-keymap) ; defines evil-org-mode-map
+  :group 'evil-org)
+
+(defun always-insert-item ()
+  "Force insertion of org item"
+  (if (not (org-in-item-p))
+      (insert "\n- ")
+    (org-insert-item))
+  )
+
+(defun evil-org-eol-call (fun)
+  "Go to end of line and call provided function"
+  (end-of-line)
+  (funcall fun)
+  (evil-append nil)
+  )
+
+;; normal state shortcuts
+(evil-define-key 'normal evil-org-mode-map
+  "gh" 'outline-up-heading
+  "gj" (if (fboundp 'org-forward-same-level) ;to be backward compatible with older org version
+           'org-forward-same-level
+         'org-forward-heading-same-level)
+  "gk" (if (fboundp 'org-backward-same-level)
+           'org-backward-same-level
+         'org-backward-heading-same-level)
+  "gl" 'outline-next-visible-heading
+  "t" 'org-todo
+  "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil)))
+  "H" 'org-beginning-of-line
+  "L" 'org-end-of-line
+  ";t" 'org-show-todo-tree
+  "o" '(lambda () (interactive) (evil-org-eol-call 'always-insert-item))
+  "O" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
+  "$" 'org-end-of-line
+  "^" 'org-beginning-of-line
+  "<" 'org-metaleft
+  ">" 'org-metaright
+  ";a" 'org-agenda
+  "-" 'org-cycle-list-bullet
+  (kbd "TAB") 'org-cycle)
+
+(add-hook 'org-mode-hook 'evil-org-mode) ;; only load with org-mode
+
+; shell
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+(winner-mode)

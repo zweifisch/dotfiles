@@ -44,6 +44,9 @@ alias vbox-list="VBoxManage -nologo list vms"
 alias nb='newsbeuter'
 alias pb='podbeuter'
 
+alias curl-json="curl -H 'Content-Type: applicaiton/json' "
+alias curl-ajax="curl -H 'X-Requested-With: XMLHttpRequest' "
+
 alias svn-url='svn info | grep -i url | cut -d " " -f 2'
 
 alias bc='bc -ql'
