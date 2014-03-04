@@ -752,6 +752,10 @@ setup-rbenv() {
 	git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 }
 
+setup-pyenv() {
+	git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+}
+
 setup-nvm() {
 	git clone https://github.com/creationix/nvm ~/.nvm
 }

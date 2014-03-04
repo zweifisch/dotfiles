@@ -76,6 +76,12 @@ if [ -d $HOME/.rbenv/bin ]; then
 	fi
 fi
 
+if [ -d $HOME/.pyenv ]; then
+	export PYENV_ROOT="$HOME/.pyenv"
+	export PATH="$PYENV_ROOT/bin:$PATH"
+	eval "$(pyenv init -)"
+fi
+
 if [ -z "$NVM_SOURCED" ]; then
 	# export NVM_SOURCED=1
 	if [ -d $HOME/.nvm ]; then

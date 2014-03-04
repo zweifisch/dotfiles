@@ -272,7 +272,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (add-hook 'org-mode-hook 'evil-org-mode) ;; only load with org-mode
 
+(winner-mode)
+
 ; shell
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-(winner-mode)
+(custom-set-variables
+ '(comint-scroll-to-bottom-on-input t)  ; always insert at the bottom
+ '(comint-scroll-to-bottom-on-output t) ; always add output at the bottom
+ '(comint-scroll-show-maximum-output t) ; scroll to show max possible output
+ '(comint-completion-autolist t)        ; show completion list when ambiguous
+ '(comint-input-ignoredups t)           ; no duplicates in command history
+ '(comint-completion-addsuffix t)       ; insert space/slash after file completion
+ )
