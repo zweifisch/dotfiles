@@ -50,6 +50,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     , ((0, xK_Print), spawn "scrot -e 'mv $f ~/screenshots/'")
 
+    , ((shiftMask, xK_Print), spawn "import ~/shot.png")
+
     -- Move focus to the next window
     , ((modm, xK_Tab ), windows W.focusDown)
 

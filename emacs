@@ -67,6 +67,7 @@
                       evil-nerd-commenter
                       evil-leader
                       subatomic-theme
+                      stylus-mode
                       virtualenvwrapper
                       flycheck))
 (dolist (p my-packages)
@@ -285,3 +286,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(comint-input-ignoredups t)           ; no duplicates in command history
  '(comint-completion-addsuffix t)       ; insert space/slash after file completion
  )
+
+(setq-default truncate-lines t)
