@@ -56,11 +56,8 @@ export PRO_BASE=$HOME/pg
 # fi
 
 pathes=(
-$HOME/bin
-$HOME/.cabal/bin
-$HOME/.gem/ruby/1.9.1/bin 
-$HOME/.composer/vendor/bin
 $HOME/.bin
+$HOME/.cabal/bin
 )
 
 for p in $pathes; do

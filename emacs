@@ -82,11 +82,15 @@
         coffee-mode
         zencoding-mode
         markdown-mode
-        mustache-mode
+        ; mustache-mode
         yaml-mode
         auto-complete
         web-mode
         jade-mode
+        haskell-mode
+        clojure-mode
+        cider
+        exec-path-from-shell
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -141,7 +145,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
   "f" 'ido-find-file
   "B" 'ido-switch-buffer
-  "r" 'recentf-open-files
+  ;; "r" 'recentf-open-files
+
+  "o" 'browse-url
 
   "s" 'projectile-switch-project
   "e" 'eshell
@@ -223,31 +229,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       deft-directory org-directory
       deft-text-mode 'org-mode)
 
-; evil-org-mode
+; org-mode
 
-(define-minor-mode evil-org-mode
-  "Buffer local minor mode for evil-org"
-  :init-value nil
-  :lighter " EvilOrg"
-  :keymap (make-sparse-keymap) ; defines evil-org-mode-map
-  :group 'evil-org)
-
-(defun always-insert-item ()
-  "Force insertion of org item"
-  (if (not (org-in-item-p))
-      (insert "\n- ")
-    (org-insert-item))
-  )
-
-(defun evil-org-eol-call (fun)
-  "Go to end of line and call provided function"
-  (end-of-line)
-  (funcall fun)
-  (evil-append nil)
-  )
-
-;; normal state shortcuts
-(evil-define-key 'normal evil-org-mode-map
+(evil-define-key 'normal org-mode-map
   "gh" 'outline-up-heading
   "gj" (if (fboundp 'org-forward-same-level) ;to be backward compatible with older org version
            'org-forward-same-level
@@ -257,21 +241,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
          'org-backward-heading-same-level)
   "gl" 'outline-next-visible-heading
   "t" 'org-todo
-  "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil)))
   "H" 'org-beginning-of-line
   "L" 'org-end-of-line
-  ";t" 'org-show-todo-tree
-  "o" '(lambda () (interactive) (evil-org-eol-call 'always-insert-item))
-  "O" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
+  "\t" 'org-show-todo-tree
   "$" 'org-end-of-line
   "^" 'org-beginning-of-line
   "<" 'org-metaleft
   ">" 'org-metaright
-  ";a" 'org-agenda
+  "\a" 'org-agenda
   "-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle)
-
-(add-hook 'org-mode-hook 'evil-org-mode) ;; only load with org-mode
 
 (winner-mode)
 
@@ -288,3 +267,23 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  )
 
 (setq-default truncate-lines t)
+
+(exec-path-from-shell-initialize)
+
+; cider
+(evil-define-key 'normal cider-mode-map
+  (kbd "RET") 'cider-eval-last-sexp)
+
+(evil-define-key 'visual cider-mode-map
+  (kbd "RET") 'cider-eval-region)
+
+; python
+(evil-define-key 'visual python-mode-map
+  (kbd "RET") 'python-shell-send-region)
+
+(evil-define-key 'normal python-mode-map
+  "gs" 'python-shell-switch-to-shell)
+
+; global evil key
+(define-key evil-normal-state-map "L" 'ido-switch-buffer)
+(define-key evil-normal-state-map "H" 'mode-line-other-buffer)

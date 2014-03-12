@@ -102,15 +102,8 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export   XMODIFIERS="@im=fcitx"
+export XMODIFIERS="@im=fcitx"
 
-PATH=$PATH:~/.bin:~/bin:~/portable/flexsdk4/bin/
+PATH=$PATH:~/.bin
 
 # ubuntu-server-tip
-
-# export http_proxy=http://172.30.30.191:1984
-# export http_proxy=http://127.0.0.1:8000
-
-# fortune
-alias composer="/usr/local/bin/composer.phar"
-
