@@ -29,7 +29,7 @@
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
 (show-paren-mode 1)
-(setq-default tab-width 3)
+(setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq x-select-enable-clipboard t
       x-select-enable-primary t
@@ -241,14 +241,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
          'org-backward-heading-same-level)
   "gl" 'outline-next-visible-heading
   "t" 'org-todo
-  "H" 'org-beginning-of-line
-  "L" 'org-end-of-line
-  "\t" 'org-show-todo-tree
+  "gt" 'org-show-todo-tree
   "$" 'org-end-of-line
   "^" 'org-beginning-of-line
   "<" 'org-metaleft
   ">" 'org-metaright
-  "\a" 'org-agenda
+  "ga" 'org-agenda
   "-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle)
 
@@ -287,3 +285,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; global evil key
 (define-key evil-normal-state-map "L" 'ido-switch-buffer)
 (define-key evil-normal-state-map "H" 'mode-line-other-buffer)
+(define-key evil-normal-state-map "\C-o" 'other-window)
+(define-key evil-insert-state-map "\C-o" 'other-window)
+
+;; coffee
+
+;; (setq coffee-indent-tabs-mode t)
+
+;; web-mode
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+
+(display-time-mode 1)

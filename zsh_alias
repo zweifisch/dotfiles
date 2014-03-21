@@ -23,7 +23,7 @@ datetime(){
 }
 
 alias vi="vim"
-alias e='emacs -nwt'
+alias e='emacs -nw'
 alias j="jobs -l"
 alias grep='grep --colour'
 alias grep-coffee='grep --include="*.coffee"'
