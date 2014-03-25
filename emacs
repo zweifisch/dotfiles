@@ -69,6 +69,7 @@
                       subatomic-theme
                       stylus-mode
                       virtualenvwrapper
+                      elscreen
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -91,6 +92,7 @@
         clojure-mode
         cider
         exec-path-from-shell
+        kivy-mode
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -298,3 +300,29 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 
 (display-time-mode 1)
+
+;; (require 'zoom-window)
+;; (global-set-key (kbd "C-x C-z") 'zoom-window-zoom)
+;; (setq zoom-window-mode-line-color "DarkGreen")
+
+;; elscreen
+(setq elscreen-prefix-key "\C-a")
+(setq elscreen-display-tab nil)
+
+(elscreen-start)
+
+(define-key elscreen-map "x" 'elscreen-kill)
+(define-key elscreen-map "b" 'elscreen-find-and-goto-by-buffer)
+(define-key elscreen-map "f" 'elscreen-find-file)
+
+(global-set-key (kbd "M-h") 'elscreen-previous)
+(global-set-key (kbd "M-l") 'elscreen-next)
+
+(defun elscreen-eshell ()
+  (interactive)
+  (progn
+    (elscreen-clone)
+    (eshell)
+    (rename-uniquely)))
+
+(define-key elscreen-map "s" 'elscreen-eshell)
