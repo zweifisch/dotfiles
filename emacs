@@ -93,6 +93,8 @@
         cider
         exec-path-from-shell
         kivy-mode
+        auctex
+        multi-term
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -322,7 +324,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (interactive)
   (progn
     (elscreen-clone)
-    (eshell)
-    (rename-uniquely)))
+    (multi-term)))
 
 (define-key elscreen-map "s" 'elscreen-eshell)

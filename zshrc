@@ -1,11 +1,17 @@
 ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME="wedisagree"
-ZSH_THEME="gnzh" # exit code
+# ZSH_THEME="wedisagree"
+# ZSH_THEME="gnzh" # exit code
 ZSH_THEME="robbyrussell"
-ZSH_THEME="sorin" # git branch added modified files exit code 
-ZSH_THEME="jonathan"
-ZSH_THEME="powerline"
+# ZSH_THEME="sorin" # git branch added modified files exit code 
+# ZSH_THEME="jonathan"
+# ZSH_THEME="powerline"
+
+if [ -n "$INSIDE_EMACS" ]; then
+	print -P "\033AnSiTu %n"
+	print -P "\033AnSiTc %d"
+	ZSH_THEME="robbyrussell"
+fi
 
 ZSH_CUSTOM=$HOME/.zsh
 

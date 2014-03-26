@@ -431,6 +431,10 @@ chpwd(){
 	if [ -f .virthualenv/bin/activate ]; then
 		activate-virthualenv
 	fi
+
+	if [ -n "$INSIDE_EMACS" ]; then
+		print -P "\033AnSiTc %d"
+	fi
 }
 
 duration(){
