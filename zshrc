@@ -11,6 +11,9 @@ if [ -n "$INSIDE_EMACS" ]; then
 	print -P "\033AnSiTu %n"
 	print -P "\033AnSiTc %d"
 	ZSH_THEME="robbyrussell"
+	export TERM=xterm-256color
+else
+	export TERM=screen-256color
 fi
 
 ZSH_CUSTOM=$HOME/.zsh
@@ -35,7 +38,6 @@ source $ZSH/oh-my-zsh.sh
 unsetopt correct_all
 unsetopt correct
 
-export TERM=screen-256color
 export EDITOR="vim"
 
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd:cd ..:cd..:mpalyer"

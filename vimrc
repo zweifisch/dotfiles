@@ -21,7 +21,6 @@ Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'maxbrunsfeld/vim-yankstack'
 " Bundle 'bling/vim-airline'
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'Lokaltog/vim-powerline'
 " Bundle 'mhinz/vim-startify'
 " Bundle 'sotte/presenting.vim'
 " Bundle 'itchyny/thumbnail.vim'
@@ -133,8 +132,14 @@ let g:solarized_underline=0
 " syntax on
 syntax enable
 
-set background=dark
-colorscheme solarized
+if empty($INSIDE_EMACS)
+	set background=dark
+	colorscheme solarized
+	Bundle 'Lokaltog/vim-powerline'
+else
+	" pass
+endif
+
 " colorscheme vividchalk
 " ir_black molokai peaksea tango2 dusk mustang desert wombat lucius fnaqevan
 
@@ -159,13 +164,16 @@ set ruler
 " dispaly time
 set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 
-set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-" allways show statusline
-set laststatus=2
+if empty($INSIDE_EMACS)
 
-let g:Powerline_symbols = 'fancy'
+	set statusline+=%#warningmsg#
+	" set statusline+=%{SyntasticStatuslineFlag()}
+	set statusline+=%*
+	" allways show statusline
+	set laststatus=2
+
+	let g:Powerline_symbols = 'fancy'
+end
 
 " enable loading a buffer in a window that currently has a modified buffer
 set hidden

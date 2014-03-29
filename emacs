@@ -70,6 +70,7 @@
                       stylus-mode
                       virtualenvwrapper
                       elscreen
+                      org-present
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -327,3 +328,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (multi-term)))
 
 (define-key elscreen-map "s" 'elscreen-eshell)
+
+(add-to-list 'term-unbind-key-list "C-a")
+(add-to-list 'term-bind-key-alist '("C-z" . term-stop-subjob))
+
+(setq-default TeX-engine 'xetex)
