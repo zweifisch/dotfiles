@@ -793,3 +793,15 @@ touch $1.{coffee,js}
 alias pip-install='pip install -r requirements.txt -i http://pypi.douban.com/simple'
 
 alias get-bing-image='curl $(curl "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1" | json images.0.url) > $(date -d now +%Y-%m-%d).jpg' 
+
+qr() {
+	content="$1"
+	if [ -z "$content" ]; then
+		content="$(xclip -o)"
+	fi
+	if [ -n "$content" ]; then
+		qrencode "$content" -o /tmp/qrencode.png && qiv /tmp/qrencode.png
+	else
+		echo empty input
+	fi
+}

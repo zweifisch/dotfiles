@@ -96,6 +96,10 @@
         kivy-mode
         auctex
         multi-term
+        slime
+        swank-js
+        js2-mode
+        smart-tab
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -290,8 +294,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; global evil key
 (define-key evil-normal-state-map "L" 'ido-switch-buffer)
 (define-key evil-normal-state-map "H" 'mode-line-other-buffer)
+; (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
+
 (define-key evil-normal-state-map "\C-o" 'other-window)
 (define-key evil-insert-state-map "\C-o" 'other-window)
+(global-set-key (kbd "C-j") 'other-window)
+(global-set-key (kbd "C-k") 'other-window)
 
 ;; coffee
 
@@ -333,3 +341,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-to-list 'term-bind-key-alist '("C-z" . term-stop-subjob))
 
 (setq-default TeX-engine 'xetex)
+
+(autoload 'js2-mode "js2-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-hook 'js2-mode-hook
+          (lambda ()
+            (slime-js-minor-mode 1)))
+
+(setq slime-contribs '(slime-fancy slime-js))
