@@ -8,6 +8,10 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'tpope/vim-vinegar'
+Bundle 'goldfeld/vim-seek'
+Bundle 'mhinz/vim-signify'
+
 Bundle 'ctrlp.vim'
 Bundle 'bufexplorer.zip'
 " Bundle 'troydm/easybuffer.vim'
@@ -20,7 +24,7 @@ Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'Valloric/YouCompleteMe'
 " Bundle 'maxbrunsfeld/vim-yankstack'
 " Bundle 'bling/vim-airline'
-Bundle 'altercation/vim-colors-solarized'
+Bundle 'blueyed/vim-colors-solarized'
 " Bundle 'mhinz/vim-startify'
 " Bundle 'sotte/presenting.vim'
 " Bundle 'itchyny/thumbnail.vim'
@@ -294,7 +298,7 @@ command CM CoffeeMake
 " ctrlp {{{
 let g:ctrlp_working_path_mode = 0
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.out,*.in,tags
-" let g:ctrlp_map = 'F'
+let g:ctrlp_map = '\f'
 " }}}
 " dirdiff{{{
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.git,.hg" 
@@ -399,7 +403,7 @@ let g:switch_definitions =
 let g:syntastic_enable_signs=1
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
-let g:syntastic_quiet_warnings=1
+let g:syntastic_quiet_messages = {'level': 'warnings'}
 let g:syntastic_disabled_filetypes = ['tex', 'coffee', 'sql', 'sh', 'go']
 
 let g:syntastic_mode_map = { 'mode': 'active',
