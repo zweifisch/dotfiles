@@ -2,32 +2,33 @@
 ! Xft settings
 !-------------------------------------------------------------------------------
 
-Xft.dpi: 96
-Xft.antialias: true
-Xft.rgba: rgb
-Xft.hinting: true
-Xft.hintstyle: hintslight
+Xft.autohint:                             0
+Xft.lcdfilter:                            lcddefault
+Xft.hintstyle:                            hintfull
+Xft.hinting:                              1
+Xft.antialias:                            1
+Xft.dpi:                                  96
+Xft.rgba:                                 rgb
 
 !-------------------------------------------------------------------------------
 ! URxvt settings
-! Colours lifted from Solarized (http://ethanschoonover.com/solarized)
-! More info at:
-! http://pod.tst.eu/http://cvs.schmorp.de/rxvt-unicode/doc/rxvt.1.pod
 !-------------------------------------------------------------------------------
 
+URxvt.buffered:                           true
+URxvt.geometry:                           80x22
 URxvt.depth: 32
-URxvt.geometry: 90x30
 URxvt.transparent: false
 URxvt.fading: 0
-! URxvt.urgentOnBell: true
+URxvt.urgentOnBell: true
 ! URxvt.visualBell: true
 URxvt.loginShell: true
 URxvt.saveLines: 50
 URxvt.internalBorder: 3
 URxvt.lineSpace: 0
+URxvt.intensityStyles: false
 
 ! Fix font space
-URxvt*letterSpace: -1.5
+URxvt*letterSpace: -1.8
 
 ! Scrollbar
 URxvt.scrollStyle: rxvt
@@ -39,7 +40,7 @@ URxvt.matcher.button: 1
 URxvt.urlLauncher: firefox
 
 ! Cursor
-URxvt.cursorBlink: true
+URxvt.cursorBlink: false
 URxvt.cursorColor: #657b83
 URxvt.cursorUnderline: false
 
@@ -89,20 +90,28 @@ URxvt.pointerBlank: true
 *color15: #fdf6e3
 
 !! font
-URxvt*font:                 xft:Monaco for Powerline:regular:size=8,\
-xft:WenQuanYi Zen Hei Mono:regular:size=8
-URxvt*imFont:               xft:Monaco for Powerline:regular:size=8,\
-xft:WenQuanYi Zen Hei Mono:regular:size=8
-URxvt*boldFont:             xft:Monaco for Powerline:bold:size=8,\
-xft:WenQuanYi Zen Hei Mono:bold:size=8
-URxvt*italicFont:           xft:Monaco for Powerline:italic:size=8,\
-xft:WenQuanYi Zen Hei Mono:italic:size=8
-URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=8,\
-xft:WenQuanYi Zen Hei Mono:bold:italic:size=8
 
-! URxvt*font:                 xft:Microsoft YaHei Mono for Powerline:regular:size=8
-! URxvt*imFont:               xft:Microsoft YaHei Mono for Powerline:regular:size=8
-! URxvt*boldFont:             xft:Microsoft YaHei Mono for Powerline:regular:size=8
-! URxvt*italicFont:           xft:Microsoft YaHei Mono for Powerline:regular:size=8
-! URxvt*boldItalicFont:       xft:Microsoft YaHei Mono for Powerline:regular:size=8
+! URxvt*font:                 xft:Monaco for Powerline:regular:size=9, xft:WenQuanYi Micro Hei Mono:regular:size=10
+! URxvt*imFont:               xft:Monaco for Powerline:regular:size=8, xft:WenQuanYi Micro Hei Mono:regular:size=8
+! URxvt*boldFont:             xft:Monaco for Powerline:bold:size=8, xft:WenQuanYi Micro Hei Mono:bold:size=8
+! URxvt*italicFont:           xft:Monaco for Powerline:italic:size=8, xft:WenQuanYi Micro Hei Mono:italic:size=8
+! URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=8, xft:WenQuanYi Micro Mono:bold:italic:size=8
 
+! URxvt*font:                 xft:Monaco for Powerline:regular:size=8
+! URxvt*imFont:               xft:Monaco for Powerline:regular:size=8
+! URxvt*boldFont:             xft:Monaco for Powerline:bold:size=8
+! URxvt*italicFont:           xft:Monaco for Powerline:italic:size=8
+! URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=8
+
+! URxvt*font:                 xft:Ubuntu Mono:size=11,xft:PowerlineSymbols:size=13,xft:WenQuanYi Micro Hei Mono:size=10
+
+! URxvt*font:                 xft:Microsoft YaHei Mono for Powerline:size=11
+! URxvt*imFont:               xft:Microsoft YaHei Mono for Powerline:size=11
+! URxvt*boldFont:             xft:Microsoft YaHei Mono for Powerline:size=11
+! URxvt*italicFont:           xft:Microsoft YaHei Mono for Powerline:size=11
+! URxvt*boldItalicFont:       xft:Microsoft YaHei Mono for Powerline:size=11
+
+! URxvt*font:                 xft:Meslo LG L DZ for Powerline:size=11, xft:WenQuanYi Micro Hei Mono:size=11
+
+! URxvt*font: xft:Ubuntu\ Mono:size=12,xft:Inconsolata\ for\ Powerline:size=12
+URxvt*font: xft:Ubuntu\ Mono:size=12,xft:PowerlineSymbols:size=12,xft:WenQuanYi Micro Hei Mono:size=11
