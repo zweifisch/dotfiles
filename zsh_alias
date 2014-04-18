@@ -445,11 +445,19 @@ hourglass(){ trap 'tput cnorm' EXIT INT;local s=$(($SECONDS +$1));(tput civis;wh
 
 uncommited(){
 	for gitdir in `find ./ -maxdepth 2 -name .git`; 
-	do 
+	do
 		workdir=${gitdir%/*}; 
-		echo; 
+		echo;
 		echo $workdir; 
 		git --git-dir=$gitdir --work-tree=$workdir status; 
+	done
+}
+
+list-git-repos(){
+	for gitdir in `find ./ -maxdepth 2 -name .git`;
+	do
+		workdir=${gitdir%/*};
+		git --git-dir=$gitdir --work-tree=$workdir remote show origin | grep Fetch | awk '{print $3}'
 	done
 }
 

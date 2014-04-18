@@ -34,10 +34,23 @@ URxvt*letterSpace: -1.8
 URxvt.scrollStyle: rxvt
 URxvt.scrollBar: false
 
-! Perl extensions
-URxvt.perl-ext-common: default,matcher
-URxvt.matcher.button: 1
+! Extensions
+URxvt.perl-ext-common: default,matcher,keyboard-select,url-select,clipboard
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.keysym.C-V: perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+URxvt.url-select.launcher: firefox
 URxvt.urlLauncher: firefox
+URxvt.matcher.rend.0: -Uline fg16
+URxvt.matcher.button: 1
+URxvt.clipboard.copycmd: xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+URxvt.clipboard.autocopy: true
+URxvt.iso14755_52: False
 
 ! Cursor
 URxvt.cursorBlink: false
@@ -91,27 +104,16 @@ URxvt.pointerBlank: true
 
 !! font
 
-! URxvt*font:                 xft:Monaco for Powerline:regular:size=9, xft:WenQuanYi Micro Hei Mono:regular:size=10
-! URxvt*imFont:               xft:Monaco for Powerline:regular:size=8, xft:WenQuanYi Micro Hei Mono:regular:size=8
-! URxvt*boldFont:             xft:Monaco for Powerline:bold:size=8, xft:WenQuanYi Micro Hei Mono:bold:size=8
-! URxvt*italicFont:           xft:Monaco for Powerline:italic:size=8, xft:WenQuanYi Micro Hei Mono:italic:size=8
-! URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=8, xft:WenQuanYi Micro Mono:bold:italic:size=8
+! URxvt*font:                 xft:Monaco for Powerline:regular:size=9, xft:WenQuanYi Micro Hei Mono:regular:size=9
+! URxvt*imFont:               xft:Monaco for Powerline:regular:size=9, xft:WenQuanYi Micro Hei Mono:regular:size=9
+! URxvt*boldFont:             xft:Monaco for Powerline:bold:size=9, xft:WenQuanYi Micro Hei Mono:bold:size=9
+! URxvt*italicFont:           xft:Monaco for Powerline:italic:size=9, xft:WenQuanYi Micro Hei Mono:italic:size=9
+! URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=9, xft:WenQuanYi Micro Mono:bold:italic:size=9
 
-! URxvt*font:                 xft:Monaco for Powerline:regular:size=8
-! URxvt*imFont:               xft:Monaco for Powerline:regular:size=8
-! URxvt*boldFont:             xft:Monaco for Powerline:bold:size=8
-! URxvt*italicFont:           xft:Monaco for Powerline:italic:size=8
-! URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=8
+! URxvt*font: xft:Inconsolata for Powerline:size=10
 
-! URxvt*font:                 xft:Ubuntu Mono:size=11,xft:PowerlineSymbols:size=13,xft:WenQuanYi Micro Hei Mono:size=10
+! URxvt*font: xft:Meslo LG S for Powerline:style=RegularForPowerline:size=9,xft:WenQuanYi Micro Hei Mono:regular:size=9
 
-! URxvt*font:                 xft:Microsoft YaHei Mono for Powerline:size=11
-! URxvt*imFont:               xft:Microsoft YaHei Mono for Powerline:size=11
-! URxvt*boldFont:             xft:Microsoft YaHei Mono for Powerline:size=11
-! URxvt*italicFont:           xft:Microsoft YaHei Mono for Powerline:size=11
-! URxvt*boldItalicFont:       xft:Microsoft YaHei Mono for Powerline:size=11
+URxvt*font: xft:DejaVu Sans Mono for Powerline:style=Book:size=9,xft:WenQuanYi Micro Hei Mono:regular:size=9
 
-! URxvt*font:                 xft:Meslo LG L DZ for Powerline:size=11, xft:WenQuanYi Micro Hei Mono:size=11
-
-! URxvt*font: xft:Ubuntu\ Mono:size=12,xft:Inconsolata\ for\ Powerline:size=12
-URxvt*font: xft:Ubuntu\ Mono:size=12,xft:PowerlineSymbols:size=12,xft:WenQuanYi Micro Hei Mono:size=11
+! @-=*{}[]0OqpjIiLl~`"'^&%$#<>

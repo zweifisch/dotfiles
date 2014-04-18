@@ -78,6 +78,10 @@ setup-zsh
 * [buftabs](https://github.com/grassofhust/buftabs)
 * :freeze
 
+## urxvt
+
+* [extensions](https://github.com/muennich/urxvt-perls)
+
 ## tmux
 
 * tmux-powerline

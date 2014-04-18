@@ -23,7 +23,6 @@ Bundle 'vim-indent-object'
 Bundle 'terryma/vim-multiple-cursors'
 " Bundle 'Valloric/YouCompleteMe'
 " Bundle 'maxbrunsfeld/vim-yankstack'
-" Bundle 'bling/vim-airline'
 Bundle 'blueyed/vim-colors-solarized'
 " Bundle 'mhinz/vim-startify'
 " Bundle 'sotte/presenting.vim'
@@ -139,7 +138,10 @@ syntax enable
 if empty($INSIDE_EMACS)
 	set background=dark
 	colorscheme solarized
-	Bundle 'Lokaltog/vim-powerline'
+	" Bundle 'Lokaltog/powerline'
+	Bundle 'bling/vim-airline'
+	" Bundle 'itchyny/lightline.vim'
+	Bundle 'edkolev/tmuxline.vim'
 else
 	" pass
 endif
@@ -176,7 +178,7 @@ if empty($INSIDE_EMACS)
 	" allways show statusline
 	set laststatus=2
 
-	let g:Powerline_symbols = 'fancy'
+	let g:airline_powerline_fonts = 1
 end
 
 " enable loading a buffer in a window that currently has a modified buffer
