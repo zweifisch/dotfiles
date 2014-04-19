@@ -813,3 +813,7 @@ qr() {
 		echo empty input
 	fi
 }
+
+wlan-ip() {
+	ifconfig | grep -A 1 wlan0 | tail -1 | awk '{print $2}' | cut -c6-
+}

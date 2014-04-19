@@ -141,7 +141,7 @@ if empty($INSIDE_EMACS)
 	" Bundle 'Lokaltog/powerline'
 	Bundle 'bling/vim-airline'
 	" Bundle 'itchyny/lightline.vim'
-	Bundle 'edkolev/tmuxline.vim'
+	" Bundle 'edkolev/tmuxline.vim'
 else
 	" pass
 endif
