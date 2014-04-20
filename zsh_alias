@@ -166,6 +166,10 @@ if [ $? = 0 ]; then
 	}
 fi
 
+which apt-get &> /dev/null
+if [ $? = 0 ]; then
+	alias get='sudo apt-get install'
+fi
 
 bright(){
 	brightness=`echo "$1 * 0.1" | bc`

@@ -94,7 +94,7 @@
         cider
         exec-path-from-shell
         kivy-mode
-        auctex
+        ; auctex
         multi-term
         slime
         swank-js
