@@ -1,0 +1,19 @@
+#!/usr/bin/env runhaskell
+
+import System.Directory
+import Control.Monad (filterM)
+import Data.Char (isSpace)
+
+-- import System.FilePath
+
+
+trimR :: String -> String
+trimR = reverse . (dropWhile isSpace) .reverse
+
+process content = unlines $ map trimR $ lines content
+
+write (path, content) = fmap (writeFile path) content
+
+main = do
+	files <- getCurrentDirectory >>= getDirectoryContents >>= filterM doesFileExist
+	mapM_ write $ zip files $ map (fmap process . readFile) files

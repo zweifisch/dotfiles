@@ -16,7 +16,7 @@ Xft.rgba:                                 rgb
 
 URxvt.buffered:                           true
 URxvt.geometry:                           80x22
-URxvt.depth: 32
+! URxvt.depth: 32
 URxvt.transparent: false
 URxvt.fading: 0
 URxvt.urgentOnBell: true
@@ -115,5 +115,3 @@ URxvt.pointerBlank: true
 ! URxvt*font: xft:Meslo LG S for Powerline:style=RegularForPowerline:size=9,xft:WenQuanYi Micro Hei Mono:regular:size=9
 
 URxvt*font: xft:DejaVu Sans Mono for Powerline:style=Book:size=9,xft:WenQuanYi Micro Hei Mono:regular:size=9
-
-! @-=*{}[]0OqpjIiLl~`"'^&%$#<>

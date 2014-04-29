@@ -9,7 +9,6 @@ alias lt='tree -L 1'
 
 alias //=''
 alias \#=''
-alias gg='google -s 8'
 alias va='vagrant'
 
 alias timestamp='date +%s'
@@ -465,6 +464,10 @@ list-git-repos(){
 	done
 }
 
+list-clj-projects(){
+	find ./ -maxdepth 2 -name project.clj
+}
+
 share(){
 	if [ -z "$1" ]; then
 		return
@@ -716,12 +719,20 @@ haxe-js(){
 	haxe -js $class.js -main $class $1 && node $class.js
 }
 
-dual () {
+dual() {
 	xrandr --output LVDS1 --primary --left-of VGA1 --output VGA1 --auto
 }
 
-single () {
+single() {
 	xrandr --output VGA1 --off
+}
+
+disable-touchpad() {
+	synclient TouchpadOff=1
+}
+
+enable-touchpad() {
+	synclient TouchpadOff=0
 }
 
 upsidedown(){
@@ -820,4 +831,13 @@ qr() {
 
 wlan-ip() {
 	ifconfig | grep -A 1 wlan0 | tail -1 | awk '{print $2}' | cut -c6-
+}
+
+gg() {
+	curl -Gs \
+		-d v=1.0 \
+		-d start=0 \
+		-d rsz=6 \
+		--data-urlencode q="$*" \
+		http://ajax.googleapis.com/ajax/services/search/web | json responseData.results | json -a titleNoFormatting unescapedUrl content
 }

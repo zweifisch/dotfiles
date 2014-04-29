@@ -38,7 +38,7 @@
       mouse-yank-at-point t
       save-place-file (concat user-emacs-directory "places")
       backup-directory-alist `(("." . ,(concat user-emacs-directory
-                                               "backups")))) 
+                                               "backups"))))
 
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
@@ -70,7 +70,7 @@
                       stylus-mode
                       virtualenvwrapper
                       elscreen
-                      org-present
+                      ; org-present
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -78,6 +78,7 @@
 (setq my:el-get-packages
       '(org-mode deft
         python jedi ein
+        grizzl
         projectile
         help-fns+
         evil-surround
@@ -100,6 +101,7 @@
         swank-js
         js2-mode
         smart-tab
+        mmm-mode
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -228,7 +230,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
          "* %?\nEntered on %U\n  %i\n  %a"))))
 
 (custom-set-variables '(org-agenda-files (quote ("~/notes/org/journal.org"))))
-(setq org-agenda-files (list "~/notes/org/journal.org" "~/notes/org/zf.org" ))  
+(setq org-agenda-files (list "~/notes/org/journal.org" "~/notes/org/zf.org" ))
 
 (setq org-todo-keywords
       '((sequence "TODO" "NEXT" "|" "DONE" "ABORTED")))
@@ -349,3 +351,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (slime-js-minor-mode 1)))
 
 (setq slime-contribs '(slime-fancy slime-js))
+
+;; (require 'mmm-mode)
+;; (mmm-add-classes
+;;  '((markdown-python
+;;     :submode python-mode
+;;     :face mmm-declaration-submode-face
+;;     :front "^```python$"
+;;     :back "^```$")))
+
+;; (setq mmm-global-mode 't)
+;; (mmm-add-mode-ext-class 'markdown-mode nil 'markdown-python)
