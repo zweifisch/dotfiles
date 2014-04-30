@@ -9,6 +9,10 @@ alias lt='tree -L 1'
 
 alias //=''
 alias \#=''
+
+alias ls-empty='find . -type f -empty -exec ls -l {} \;'
+alias rm-empty='find . -type f -empty -delete'
+
 alias va='vagrant'
 
 alias timestamp='date +%s'
@@ -841,3 +845,10 @@ gg() {
 		--data-urlencode q="$*" \
 		http://ajax.googleapis.com/ajax/services/search/web | json responseData.results | json -a titleNoFormatting unescapedUrl content
 }
+
+cloc-all() {
+	find -maxdepth 1 \! -iname ".*" \
+		-printf "cloc %p | sed -n 9p | awk 'BEGIN{ORS=\" \"}{print \$5}';\necho %p | sed 's|^\\\\./||';\n" \
+		| sh | sort -rnk1 | column -t | grep '^[0-9]\+'
+}
+
