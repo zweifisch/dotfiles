@@ -96,16 +96,18 @@ fi
 
 eval `dircolors ~/.dir_colors`
 
-source $HOME/.zsh_alias
-
-# local settings
-if [ -f $HOME/.zshrc_local ]; then
-	source $HOME/.zshrc_local
-fi
-
 export ANSIBLE_HOSTS=hosts
 
 # tmuxp
 export DISABLE_AUTO_TITLE='true'
 
 export GOPATH=$HOME/.golang
+
+source $HOME/.zsh_alias
+ 
+uname -a | grep -i ubuntu > /dev/null && source $HOME/.ppa
+
+# local settings
+if [ -f $HOME/.zshrc_local ]; then
+	source $HOME/.zshrc_local
+fi
