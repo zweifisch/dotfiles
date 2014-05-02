@@ -202,7 +202,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; ein
 
 ; python
-(setq python-shell-interpreter "ipython3"
+(setq python-shell-interpreter "ipython"
       python-shell-interpreter-args ""
       python-shell-prompt-regexp "In \\[[0-9]+\\]: "
       python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "

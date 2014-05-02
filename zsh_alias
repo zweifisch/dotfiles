@@ -379,7 +379,7 @@ activate-venv(){
 		select yn in "Yes" "No"; do
 			case $yn in
 				Yes)
-					source venv/bin/activate;break;
+					source .venv/bin/activate;break;
 					export VENV_ACTIVATED="$(pwd)";
 					break;;
 				No)
@@ -388,25 +388,6 @@ activate-venv(){
 		done
 	else
 		echo "venv (from $VENV_ACTIVATED) already activated"
-	fi
-}
-
-
-activate-virthualenv(){
-	if [ -z "$VIRTHUALENV_ACTIVATED" ]; then
-		echo "activate virthualenv?"
-		select yn in "Yes" "No"; do
-			case $yn in
-				Yes)
-					source .virthualenv/bin/activate;
-					export VIRTHUALENV_ACTIVATED="$(pwd)";
-					break;;
-				No)
-					break;;
-			 esac
-		done
-	else
-		echo "virthualenv (from $VIRTHUALENV_ACTIVATED) already activated"
 	fi
 }
 
