@@ -300,7 +300,6 @@ command CM CoffeeMake
 " ctrlp {{{
 let g:ctrlp_working_path_mode = 0
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.out,*.in,tags
-let g:ctrlp_map = '\f'
 " }}}
 " dirdiff{{{
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.git,.hg" 
@@ -586,15 +585,8 @@ map <C-H> <C-W>h
 nnoremap <C-N> <C-W>w
 nnoremap <C-P> <C-W>W
 
-" dwm
-" let g:dwm_map_keys = 0
-" 
-" nmap <C-N> <Plug>DWMNew
-" nmap <C-C> <Plug>DWMClose
-" nmap <C-M> <Plug>DWMFocus
-" 
-" nmap <C-L> <Plug>DWMGrowMaster
-" nmap <C-H> <Plug>DWMShrinkMaster
+nmap <leader>f :CtrlP <c-r>=expand('%:p:h')<cr><cr>
+nmap <leader>F :CtrlP<cr>
 
 map ,j <c-w>j
 map ,k <c-w>k
@@ -785,12 +777,6 @@ nmap ,trc :e $HOME/.tmux.conf<cr>
 nmap ,prc :e $HOME/.pentadactylrc<cr>
 nmap ,rem :e $HOME/.reminders<cr>
 nmap ,arc :e $HOME/.config/awesome/rc.lua<cr>
-"}}}
-" firefox {{{
-" open current file
-nnoremap <leader>ff :!firefox <c-r>=expand("%:p" )<cr><cr>
-" open current link
-nnoremap ,ff :!firefox <c-r>=expand("<cWORD>")<cr><cr>
 "}}}
 " Mysql {{{
 function! Mysql()

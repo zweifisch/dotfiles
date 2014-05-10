@@ -19,7 +19,7 @@ helpers =
 		document = content.document
 		for style in document.getElementsByTagName('style') then style?.parentNode?.removeChild style
 		for link in document.getElementsByTagName('link') then link?.parentNode?.removeChild link
-	removeScript : -> 
+	removeScript : ->
 		document = content.document
 		for script in document.getElementsByTagName 'script' then script.parentNode?.removeChild script
 	requireCSS : (style)->

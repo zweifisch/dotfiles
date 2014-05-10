@@ -833,3 +833,17 @@ cloc-all() {
 		| sh | sort -rnk1 | column -t | grep '^[0-9]\+'
 }
 
+alias tbl-header="sed -n '2 s/ *| */\n/pg' | sed -e '/^$/d'"
+
+tbl-cell() {
+	colnum=$(($1 + 1))
+	rownum=${2:-1}
+	rownum=$(($rownum + 3))
+	sed -n "$rownum p" | cut -d'|' -f $colnum
+}
+
+tbl-row() {
+	rownum=${1:-1}
+	rownum=$(($rownum + 3))
+	sed -n "$rownum p" | sed -n 's/ *| */\n/pg' | sed -e '/^$/d'
+}

@@ -45,6 +45,8 @@ vim
 * prev buffer `H`
 * list buffer `L`
 * left/lower/upper/right window `ctrl-h/j/k/l`
+* open file in project `\F`
+* open file in current dir `\f`
 
 pentadactyl
 
