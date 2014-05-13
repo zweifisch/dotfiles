@@ -155,8 +155,10 @@ endif
 se nohlsearch
 
 " set cindent
-set tabstop=3
-set shiftwidth=3
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
 
 set smartindent
 set autoindent
