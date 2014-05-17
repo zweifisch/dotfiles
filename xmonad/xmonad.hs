@@ -97,6 +97,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
 
+    -- Move focus to the previous window
+    , ((modm, xK_t ), spawn "$HOME/.bin/toggle-touchpad")
+
     -- Restart xmonad
     , ((modm , xK_q ), spawn "xmonad --recompile; xmonad --restart")
     ]

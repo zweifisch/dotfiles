@@ -712,14 +712,6 @@ single() {
 	xrandr --output VGA1 --off
 }
 
-disable-touchpad() {
-	synclient TouchpadOff=1
-}
-
-enable-touchpad() {
-	synclient TouchpadOff=0
-}
-
 upsidedown(){
 	LD_PRELOAD=/usr/lib/i386-linux-gnu/libv4l/v4l1compat.so $*
 }
@@ -846,6 +838,12 @@ tbl-row() {
 	rownum=${1:-1}
 	rownum=$(($rownum + 3))
 	sed -n "$rownum p" | sed -n 's/ *| */\n/pg' | sed -e '/^$/d'
+}
+
+tbl-col() {
+	colnum=${1:-1}
+    colnum=$(($colnum + 1))
+    head -n-1  | tail -n+4 | cut -d'|' -f $colnum
 }
 
 expand-tabs() {

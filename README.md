@@ -31,6 +31,7 @@ xmonad
 
 * prev workspace `mod4-H`
 * next workspace `mod4-L`
+* toggle touchpad `mod4-t`
 
 tmux
 

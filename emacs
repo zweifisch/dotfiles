@@ -14,6 +14,8 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
+(set-face-attribute 'default nil :height 110)
+
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
