@@ -35,11 +35,12 @@ xmonad
 
 tmux
 
-* prev session `alt-K`
-* next session `alt-J`
-* prev window `alt-H`
-* next window `alt-L`
-* left/lower/upper/right panel `alt-h/j/k/l`
+* prev session `alt-k`
+* next session `alt-j`
+* prev window `alt-h`
+* next window `alt-l`
+* last window `alt-H`
+* left/lower/upper/right panel `ctrl-h/j/k/l`
 
 vim
 

@@ -8,6 +8,8 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
+Bundle 'christoomey/vim-tmux-navigator'
+
 Bundle 'tpope/vim-vinegar'
 Bundle 'goldfeld/vim-seek'
 Bundle 'mhinz/vim-signify'
@@ -348,13 +350,14 @@ let g:EasyMotion_mapping_b = '('
 let g:EasyMotion_mapping_f = 'f'
 let g:EasyMotion_mapping_F = 'F'
 " }}}
-" python mode {{{
+" python-mode {{{
 let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,W402,W0401,E302,E701"
 " E302 two blank line
 " E701 multiple statements on one line
 " let g:pymode_indent = 0
 let g:pymode_lint_checker = "pyflakes"
 " let g:pymode_python = 'python3'
+let g:pymode_rope_complete_on_dot = 0
 " }}}
 " rainbow {{{
 let g:rbpt_colorpairs = [
@@ -573,13 +576,10 @@ map n nzz
 map N Nzz
 " imap kk <esc>
 
-" Easier moving in tabs and windows
-map <C-J> <C-W>j
-" map <C-J> <C-W>j<C-W>_
-map <C-K> <C-W>k
-" map <C-K> <C-W>k<C-W>_
-map <C-L> <C-W>l
-map <C-H> <C-W>h
+" map <C-J> <C-W>j
+" map <C-K> <C-W>k
+" map <C-L> <C-W>l
+" map <C-H> <C-W>h
 " map <C-H> <C-W>W
 " nmap j gj
 " nmap k gk
