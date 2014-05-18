@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+// eval is used evilly here !!
+
+fs=require('fs');
+
+content = fs.readFileSync('/dev/stdin').toString();
+
+content = content.replace(/^[^(]*/, '');
+
+process.stdout.write(JSON.stringify(eval(content)));
