@@ -22,7 +22,7 @@ alias pry='rlwrap -a pry'
 alias erl='rlwrap -a erl'
 
 datetime(){
-	date -d@$1 +%Y-%m-%d\ %H:%M:%S
+    date -d@$1 +%Y-%m-%d\ %H:%M:%S
 }
 
 alias vi="vim"
@@ -72,56 +72,56 @@ alias privoxy-socks="privoxy $HOME/.privoxy.conf"
 alias playbook="ansible-playbook"
 
 if [ -e /usr/bin/service ]; then
-	start(){ sudo service $1 start }
-	status(){ sudo service $1 status }
-	stop(){ sudo service $1 stop }
-	restart(){ sudo service $1 restart }
-	reload(){ sudo service $1 reload }
+    start(){ sudo service $1 start }
+    status(){ sudo service $1 status }
+    stop(){ sudo service $1 stop }
+    restart(){ sudo service $1 restart }
+    reload(){ sudo service $1 reload }
 fi
 
 if [ -e /usr/bin/systemctl ]; then
-	alias start='sudo systemctl start'
-	alias stop='sudo systemctl stop'
-	alias status='sudo systemctl status'
-	alias restart='sudo systemctl restart'
+    alias start='sudo systemctl start'
+    alias stop='sudo systemctl stop'
+    alias status='sudo systemctl status'
+    alias restart='sudo systemctl restart'
 fi
 
 # Automatically background processes (no output to terminal etc)
 alias z='echo $RANDOM > /dev/null; zz'
 zz() {
-	echo $*
-	$* &> "/tmp/z-$1-$RANDOM" &!
+    echo $*
+    $* &> "/tmp/z-$1-$RANDOM" &!
 }
 
 for i in mupdf zathura; do
-	alias "$i=z $i"
+    alias "$i=z $i"
 done
 
 GRC=`which grc`
 if [ $? = 0 ]; then
-	alias colourify="$GRC -es --colour=auto"
-	alias diff='colourify diff'
-	alias make='colourify make'
-	# alias gcc='colourify gcc'
-	alias g++='colourify g++'
-	alias as='colourify as'
-	alias ld='colourify ld'
-	alias netstat='colourify netstat'
-	alias ping='colourify ping'
-	alias traceroute='colourify /usr/sbin/traceroute'
+    alias colourify="$GRC -es --colour=auto"
+    alias diff='colourify diff'
+    alias make='colourify make'
+    # alias gcc='colourify gcc'
+    alias g++='colourify g++'
+    alias as='colourify as'
+    alias ld='colourify ld'
+    alias netstat='colourify netstat'
+    alias ping='colourify ping'
+    alias traceroute='colourify /usr/sbin/traceroute'
 fi
 
 wow(){
-	unrar x $1 && rm -f Readme.png $1
+    unrar x $1 && rm -f Readme.png $1
 }
 
 wow-url(){
-	curl -sI $(curl -s "$1" | grep -F "http://sh.st/" | cut -d '"' -f 4) |\
-		grep -i location | cut -d " " -f 2
+    curl -sI $(curl -s "$1" | grep -F "http://sh.st/" | cut -d '"' -f 4) |\
+        grep -i location | cut -d " " -f 2
 }
 
 view-tex(){
-	xelatex "$1" && mupdf "${1%.*}.pdf"
+    xelatex "$1" && mupdf "${1%.*}.pdf"
 }
 
 # uname -a | grep -i ubuntu > /dev/null && alias 'pkg-install=sudo apt-get install'
@@ -129,60 +129,60 @@ view-tex(){
 
 which apt-get &> /dev/null
 if [ $? = 0 ]; then
-	yaourt-install(){
-		results="$(apt-cache search $1)"
-		echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
-		echo -n "===> "
-		read num
-		if [[ "$num" =~ ^[0-9]+$ ]]; then
-			selected=$(sed -n "$num s/\([^ ]\) .*/\1/p" <<< "$results")
-			echo "selected package: $selected"
-			sudo apt-get install $selected
-		fi
-	}
-	yaourt-remove(){
-		results="$(dpkg --get-selections | grep -i $1 | grep -v deinstall | cut -f 1)"
-		echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
-		echo -n "===> "
-		read num
-		if [[ "$num" =~ ^[0-9]+$ ]]; then
-			selected=$(sed -n "$num s/\([^ ]\) .*/\1/p" <<< "$results")
-			selected=$(sed -n "$num p" <<< "$results")
-			echo "selected package: $selected"
-			sudo apt-get remove $selected
-		fi
-	}
-	yaourt-upgrade(){
-		sudo apt-get upgrade
-	}
-	yaourt(){
-		case $1 in
-			-R)
-				yaourt-remove $2
-				;;
-			-Syu)
-				yaourt-upgrade
-				;;
-			*)
-				yaourt-install $1
-		esac
-	}
+    yaourt-install(){
+        results="$(apt-cache search $1)"
+        echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
+        echo -n "===> "
+        read num
+        if [[ "$num" =~ ^[0-9]+$ ]]; then
+            selected=$(sed -n "$num s/\([^ ]\) .*/\1/p" <<< "$results")
+            echo "selected package: $selected"
+            sudo apt-get install $selected
+        fi
+    }
+    yaourt-remove(){
+        results="$(dpkg --get-selections | grep -i $1 | grep -v deinstall | cut -f 1)"
+        echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
+        echo -n "===> "
+        read num
+        if [[ "$num" =~ ^[0-9]+$ ]]; then
+            selected=$(sed -n "$num s/\([^ ]\) .*/\1/p" <<< "$results")
+            selected=$(sed -n "$num p" <<< "$results")
+            echo "selected package: $selected"
+            sudo apt-get remove $selected
+        fi
+    }
+    yaourt-upgrade(){
+        sudo apt-get upgrade
+    }
+    yaourt(){
+        case $1 in
+            -R)
+                yaourt-remove $2
+                ;;
+            -Syu)
+                yaourt-upgrade
+                ;;
+            *)
+                yaourt-install $1
+        esac
+    }
 fi
 
 which apt-get &> /dev/null
 if [ $? = 0 ]; then
-	alias get='sudo apt-get install'
+    alias get='sudo apt-get install'
 fi
 
 bright(){
-	brightness=`echo "$1 * 0.1" | bc`
-	redshiftgui -o -b $brightness
+    brightness=`echo "$1 * 0.1" | bc`
+    redshiftgui -o -b $brightness
 }
 
 _bright(){
-	A=( 5 6 7 8 9 10 )
-	_arguments \
-		 ":::($A)"
+    A=( 5 6 7 8 9 10 )
+    _arguments \
+         ":::($A)"
 }
 compdef _bright bright
 
@@ -210,7 +210,7 @@ alias last-ips="last | awk '{print \$3}' | sort | uniq -c | sort -rnk1"
 alias secure="chmod 600 $1"
 
 ghc-run(){
-	ghc --make $1 && "./${1%.*}"
+    ghc --make $1 && "./${1%.*}"
 }
 
 alias get-jquery='wget http://code.jquery.com/jquery-1.8.3.min.js'
@@ -234,43 +234,43 @@ alias get-es5-shim="wget https://raw.github.com/kriskowal/es5-shim/master/es5-sh
 alias get-angular="wget http://code.angularjs.org/1.1.5/angular.min.js"
 
 whichweek(){
-	week=`date -d "now" +%U`
-	echo "$week + 1" | bc
+    week=`date -d "now" +%U`
+    echo "$week + 1" | bc
 }
 
 svn-add-all(){
-	svn st | grep '^?' | sed 's/^?[ \t]\+//' | xargs -i svn add {}
+    svn st | grep '^?' | sed 's/^?[ \t]\+//' | xargs -i svn add {}
 }
 
 svn-diff-by-extension(){
-	exts='';
-	for i in "$@"; do
-		if [ -z "$exts" ]; then
-			exts="$exts -iname \"*.$i\"";
-		else
-			exts="$exts -o -iname \"*.$i\"";
-		fi
-	done;
-	svn diff $(eval "find -type f $exts")
+    exts='';
+    for i in "$@"; do
+        if [ -z "$exts" ]; then
+            exts="$exts -iname \"*.$i\"";
+        else
+            exts="$exts -o -iname \"*.$i\"";
+        fi
+    done;
+    svn diff $(eval "find -type f $exts")
 }
 
 svn-export-changed()
 {
-	url=$3
-	for i in $(svn diff --summarize -r $1:$2 $url| awk '{ print $2 }' | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | xargs echo -e); do
-		p=$(echo $i | sed -e 's{'$url/'{{');
-		mkdir -p $(dirname $p);
-		svn export $i $p;
-	done 
+    url=$3
+    for i in $(svn diff --summarize -r $1:$2 $url| awk '{ print $2 }' | sed -e's/%\([0-9A-F][0-9A-F]\)/\\\\\x\1/g' | xargs echo -e); do
+        p=$(echo $i | sed -e 's{'$url/'{{');
+        mkdir -p $(dirname $p);
+        svn export $i $p;
+    done 
 }
 
 start-wicd(){
-	sudo wicd
-	wicd-cli --wireless -c
+    sudo wicd
+    wicd-cli --wireless -c
 }
 
 quote(){
-	curl --silent http://hackersays.com/quote | json c a
+    curl --silent http://hackersays.com/quote | json c a
 }
 
 
@@ -309,11 +309,11 @@ cb() {
 }
 
 wiki() {
-	dig +short txt $1.wp.dg.cx
+    dig +short txt $1.wp.dg.cx
 }
 
 qq-dict() {
-	curl -s "http://dict.qq.com/dict?q=$1"
+    curl -s "http://dict.qq.com/dict?q=$1"
 }
 
 givedef(){
@@ -326,31 +326,31 @@ givedef(){
 }
 
 git-sync() {
-	message=$1
-	if [ -z "$message" ]; then
-		message='sync'
-	fi
-	git add .
-	git ci -am "$message"
-	git push
+    message=$1
+    if [ -z "$message" ]; then
+        message='sync'
+    fi
+    git add .
+    git ci -am "$message"
+    git push
 }
 
 min-and-gzipped() {
-	uglifyjs $1 | gzip -c | wc -c
+    uglifyjs $1 | gzip -c | wc -c
 }
 
 f(){
-	find . -iname "*$1*"
+    find . -iname "*$1*"
 }
 
 runc(){
-	cc -Wall -g $1.c -o $1.out && ./$1.out
-	rm -f $1.out
+    cc -Wall -g $1.c -o $1.out && ./$1.out
+    rm -f $1.out
 }
 
 ignore(){
-	touch .gitignore
-	cat >> .gitignore <<EOF
+    touch .gitignore
+    cat >> .gitignore <<EOF
 *.pyc
 /venv/
 /node_modules/
@@ -360,428 +360,466 @@ bower_components/
 .lock.pid
 .module-cache/
 EOF
-	$EDITOR .gitignore
+    $EDITOR .gitignore
 }
 
 init-venv2(){
-	virtualenv -p $(which python2) venv
-	activate-venv
+    virtualenv -p $(which python2) venv
+    activate-venv
 }
 
 init-venv(){
-	virtualenv -p $(which python3) venv
-	activate-venv
+    virtualenv -p $(which python3) venv
+    activate-venv
 }
 
 activate-venv(){
-	if [ -z "$VENV_ACTIVATED" ]; then
-		echo "activate virtualenv?"
-		select yn in "Yes" "No"; do
-			case $yn in
-				Yes)
-					source .venv/bin/activate;break;
-					export VENV_ACTIVATED="$(pwd)";
-					break;;
-				No)
-					break;;
-			 esac
-		done
-	else
-		echo "venv (from $VENV_ACTIVATED) already activated"
-	fi
+    if [ -z "$VENV_ACTIVATED" ]; then
+        echo "activate virtualenv?"
+        select yn in "Yes" "No"; do
+            case $yn in
+                Yes)
+                    source .venv/bin/activate;break;
+                    export VENV_ACTIVATED="$(pwd)";
+                    break;;
+                No)
+                    break;;
+             esac
+        done
+    else
+        echo "venv (from $VENV_ACTIVATED) already activated"
+    fi
 }
 
 load_env_sh(){
-	if [ -z "$ENVSH_SOURCED" ]; then
-		echo "source env.sh?"
-		select yn in "Yes" "No"; do
-			case $yn in
-				Yes)
-					source env.sh;
-					export ENVSH_SOURCED="$(pwd)";
-					break;;
-				No)
-					break;;
-			 esac
-		done
-	else
-		echo "env.sh (from $ENVSH_SOURCED) already sourced"
-	fi
+    if [ -z "$ENVSH_SOURCED" ]; then
+        echo "source env.sh?"
+        select yn in "Yes" "No"; do
+            case $yn in
+                Yes)
+                    source env.sh;
+                    export ENVSH_SOURCED="$(pwd)";
+                    break;;
+                No)
+                    break;;
+             esac
+        done
+    else
+        echo "env.sh (from $ENVSH_SOURCED) already sourced"
+    fi
 }
 
 chpwd(){
-	if [ -f venv/bin/activate ]; then
-		activate-venv
-	fi
-	if [ -f env.sh ]; then
-		load_env_sh
-	fi
-	if [ -f .virthualenv/bin/activate ]; then
-		activate-virthualenv
-	fi
+    if [ -f venv/bin/activate ]; then
+        activate-venv
+    fi
+    if [ -f env.sh ]; then
+        load_env_sh
+    fi
+    if [ -f .virthualenv/bin/activate ]; then
+        activate-virthualenv
+    fi
 
-	if [ -n "$INSIDE_EMACS" ]; then
-		print -P "\033AnSiTc %d"
-	fi
+    if [ -n "$INSIDE_EMACS" ]; then
+        print -P "\033AnSiTc %d"
+    fi
 }
 
 duration(){
-	ffprobe "$1" 2>&1 | grep -i duration
+    ffprobe "$1" 2>&1 | grep -i duration
 }
 
 hourglass(){ trap 'tput cnorm' EXIT INT;local s=$(($SECONDS +$1));(tput civis;while [[ $SECONDS -lt $s ]];do for f in '|' '\' '-' '/';do echo -n "$f" && sleep .2s && echo -n $'\b';done;done;);tput cnorm;}
 
 uncommited(){
-	for gitdir in `find ./ -maxdepth 2 -name .git`; 
-	do
-		workdir=${gitdir%/*}; 
-		echo;
-		echo $workdir; 
-		git --git-dir=$gitdir --work-tree=$workdir status; 
-	done
+    for gitdir in `find ./ -maxdepth 2 -name .git`; 
+    do
+        workdir=${gitdir%/*}; 
+        echo;
+        echo $workdir; 
+        git --git-dir=$gitdir --work-tree=$workdir status; 
+    done
 }
 
 list-git-repos(){
-	for gitdir in `find ./ -maxdepth 2 -name .git`;
-	do
-		workdir=${gitdir%/*};
-		git --git-dir=$gitdir --work-tree=$workdir remote show origin | grep Fetch | awk '{print $3}'
-	done
+    for gitdir in `find ./ -maxdepth 2 -name .git`;
+    do
+        workdir=${gitdir%/*};
+        git --git-dir=$gitdir --work-tree=$workdir remote show origin | grep Fetch | awk '{print $3}'
+    done
 }
 
 list-clj-projects(){
-	find ./ -maxdepth 2 -name project.clj
+    find ./ -maxdepth 2 -name project.clj
 }
 
 share(){
-	if [ -z "$1" ]; then
-		return
-	fi
-	if [ -f ~/.share-pid ]; then
-		if [ kill -0 $(cat ~/.share-pid) > /dev/null 2>&1 ]; then
-			echo 'server is running'
-		else
-			share-start
-		fi
-	else
-		share-start
-	fi
-	ln -nsf "$(readlink -e "$1")" ~/.share-tmp/
+    if [ -z "$1" ]; then
+        return
+    fi
+    if [ -f ~/.share-pid ]; then
+        if [ kill -0 $(cat ~/.share-pid) > /dev/null 2>&1 ]; then
+            echo 'server is running'
+        else
+            share-start
+        fi
+    else
+        share-start
+    fi
+    ln -nsf "$(readlink -e "$1")" ~/.share-tmp/
 }
 
 share-start(){
-	echo 'staring server'
-	mkdir ~/.share-tmp
-	port=8888
-	if [ -n "$1" ]; then
-		port=$1
-	fi
-	cd ~/.share-tmp
-	python2 -mSimpleHTTPServer $port &>! ~/.share-log & echo "$!" >! ~/.share-pid
-	ls -1
-	cd - > /dev/null
+    echo 'staring server'
+    mkdir ~/.share-tmp
+    port=8888
+    if [ -n "$1" ]; then
+        port=$1
+    fi
+    cd ~/.share-tmp
+    python2 -mSimpleHTTPServer $port &>! ~/.share-log & echo "$!" >! ~/.share-pid
+    ls -1
+    cd - > /dev/null
 }
 
 share-stop(){
-	kill $(cat ~/.share-pid) &> /dev/null
-	rm -rf ~/.share-tmp
-	rm -f ~/.share-pid
+    kill $(cat ~/.share-pid) &> /dev/null
+    rm -rf ~/.share-tmp
+    rm -f ~/.share-pid
 }
 
 github-clone(){
-	git clone git@github.com:$1/$2.git
+    git clone git@github.com:$1/$2.git
 }
 
 bitbucket-username(){
-	if [ -z "$BITBUCKET_USERNAME" ]; then
-		export BITBUCKET_USERNAME=$(cat $HOME/.bitbucket-username)
-	fi
-	echo $BITBUCKET_USERNAME
+    if [ -z "$BITBUCKET_USERNAME" ]; then
+        export BITBUCKET_USERNAME=$(cat $HOME/.bitbucket-username)
+    fi
+    echo $BITBUCKET_USERNAME
 }
 
 bitbucket-passwd(){
-	if [ -z "$BITBUCKET_PASSWD" ]; then
-		export BITBUCKET_PASSWD=$(cat $HOME/.bitbucket-passwd)
-	fi
-	echo $BITBUCKET_PASSWD
+    if [ -z "$BITBUCKET_PASSWD" ]; then
+        export BITBUCKET_PASSWD=$(cat $HOME/.bitbucket-passwd)
+    fi
+    echo $BITBUCKET_PASSWD
 }
 
 bitbucket-setup(){
-	echo -n "username: "
-	read username
-	echo -n "passwd: "
-	read -s password
-	echo $username >! $HOME/.bitbucket-username
-	echo $password >! $HOME/.bitbucket-passwd
-	chmod 600 $HOME/.bitbucket-username
-	chmod 600 $HOME/.bitbucket-passwd
+    echo -n "username: "
+    read username
+    echo -n "passwd: "
+    read -s password
+    echo $username >! $HOME/.bitbucket-username
+    echo $password >! $HOME/.bitbucket-passwd
+    chmod 600 $HOME/.bitbucket-username
+    chmod 600 $HOME/.bitbucket-passwd
 }
 
 bitbucket-list(){
-	curl -s --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/user/repositories | json | sed -n '/name/ s/^[^:]\+\: \"\([a-zA-Z0-9_-]\+\)\"\,/\1/p'
+    curl -s --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/user/repositories | json | sed -n '/name/ s/^[^:]\+\: \"\([a-zA-Z0-9_-]\+\)\"\,/\1/p'
 }
 
 bitbucket-new(){
-	name=$1
-	is_private=$2
-	if [ -z "$is_private" ]; then
-		is_private='true'
-	fi
-	scm=$3
-	if [ -z "$scm" ]; then
-		scm='git'
-	fi
-	curl -s --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/repositories/ --data "name=$name;is_private=$is_private;scm=$scm"
+    name=$1
+    is_private=$2
+    if [ -z "$is_private" ]; then
+        is_private='true'
+    fi
+    scm=$3
+    if [ -z "$scm" ]; then
+        scm='git'
+    fi
+    curl -s --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/repositories/ --data "name=$name;is_private=$is_private;scm=$scm"
 }
 
 bitbucket-delete(){
-	repo_name=$1
-	curl -s -X DELETE --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/repositories/$(bitbucket-username)/$repo_name
+    repo_name=$1
+    curl -s -X DELETE --user "$(bitbucket-username):$(bitbucket-passwd)" https://api.bitbucket.org/1.0/repositories/$(bitbucket-username)/$repo_name
 }
 
 bitbucket-clone(){
-	git clone git@bitbucket.org:$(bitbucket-username)/$1.git
+    git clone git@bitbucket.org:$(bitbucket-username)/$1.git
 }
 
 bitbucket-add-remote(){
-	git remote add origin ssh://git@bitbucket.org/$(bitbucket-username)/$1.git
+    git remote add origin ssh://git@bitbucket.org/$(bitbucket-username)/$1.git
 }
 
 mxmlc-release(){
-	output=$3
-	if [ -z "$output" ]; then
-		output=output.swf
-	fi
-	libpath=$2
-	if [ -z "$libpath" ]; then
-		libpath=$FLEX_LIB_PATH
-	fi
-	mxmlc $1\
-	 -external-library-path $libpath\
-	 -output $output\
-	 -default-size=600,400\
-	 -default-frame-rate=24\
-	 -default-background-color=0xffffff\
-	 -static-link-runtime-shared-libraries\
-	 -optimize=true\
-	 -debug=false
+    output=$3
+    if [ -z "$output" ]; then
+        output=output.swf
+    fi
+    libpath=$2
+    if [ -z "$libpath" ]; then
+        libpath=$FLEX_LIB_PATH
+    fi
+    mxmlc $1\
+     -external-library-path $libpath\
+     -output $output\
+     -default-size=600,400\
+     -default-frame-rate=24\
+     -default-background-color=0xffffff\
+     -static-link-runtime-shared-libraries\
+     -optimize=true\
+     -debug=false
 }
 
 mxmlc-debug(){
-	output=$3
-	if [ -z "$output" ]; then
-		output=output.swf
-	fi
-	libpath=$2
-	if [ -z "$libpath" ]; then
-		libpath=$FLEX_LIB_PATH
-	fi
-	mxmlc $1\
-	 -external-library-path+=$libpath\
-	 -output $output\
-	 -default-size=600,400\
-	 -default-frame-rate=24\
-	 -default-background-color=0xffffff\
-	 -static-link-runtime-shared-libraries\
-	 -optimize=false\
-	 -debug=true
+    output=$3
+    if [ -z "$output" ]; then
+        output=output.swf
+    fi
+    libpath=$2
+    if [ -z "$libpath" ]; then
+        libpath=$FLEX_LIB_PATH
+    fi
+    mxmlc $1\
+     -external-library-path+=$libpath\
+     -output $output\
+     -default-size=600,400\
+     -default-frame-rate=24\
+     -default-background-color=0xffffff\
+     -static-link-runtime-shared-libraries\
+     -optimize=false\
+     -debug=true
 }
 
 rename-after-time(){
-	target="$(dirname $1)/$(date -d now +%Y-%m-%d-%H-%M-%S).${1##*.}"
-	mv "$1" "$target"
-	echo "$target"
+    target="$(dirname $1)/$(date -d now +%Y-%m-%d-%H-%M-%S).${1##*.}"
+    mv "$1" "$target"
+    echo "$target"
 }
 
 shot(){
-	mplayer -vo jpeg -frames 2 tv:// &> /dev/null
-	rm -f 00000001.jpg
-	img="$(rename-after-time 00000002.jpg)"
-	if [ -n "$1" ]; then
-		mv "$img" "$1"
-		img="$1/$img"
-	fi
-	echo "$img"
+    mplayer -vo jpeg -frames 2 tv:// &> /dev/null
+    rm -f 00000001.jpg
+    img="$(rename-after-time 00000002.jpg)"
+    if [ -n "$1" ]; then
+        mv "$img" "$1"
+        img="$1/$img"
+    fi
+    echo "$img"
 }
 
 
 mount-ntfs(){
-	mkdir -p $2
-	ntfs-3g /dev/$1 $2
-	# mount -t ntfs -o nls=utf8,umask=0022,gid=$(id -g),uid=$(id -u)  /dev/$1 $2
+    mkdir -p $2
+    ntfs-3g /dev/$1 $2
+    # mount -t ntfs -o nls=utf8,umask=0022,gid=$(id -g),uid=$(id -u)  /dev/$1 $2
 }
 
 pdf-compress(){
-	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$2 $1
 }
 
 pdf-concat(){
-	for pdf in $*; do
-		pdf2ps $pdf
-	done
-	rm merged.ps
-	cat *.ps > merged.ps
-	ps2pdf merged.ps
+    for pdf in $*; do
+        pdf2ps $pdf
+    done
+    rm merged.ps
+    cat *.ps > merged.ps
+    ps2pdf merged.ps
 }
 
 
 _mux(){
-	_arguments ":::($(mux ls | tail -n +2))"
+    _arguments ":::($(mux ls | tail -n +2))"
 }
 compdef _mux mux
 
 _pman(){
-	_arguments ":::($(php -r 'echo implode(PHP_EOL,get_defined_functions()["internal"]);'))"
+    _arguments ":::($(php -r 'echo implode(PHP_EOL,get_defined_functions()["internal"]);'))"
 }
 compdef _pman pman
 
 wget-proxy(){
-	host=$1
-	name="/tmp/wget-$2"
-	url="$3"
-	ssh $host "wget -O $name '$url'"
-	scp $host:$name $2
+    host=$1
+    name="/tmp/wget-$2"
+    url="$3"
+    ssh $host "wget -O $name '$url'"
+    scp $host:$name $2
 }
 
 youtube-dl-proxy(){
-	host=$1
-	name="/tmp/youtube-dl-$2"
-	url="$3"
-	ssh $host "youtube-dl -o $name '$url'"
-	scp $host:$name $2
+    host=$1
+    name="/tmp/youtube-dl-$2"
+    url="$3"
+    ssh $host "youtube-dl -o $name '$url'"
+    scp $host:$name $2
 }
 
 redis-eval(){
-	redis-cli eval "$(cat $1)" "${@:2}"
+    redis-cli eval "$(cat $1)" "${@:2}"
 }
 
 # setopt NO_GLOB
 command_not_found_handler() {
-	case ${1: -1} in
-		\?)
-			man ${1:0: -1}
-			;;
-		!)
-			tsocks ${1:0: -1} ${@:2}
-			;;
-		+)
-			;;
-		*)
-			case ${1:0:1} in
-				@)
-					ssh ${1:1} "${@:2}"
-					;;
-				*)
-					exit 1
-			esac
-	esac
+    case ${1: -1} in
+        \?)
+            man ${1:0: -1}
+            ;;
+        !)
+            tsocks ${1:0: -1} ${@:2}
+            ;;
+        +)
+            ;;
+        *)
+            case ${1:0:1} in
+                @)
+                    ssh ${1:1} "${@:2}"
+                    ;;
+                *)
+                    exit 1
+            esac
+    esac
 }
 
 urls()
 {
-	results="$(tmux capture-pane \; show-buffer -b0 \; delete-buffer -b0 \
-		| grep -P -o '(?:https?://|\bwww\.)[a-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27,~#]*(\([a-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27,~#]*\)|[a-zA-Z0-9\-\@;\/?:&=%\$_+*~])+' \
-		| sort | uniq)"
-	echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
-	echo -n "===> "
-	read num
-	if [[ "$num" =~ ^[0-9]+$ ]]; then
-		selected=$(sed -n "$num p" <<< "$results")
-		xdg-open $selected
-	fi
+    results="$(tmux capture-pane \; show-buffer -b0 \; delete-buffer -b0 \
+        | grep -P -o '(?:https?://|\bwww\.)[a-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27,~#]*(\([a-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27,~#]*\)|[a-zA-Z0-9\-\@;\/?:&=%\$_+*~])+' \
+        | sort | uniq)"
+    echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
+    echo -n "===> "
+    read num
+    if [[ "$num" =~ ^[0-9]+$ ]]; then
+        selected=$(sed -n "$num p" <<< "$results")
+        xdg-open $selected
+    fi
 }
 
 memcached-flush(){
-	php -r '$m = new Memcached; $m->addServer("localhost",11211); $m->deleteMulti($m->getAllKeys());'
+    php -r '$m = new Memcached; $m->addServer("localhost",11211); $m->deleteMulti($m->getAllKeys());'
 }
 
 memcached-keys(){
-	php -r '$m = new Memcached; $m->addServer("localhost",11211); echo implode("\n",$m->getAllKeys());'
+    php -r '$m = new Memcached; $m->addServer("localhost",11211); echo implode("\n",$m->getAllKeys());'
 }
 
 haxe-js(){
-	class=${1%.*}
-	haxe -js $class.js -main $class $1 && node $class.js
+    class=${1%.*}
+    haxe -js $class.js -main $class $1 && node $class.js
 }
 
-dual() {
-	xrandr --output LVDS1 --primary --left-of VGA1 --output VGA1 --auto
+output-list() {
+    xrandr --current | grep connected | grep -v disconnected | awk '{print $1}'
 }
 
-single() {
-	xrandr --output VGA1 --off
+output-list-all() {
+    xrandr --current | grep connected | awk '{print $1}'
+}
+
+output-dual() {
+    primary=$1
+    secondary=$2
+    xrandr --output $primary --primary --left-of $secondary --output $secondary --auto
+}
+_outputs(){
+    _arguments '1: :->primary' '2: :->secondary'
+    case $state in
+        primary)
+            _arguments "1: :($(output-list))"
+            ;;
+        secondary)
+            compadd "$@" $(output-list | grep -v $words[2])
+            ;;
+    esac 
+}
+compdef _outputs output-dual
+
+output-close() {
+    xrandr --output $1 --off
+}
+_output(){
+    _arguments ":::($(output-list))"
+}
+compdef _output output-close
+
+output-switch() {
+    xrandr --output $1 --primary --auto
+}
+_output_disconnected() {
+    _arguments ":::($(output-list))"
+}
+compdef _output_disconnected output-switch
+
+output-reset() {
+    xrandr --auto
 }
 
 upsidedown(){
-	LD_PRELOAD=/usr/lib/i386-linux-gnu/libv4l/v4l1compat.so $*
+    LD_PRELOAD=/usr/lib/i386-linux-gnu/libv4l/v4l1compat.so $*
 }
 
 bd(){
-	cd $(pwd | sed 's|\(.*/'$1'[^/]*/\).*|\1|')
+    cd $(pwd | sed 's|\(.*/'$1'[^/]*/\).*|\1|')
 }
 
 git-date(){
-	commit=$1
-	date="$2"
-	git filter-branch --env-filter \
-		'if [ $GIT_COMMIT = $commit ]
-		 then
-			export GIT_AUTHOR_DATE="$date"
-			export GIT_COMMITTER_DATE="$date"
-		 fi'
+    commit=$1
+    date="$2"
+    git filter-branch --env-filter \
+        'if [ $GIT_COMMIT = $commit ]
+         then
+            export GIT_AUTHOR_DATE="$date"
+            export GIT_COMMITTER_DATE="$date"
+         fi'
 }
 
 git-amend-date() {
-	GIT_COMMITTER_DATE="$1 +0800" git commit --amend -C HEAD --date "$1 +0800"
+    GIT_COMMITTER_DATE="$1 +0800" git commit --amend -C HEAD --date "$1 +0800"
 }
 
 nocolor(){
-	sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
+    sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
 }
 
 ranger-cd(){
-	tempfile='/tmp/ranger-chosendir'
-	ranger --choosedir="$tempfile" "${@:-$(pwd)}"
-	test -f "$tempfile" && if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
-		cd -- "$(cat "$tempfile")"
-	fi
-	rm -f -- "$tempfile"
+    tempfile='/tmp/ranger-chosendir'
+    ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+    test -f "$tempfile" && if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    rm -f -- "$tempfile"
 }
 
 alias rcd=ranger-cd
 
 setup-rbenv() {
-	git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
-	mkdir -p ~/.rbenv/plugins
-	git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+    git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+    mkdir -p ~/.rbenv/plugins
+    git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 }
 
 setup-pyenv() {
-	git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+    git clone git://github.com/yyuu/pyenv.git ~/.pyenv
 }
 
 setup-nvm() {
-	git clone https://github.com/creationix/nvm ~/.nvm
+    git clone https://github.com/creationix/nvm ~/.nvm
 }
 
 setup-zsh() {
-	git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
+    git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
 }
 
 setup-git() {
-	cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
+    cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
 }
 
 html-coffee() {
-	cat > $1.html << EOF
+    cat > $1.html << EOF
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title></title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
-	
+    
 <script src="$1.js"></script>
 </body>
 </html>
@@ -795,61 +833,63 @@ alias pip-install='pip install -r requirements.txt -i http://pypi.douban.com/sim
 alias get-bing-image='curl $(curl "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1" | json images.0.url) > $(date -d now +%Y-%m-%d).jpg' 
 
 qr() {
-	content="$1"
-	if [ -z "$content" ]; then
-		content="$(xclip -o)"
-	fi
-	if [ -n "$content" ]; then
-		qrencode "$content" -o /tmp/qrencode.png && qiv /tmp/qrencode.png
-	else
-		echo empty input
-	fi
+    content="$1"
+    if [ -z "$content" ]; then
+        content="$(xclip -o)"
+    fi
+    if [ -n "$content" ]; then
+        qrencode "$content" -o /tmp/qrencode.png && qiv /tmp/qrencode.png
+    else
+        echo empty input
+    fi
 }
 
 wlan-ip() {
-	ifconfig | grep -A 1 wlan0 | tail -1 | awk '{print $2}' | cut -c6-
+    ifconfig | grep -A 1 wlan0 | tail -1 | awk '{print $2}' | cut -c6-
 }
 
 gg() {
-	curl -Gs \
-		-d v=1.0 \
-		-d start=0 \
-		-d rsz=6 \
-		--data-urlencode q="$*" \
-		http://ajax.googleapis.com/ajax/services/search/web | json responseData.results | json -a titleNoFormatting unescapedUrl content
+    curl -Gs \
+        -d v=1.0 \
+        -d start=0 \
+        -d rsz=6 \
+        --data-urlencode q="$*" \
+        http://ajax.googleapis.com/ajax/services/search/web | json responseData.results | json -a titleNoFormatting unescapedUrl content
 }
 
 cloc-all() {
-	find -maxdepth 1 \! -iname ".*" \
-		-printf "cloc %p | sed -n 9p | awk 'BEGIN{ORS=\" \"}{print \$5}';\necho %p | sed 's|^\\\\./||';\n" \
-		| sh | sort -rnk1 | column -t | grep '^[0-9]\+'
+    find -maxdepth 1 \! -iname ".*" \
+        -printf "cloc %p | sed -n 9p | awk 'BEGIN{ORS=\" \"}{print \$5}';\necho %p | sed 's|^\\\\./||';\n" \
+        | sh | sort -rnk1 | column -t | grep '^[0-9]\+'
 }
 
 alias tbl-header="sed -n '2 s/ *| */\n/pg' | sed -e '/^$/d'"
 
 tbl-cell() {
-	colnum=$(($1 + 1))
-	rownum=${2:-1}
-	rownum=$(($rownum + 3))
-	sed -n "$rownum p" | cut -d'|' -f $colnum
+    colnum=$(($1 + 1))
+    rownum=${2:-1}
+    rownum=$(($rownum + 3))
+    sed -n "$rownum p" | cut -d'|' -f $colnum
 }
 
 tbl-row() {
-	rownum=${1:-1}
-	rownum=$(($rownum + 3))
-	sed -n "$rownum p" | sed -n 's/ *| */\n/pg' | sed -e '/^$/d'
+    rownum=${1:-1}
+    rownum=$(($rownum + 3))
+    sed -n "$rownum p" | sed -n 's/ *| */\n/pg' | sed -e '/^$/d'
 }
 
 tbl-col() {
-	colnum=${1:-1}
+    colnum=${1:-1}
     colnum=$(($colnum + 1))
     head -n-1  | tail -n+4 | cut -d'|' -f $colnum
 }
 
 expand-tabs() {
-	find . -name '*.'$1 ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
+    find . -name '*.'$1 ! -type d -exec bash -c 'expand -t 4 "$0" > /tmp/e && mv /tmp/e "$0"' {} \;
 }
 
 box-self-upgrade() {
     curl "https://raw.githubusercontent.com/andreafabrizi/Dropbox-Uploader/master/dropbox_uploader.sh" -o $(which box)
 }
+
+ailas take-breaks='zz xwrits breaktime=:30 typetime=20 +lock'

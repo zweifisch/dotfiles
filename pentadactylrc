@@ -315,9 +315,11 @@ map -builtin <F3> :styletoggle<Space>-name<Space>solarizeddark<CR>
 map -builtin <F4> :styletoggle<Space>-name<Space>solarizedlight<CR>
 " toggle minimalistic tabs
 map -builtin <leader>t :styletoggle<Space>-name<Space>minitabs<CR>
-map <Leader>P :se! extensions.autoproxy.proxyMode=auto<CR>:ec 'auto'<CR>
-" map <Leader>P :se! extensions.autoproxy.proxyMode=disabled<CR>:ec 'disabled'<CR>
-map <Leader>p :se! extensions.autoproxy.proxyMode=global<CR>:ec 'global'<CR>
+
+set! network.proxy.socks_remote_dns=true
+" command proxy -nargs=1 :set! network.proxy.type=<args>
+map <Leader>p :set! network.proxy.type=0<CR>:echo 'no proxy'<CR>
+map <Leader>P :set! network.proxy.type=1<CR>:echo 'global'<CR>
 
 
 "{{{ font
@@ -392,6 +394,7 @@ style -name minitabs chrome://* <<EOM
  
 .tabbrowser-tabs {
   background: #073642 !important;
+  /* display: none !important; */
 }
  
 .tabbrowser-tab {
