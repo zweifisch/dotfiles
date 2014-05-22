@@ -102,6 +102,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Restart xmonad
     , ((modm , xK_q ), spawn "xmonad --recompile; xmonad --restart")
+
+    -- reset output
+    , ((modm , xK_r ), spawn "xrandr --auto")
     ]
     ++
 

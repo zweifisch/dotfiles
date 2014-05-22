@@ -328,6 +328,10 @@ hi FontFixed -a font-family: Terminus !important; font-size: 9pt !important;
 hi Normal -a font-family: Terminus !important; font-size: 9pt !important;
 "}}}
 
+style about:blank <<EOM
+*{background-color:#002b36;}
+EOM
+
 " {{{ dark colors
 style -name solarizeddark http://*,https://*,file://*,about:blank <<EOM
 * {

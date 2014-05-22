@@ -69,8 +69,6 @@ alias mem-usage="ps aux | awk '{sum +=\$4}; END {print sum}'"
 
 alias privoxy-socks="privoxy $HOME/.privoxy.conf"
 
-alias playbook="ansible-playbook"
-
 if [ -e /usr/bin/service ]; then
     start(){ sudo service $1 start }
     status(){ sudo service $1 status }
@@ -310,6 +308,17 @@ cb() {
 
 wiki() {
     dig +short txt $1.wp.dg.cx
+}
+
+wiki-entry() {
+    if [ -z "$WIKI_ROOT" ]; then
+        echo "you have to set \$WIKI_ROOT"
+        return 1
+    fi
+    if [ -z "$1" ]; then
+        return 1
+    fi
+    entries="$(find $WIKI_ROOT -iname "*$1*" -type f)"
 }
 
 qq-dict() {
@@ -893,3 +902,11 @@ box-self-upgrade() {
 }
 
 ailas take-breaks='zz xwrits breaktime=:30 typetime=20 +lock'
+
+
+ansible-role-init() {
+    mkdir $1
+    cd $1
+    mkdir files handlers meta templates tasks vars
+    cd ..
+}
