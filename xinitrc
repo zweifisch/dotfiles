@@ -1,1 +1,1 @@
-xmodmap ~/.Xmodmap && exec xmonad
+exec xmonad
