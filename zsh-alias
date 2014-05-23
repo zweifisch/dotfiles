@@ -1,4 +1,4 @@
-alias reload-alias='source $HOME/.zsh_alias'
+alias reload-alias='source $HOME/.zsh-alias'
 
 alias rm='rm -i'
 alias mv='mv -i'
@@ -811,10 +811,6 @@ setup-nvm() {
     git clone https://github.com/creationix/nvm ~/.nvm
 }
 
-setup-zsh() {
-    git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh
-}
-
 setup-git() {
     cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
 }
@@ -929,4 +925,7 @@ EOF
     git "$@"
 }
 
-alias get-prezto='git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"'
+alias get-prezto='git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto'
+
+alias get-oh-my-zsh='git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh'
+

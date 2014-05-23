@@ -32,8 +32,11 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(vi-mode lein mix rebar fabric gnu-utils rake svn taskwarrior zsh-syntax-highlighting history-substring-search vagrant zaw)
+plugins=(vi-mode gnu-utils zsh-syntax-highlighting history-substring-search vagrant zaw)
 source $ZSH/oh-my-zsh.sh
+
+bindkey '\e[A' history-substring-search-up
+bindkey '\e[B' history-substring-search-down
 
 # if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 #   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
