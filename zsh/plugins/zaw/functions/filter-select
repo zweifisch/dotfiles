@@ -23,7 +23,7 @@
 # usage:
 #   filter-select [-t title] [-A assoc-array-name]
 #                 [-d array-of-description] [-D assoc-array-of-descrption]
-#                 [-r] [-m] [-e exit-zle-widget-name]... [--] [arg]...
+#                 [-n] [-r] [-m] [-e exit-zle-widget-name]... [--] [arg]...
 #   filter-select -i
 #
 #     -t title
@@ -38,6 +38,9 @@
 #       it is used to display and filter candidates.
 #
 #       if not specified, copied from candidates.
+#
+#     -n
+#       assign a number to the description when -d is not specified
 #
 #     -D assoc-array-of-descrption
 #       same as ``-d`` but associative array.
@@ -82,7 +85,9 @@
 #   ':filter-select:highlight' selected
 #   ':filter-select:highlight' matched
 #   ':filter-select:highlight' title
+#   ':filter-select:highlight' error
 #   ':filter-select' max-lines
+#   ':filter-select' rotate-list
 #   ':filter-select' case-insensitive
 #   ':filter-select' extended-search
 #
@@ -90,6 +95,7 @@
 #     zstyle ':filter-select:highlight' matched fg=yellow,standout
 #     zstyle ':filter-select' max-lines 10 # use 10 lines for filter-select
 #     zstyle ':filter-select' max-lines -10 # use $LINES - 10 for filter-select
+#     zstyle ':filter-select' rotate-list yes # enable rotation for filter-select
 #     zstyle ':filter-select' case-insensitive yes # enable case-insensitive search
 #     zstyle ':filter-select' extended-search yes # enable extended search regardless of the case-insensitive style
 #
@@ -124,18 +130,22 @@ function filter-select() {
     local -a init_region_highlight marked_lines
     local -A candidates descriptions matched_descs
 
-    integer i bottom_lines cursor_line=1 display_head_line=1 cand_num disp_num
-    integer offset display_bottom_line selected_num rev=0 ret=0
+    integer i bottom_lines cursor_line=1 display_head_line=1 cand_num disp_num ii num_desc
+    integer offset display_bottom_line selected_num rev=0 ret=0 enum=0
     integer mark_idx markable=0 is_marked
 
-    local hi_selected hi_matched hi_marked hi_title
+    local hi_selected hi_matched hi_marked hi_title hi_error
     zstyle -s ':filter-select:highlight' selected hi_selected || hi_selected='standout'
     zstyle -s ':filter-select:highlight' matched hi_matched || hi_matched='fg=magenta,underline'
     zstyle -s ':filter-select:highlight' marked hi_marked || hi_marked='fg=blue,standout'
     zstyle -s ':filter-select:highlight' title hi_title || hi_title='bold'
+    zstyle -s ':filter-select:highlight' error hi_error || hi_error='fg=white,bg=red'
 
     integer max_lines
     zstyle -s ':filter-select' max-lines max_lines || max_lines=0
+
+    local rotate_list
+    zstyle -b ':filter-select' rotate-list rotate_list
 
     _filter-select-init-keybind
 
@@ -143,7 +153,7 @@ function filter-select() {
     descriptions=()
     exit_wigdets=(accept-line accept-search send-break)
 
-    while getopts 't:A:d:D:rme:i' opt; do
+    while getopts 't:A:d:D:nrme:i' opt; do
         case "${opt}" in
             t)
                 title="${OPTARG}"
@@ -163,6 +173,9 @@ function filter-select() {
             D)
                 # copy input assc array
                 descriptions=("${(@kvP)${OPTARG}}")
+                ;;
+            n)
+                enum=1
                 ;;
             r)
                 # reverse ordering
@@ -193,6 +206,18 @@ function filter-select() {
     if (( $#descriptions == 0 )); then
         # copy candidates
         descriptions=("${(@kv)candidates}")
+        # add number
+        if (( enum )); then
+            num_desc="${#descriptions}"
+            for i in {1.."$num_desc"}; do
+                if (( rev )); then
+                    ii="$(($num_desc-$i+1))"
+                else
+                    ii="$i"
+                fi
+                descriptions[$i]="${(r.5.)ii} ${descriptions[$i]}"
+            done
+        fi
     fi
 
     desc_num="${#descriptions}"
@@ -293,7 +318,12 @@ function filter-select() {
             if (( display_head_line < 1 )); then
                 (( display_head_line = 1 ))
             fi
-            (( cursor_line = 1 ))
+            if [[ $rotate_list == "yes" ]] && (( selected_num <= 1 )); then
+                (( cursor_line = bottom_lines ))
+                (( display_head_line = desc_num - bottom_lines + 1 ))
+            else
+                (( cursor_line = 1 ))
+            fi
 
         elif (( bottom_lines == 0 )); then
             (( display_head_line = 1 ))
@@ -304,7 +334,12 @@ function filter-select() {
             if (( display_head_line > desc_num - bottom_lines + 1 )); then
                 (( display_head_line = desc_num - bottom_lines + 1 ))
             fi
-            (( cursor_line = bottom_lines ))
+            if [[ $rotate_list == "yes" ]] && (( selected_num >= desc_num )); then
+                (( cursor_line = 1 ))
+                (( display_head_line = 1 ))
+            else
+                (( cursor_line = bottom_lines ))
+            fi
         fi
 
         if (( ! PENDING )); then
@@ -418,7 +453,7 @@ function filter-select() {
                     msg='pattern not found'
                 fi
                 POSTDISPLAY+="${msg}"
-                region_highlight+="${offset} $(( offset + ${#msg} + 1 )) fg=white,bg=red"
+                region_highlight+="${offset} $(( offset + ${#msg} + 1 )) ${hi_error}"
             fi
 
             POSTDISPLAY+="${(F)displays}"$'\n'"[${selected_num}/${desc_num}]"
@@ -618,9 +653,11 @@ function _filter-select-init-keybind() {
 
         bindkey -M filterselect '^F' forward-char
         bindkey -M filterselect '^[[C' forward-char
+        bindkey -M filterselect '^[OC' forward-char
 
         bindkey -M filterselect '^B' backward-char
         bindkey -M filterselect '^[[D' backward-char
+        bindkey -M filterselect '^[OD' backward-char
 
         bindkey -M filterselect '^A' beginning-of-line
         bindkey -M filterselect '^E' end-of-line
@@ -632,8 +669,10 @@ function _filter-select-init-keybind() {
         # move cursor down/up
         bindkey -M filterselect '^N' down-line-or-history
         bindkey -M filterselect '^[[B' down-line-or-history
+        bindkey -M filterselect '^[OB' down-line-or-history
         bindkey -M filterselect '^P' up-line-or-history
         bindkey -M filterselect '^[[A' up-line-or-history
+        bindkey -M filterselect '^[OA' up-line-or-history
 
         # page down/up
         bindkey -M filterselect '^V' forward-word
@@ -662,7 +701,7 @@ function _filter-select-read-keys() {
     if [[ '#key' -eq '#\\e' ]]; then
         # M-...
         read -t $(( KEYTIMEOUT / 1000 )) -k key2
-        if [[ "${key2}" == '[' ]]; then
+        if [[ "${key2}" == ['['O] ]]; then
             # cursor keys
             read -k key3
             ret=$?

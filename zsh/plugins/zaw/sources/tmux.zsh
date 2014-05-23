@@ -10,7 +10,7 @@ function zaw-src-tmux() {
 
     tmux list-sessions | \
         while read session state; do
-            candidates+=("${session%:*}")
+            candidates+=("${session}")
             cand_descriptions+=("${(r:30:::::)session} ${state}")
         done
         actions=('zaw-callback-tmux-attach')
@@ -20,7 +20,6 @@ function zaw-src-tmux() {
 zaw-register-src -n tmux zaw-src-tmux
 
 function zaw-callback-tmux-attach() {
-    # BUFFER="tmux attach -t ${(q)1}"
-    BUFFER="mux ${(q)1}"
+    BUFFER="tmux attach -t ${(q)1}"
     zle accept-line
 }

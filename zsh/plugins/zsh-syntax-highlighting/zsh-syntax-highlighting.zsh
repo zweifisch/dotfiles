@@ -107,7 +107,7 @@ typeset -gA ZSH_HIGHLIGHT_STYLES
 # Returns 0 if the buffer has changed since _zsh_highlight was last called.
 _zsh_highlight_buffer_modified()
 {
-  [[ ${_ZSH_HIGHLIGHT_PRIOR_BUFFER:-} != $BUFFER ]]
+  [[ "${_ZSH_HIGHLIGHT_PRIOR_BUFFER:-}" != "$BUFFER" ]]
 }
 
 # Whether the cursor has moved or not.
@@ -198,7 +198,7 @@ _zsh_highlight_bind_widgets || {
 }
 
 # Resolve highlighters directory location.
-_zsh_highlight_load_highlighters "${ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR:-${0:h}/highlighters}" || {
+_zsh_highlight_load_highlighters "${ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR:-${${0:A}:h}/highlighters}" || {
   echo 'zsh-syntax-highlighting: failed loading highlighters, exiting.' >&2
   return 1
 }

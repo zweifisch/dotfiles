@@ -37,13 +37,23 @@ currently these sources are available:
   - ack
   - applications
   - bookmark
+  - git-branches
+  - git-recent-all-branches
+  - git-recent-branches
   - git-files
+  - git-files-legacy
+  - git-status
   - history
   - open-file
   - perldoc
+  - process
   - screens
+  - ssh-hosts
   - tmux
 
+(Note: git-files-legacy is an alternative for git-files.
+git-files classifies modified files, git-files-legacy doesn't do it for
+performance reason.)
 
 shortcut widgets
 ================
@@ -62,11 +72,18 @@ you can get all available shortcut widgets' name using ``zaw-print-src``::
   ack              zaw-ack
   applications     zaw-applications
   bookmark         zaw-bookmark
+  git-branches     zaw-git-branches
+  git-recent-all-branches     zaw-git-recent-all-branches
+  git-recent-branches     zaw-git-recent-branches
   git-files        zaw-git-files
+  git-files-legacy zaw-git-files-legacy
+  git-status       zaw-git-status
   history          zaw-history
   open-file        zaw-open-file
   perldoc          zaw-perldoc
+  process          zaw-process
   screens          zaw-screens
+  ssh-hosts        zaw-ssh-hosts
   tmux             zaw-tmux
 
 
@@ -101,7 +118,9 @@ and these zstyles to customize styles::
   ':filter-select:highlight' selected
   ':filter-select:highlight' matched
   ':filter-select:highlight' title
+  ':filter-select:highlight' error
   ':filter-select' max-lines
+  ':filter-select' rotate-list
   ':filter-select' case-insensitive
   ':filter-select' extended-search
 
@@ -109,6 +128,7 @@ and these zstyles to customize styles::
     zstyle ':filter-select:highlight' matched fg=yellow,standout
     zstyle ':filter-select' max-lines 10 # use 10 lines for filter-select
     zstyle ':filter-select' max-lines -10 # use $LINES - 10 for filter-select
+    zstyle ':filter-select' rotate-list yes # enable rotation for filter-select
     zstyle ':filter-select' case-insensitive yes # enable case-insensitive search
     zstyle ':filter-select' extended-search yes # see below
 

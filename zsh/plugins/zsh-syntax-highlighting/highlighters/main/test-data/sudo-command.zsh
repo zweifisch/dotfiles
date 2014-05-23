@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # -------------------------------------------------------------------------------------------------
-# Copyright (c) 2010-2011 zsh-syntax-highlighting contributors
+# Copyright (c) 2010-2013 zsh-syntax-highlighting contributors
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification, are permitted
@@ -28,33 +28,12 @@
 # vim: ft=zsh sw=2 ts=2 et
 # -------------------------------------------------------------------------------------------------
 
+BUFFER='sudo -u otheruser ls /'
 
-# List of keyword and color pairs.
-typeset -gA ZSH_HIGHLIGHT_PATTERNS
-
-# Whether the pattern highlighter should be called or not.
-_zsh_highlight_pattern_highlighter_predicate()
-{
-  _zsh_highlight_buffer_modified
-}
-
-# Pattern syntax highlighting function.
-_zsh_highlight_pattern_highlighter()
-{
-  setopt localoptions extendedglob
-  local pattern
-  for pattern in ${(k)ZSH_HIGHLIGHT_PATTERNS}; do
-    _zsh_highlight_pattern_highlighter_loop "$BUFFER" "$pattern"
-  done
-}
-
-_zsh_highlight_pattern_highlighter_loop()
-{
-  # This does *not* do its job syntactically, sorry.
-  local buf="$1" pat="$2"
-  local -a match mbegin mend
-  if [[ "$buf" == (#b)(*)(${~pat})* ]]; then
-    region_highlight+=("$((mbegin[2] - 1)) $mend[2] $ZSH_HIGHLIGHT_PATTERNS[$pat]")
-    "$0" "$match[1]" "$pat"; return $?
-  fi
-}
+expected_region_highlight=(
+  "1 4 $ZSH_HIGHLIGHT_STYLES[precommand]" # sudo
+  "6 7 $ZSH_HIGHLIGHT_STYLES[single-hyphen-option]" # -u
+  "9 17 $ZSH_HIGHLIGHT_STYLES[default]" # otheruser
+  "19 20 $ZSH_HIGHLIGHT_STYLES[command]" # ls
+  "22 22 $ZSH_HIGHLIGHT_STYLES[path]" # /
+)

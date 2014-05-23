@@ -32,7 +32,7 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(vi-mode lein mix rebar fabric gnu-utils rake svn taskwarrior zsh-syntax-highlighting history-substring-search vagrant)
+plugins=(vi-mode lein mix rebar fabric gnu-utils rake svn taskwarrior zsh-syntax-highlighting history-substring-search vagrant zaw)
 source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all
@@ -58,6 +58,9 @@ setopt NOCLOBBER
 export VIDIR_EDITOR_ARGS='-c :set nolist | :set ft=vidir-ls'
 
 export PRO_BASE=$HOME/pg
+
+bindkey '^R' zaw-history
+zstyle ':filter-select' max-lines 5
 
 # if [[ -x $(which ondir) ]]; then
 # 	cd() { builtin cd "$@" && eval "`ondir \"$OLDPWD\" \"$PWD\"`" }
