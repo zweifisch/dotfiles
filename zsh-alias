@@ -454,7 +454,7 @@ list-git-repos(){
     for gitdir in `find ./ -maxdepth 2 -name .git`;
     do
         workdir=${gitdir%/*};
-        git --git-dir=$gitdir --work-tree=$workdir remote show origin | grep Fetch | awk '{print $3}'
+        git --git-dir=$gitdir --work-tree=$workdir config --get remote.origin.url
     done
 }
 
@@ -915,22 +915,18 @@ swap-caps-esc() {
     [[ -n $(xmodmap -pk | awk '$1 == 66 && $3 == "(Escape)"') ]] || xmodmap ~/.Xmodmap
 }
 
-alias git-proxy-disable='export -n GIT_PROXY_COMMAND'
-git-proxy-enable() {
-    export GIT_PROXY_COMMAND==git-proxy
-}
-
 proxied-git () {
     export GIT_PROXY_COMMAND=/tmp/git-proxy;
 
     if [ ! -f $GIT_PROXY_COMMAND ]; then
         cat > $GIT_PROXY_COMMAND <<EOF
 #!/bin/bash
-/usr/bin/socat - PROXY:127.0.0.1:\$1:\$2,proxyport=7070
-#/bin/nc -x127.0.0.1:7070 -X5 \$*
+/bin/nc -x127.0.0.1:7070 -X5 \$*
 EOF
         chmod +x $GIT_PROXY_COMMAND;
     fi
 
     git "$@"
 }
+
+alias get-prezto='git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"'

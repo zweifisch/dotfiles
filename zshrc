@@ -35,6 +35,10 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(vi-mode lein mix rebar fabric gnu-utils rake svn taskwarrior zsh-syntax-highlighting history-substring-search vagrant zaw)
 source $ZSH/oh-my-zsh.sh
 
+# if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+#   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# fi
+
 unsetopt correct_all
 unsetopt correct
 
@@ -106,11 +110,11 @@ export DISABLE_AUTO_TITLE='true'
 
 export GOPATH=$HOME/.golang
 
-source $HOME/.zsh_alias
+source $HOME/.zsh-alias
  
 uname -a | grep -i ubuntu > /dev/null && source $HOME/.ppa
 
 # local settings
-if [ -f $HOME/.zshrc_local ]; then
-	source $HOME/.zshrc_local
+if [ -f $HOME/.zshrc-local ]; then
+	source $HOME/.zshrc-local
 fi
