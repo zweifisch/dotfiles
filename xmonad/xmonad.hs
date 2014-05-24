@@ -105,6 +105,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- reset output
     , ((modm , xK_r ), spawn "xrandr --auto")
+
+    -- reset brightness
+    , ((modm , xK_b ), spawn "xbacklight -set 90")
     ]
     ++
 

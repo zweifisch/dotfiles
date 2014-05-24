@@ -172,18 +172,6 @@ if [ $? = 0 ]; then
     alias get='sudo apt-get install'
 fi
 
-bright(){
-    brightness=`echo "$1 * 0.1" | bc`
-    redshiftgui -o -b $brightness
-}
-
-_bright(){
-    A=( 5 6 7 8 9 10 )
-    _arguments \
-         ":::($A)"
-}
-compdef _bright bright
-
 alias chrome='z google-chrome --disk-cache-dir="/dev/shm/chrome/" &'
 alias chrome-proxy='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --proxy-server="socks5://localhost:7070" &'
 alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-file-access-from-files  --disable-web-security --remote-debugging-port=9222 &'
@@ -210,26 +198,6 @@ alias secure="chmod 600 $1"
 ghc-run(){
     ghc --make $1 && "./${1%.*}"
 }
-
-alias get-jquery='wget http://code.jquery.com/jquery-1.8.3.min.js'
-alias get-jquery='wget http://code.jquery.com/jquery-1.9.1.min.js'
-alias get-bootstrap-datepicker='wget https://raw.github.com/eternicode/bootstrap-datepicker/master/js/bootstrap-datepicker.js'
-alias get-mustache='wget https://raw.github.com/janl/mustache.js/master/mustache.js'
-alias get-hammer='wget https://raw.github.com/EightMedia/hammer.js/master/hammer.js'
-alias get-zepto='wget http://zeptojs.com/zepto.min.js'
-alias get-mocha='wget https://raw.github.com/visionmedia/mocha/master/mocha.js'
-alias get-mocha-css='wget https://raw.github.com/visionmedia/mocha/master/mocha.css'
-alias get-chai='wget https://raw.github.com/chaijs/chai/master/chai.js'
-alias get-pathjs='wget https://raw.github.com/mtrpcic/pathjs/master/path.js'
-alias get-knockout='wget http://knockoutjs.com/downloads/knockout-3.0.0.js'
-alias get-moment='wget https://raw.github.com/timrwood/moment/2.0.0/min/moment.min.js'
-alias get-uikit='wget http://visionmedia.github.com/uikit/build/ui.js'
-alias get-uikit-css="wget http://visionmedia.github.com/uikit/build/ui.css"
-alias get-chosen="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.jquery.js"
-alias get-chosen-css="wget https://raw.github.com/harvesthq/chosen/master/chosen/chosen.css"
-alias get-spin="wget http://fgnass.github.com/spin.js/dist/spin.js"
-alias get-es5-shim="wget https://raw.github.com/kriskowal/es5-shim/master/es5-shim.js"
-alias get-angular="wget http://code.angularjs.org/1.1.5/angular.min.js"
 
 whichweek(){
     week=`date -d "now" +%U`
@@ -759,6 +727,11 @@ output-reset() {
     xrandr --auto
 }
 
+output-brightness() {
+    xrandr --output $1 --brightness "0.$2"
+}
+compdef _output output-brightness
+
 upsidedown(){
     LD_PRELOAD=/usr/lib/i386-linux-gnu/libv4l/v4l1compat.so $*
 }
@@ -805,6 +778,7 @@ setup-rbenv() {
 
 setup-pyenv() {
     git clone git://github.com/yyuu/pyenv.git ~/.pyenv
+    sudo apt-get install libncursesw5-dev libreadline6-dev libssl-dev libgdbm-dev libc6-dev libsqlite3-dev liblzma-dev libz-dev libbz2-dev
 }
 
 setup-nvm() {
@@ -929,3 +903,12 @@ alias get-prezto='git clone --recursive https://github.com/sorin-ionescu/prezto.
 
 alias get-oh-my-zsh='git clone https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh'
 
+kbd-backlight() {
+    sudo bash -c 'echo 0 > /sys/class/leds/smc::kbd_backlight/brightness'
+}
+
+brightness() {
+    sudo bash -c "echo $1 > /sys/class/backlight/mba6x_backlight/brightness"
+}
+
+alias super-caps='xcape -e "Control_L=Escape"'
