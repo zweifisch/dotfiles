@@ -912,3 +912,6 @@ brightness() {
 }
 
 alias super-caps='xcape -e "Control_L=Escape"'
+
+alias smart-touch='syndaemon -Kdi 1'
+

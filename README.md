@@ -164,3 +164,4 @@ setup-git
 * `inxi -c0 -v7` [inxi](https://inxi.googlecode.com/svn/trunk/inxi)
 * `memtop` http://code.google.com/p/memtop/ 1.0.2 
 * `output-dual` connecting to external monitor
+* [nmcli-dmenu](https://github.com/firecat53/nmcli-dmenu)

@@ -79,13 +79,15 @@
 
 (setq my:el-get-packages
       '(org-mode deft
-        python jedi ein
+        python
+        ; jedi
+        ; ein
         grizzl
         projectile
         help-fns+
         evil-surround
         coffee-mode
-        zencoding-mode
+        ; zencoding-mode
         markdown-mode
         ; mustache-mode
         yaml-mode
