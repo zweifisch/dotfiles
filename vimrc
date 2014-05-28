@@ -8,8 +8,6 @@ call vundle#rc()
 
 " Bundle 'gmarik/vundle'
 
-Bundle 'christoomey/vim-tmux-navigator'
-
 Bundle 'tpope/vim-vinegar'
 Bundle 'goldfeld/vim-seek'
 Bundle 'mhinz/vim-signify'
@@ -576,10 +574,10 @@ map n nzz
 map N Nzz
 " imap kk <esc>
 
-" map <C-J> <C-W>j
-" map <C-K> <C-W>k
-" map <C-L> <C-W>l
-" map <C-H> <C-W>h
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
+map <C-H> <C-W>h
 " map <C-H> <C-W>W
 " nmap j gj
 " nmap k gk
