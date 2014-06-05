@@ -7,13 +7,9 @@ alias mkdir='mkdir -p'
 
 alias lt='tree -L 1'
 
-alias //=''
-alias \#=''
-
 alias ls-empty='find . -type f -empty -exec ls -l {} \;'
 alias rm-empty='find . -type f -empty -delete'
-
-alias va='vagrant'
+alias rm-empty-dir='find . -type d -empty -delete'
 
 alias timestamp='date +%s'
 
@@ -915,3 +911,7 @@ alias super-caps='xcape -e "Control_L=Escape"'
 
 alias smart-touch='syndaemon -Kdi 1'
 
+vagrant-copy-id() {
+    ssh-keygen -f "/home/zf/.ssh/known_hosts" -R [127.0.0.1]:2222
+    ssh-copy-id root@127.0.0.1 -p 2222
+}

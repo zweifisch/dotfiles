@@ -9,7 +9,7 @@ import qualified Data.Map as M
 
 import XMonad.Hooks.EwmhDesktops
 
-myTerminal = "urxvt -e bash -c \"tmux -q has-session && exec tmux attach-session -d || exec tmux new-session\""
+myTerminal = "urxvt"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool

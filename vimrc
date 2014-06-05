@@ -481,8 +481,8 @@ let g:vimwiki_url_maxsave = 0
 
 nmap <silent> <leader>stupidmap <Plug>VimwikiNormalizeLinkVisualCR
 
-let vimwiki_path='~/notes/vimwiki/'
-let vimwiki_export_path='~/notes/vimwiki-exported/'
+let vimwiki_path='~/.vimwiki/'
+let vimwiki_export_path='~/.vimwiki-exported/'
 let wiki_settings={
 \ 'template_path': vimwiki_export_path.'vimwiki-assets/',
 \ 'template_default': 'default',
@@ -525,14 +525,14 @@ let wiki_settings={
 \   'monit': 'monit'
 \ }}
 
-let wikis=["linux","web","logs","game","projects","nlp","de","geld","cs","misc"]
+let wikis=["wikis"]
 let g:vimwiki_list = []
 for wiki_name in wikis
 	let wiki=copy(wiki_settings)
 	let wiki.path = vimwiki_path.wiki_name.'/'
 	let wiki.path_html = vimwiki_export_path.wiki_name.'/'
 	let wiki.diary_index = 'index'
-	let wiki.diary_rel_path = 'diary/'
+	let wiki.diary_rel_path = '../diary/'
 	call add(g:vimwiki_list, wiki)
 endfor
 
