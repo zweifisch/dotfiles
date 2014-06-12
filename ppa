@@ -1,80 +1,87 @@
 
 setup-erlang(){
-	sudo sh -c 'echo "deb http://binaries.erlang-solutions.com/debian $(lsb_release -sc) contrib" > /etc/apt/sources.list.d/erlang.list'
-	wget -O - http://binaries.erlang-solutions.com/debian/erlang_solutions.asc | sudo apt-key add -
-	sudo apt-get update
-	sudo apt-get install esl-erlang
+    sudo sh -c 'echo "deb http://binaries.erlang-solutions.com/debian $(lsb_release -sc) contrib" > /etc/apt/sources.list.d/erlang.list'
+    wget -O - http://binaries.erlang-solutions.com/debian/erlang_solutions.asc | sudo apt-key add -
+    sudo apt-get update
+    sudo apt-get install esl-erlang
 }
 
 setup-java(){
-	sudo add-apt-repository ppa:webupd8team/java
-	sudo apt-get update
-	sudo apt-get install oracle-java7-installer
+    sudo add-apt-repository ppa:webupd8team/java
+    sudo apt-get update
+    sudo apt-get install oracle-java7-installer
 }
 
 setup-mongodb(){
-	sudo sh -c 'echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" > /etc/apt/sources.list.d/mongo.list'
-	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
-	sudo apt-get update
-	sudo apt-get install mongodb-10gen
+    sudo sh -c 'echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" > /etc/apt/sources.list.d/mongo.list'
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+    sudo apt-get update
+    sudo apt-get install mongodb-10gen
 }
 
 setup-neo4j(){
-	sudo sh -c 'echo "deb http://debian.neo4j.org/repo stable/" > /etc/apt/sources.list.d/neo4j.list'
-	wget -O - http://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add - 
-	sudo apt-get update
-	sudo apt-get install neo4j
+    sudo sh -c 'echo "deb http://debian.neo4j.org/repo stable/" > /etc/apt/sources.list.d/neo4j.list'
+    wget -O - http://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add - 
+    sudo apt-get update
+    sudo apt-get install neo4j
 }
 
 setup-nodejs(){
-	sudo apt-add-repository ppa:chris-lea/node.js
-	sudo apt-get update
-	sudo apt-get install nodejs
+    sudo apt-add-repository ppa:chris-lea/node.js
+    sudo apt-get update
+    sudo apt-get install nodejs
 }
 
 setup-rabbitmq(){
-	sudo sh -c 'echo "deb http://www.rabbitmq.com/debian/ testing main" > /etc/apt/sources.list.d/rabbitmq.list'
-	wget -O - http://www.rabbitmq.com/rabbitmq-signing-key-public.asc | sudo apt-key add -
-	sudo apt-get update
-	sudo apt-get install rabbitmq-server
+    sudo sh -c 'echo "deb http://www.rabbitmq.com/debian/ testing main" > /etc/apt/sources.list.d/rabbitmq.list'
+    wget -O - http://www.rabbitmq.com/rabbitmq-signing-key-public.asc | sudo apt-key add -
+    sudo apt-get update
+    sudo apt-get install rabbitmq-server
 }
 
 setup-redis(){
-	sudo apt-add-repository ppa:chris-lea/redis-server 
-	sudo apt-get update
-	sudo apt-get install redis-server
+    sudo apt-add-repository ppa:chris-lea/redis-server 
+    sudo apt-get update
+    sudo apt-get install redis-server
 }
 
 setup-rethinkdb(){
-	sudo add-apt-repository ppa:rethinkdb/ppa
-	sudo apt-get update
-	sudo apt-get install rethinkdb
+    sudo add-apt-repository ppa:rethinkdb/ppa
+    sudo apt-get update
+    sudo apt-get install rethinkdb
 }
 
 setup-riak(){
-	# sudo sh -c 'echo "deb http://apt.basho.com $(lsb_release -sc) main" > /etc/apt/sources.list.d/basho.list'
-	sudo sh -c 'echo "deb http://apt.basho.com precise main" > /etc/apt/sources.list.d/basho.list'
-	wget -O - http://apt.basho.com/gpg/basho.apt.key | sudo apt-key add -
-	sudo apt-get update
-	sudo apt-get install riak
+    # sudo sh -c 'echo "deb http://apt.basho.com $(lsb_release -sc) main" > /etc/apt/sources.list.d/basho.list'
+    sudo sh -c 'echo "deb http://apt.basho.com precise main" > /etc/apt/sources.list.d/basho.list'
+    wget -O - http://apt.basho.com/gpg/basho.apt.key | sudo apt-key add -
+    sudo apt-get update
+    sudo apt-get install riak
+}
+
+setup-elasticsearch(){
+    wget -O - http://packages.elasticsearch.org/GPG-KEY-elasticsearch | sudo apt-key add -
+    sudo sh -c 'echo "deb http://packages.elasticsearch.org/elasticsearch/1.1/debian stable main" > /etc/apt/sources.list.d/elasticsearch.list'
+    sudo apt-get update
+    sudo apt-get install elasticsearch
 }
 
 setup-tmux(){
-	sudo add-apt-repository ppa:pi-rho/dev
-	sudo apt-get update
-	sudo apt-get install tmux
+    sudo add-apt-repository ppa:pi-rho/dev
+    sudo apt-get update
+    sudo apt-get install tmux
 }
 
 setup-rust(){
-	sudo add-apt-repository ppa:hansjorg/rust
-	sudo apt-get update
-	sudo apt-get install rust-nightly
+    sudo add-apt-repository ppa:hansjorg/rust
+    sudo apt-get update
+    sudo apt-get install rust-nightly
 }
 
 setup-php(){
-	sudo add-apt-repository ppa:ondrej/php5
-	sudo apt-get update
-	sudo apt-get install php5
+    sudo add-apt-repository ppa:ondrej/php5
+    sudo apt-get update
+    sudo apt-get install php5
 }
 
 # vim:set ft=zsh:

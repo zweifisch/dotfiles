@@ -173,7 +173,7 @@ alias chrome-proxy='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --proxy-
 alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-file-access-from-files  --disable-web-security --remote-debugging-port=9222 &'
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
-alias play='mplayer'
+alias play='VDPAU_DRIVER=va_gl mpv'
 alias play-shuffle='mplayer -shuffle -playlist <(find $(pwd) -iname \*.mp3)'
 
 alias datafart='curl --data-binary @- datafart.com'
@@ -912,6 +912,9 @@ alias super-caps='xcape -e "Control_L=Escape"'
 alias smart-touch='syndaemon -Kdi 1'
 
 vagrant-copy-id() {
-    ssh-keygen -f "/home/zf/.ssh/known_hosts" -R [127.0.0.1]:2222
-    ssh-copy-id root@127.0.0.1 -p 2222
+    port=${1:-2222}
+    ssh-keygen -f "/home/zf/.ssh/known_hosts" -R [127.0.0.1]:$port
+    ssh-copy-id root@127.0.0.1 -p $port
 }
+
+alias tcpflow-on='sudo tcpflow -X /dev/null -i any -C -J port'
