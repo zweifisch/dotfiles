@@ -37,8 +37,6 @@ export REPORTTIME=30
 
 export VIDIR_EDITOR_ARGS='-c :set nolist | :set ft=vidir-ls'
 
-export ANSIBLE_HOSTS=hosts
-
 # tmuxp
 export DISABLE_AUTO_TITLE='true'
 

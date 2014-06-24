@@ -34,8 +34,6 @@ alias short-line='awk "length < 200"'
 alias leiser='amixer -q -c 0 sset Master 5%- unmute'
 alias lauter='amixer -q -c 0 sset Master 5%+ unmute'
 
-alias g='google-search'
-
 alias total-play-time='bc <<< "$(find -name "*.mp3" -print0 | xargs -0 mp3info -p "%S\n" | paste -sd+ | bc) / 60" '
 
 alias vbox='VBoxManage startvm'
@@ -105,15 +103,6 @@ if [ $? = 0 ]; then
     alias traceroute='colourify /usr/sbin/traceroute'
 fi
 
-wow(){
-    unrar x $1 && rm -f Readme.png $1
-}
-
-wow-url(){
-    curl -sI $(curl -s "$1" | grep -F "http://sh.st/" | cut -d '"' -f 4) |\
-        grep -i location | cut -d " " -f 2
-}
-
 view-tex(){
     xelatex "$1" && mupdf "${1%.*}.pdf"
 }
@@ -173,7 +162,8 @@ alias chrome-proxy='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --proxy-
 alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-file-access-from-files  --disable-web-security --remote-debugging-port=9222 &'
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
-alias play='VDPAU_DRIVER=va_gl mpv'
+# alias play='VDPAU_DRIVER=va_gl mpv'
+alias play='mplayer'
 alias play-shuffle='mplayer -shuffle -playlist <(find $(pwd) -iname \*.mp3)'
 
 alias datafart='curl --data-binary @- datafart.com'
@@ -918,3 +908,17 @@ vagrant-copy-id() {
 }
 
 alias tcpflow-on='sudo tcpflow -X /dev/null -i any -C -J port'
+
+tcpdump-http() {
+    port=${1:-80}
+    sudo tcpdump -A -s 0 -i lo "tcp port $port and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)"
+}
+
+mysql-create-user() {
+    db=$1
+    user=$2
+    host=localhost
+    echo -n "password for $user: "
+    read password
+    mysql -uroot -p -e "GRANT ALL PRIVILEGES ON $db.* TO $user@$host IDENTIFIED BY '$password'; FLUSH PRIVILEGES; SHOW GRANTS FOR $user@$host"
+}
