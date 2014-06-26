@@ -643,6 +643,7 @@ nmap ,ti a<C-R>=strftime("%H:%M:%S")<CR>
 " }}}1
 " ft {{{
 au BufRead,BufNewFile *.go set ft=go
+au BufRead,BufNewFile *.kv set ft=kv
 au BufRead,BufNewFile *.as set ft=actionscript
 au BufRead,BufNewFile *.ldg,*.ledger set ft=ledger  
 au BufRead,BufNewFile *.md set ft=markdown
