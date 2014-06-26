@@ -51,7 +51,7 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'vim-coffee-script'
 " Bundle 'tpope/vim-haml'
 " Bundle 'klen/python-mode'
-Bundle 'pangloss/vim-javascript'
+" Bundle 'pangloss/vim-javascript'
 " Bundle 'johnhamelink/blade.vim'
 " Bundle 'jceb/vim-orgmode'
 " Bundle 'hsitz/VimOrganizer'
@@ -123,6 +123,7 @@ Bundle 'Valloric/MatchTagAlways.git'
 " fcitx
 " css-color
 " yankering
+Bundle 'jdonaldson/vaxe'
 
 filetype plugin indent on
 " }}}
@@ -200,6 +201,8 @@ set scrolloff=3
 " show partial commands as you type
 set showcmd
 " set cmdheight=2
+
+set shortmess+=A
 
 " for autocompletion
 set wildmode=list:longest,full
