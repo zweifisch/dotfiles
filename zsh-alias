@@ -373,7 +373,7 @@ load_env_sh(){
 }
 
 chpwd(){
-    if [ -f venv/bin/activate ]; then
+    if [ -f .venv/bin/activate ]; then
         activate-venv
     fi
     if [ -f env.sh ]; then
