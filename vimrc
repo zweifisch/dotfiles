@@ -590,6 +590,8 @@ nnoremap <C-P> <C-W>W
 
 nmap <leader>f :CtrlP <c-r>=expand('%:p:h')<cr><cr>
 nmap <leader>F :CtrlP<cr>
+nmap <leader>b :CtrlPBuffer<cr>
+nmap <leader>B :CtrlPMRU<cr>
 
 map ,j <c-w>j
 map ,k <c-w>k

@@ -17,6 +17,11 @@ alias iex='rlwrap -a iex'
 alias pry='rlwrap -a pry'
 alias erl='rlwrap -a erl'
 
+alias pull='git pull'
+alias push='git push'
+alias st='git status -sb'
+alias ci='git commit'
+
 datetime(){
     date -d@$1 +%Y-%m-%d\ %H:%M:%S
 }
