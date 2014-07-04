@@ -927,3 +927,12 @@ mysql-create-user() {
     read password
     mysql -uroot -p -e "GRANT ALL PRIVILEGES ON $db.* TO $user@$host IDENTIFIED BY '$password'; FLUSH PRIVILEGES; SHOW GRANTS FOR $user@$host"
 }
+
+haxe-run() {
+    haxe -js /tmp/haxe.js -main $1
+    node /tmp/haxe.js
+}
+
+ip-info() {
+    curl ipinfo.io/$(host $1| head -1 | awk '{print $4}')
+}
