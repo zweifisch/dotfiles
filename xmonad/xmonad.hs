@@ -49,6 +49,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_n ), refresh)
 
     , ((0, xK_Print), spawn "scrot -e 'mv $f ~/screenshots/'")
+    , ((modm, xK_s), spawn "scrot -e 'mv $f ~/screenshots/'")
 
     , ((shiftMask, xK_Print), spawn "import ~/shot.png")
 
@@ -108,6 +109,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- reset brightness
     , ((modm , xK_b ), spawn "xbacklight -set 90")
+
+    , ((modm , xK_a ), spawn "sudo sh -c 'echo 100 > /sys/class/backlight/mba6x_backlight/brightness'")
     ]
     ++
 

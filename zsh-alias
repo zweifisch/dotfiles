@@ -4,7 +4,6 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 alias mkdir='mkdir -p'
-
 alias lt='tree -L 1'
 
 alias ls-empty='find . -type f -empty -exec ls -l {} \;'
@@ -167,7 +166,7 @@ alias chrome-proxy='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --proxy-
 alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-file-access-from-files  --disable-web-security --remote-debugging-port=9222 &'
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
-# alias play='VDPAU_DRIVER=va_gl mpv'
+alias mpv='VDPAU_DRIVER=va_gl mpv'
 alias play='mplayer'
 alias play-shuffle='mplayer -shuffle -playlist <(find $(pwd) -iname \*.mp3)'
 
@@ -935,4 +934,24 @@ haxe-run() {
 
 ip-info() {
     curl ipinfo.io/$(host $1| head -1 | awk '{print $4}')
+}
+
+mem-available() {
+    awk '$1 == "MemAvailable:" { print $2 * 1024 }' /proc/meminfo | numfmt --to iec
+}
+
+mba-backlight() {
+    if [ -z "$1" ]; then
+        cat /sys/class/backlight/mba6x_backlight/brightness
+    else
+        sudo sh -c "echo $1 > /sys/class/backlight/mba6x_backlight/brightness"
+    fi
+}
+
+mba-kbd-backlight() {
+    sudo sh -c 'echo 0 > /sys/class/leds/smc::kbd_backlight/brightness'
+}
+
+local-http-proxy() {
+    export http_proxy=http://127.0.0.1:8118/
 }
