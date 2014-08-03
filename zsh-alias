@@ -44,6 +44,7 @@ alias vbox='VBoxManage startvm'
 alias vbox-list="VBoxManage -nologo list vms"
 alias nb='newsbeuter'
 alias pb='podbeuter'
+alias docker='sudo docker.io'
 
 alias curl-json="curl -H 'Content-Type: applicaiton/json' "
 alias curl-ajax="curl -H 'X-Requested-With: XMLHttpRequest' "
@@ -514,46 +515,6 @@ bitbucket-add-remote(){
     git remote add origin ssh://git@bitbucket.org/$(bitbucket-username)/$1.git
 }
 
-mxmlc-release(){
-    output=$3
-    if [ -z "$output" ]; then
-        output=output.swf
-    fi
-    libpath=$2
-    if [ -z "$libpath" ]; then
-        libpath=$FLEX_LIB_PATH
-    fi
-    mxmlc $1\
-     -external-library-path $libpath\
-     -output $output\
-     -default-size=600,400\
-     -default-frame-rate=24\
-     -default-background-color=0xffffff\
-     -static-link-runtime-shared-libraries\
-     -optimize=true\
-     -debug=false
-}
-
-mxmlc-debug(){
-    output=$3
-    if [ -z "$output" ]; then
-        output=output.swf
-    fi
-    libpath=$2
-    if [ -z "$libpath" ]; then
-        libpath=$FLEX_LIB_PATH
-    fi
-    mxmlc $1\
-     -external-library-path+=$libpath\
-     -output $output\
-     -default-size=600,400\
-     -default-frame-rate=24\
-     -default-background-color=0xffffff\
-     -static-link-runtime-shared-libraries\
-     -optimize=false\
-     -debug=true
-}
-
 rename-after-time(){
     target="$(dirname $1)/$(date -d now +%Y-%m-%d-%H-%M-%S).${1##*.}"
     mv "$1" "$target"
@@ -569,13 +530,6 @@ shot(){
         img="$1/$img"
     fi
     echo "$img"
-}
-
-
-mount-ntfs(){
-    mkdir -p $2
-    ntfs-3g /dev/$1 $2
-    # mount -t ntfs -o nls=utf8,umask=0022,gid=$(id -g),uid=$(id -u)  /dev/$1 $2
 }
 
 pdf-compress(){
@@ -603,19 +557,19 @@ _pman(){
 compdef _pman pman
 
 wget-proxy(){
-    host=$1
+    url="$1"
     name="/tmp/wget-$2"
-    url="$3"
+    host=${3:-proxy}
     ssh $host "wget -O $name '$url'"
     scp $host:$name $2
 }
 
 youtube-dl-proxy(){
-    host=$1
+    url="$1"
     name="/tmp/youtube-dl-$2"
-    url="$3"
-    ssh $host "youtube-dl -o $name '$url'"
-    scp $host:$name $2
+    server=${3:-proxy}
+    ssh $server "youtube-dl -o $name '$url'"
+    scp $server:$name $2
 }
 
 redis-eval(){
@@ -717,6 +671,10 @@ output-reset() {
     xrandr --auto
 }
 
+output-classic() {
+    xrandr --output $1 --mode 640x480
+}
+
 output-brightness() {
     xrandr --output $1 --brightness "0.$2"
 }
@@ -775,7 +733,7 @@ setup-nvm() {
     git clone https://github.com/creationix/nvm ~/.nvm
 }
 
-setup-git() {
+setup-git-extra() {
     cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
 }
 
@@ -953,5 +911,9 @@ mba-kbd-backlight() {
 }
 
 local-http-proxy() {
+    if [ ! -f /tmp/privoxy.pid ]; then
+        echo 'forward-socks5 / 127.0.0.1:7070 .' >! /tmp/privoxy.conf
+        privoxy --pidfile /tmp/privoxy.pid /tmp/privoxy.conf
+    fi
     export http_proxy=http://127.0.0.1:8118/
 }

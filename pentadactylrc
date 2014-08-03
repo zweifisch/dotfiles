@@ -114,6 +114,7 @@ set fbwhitelist+=coursera.org
 set fbwhitelist+=udacity.com
 set fbwhitelist+=duolingo.com
 set fbwhitelist+=tv.sohu.com
+set fbwhitelist+=bing.com
 "}}}
 
 "{{{ Hint Style

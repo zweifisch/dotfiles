@@ -13,11 +13,21 @@ bind-key O open-in-browser-and-mark-read
 
 max-items 200
 
-color listnormal color244 default
-color listfocus color166 black
-color info color136 black
-color article color244 default
-color background color244 default
+# color listnormal color244 default
+# color listfocus color166 black
+# color info color136 black
+# color article color244 default
+# color background color244 default
+
+color background default default
+color listnormal default default
+color listfocus black yellow
+color info default black
+color article default default
+
+highlight article "^(Title):.*$" blue default
+highlight article "https?://[^ ]+" red default
+highlight article "\\[image\\ [0-9]+\\]" green default
 
 # no automatic reloading
 refresh-on-startup no

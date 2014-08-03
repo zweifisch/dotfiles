@@ -72,7 +72,8 @@
                       stylus-mode
                       virtualenvwrapper
                       elscreen
-                      ; org-present
+                      elm-mode
+                      org-present
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -233,7 +234,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org")
          "* %?\nEntered on %U\n  %i\n  %a"))))
 
-(custom-set-variables '(org-agenda-files (quote ("~/notes/org/journal.org"))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(comint-completion-addsuffix t)
+ '(comint-completion-autolist t)
+ '(comint-input-ignoredups t)
+ '(comint-move-point-for-output t)
+ '(comint-scroll-show-maximum-output t)
+ '(comint-scroll-to-bottom-on-input t)
+ '(org-agenda-files (quote ("~/notes/org/journal.org")) t)
+ '(safe-local-variable-values (quote ((coffee-indent-tabs-mode . t)))))
 (setq org-agenda-files (list "~/notes/org/journal.org" "~/notes/org/zf.org" ))
 
 (setq org-todo-keywords
@@ -270,14 +283,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; shell
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-(custom-set-variables
- '(comint-scroll-to-bottom-on-input t)  ; always insert at the bottom
- '(comint-scroll-to-bottom-on-output t) ; always add output at the bottom
- '(comint-scroll-show-maximum-output t) ; scroll to show max possible output
- '(comint-completion-autolist t)        ; show completion list when ambiguous
- '(comint-input-ignoredups t)           ; no duplicates in command history
- '(comint-completion-addsuffix t)       ; insert space/slash after file completion
- )
+
 
 (setq-default truncate-lines t)
 
@@ -308,6 +314,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-k") 'other-window)
 
 ;; coffee
+(evil-define-key 'visual coffee-mode-map
+  "r" 'coffee-compile-region)
 
 ;; (setq coffee-indent-tabs-mode t)
 
