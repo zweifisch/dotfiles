@@ -16,6 +16,11 @@
 
 (set-face-attribute 'default nil :height 110)
 
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
@@ -107,10 +112,11 @@
         js2-mode
         smart-tab
         mmm-mode
+        helm
         magit))
 (el-get 'sync my:el-get-packages)
 
-;; powerline fiplr helm clojure-mode slime-repl swank-clojure
+;; powerline fiplr clojure-mode slime-repl swank-clojure
 ;; yasnippet anything emms dired-sort dired+ auto-dictionnary
 ;; autopair google-maps org2blog rainbow-mode switch-window
 ;; sr-speedbar typopunct solarized-theme
@@ -155,17 +161,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (evil-leader/set-key
   "F" 'projectile-find-file
-  "b" 'projectile-switch-to-buffer
-  "R" 'projectile-recentf
-  "g" 'projectile-grep
-
   "f" 'ido-find-file
-  "B" 'ido-switch-buffer
-  ;; "r" 'recentf-open-files
-
-  "o" 'browse-url
+  ;; "B" 'ido-switch-buffer
+  "B" 'helm-buffers-list
+  "b" 'projectile-switch-to-buffer
+  "R" 'helm-recentf
+  "r" 'projectile-recentf
 
   "s" 'projectile-switch-project
+  "g" 'projectile-grep
+  "o" 'browse-url
   "e" 'eshell
   "i" 'ein:notebooklist-open
   "c" 'org-capture
@@ -187,7 +192,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; recentf
 (recentf-mode 1)
-(setq recentf-max-saved-items 256)
+(setq recentf-max-saved-items 512)
 
 ; projectile
 (projectile-global-mode)
