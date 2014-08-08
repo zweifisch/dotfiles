@@ -7,6 +7,7 @@
 
 (ido-mode t)
 (setq ido-enable-flex-matching t)
+(add-to-list 'ido-ignore-buffers "*Messages*")
 
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
@@ -79,6 +80,8 @@
                       elscreen
                       elm-mode
                       org-present
+                      smex  ; replace M-x
+                      ace-jump-mode  ; easymotion
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -113,6 +116,7 @@
         smart-tab
         mmm-mode
         helm
+        dizzee  ; process management
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -168,12 +172,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "R" 'helm-recentf
   "r" 'projectile-recentf
 
-  "s" 'projectile-switch-project
+  "p" 'projectile-switch-project
   "g" 'projectile-grep
   "o" 'browse-url
   "e" 'eshell
   "i" 'ein:notebooklist-open
   "c" 'org-capture
+  "s" 'magit-status
+  "j" 'ace-jump-mode
   "d" 'deft)
 (global-evil-leader-mode)
 
@@ -228,6 +234,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
+(setq org-src-fontify-natively t)  ; code block
+
 (setq org-directory "~/notes/org")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 
@@ -250,8 +258,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '(comint-move-point-for-output t)
  '(comint-scroll-show-maximum-output t)
  '(comint-scroll-to-bottom-on-input t)
- '(org-agenda-files (quote ("~/notes/org/journal.org")) t)
- '(safe-local-variable-values (quote ((coffee-indent-tabs-mode . t)))))
+ '(org-agenda-files (quote ("~/notes/org/journal.org")) t))
 (setq org-agenda-files (list "~/notes/org/journal.org" "~/notes/org/zf.org" ))
 
 (setq org-todo-keywords
@@ -301,6 +308,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'visual cider-mode-map
   (kbd "RET") 'cider-eval-region)
 
+; magit
+(evil-define-key 'normal magit-mode-map
+  "j" 'magit-goto-next-section)
+(evil-define-key 'normal magit-mode-map
+  "k" 'magit-goto-previous-section)
+
 ; python
 (evil-define-key 'visual python-mode-map
   (kbd "RET") 'python-shell-send-region)
@@ -322,6 +335,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'visual coffee-mode-map
   "r" 'coffee-compile-region)
 
+(add-to-list 'ac-modes 'coffee-mode)
 ;; (setq coffee-indent-tabs-mode t)
 
 ;; web-mode
@@ -369,6 +383,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq slime-contribs '(slime-fancy slime-js))
 
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+
+
 ;; (require 'mmm-mode)
 ;; (mmm-add-classes
 ;;  '((markdown-python
@@ -379,3 +397,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; (setq mmm-global-mode 't)
 ;; (mmm-add-mode-ext-class 'markdown-mode nil 'markdown-python)
+
+
+(when (member "DejaVu Sans Mono for Powerline" (font-family-list))
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono for Powerline-10"))
