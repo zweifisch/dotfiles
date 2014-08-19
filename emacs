@@ -184,6 +184,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-evil-leader-mode)
 
 ; evil-nerd-commenter
+(setq evilnc-hotkey-comment-operator "gc")
 (evilnc-default-hotkeys)
 
 ; jedi
@@ -203,6 +204,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; projectile
 (projectile-global-mode)
 (setq projectile-completion-system 'grizzl
+      projectile-switch-project-action 'projectile-dired
       projectile-remember-window-configs t)
 
 ;; virtualenv
