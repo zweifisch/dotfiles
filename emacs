@@ -9,6 +9,8 @@
 (setq ido-enable-flex-matching t)
 (add-to-list 'ido-ignore-buffers "*Messages*")
 
+(global-auto-revert-mode t)
+
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
@@ -324,7 +326,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gs" 'python-shell-switch-to-shell)
 
 ; global evil key
-(define-key evil-normal-state-map "L" 'ido-switch-buffer)
+;; (define-key evil-normal-state-map "L" 'ido-switch-buffer)
+(define-key evil-normal-state-map "L" 'helm-buffers-list)
 (define-key evil-normal-state-map "H" 'mode-line-other-buffer)
 ; (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
 
@@ -403,3 +406,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (when (member "DejaVu Sans Mono for Powerline" (font-family-list))
   (set-face-attribute 'default nil :font "DejaVu Sans Mono for Powerline-10"))
+
+;; (set-face-attribute 'helm-selection nil :background "#441100")

@@ -162,9 +162,9 @@ if [ $? = 0 ]; then
     alias get='sudo apt-get install'
 fi
 
-alias chrome='z google-chrome --disk-cache-dir="/dev/shm/chrome/" &'
-alias chrome-proxy='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --proxy-server="socks5://localhost:7070" &'
-alias chrome-dev='z google-chrome --disk-cache-dir="/dev/shm/chrome/" --allow-file-access-from-files  --disable-web-security --remote-debugging-port=9222 &'
+alias chrome='z chromium-browser --disk-cache-dir="/dev/shm/chrome/" &'
+alias chrome-proxy='z chromium-browser --disk-cache-dir="/dev/shm/chrome/" --proxy-server="socks5://localhost:7070" &'
+alias chrome-dev='z chromium-browser --disk-cache-dir="/dev/shm/chrome/" --allow-file-access-from-files  --disable-web-security --remote-debugging-port=9222 &'
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias mpv='VDPAU_DRIVER=va_gl mpv'
