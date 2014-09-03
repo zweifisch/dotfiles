@@ -36,8 +36,8 @@ URxvt.scrollBar: false
 
 ! Extensions
 URxvt.perl-ext-common: default,keyboard-select,url-select,clipboard
-URxvt.keysym.M-m: perl:keyboard-select:activate
-URxvt.keysym.M-s: perl:keyboard-select:search
+! URxvt.keysym.M-m: perl:keyboard-select:activate
+! URxvt.keysym.M-s: perl:keyboard-select:search
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.keysym.M-c: perl:clipboard:copy
 URxvt.keysym.M-v: perl:clipboard:paste

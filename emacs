@@ -11,6 +11,8 @@
 
 (global-auto-revert-mode t)
 
+;; (global-hl-line-mode)
+
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1))
@@ -76,6 +78,7 @@
                       evil-matchit
                       evil-nerd-commenter
                       evil-leader
+                      paredit
                       subatomic-theme
                       stylus-mode
                       virtualenvwrapper
@@ -119,6 +122,7 @@
         mmm-mode
         helm
         dizzee  ; process management
+        rainbow-delimiters
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -299,11 +303,39 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; shell
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-
-
 (setq-default truncate-lines t)
 
 (exec-path-from-shell-initialize)
+
+; paredit
+
+;; (add-hook 'emacs-lisp-mode-hook 'evil-paredit-mode)
+;; (add-hook 'clojure-mode-hook 'evil-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+
+;; clojure
+
+(add-hook 'clojure-mode-hook 'paredit-mode)
+(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+
+(evil-define-key 'normal paredit-mode-map
+  "D" 'paredit-kill
+  ;; "dd" 'paredit-kill-sexps-on-whole-line
+  "gh" 'paredit-backward
+  "gj" 'paredit-forward-up
+  "gk" 'paredit-backward-up
+  "gl" 'paredit-forward
+
+  "w(" 'paredit-wrap-round
+  "w[" 'paredit-wrap-square
+  "w{" 'paredit-wrap-curly
+  "w<" 'paredit-wrap-angled
+  "wh" 'paredit-forward-barf-sexp
+  "wl" 'paredit-forward-slurp-sexp
+  "ww" 'paredit-splice-sexp
+
+  ;; "J" 'paredit-join-sexps
+  "O" 'paredit-split-sexp)
 
 ; cider
 (evil-define-key 'normal cider-mode-map
@@ -335,6 +367,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-insert-state-map "\C-o" 'other-window)
 (global-set-key (kbd "C-j") 'other-window)
 (global-set-key (kbd "C-k") 'other-window)
+
+(setq evil-default-cursor '("DodgerBlue1" box)
+      evil-normal-state-cursor '("gray" box)
+      evil-emacs-state-cursor '("pink" box)
+      evil-motion-state-cursor '("SeaGreen1" box)
+      evil-insert-state-cursor '("white" bar)
+      evil-visual-state-cursor '("white" hbar)
+      evil-replace-state-cursor '("orange" hbar))
+
+(global-set-key (kbd "RET") 'newline-and-indent)
+(define-key minibuffer-local-map (kbd "C-w") 'backward-kill-word)
+
+(define-key evil-normal-state-map "Y" (kbd "y$"))
+
+(autoload 'dired-jump "dired-x"
+  "Jump to Dired buffer corresponding to current buffer." t)
+(define-key evil-normal-state-map "-" 'dired-jump)
+(evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
 
 ;; coffee
 (evil-define-key 'visual coffee-mode-map
@@ -408,3 +458,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (set-face-attribute 'default nil :font "DejaVu Sans Mono for Powerline-10"))
 
 ;; (set-face-attribute 'helm-selection nil :background "#441100")
+
+;; dangerous
+(setq enable-local-variables :all)
