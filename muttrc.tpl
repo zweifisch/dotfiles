@@ -50,8 +50,8 @@ set edit_headers=yes      # See the headers when editing
 #======================================================#
 # Aliases
 
-set alias_file = ~/notes/mutt_aliases
-source ~/notes/mutt_aliases
+set alias_file = ~/.mutt_aliases
+source ~/.mutt_aliases
 set sort_alias=alias                 # Sort alphabetically
 
 #======================================================#
