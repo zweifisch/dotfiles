@@ -1,30 +1,32 @@
 #======================================================#
-# Boring details
+
 set realname = "#{realname}"
 set from = "#{email}"
 set use_from = yes
 set envelope_from ="yes"
 
-# Use a signature
+# signature
 # set signature="fortune -n 120 -s ~/.fortune/signature|"
              # fortune -n 120 -s ~/.fortune/signature
-set signature="curl --silent http://hackersays.com/quote | json c a|"
+# set signature="curl --silent http://hackersays.com/quote | json c a|"
 
 # Use msmtp rather than sendmail. Check that 
 # the path is correct for your system:
-set sendmail="/usr/bin/msmtp"   
+set sendmail = /usr/bin/msmtp
 
-# If not set in ~/.bashrc:
+set folder = $HOME/mail
+
 # set spoolfile = /var/spool/mail/#{username}
+set spoolfile = "+archive"
 
 #======================================================#
-# Folders
-set folder="$HOME/mail"      # Local mailboxes stored here
+
 # set record="+sent"           # Where to store sent messages
 # set record="~/mail/=sent-mail-`date +%Y-%m`"
 set record="+sent-mail-`date +%Y-%m`"
 set postponed="+postponed"   # Where to store draft messages
-set mbox_type=mbox           # Mailbox type
+# set mbox_type=mbox           # Mailbox type
+set mbox_type=Maildir
 set move=no                  # Don't move mail from spool
 
 #======================================================#
@@ -42,8 +44,7 @@ hdr_order Date: From: User-Agent: X-Mailer X-Operating-System To: \
         Cc: Reply-To: Subject: Mail-Followup-To:
                        
 #======================================================#
-# which editor do you want to use? 
-# vim of course!
+
 set editor="vim -c 'set tw=70 et' '+/^$' " 
 set edit_headers=yes      # See the headers when editing
 
@@ -55,7 +56,6 @@ source ~/.mutt_aliases
 set sort_alias=alias                 # Sort alphabetically
 
 #======================================================#
-# Colours: defaults are a little bleak so experiment!
 
 # source ~/.mutt-colors-solarized-dark-256.muttrc
 source ~/.mutt-colors-solarized-dark-16.muttrc
