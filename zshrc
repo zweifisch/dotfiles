@@ -80,6 +80,10 @@ if [ -z "$NVM_SOURCED" ]; then
 	fi
 fi
 
+if [ -f $HOME/.gvm/scripts/gvm ]; then
+    source $HOME/.gvm/scripts/gvm
+fi
+
 if [ -f $HOME/.ppa ]; then
     uname -a | grep -i ubuntu > /dev/null && source $HOME/.ppa
 fi

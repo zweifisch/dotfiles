@@ -87,6 +87,9 @@
                       org-present
                       smex  ; replace M-x
                       ace-jump-mode  ; easymotion
+                      use-package
+                      ;go-mode
+                      ;go-eldoc
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -255,19 +258,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org")
          "* %?\nEntered on %U\n  %i\n  %a"))))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(comint-completion-addsuffix t)
- '(comint-completion-autolist t)
- '(comint-input-ignoredups t)
- '(comint-move-point-for-output t)
- '(comint-scroll-show-maximum-output t)
- '(comint-scroll-to-bottom-on-input t)
- '(org-agenda-files (quote ("~/notes/org/journal.org")) t))
-(setq org-agenda-files (list "~/notes/org/journal.org" "~/notes/org/zf.org" ))
+(setq org-agenda-files (mapcar (lambda (path) (concat org-directory path))
+                            (list "/journal.org" "/zf.org" "/todo.org")))
 
 (setq org-todo-keywords
       '((sequence "TODO" "NEXT" "|" "DONE" "ABORTED")))
@@ -297,6 +289,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "ga" 'org-agenda
   "-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle)
+
+(evil-define-key 'emacs org-agenda-mode-map
+  "j" 'org-agenda-next-line
+  "k" 'org-agenda-previous-line
+  (kbd "C-j") 'org-agenda-goto-date  ; "j"
+  "n" 'org-agenda-capture)           ; "k"
 
 (winner-mode)
 
@@ -461,3 +459,22 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; dangerous
 (setq enable-local-variables :all)
+
+(require 'use-package)
+(use-package helm
+  :config
+  (progn
+    (use-package helm-config)
+    (define-key helm-map (kbd "C-j") 'helm-next-line)
+    (define-key helm-map (kbd "C-k") 'helm-previous-line)))
+
+(use-package grizzl
+  :config
+  (progn
+    (define-key *grizzl-keymap* (kbd "C-j") 'grizzl-set-selection-1)
+    (define-key *grizzl-keymap* (kbd "C-k") 'grizzl-set-selection+1)))
+
+;; golang
+;; (add-hook 'before-save-hook 'gofmt-before-save)
+;; (add-hook 'go-mode-hook 'go-eldoc-setup)
+

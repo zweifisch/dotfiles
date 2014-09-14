@@ -733,6 +733,10 @@ setup-nvm() {
     git clone https://github.com/creationix/nvm ~/.nvm
 }
 
+setup-gvm() {
+    bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+}
+
 setup-git-extra() {
     cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
 }
