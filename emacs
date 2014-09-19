@@ -55,7 +55,8 @@
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+                         ;("melpa" . "http://melpa.milkbox.net/packages/")
+                         ))
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -88,8 +89,8 @@
                       smex  ; replace M-x
                       ace-jump-mode  ; easymotion
                       use-package
-                      ;go-mode
-                      ;go-eldoc
+                      go-mode
+                      org-journal
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -247,7 +248,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq org-src-fontify-natively t)  ; code block
 
-(setq org-directory "~/notes/org")
+(setq org-directory "~/.org")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 
 (setq org-capture-templates
@@ -258,8 +259,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org")
          "* %?\nEntered on %U\n  %i\n  %a"))))
 
-(setq org-agenda-files (mapcar (lambda (path) (concat org-directory path))
-                            (list "/journal.org" "/zf.org" "/todo.org")))
+(setq org-journal-dir (concat org-directory "/"))
+
+(setq org-agenda-files (list org-directory))
+(setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+")
+
+;; (setq org-journal-file-format  "%Y-%m-%d.org")
+;; (setq org-journal-file-pattern "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}.org")
+
+(evil-define-key 'normal org-journal-mode-map
+  "gb" 'org-journal-open-previous-entry
+  "gf" 'org-journal-open-next-entry)
 
 (setq org-todo-keywords
       '((sequence "TODO" "NEXT" "|" "DONE" "ABORTED")))
@@ -475,6 +485,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (define-key *grizzl-keymap* (kbd "C-k") 'grizzl-set-selection+1)))
 
 ;; golang
-;; (add-hook 'before-save-hook 'gofmt-before-save)
+(add-hook 'before-save-hook 'gofmt-before-save)
 ;; (add-hook 'go-mode-hook 'go-eldoc-setup)
-
