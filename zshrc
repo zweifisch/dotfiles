@@ -40,8 +40,6 @@ export VIDIR_EDITOR_ARGS='-c :set nolist | :set ft=vidir-ls'
 # tmuxp
 export DISABLE_AUTO_TITLE='true'
 
-export GOPATH=$HOME/.golang
-
 bindkey '^R' zaw-history
 zstyle ':filter-select' max-lines 5
 
@@ -96,3 +94,5 @@ eval `dircolors ~/.dir_colors`
 if [ -f $HOME/.zshrc-local ]; then
 	source $HOME/.zshrc-local
 fi
+
+export GOPATH=$GOPATH:$HOME/.projects

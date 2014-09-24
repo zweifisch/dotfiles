@@ -21,8 +21,12 @@
 
 (set-face-attribute 'default nil :height 110)
 
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
+;; (setq backup-directory-alist
+;;       `((".*" . ,temporary-file-directory)))
+
+(setq backup-directory-alist '(("." . "~/.tmp")))
+
+
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
@@ -248,18 +252,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq org-src-fontify-natively t)  ; code block
 
-(setq org-directory "~/.org")
-(setq org-default-notes-file (concat org-directory "/notes.org"))
+(setq org-directory "~/.org/")
 
 (setq org-capture-templates
-      '(("t" "Tasks" entry (file+headline (concat org-directory "/todo.org") "Tasks")
+      '(("t" "Tasks" entry (file+headline "todo.org" "Tasks")
          "* TODO %?")
-        ("c" "Collection" entry (file+datetree (concat org-directory "/collect.org") "Collections")
+        ("c" "Collection" entry (file+datetree "collect.org" "Collections")
          "* %x")
-        ("j" "Journal" entry (file+datetree (concat org-directory "/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a"))))
+        ("j" "Journal" entry (file+datetree "journal.org" "* %?\nEntered on %U\n  %i\n  %a"))))
 
-(setq org-journal-dir (concat org-directory "/"))
+(setq org-journal-dir org-directory)
 
 (setq org-agenda-files (list org-directory))
 (setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+")
@@ -487,3 +489,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; golang
 (add-hook 'before-save-hook 'gofmt-before-save)
 ;; (add-hook 'go-mode-hook 'go-eldoc-setup)
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)

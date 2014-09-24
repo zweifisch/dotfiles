@@ -29,6 +29,8 @@ Bundle 'blueyed/vim-colors-solarized'
 " Bundle 'itchyny/thumbnail.vim'
 Bundle 'zweifisch/pipe2eval'
 
+Bundle 'katono/rogue.vim'
+
 " Bundle 'rfc-syntax'
 " Bundle 'dag/vim2hs'
 Bundle 'lukerandall/haskellmode-vim'
