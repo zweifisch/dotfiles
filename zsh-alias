@@ -284,6 +284,12 @@ qq-dict() {
     curl -s "http://dict.qq.com/dict?q=$1"
 }
 
+bing-dict() {
+    elinks -dump "http://www.bing.com/dict/search?q=$1" | less
+}
+
+alias define=bing-dict
+
 givedef(){
     if [[ $# -ge 2 ]] then
         echo "givedef: too many arguments" >&2
@@ -419,41 +425,6 @@ list-git-repos(){
 
 list-clj-projects(){
     find ./ -maxdepth 2 -name project.clj
-}
-
-share(){
-    if [ -z "$1" ]; then
-        return
-    fi
-    if [ -f ~/.share-pid ]; then
-        if [ kill -0 $(cat ~/.share-pid) > /dev/null 2>&1 ]; then
-            echo 'server is running'
-        else
-            share-start
-        fi
-    else
-        share-start
-    fi
-    ln -nsf "$(readlink -e "$1")" ~/.share-tmp/
-}
-
-share-start(){
-    echo 'staring server'
-    mkdir ~/.share-tmp
-    port=8888
-    if [ -n "$1" ]; then
-        port=$1
-    fi
-    cd ~/.share-tmp
-    python2 -mSimpleHTTPServer $port &>! ~/.share-log & echo "$!" >! ~/.share-pid
-    ls -1
-    cd - > /dev/null
-}
-
-share-stop(){
-    kill $(cat ~/.share-pid) &> /dev/null
-    rm -rf ~/.share-tmp
-    rm -f ~/.share-pid
 }
 
 github-clone(){

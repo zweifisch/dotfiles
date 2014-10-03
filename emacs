@@ -7,7 +7,7 @@
 
 (ido-mode t)
 (setq ido-enable-flex-matching t)
-(add-to-list 'ido-ignore-buffers "*Messages*")
+(add-to-list 'ido-ignore-buffers "*Messages*" "*Ibuffer*")
 
 (global-auto-revert-mode t)
 
@@ -25,7 +25,7 @@
 ;;       `((".*" . ,temporary-file-directory)))
 
 (setq backup-directory-alist '(("." . "~/.tmp")))
-
+;; (setq make-backup-files nil)
 
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
@@ -369,7 +369,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; global evil key
 ;; (define-key evil-normal-state-map "L" 'ido-switch-buffer)
-(define-key evil-normal-state-map "L" 'helm-buffers-list)
+;; (define-key evil-normal-state-map "L" 'helm-buffers-list)
+(define-key evil-normal-state-map "L" 'ibuffer)
 (define-key evil-normal-state-map "H" 'mode-line-other-buffer)
 ; (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
 
@@ -492,3 +493,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
+
+(evil-set-initial-state 'ibuffer-mode 'normal)
+(evil-define-key 'normal ibuffer-mode
+  "j" 'ibuffer-forward-line
+  "k" 'ibuffer-backward-line)
+
+;; Don't wait for any other keys after escape is pressed.
+(setq evil-esc-delay 0)

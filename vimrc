@@ -470,11 +470,11 @@ nmap ,,hT :!otl2html.py % > <c-r>=expand("%:r")<cr>.html && firefox <c-r>=expand
 nnoremap <silent> <Leader>vr :VimroomToggle<CR>
 " }}}
 " vimux {{{
-map <Leader>vc :VimuxClosePanes<CR>
+nmap <Leader>vc :VimuxPromptCommand<CR>
 
 vmap <silent> <CR> "vy:call VimuxRunCommand(escape(@v, '$`'), 0)<CR>
 
-map <Leader>vl :VimuxRunLastCommand<CR>
+nmap <silent> <CR> :VimuxInterruptRunner<CR>:VimuxRunLastCommand<CR>
 
 let g:VimuxHeight = "40"
 let g:VimuxOrientation = "h"
