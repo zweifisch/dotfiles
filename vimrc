@@ -355,6 +355,11 @@ let g:EasyMotion_mapping_b = '('
 let g:EasyMotion_mapping_f = 'f'
 let g:EasyMotion_mapping_F = 'F'
 " }}}
+" go {{{
+let g:go_auto_type_info = 1
+au FileType go nmap gd <Plug>(go-def)
+au FileType go nmap <Leader>gd <Plug>(go-doc-vertical)
+" }}}
 " python-mode {{{
 let g:pymode_lint_ignore = "W191,E501,W806,E122,E128,E121,W404,W402,W0401,E302,E701"
 " E302 two blank line
