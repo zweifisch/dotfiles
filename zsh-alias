@@ -886,9 +886,9 @@ mba-kbd-backlight() {
 }
 
 local-http-proxy() {
-    if [ ! -f /tmp/privoxy.pid ]; then
-        echo 'forward-socks5 / 127.0.0.1:7070 .' >! /tmp/privoxy.conf
-        privoxy --pidfile /tmp/privoxy.pid /tmp/privoxy.conf
-    fi
+    # if [ ! -f /tmp/privoxy.pid ]; then
+    #     echo 'forward-socks5 / 127.0.0.1:7070 .' >! /tmp/privoxy.conf
+    #     privoxy --pidfile /tmp/privoxy.pid /tmp/privoxy.conf
+    # fi
     export http_proxy=http://127.0.0.1:8118/
 }
