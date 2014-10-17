@@ -131,6 +131,7 @@
         helm
         dizzee  ; process management
         rainbow-delimiters
+        calfw
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -253,6 +254,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq org-src-fontify-natively t)  ; code block
 
 (setq org-directory "~/.org/")
+(setq org-agenda-files (list org-directory))
 
 (setq org-capture-templates
       '(("t" "Tasks" entry (file+headline "todo.org" "Tasks")
@@ -262,16 +264,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         ("j" "Journal" entry (file+datetree "journal.org" "* %?\nEntered on %U\n  %i\n  %a"))))
 
 (setq org-journal-dir org-directory)
-
-(setq org-agenda-files (list org-directory))
-(setq org-agenda-file-regexp "\\`[^.].*\\.org'\\|[0-9]+")
-
-;; (setq org-journal-file-format  "%Y-%m-%d.org")
-;; (setq org-journal-file-pattern "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}.org")
+(setq org-journal-file-format  "%Y-%m-%d.org")
 
 (evil-define-key 'normal org-journal-mode-map
   "gb" 'org-journal-open-previous-entry
   "gf" 'org-journal-open-next-entry)
+
+(evil-define-key 'motion calendar-mode-map
+  (kbd "RET") 'org-journal-read-entry)
+
+(setq calendar-week-start-day 1)
 
 (setq org-todo-keywords
       '((sequence "TODO" "NEXT" "|" "DONE" "ABORTED")))
@@ -501,3 +503,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Don't wait for any other keys after escape is pressed.
 (setq evil-esc-delay 0)
+
+(require 'calfw)
