@@ -834,7 +834,7 @@ brightness() {
     sudo bash -c "echo $1 > /sys/class/backlight/mba6x_backlight/brightness"
 }
 
-alias super-caps='xcape -e "Control_L=Escape"'
+alias super-caps='xcape -e "Control_L=Escape;Shift_R=Escape;Shift_L=Control_L|a"'
 
 alias smart-touch='syndaemon -Kdi 1'
 

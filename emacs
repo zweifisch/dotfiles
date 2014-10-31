@@ -59,8 +59,7 @@
 (require 'package)
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ;("melpa" . "http://melpa.milkbox.net/packages/")
-                         ))
+                         ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -95,6 +94,7 @@
                       use-package
                       go-mode
                       org-journal
+                      linum-relative
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -504,4 +504,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; Don't wait for any other keys after escape is pressed.
 (setq evil-esc-delay 0)
 
-(require 'calfw)
+;; (require 'calfw)
+
+(setq org-agenda-include-diary t)
+
+(require 'linum-relative)

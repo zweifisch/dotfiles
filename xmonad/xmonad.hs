@@ -32,9 +32,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch dmenu
     -- , ((modm, xK_p ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm, xK_p ), spawn "exe=`dmenu_run -nb '#000' -nf '#fff' -sb '#333' -sf '#fff'` && eval \"exec $exe\"")
+    , ((modm, xK_w ), spawn "nmcli-dmenu")
 
-    , ((modm , xK_Up ), spawn "amixer -q sset Master 10%+ unmute")
-    , ((modm , xK_Down ), spawn "amixer -q sset Master 10%- unmute")
+    , ((modm , xK_Up ), spawn "amixer -q sset Master 5%+ unmute")
+    , ((modm , xK_Down ), spawn "amixer -q sset Master 5%- unmute")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c ), kill)
