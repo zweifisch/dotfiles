@@ -122,11 +122,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    -- ++
+    ++
 
-    --
-    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-    -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
+    -- Also switch to spacial workspace for symbol keys
+    [((m .|. modm, k), windows $ f i)
+        | (i, k) <- zip (XMonad.workspaces conf) symbolKeys
+        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+
     --
     -- [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
     --     | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
@@ -148,6 +150,12 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
+
+-- symbol keys, sorted by order of switching
+symbolKeys = [ xK_exclam, xK_at, xK_numbersign
+             , xK_dollar, xK_percent, xK_asciicircum
+             , xK_ampersand,  xK_asterisk,  xK_parenleft
+             , xK_parenright]
 
 
 myLayout = Full ||| tiled ||| Mirror tiled

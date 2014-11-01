@@ -892,3 +892,5 @@ local-http-proxy() {
     # fi
     export http_proxy=http://127.0.0.1:8118/
 }
+
+alias xev-simple="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
