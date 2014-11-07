@@ -5,7 +5,7 @@ set novb
 set newtab=all
 " buggy
 " set hintkeys='ASDFGHJLK;'
-set hintkeys='asdfghjlk;'
+set hintkeys='asdfghjlk:'
 hi Hint -a text-transform: uppercase;
 
 loadplugins '\.(js|penta)$'

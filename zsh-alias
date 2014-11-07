@@ -712,6 +712,11 @@ setup-git-extra() {
     cd /tmp && git clone --depth 1 https://github.com/visionmedia/git-extras.git && cd git-extras && sudo make install
 }
 
+setup-boot() {
+    wget -c https://github.com/boot-clj/boot/releases/download/v2-r1/boot.sh -O boot
+    chmod +x boot && sudo mv boot /usr/local/bin
+}
+
 html-coffee() {
     cat > $1.html << EOF
 <!DOCTYPE html>
@@ -732,7 +737,7 @@ touch $1.{coffee,js}
 
 alias pip-install='pip install -r requirements.txt -i http://pypi.douban.com/simple'
 
-alias get-bing-image='curl $(curl "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1" | json images.0.url) > $(date -d now +%Y-%m-%d).jpg' 
+alias get-bing-image='curl $(curl "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1" | jq -r .images[0].url) > $(date -d now +%Y-%m-%d).jpg' 
 
 qr() {
     content="$1"

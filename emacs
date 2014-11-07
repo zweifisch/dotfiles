@@ -86,7 +86,7 @@
                       subatomic-theme
                       stylus-mode
                       virtualenvwrapper
-                      elscreen
+                      ;; elscreen
                       elm-mode
                       org-present
                       smex  ; replace M-x
@@ -95,6 +95,7 @@
                       go-mode
                       org-journal
                       linum-relative
+                      volatile-highlights
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -132,6 +133,8 @@
         dizzee  ; process management
         rainbow-delimiters
         calfw
+        anaphora
+        workgroups2
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -418,25 +421,25 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (setq zoom-window-mode-line-color "DarkGreen")
 
 ;; elscreen
-(setq elscreen-prefix-key "\C-a")
-(setq elscreen-display-tab nil)
+;; (setq elscreen-prefix-key "\C-a")
+;; (setq elscreen-display-tab nil)
 
-(elscreen-start)
+;; (elscreen-start)
 
-(define-key elscreen-map "x" 'elscreen-kill)
-(define-key elscreen-map "b" 'elscreen-find-and-goto-by-buffer)
-(define-key elscreen-map "f" 'elscreen-find-file)
+;; (define-key elscreen-map "x" 'elscreen-kill)
+;; (define-key elscreen-map "b" 'elscreen-find-and-goto-by-buffer)
+;; (define-key elscreen-map "f" 'elscreen-find-file)
 
-(global-set-key (kbd "M-h") 'elscreen-previous)
-(global-set-key (kbd "M-l") 'elscreen-next)
+;; (global-set-key (kbd "M-h") 'elscreen-previous)
+;; (global-set-key (kbd "M-l") 'elscreen-next)
 
-(defun elscreen-eshell ()
-  (interactive)
-  (progn
-    (elscreen-clone)
-    (multi-term)))
+;; (defun elscreen-eshell ()
+;;   (interactive)
+;;   (progn
+;;     (elscreen-clone)
+;;     (multi-term)))
 
-(define-key elscreen-map "s" 'elscreen-eshell)
+;; (define-key elscreen-map "s" 'elscreen-eshell)
 
 (add-to-list 'term-unbind-key-list "C-a")
 (add-to-list 'term-bind-key-alist '("C-z" . term-stop-subjob))
@@ -508,4 +511,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq org-agenda-include-diary t)
 
+(setq wg-prefix-key (kbd "C-a"))
+(setq wg-mode-line-display-on t)
+
+(workgroups-mode 1)
+
 (require 'linum-relative)
+
+(volatile-highlights-mode t)
