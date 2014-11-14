@@ -379,10 +379,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map "H" 'mode-line-other-buffer)
 ; (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
 
-(define-key evil-normal-state-map "\C-o" 'other-window)
-(define-key evil-insert-state-map "\C-o" 'other-window)
-(global-set-key (kbd "C-j") 'other-window)
-(global-set-key (kbd "C-k") 'other-window)
+(define-key evil-normal-state-map (kbd "C-a o") 'other-window)
+(define-key evil-insert-state-map (kbd "C-a o") 'other-window)
 
 (setq evil-default-cursor '("DodgerBlue1" box)
       evil-normal-state-cursor '("gray" box)
@@ -518,4 +516,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'linum-relative)
 
+(require 'volatile-highlights)
 (volatile-highlights-mode t)
