@@ -495,7 +495,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (add-hook 'go-mode-hook 'go-eldoc-setup)
 
 (setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+(load custom-file t)
 
 (evil-set-initial-state 'ibuffer-mode 'normal)
 (evil-define-key 'normal ibuffer-mode
