@@ -96,6 +96,9 @@
                       org-journal
                       linum-relative
                       volatile-highlights
+                      know-your-http-well
+                      company
+                      smart-mode-line
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -518,3 +521,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; (require 'smart-mode-line)
+;; (sml/setup)
