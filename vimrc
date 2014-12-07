@@ -508,6 +508,7 @@ let wiki_settings={
 \   'py': 'python',
 \   'prolog': 'prolog',
 \   'lisp': 'lisp',
+\   'scheme': 'scheme',
 \   'clojure': 'clojure',
 \   'clj': 'clojure',
 \   'c++': 'cpp',
