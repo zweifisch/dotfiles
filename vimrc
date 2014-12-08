@@ -669,6 +669,7 @@ au BufRead,BufNewFile *.hist set ft=sh
 au BufRead,BufNewFile *.pgsql set ft=pgsql
 au BufRead,BufNewFile *.hamlet set ft=hamlet
 au BufRead,BufNewFile *.pl set ft=prolog
+au BufRead,BufNewFile *.conf set ft=dosini
 
 au BufReadCmd *.epub call zip#Browse(expand("<amatch>"))
 

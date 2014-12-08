@@ -98,7 +98,10 @@
                       volatile-highlights
                       know-your-http-well
                       company
+                      alchemist
                       smart-mode-line
+                      quack
+                      geiser
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -117,7 +120,7 @@
         markdown-mode
         ; mustache-mode
         yaml-mode
-        auto-complete
+        ;; auto-complete
         web-mode
         jade-mode
         haskell-mode
@@ -162,6 +165,8 @@
 
 (define-key evil-normal-state-map " " 'evil-toggle-fold)
 (define-key evil-normal-state-map ";" 'evil-ex)
+(define-key evil-visual-state-map
+  (kbd "RET") 'append-to-buffer)
 
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.
@@ -411,7 +416,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'visual coffee-mode-map
   "r" 'coffee-compile-region)
 
-(add-to-list 'ac-modes 'coffee-mode)
+;; (add-to-list 'ac-modes 'coffee-mode)
 ;; (setq coffee-indent-tabs-mode t)
 
 ;; web-mode
@@ -530,3 +535,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; (require 'smart-mode-line)
 ;; (sml/setup)
+
+(require 'quack)
+
+;; babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ruby . t)
+   (scheme . t)
+   (python . t)
+   ))
+(setq org-confirm-babel-evaluate nil)
