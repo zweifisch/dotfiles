@@ -101,6 +101,7 @@
                       alchemist
                       smart-mode-line
                       quack
+                      elpy
                       geiser
                       flycheck))
 (dolist (p my-packages)
@@ -546,3 +547,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (python . t)
    ))
 (setq org-confirm-babel-evaluate nil)
+
+(elpy-enable)
