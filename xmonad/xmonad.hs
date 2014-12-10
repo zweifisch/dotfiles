@@ -9,6 +9,14 @@ import qualified Data.Map as M
 
 import XMonad.Hooks.EwmhDesktops
 
+import XMonad.Config
+import XMonad.Prompt
+import XMonad.Prompt.Input (inputPromptWithCompl, (?+))
+import XMonad.Util.Run (runProcessWithInput)
+import Data.Bits ((.|.))
+
+
+
 myTerminal = "urxvt"
 
 -- Whether focus follows the mouse pointer.
@@ -24,6 +32,22 @@ myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor = "#dddddd"
 myFocusedBorderColor = "#ff0000"
 
+
+-- get the list of connections using nmcli
+getNmConnections :: X [String]
+getNmConnections = fmap lines $ runProcessWithInput "nmcli" [ "-t", "-f", "NAME", "con", "list" ] []
+
+-- a utility to run an nmcli command
+nmConAction a = spawn . ((++) "nmcli con ") . ((++) a)
+
+-- Prompt for nm up or down action
+nmPrompt :: String -> X ()
+nmPrompt a = do
+                conns <- getNmConnections
+                inputPromptWithCompl defaultXPConfig ("Connection to " ++ a)
+                  (mkComplFunFromList conns) ?+ (nmConAction (" " ++ a ++ " id "))
+
+
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
@@ -32,7 +56,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch dmenu
     -- , ((modm, xK_p ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm, xK_p ), spawn "exe=`dmenu_run -nb '#000' -nf '#fff' -sb '#333' -sf '#fff'` && eval \"exec $exe\"")
-    , ((modm, xK_w ), spawn "nmcli-dmenu")
+
+    -- , ((modm, xK_w ), spawn "nmcli-dmenu")
+    , ((modm                , xK_w), nmPrompt "up")
+    , ((modm .|. shiftMask, xK_w), nmPrompt "down")
 
     , ((modm , xK_Up ), spawn "amixer -q sset Master 5%+ unmute")
     , ((modm , xK_Down ), spawn "amixer -q sset Master 5%- unmute")
@@ -199,3 +226,4 @@ defaults = defaultConfig {
         logHook = myLogHook,
         startupHook = myStartupHook
     }
+

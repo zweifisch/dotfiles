@@ -365,6 +365,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal emacs-lisp-mode-map
   (kbd "RET") 'eval-last-sexp)
 
+(evil-define-key 'normal scheme-mode-map
+  (kbd "RET") 'geiser-eval-last-sexp)
+
 ; cider
 (evil-define-key 'normal cider-mode-map
   (kbd "RET") 'cider-eval-last-sexp)
