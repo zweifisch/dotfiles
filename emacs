@@ -102,6 +102,7 @@
                       smart-mode-line
                       quack
                       elpy
+                      evil-god-state
                       geiser
                       flycheck))
 (dolist (p my-packages)
@@ -189,7 +190,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key [escape] 'evil-exit-emacs-state)
 
 ; evil-leader
-
 (evil-leader/set-key
   "F" 'projectile-find-file
   "f" 'ido-find-file
@@ -207,8 +207,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "c" 'org-capture
   "s" 'magit-status
   "j" 'ace-jump-mode
+  "v" 'wg-switch-to-workgroup
   "d" 'deft)
 (global-evil-leader-mode)
+(evil-leader/set-leader "|")
+(evil-define-key 'normal global-map "," 'evil-execute-in-god-state)
 
 ; evil-nerd-commenter
 (setq evilnc-hotkey-comment-operator "gc")
