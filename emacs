@@ -378,6 +378,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'visual cider-mode-map
   (kbd "RET") 'cider-eval-region)
 
+;; (setq nrepl-hide-special-buffers t
+;;       cider-repl-pop-to-buffer-on-connect nil
+;;       cider-popup-stacktraces nil
+;;       cider-repl-popup-stacktraces t)
+
 ; magit
 (evil-define-key 'normal magit-mode-map
   "j" 'magit-goto-next-section)
@@ -551,7 +556,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '((ruby . t)
    (scheme . t)
    (python . t)
-   ))
+   (clojure . t)))
 (setq org-confirm-babel-evaluate nil)
+
+(setq org-edit-src-content-indentation 0
+      org-src-tab-acts-natively t
+      org-src-fontify-natively t
+      org-confirm-babel-evaluate nil)
+
+(setq org-babel-clojure-backend 'cider)
 
 (elpy-enable)
