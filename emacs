@@ -556,7 +556,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
  '((ruby . t)
    (scheme . t)
    (python . t)
+   (js . t)
    (clojure . t)))
+
 (setq org-confirm-babel-evaluate nil)
 
 (setq org-edit-src-content-indentation 0
