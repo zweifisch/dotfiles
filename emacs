@@ -302,15 +302,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (evil-define-key 'normal org-mode-map
   "gh" 'outline-up-heading
-  "gj" (if (fboundp 'org-forward-same-level) ;to be backward compatible with older org version
-           'org-forward-same-level
-         'org-forward-heading-same-level)
-  "gk" (if (fboundp 'org-backward-same-level)
-           'org-backward-same-level
-         'org-backward-heading-same-level)
+  "gj" 'org-forward-heading-same-level
+  "gk" 'org-backward-heading-same-level
   "gl" 'outline-next-visible-heading
   "t" 'org-todo
   "gt" 'org-show-todo-tree
+  "ge" 'org-edit-special
   "$" 'org-end-of-line
   "^" 'org-beginning-of-line
   "<" 'org-metaleft
@@ -318,6 +315,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "ga" 'org-agenda
   "-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle)
+
+(evil-define-key 'normal org-src-mode-map
+  "ge" 'org-edit-src-exit)
 
 (evil-define-key 'emacs org-agenda-mode-map
   "j" 'org-agenda-next-line
