@@ -1,6 +1,8 @@
 " Basic Setup {{{1
 set nocompatible
 
+let mapleader = "|"
+
 " vundle {{{
 filetype off
 set rtp+=~/.vim/vundle/
