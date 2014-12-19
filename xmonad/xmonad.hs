@@ -57,6 +57,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- , ((modm, xK_p ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
     , ((modm, xK_p ), spawn "exe=`dmenu_run -nb '#000' -nf '#fff' -sb '#333' -sf '#fff'` && eval \"exec $exe\"")
 
+    , ((modm, xK_e ), spawn "env LC_CTYPE=zh_CN.UTF-8 emacs")
+
     -- , ((modm, xK_w ), spawn "nmcli-dmenu")
     , ((modm                , xK_w), nmPrompt "up")
     , ((modm .|. shiftMask, xK_w), nmPrompt "down")
