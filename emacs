@@ -93,7 +93,6 @@
                       ace-jump-mode  ; easymotion
                       use-package
                       go-mode
-                      org-journal
                       linum-relative
                       volatile-highlights
                       know-your-http-well
@@ -199,6 +198,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "R" 'helm-recentf
   "r" 'projectile-recentf
 
+  "a" 'org-agenda
+
   "p" 'projectile-switch-project
   "g" 'projectile-grep
   "o" 'browse-url
@@ -262,8 +263,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 ; org-mode
+(evil-set-initial-state 'org-mode 'emacs)
+
 (global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
 (setq org-src-fontify-natively t)  ; code block
@@ -277,13 +279,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         ("c" "Collection" entry (file+datetree "collect.org" "Collections")
          "* %x")
         ("j" "Journal" entry (file+datetree "journal.org" "* %?\nEntered on %U\n  %i\n  %a"))))
-
-(setq org-journal-dir org-directory)
-(setq org-journal-file-format  "%Y-%m-%d.org")
-
-(evil-define-key 'normal org-journal-mode-map
-  "gb" 'org-journal-open-previous-entry
-  "gf" 'org-journal-open-next-entry)
 
 (evil-define-key 'motion calendar-mode-map
   (kbd "RET") 'org-journal-read-entry)
@@ -313,7 +308,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "<" 'org-metaleft
   ">" 'org-metaright
   "ga" 'org-agenda
-  "-" 'org-cycle-list-bullet
+  ;; "-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle)
 
 (evil-define-key 'normal org-src-mode-map
@@ -403,9 +398,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map "H" 'mode-line-other-buffer)
 ; (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
 
-(define-key evil-normal-state-map (kbd "C-a o") 'other-window)
-(define-key evil-insert-state-map (kbd "C-a o") 'other-window)
-
 (setq evil-default-cursor '("DodgerBlue1" box)
       evil-normal-state-cursor '("gray" box)
       evil-emacs-state-cursor '("pink" box)
@@ -423,12 +415,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "Jump to Dired buffer corresponding to current buffer." t)
 (define-key evil-normal-state-map "-" 'dired-jump)
 (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
+;; (setq dired-isearch-filenames t)
 
 ;; coffee
 (evil-define-key 'visual coffee-mode-map
   "r" 'coffee-compile-region)
-
-;; (add-to-list 'ac-modes 'coffee-mode)
 ;; (setq coffee-indent-tabs-mode t)
 
 ;; web-mode
@@ -437,31 +428,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 
 (display-time-mode 1)
-
-;; (require 'zoom-window)
-;; (global-set-key (kbd "C-x C-z") 'zoom-window-zoom)
-;; (setq zoom-window-mode-line-color "DarkGreen")
-
-;; elscreen
-;; (setq elscreen-prefix-key "\C-a")
-;; (setq elscreen-display-tab nil)
-
-;; (elscreen-start)
-
-;; (define-key elscreen-map "x" 'elscreen-kill)
-;; (define-key elscreen-map "b" 'elscreen-find-and-goto-by-buffer)
-;; (define-key elscreen-map "f" 'elscreen-find-file)
-
-;; (global-set-key (kbd "M-h") 'elscreen-previous)
-;; (global-set-key (kbd "M-l") 'elscreen-next)
-
-;; (defun elscreen-eshell ()
-;;   (interactive)
-;;   (progn
-;;     (elscreen-clone)
-;;     (multi-term)))
-
-;; (define-key elscreen-map "s" 'elscreen-eshell)
 
 (add-to-list 'term-unbind-key-list "C-a")
 (add-to-list 'term-bind-key-alist '("C-z" . term-stop-subjob))
@@ -478,18 +444,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
-
-
-;; (require 'mmm-mode)
-;; (mmm-add-classes
-;;  '((markdown-python
-;;     :submode python-mode
-;;     :face mmm-declaration-submode-face
-;;     :front "^```python$"
-;;     :back "^```$")))
-
-;; (setq mmm-global-mode 't)
-;; (mmm-add-mode-ext-class 'markdown-mode nil 'markdown-python)
 
 
 (when (member "DejaVu Sans Mono for Powerline" (font-family-list))

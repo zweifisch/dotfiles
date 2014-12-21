@@ -839,7 +839,7 @@ brightness() {
     sudo bash -c "echo $1 > /sys/class/backlight/mba6x_backlight/brightness"
 }
 
-alias super-caps='xcape -e "Control_L=Escape;Shift_R=Escape;Shift_L=Control_L|a"'
+alias super-caps='xcape -e "Control_L=Escape;Shift_R=Escape"'
 
 alias smart-touch='syndaemon -Kdi 1'
 
@@ -896,3 +896,5 @@ use-local-http-proxy() {
 }
 
 alias xev-simple="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
+
+alias emacs-server="env LC_CTYPE=zh_CN.UTF-8 emacs --daemon"
