@@ -37,12 +37,14 @@
 (setq-default save-place t)
 
 (global-set-key (kbd "M-/") 'hippie-expand)
-(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
+
+(global-set-key (kbd "M-l") 'persp-next)
+(global-set-key (kbd "M-h") 'persp-prev)
 
 (show-paren-mode 1)
 (setq-default tab-width 4)
@@ -103,6 +105,7 @@
                       elpy
                       evil-god-state
                       geiser
+                      perspective
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -141,7 +144,7 @@
         rainbow-delimiters
         calfw
         anaphora
-        workgroups2
+        ;; workgroups2
         magit))
 (el-get 'sync my:el-get-packages)
 
@@ -208,7 +211,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "c" 'org-capture
   "s" 'magit-status
   "j" 'ace-jump-mode
-  "v" 'wg-switch-to-workgroup
+  ;; "v" 'wg-switch-to-workgroup
+  "v" 'projectile-persp-switch-project
   "d" 'deft)
 (global-evil-leader-mode)
 (evil-leader/set-leader "|")
@@ -392,9 +396,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gs" 'python-shell-switch-to-shell)
 
 ; global evil key
-;; (define-key evil-normal-state-map "L" 'ido-switch-buffer)
+(define-key evil-normal-state-map "L" 'ido-switch-buffer)
 ;; (define-key evil-normal-state-map "L" 'helm-buffers-list)
-(define-key evil-normal-state-map "L" 'ibuffer)
 (define-key evil-normal-state-map "H" 'mode-line-other-buffer)
 ; (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
 
@@ -490,7 +493,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq wg-prefix-key (kbd "C-a"))
 (setq wg-mode-line-display-on t)
 
-(workgroups-mode 1)
+;; (workgroups-mode 1)
 
 (require 'linum-relative)
 
@@ -523,3 +526,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq org-babel-clojure-backend 'cider)
 
 (elpy-enable)
+
+(persp-mode)
+(require 'persp-projectile)
+
