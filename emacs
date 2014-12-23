@@ -36,16 +36,6 @@
 (require 'saveplace)
 (setq-default save-place t)
 
-(global-set-key (kbd "M-/") 'hippie-expand)
-
-(global-set-key (kbd "C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
-
-(global-set-key (kbd "M-l") 'persp-next)
-(global-set-key (kbd "M-h") 'persp-prev)
-
 (show-paren-mode 1)
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
@@ -377,10 +367,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'visual cider-mode-map
   (kbd "RET") 'cider-eval-region)
 
-;; (setq nrepl-hide-special-buffers t
-;;       cider-repl-pop-to-buffer-on-connect nil
-;;       cider-popup-stacktraces nil
-;;       cider-repl-popup-stacktraces t)
+(setq nrepl-hide-special-buffers t
+      cider-repl-pop-to-buffer-on-connect nil
+      cider-popup-stacktraces t
+      cider-repl-popup-stacktraces t)
 
 ; magit
 (evil-define-key 'normal magit-mode-map
@@ -530,3 +520,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (persp-mode)
 (require 'persp-projectile)
 
+
+(global-set-key (kbd "M-/") 'hippie-expand)
+
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "C-r") 'isearch-backward-regexp)
+(global-set-key (kbd "C-M-s") 'isearch-forward)
+(global-set-key (kbd "C-M-r") 'isearch-backward)
+
+(global-set-key (kbd "M-l") 'persp-next)
+(global-set-key (kbd "M-h") 'persp-prev)
