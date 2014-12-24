@@ -901,4 +901,4 @@ alias emacs-server="env LC_CTYPE=zh_CN.UTF-8 emacs --daemon"
 
 alias h2="java -jar $(find ~/.m2/repository/com/h2database/h2 -iname 'h2*.jar')"
 
-alias lein-repl="lein trampoline repl"
+export LEIN_FAST_TRAMPOLINE=y
