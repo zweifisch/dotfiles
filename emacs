@@ -7,7 +7,8 @@
 
 (ido-mode t)
 (setq ido-enable-flex-matching t)
-(add-to-list 'ido-ignore-buffers "*Messages*" "*Ibuffer*")
+(add-to-list 'ido-ignore-buffers "*Messages*")
+(add-to-list 'ido-ignore-buffers "*Ibuffer*")
 
 (global-auto-revert-mode t)
 
@@ -76,6 +77,8 @@
                       evil-leader
                       paredit
                       subatomic-theme
+                      flatui-theme
+                      solarized-theme
                       stylus-mode
                       virtualenvwrapper
                       ;; elscreen
@@ -96,6 +99,7 @@
                       evil-god-state
                       geiser
                       perspective
+                      ;; diff-hl
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -141,7 +145,7 @@
 ;; powerline fiplr clojure-mode slime-repl swank-clojure
 ;; yasnippet anything emms dired-sort dired+ auto-dictionnary
 ;; autopair google-maps org2blog rainbow-mode switch-window
-;; sr-speedbar typopunct solarized-theme
+;; sr-speedbar typopunct
 
 ;; theme and modes
 
@@ -388,7 +392,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; global evil key
 (define-key evil-normal-state-map "L" 'ido-switch-buffer)
 ;; (define-key evil-normal-state-map "L" 'helm-buffers-list)
-(define-key evil-normal-state-map "H" 'mode-line-other-buffer)
+(define-key evil-normal-state-map "H" 'projectile-project-buffers-other-buffer)
+;; (define-key evil-normal-state-map "H" 'previous-buffer)
+;; (define-key evil-normal-state-map "L" 'next-buffer)
+
 ; (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
 
 (setq evil-default-cursor '("DodgerBlue1" box)
@@ -492,8 +499,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-;; (require 'smart-mode-line)
-;; (sml/setup)
+(require 'smart-mode-line)
+(sml/setup)
+(sml/apply-theme 'respectful)
+(add-to-list 'rm-blacklist " Undo-Tree")
+(add-to-list 'rm-blacklist " Paredit")
+(add-to-list 'rm-blacklist " VHl")
 
 (require 'quack)
 
