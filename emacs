@@ -237,14 +237,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       projectile-remember-window-configs t)
 
 ;; virtualenv
-(require 'virtualenvwrapper)
-(venv-initialize-eshell)
-(setq venv-location "~/.venv/")
-(setq eshell-prompt-function
-      (lambda ()
-        (concat venv-current-name " $ ")))
+;; (require 'virtualenvwrapper)
+;; (venv-initialize-eshell)
+;; (setq venv-location "~/.venv/")
+;; (setq eshell-prompt-function
+      ;; (lambda ()
+        ;; (concat venv-current-name " $ ")))
 ;; virtualenv in modline
-(setq-default mode-line-format (cons '(:exec venv-current-name) mode-line-format))
+;; (setq-default mode-line-format (cons '(:exec venv-current-name) mode-line-format))
 
 ; ein
 
@@ -541,3 +541,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (global-set-key (kbd "M-l") 'persp-next)
 (global-set-key (kbd "M-h") 'persp-prev)
+
+
+(eval-after-load "org"
+  '(progn (define-key org-mode-map (kbd "M-h") nil)))
+
+(eval-after-load "magit"
+  '(progn (define-key magit-mode-map (kbd "M-h") nil)))
+
+(add-hook 'eshell-mode-hook 'rename-uniquely)
+	
