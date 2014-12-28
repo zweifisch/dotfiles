@@ -515,6 +515,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (scheme . t)
    (python . t)
    (js . t)
+   (sh . t)
+   (sql . t)
    (clojure . t)))
 
 (setq org-confirm-babel-evaluate nil)
@@ -550,4 +552,3 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   '(progn (define-key magit-mode-map (kbd "M-h") nil)))
 
 (add-hook 'eshell-mode-hook 'rename-uniquely)
-	
