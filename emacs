@@ -8,7 +8,8 @@
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 (add-to-list 'ido-ignore-buffers "*Messages*")
-(add-to-list 'ido-ignore-buffers "*Ibuffer*")
+
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (global-auto-revert-mode t)
 
@@ -50,25 +51,14 @@
                                                "backups"))))
 
 (require 'package)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
-
-;; el-get
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
-
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
 (defvar my-packages '(evil
                       evil-indent-textobject
@@ -99,10 +89,23 @@
                       evil-god-state
                       geiser
                       perspective
+                      graphviz-dot-mode
                       ;; diff-hl
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
+
+;; el-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
 (setq my:el-get-packages
       '(org-mode deft
@@ -142,8 +145,8 @@
         magit))
 (el-get 'sync my:el-get-packages)
 
-;; powerline fiplr clojure-mode slime-repl swank-clojure
-;; yasnippet anything emms dired-sort dired+ auto-dictionnary
+;; powerline fiplr slime-repl swank-clojure
+;; yasnippet emms dired-sort dired+ auto-dictionnary
 ;; autopair google-maps org2blog rainbow-mode switch-window
 ;; sr-speedbar typopunct
 
@@ -192,6 +195,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; "B" 'ido-switch-buffer
   "B" 'helm-buffers-list
   "b" 'projectile-switch-to-buffer
+  ;; "b" 'ace-jump-buffer
   "R" 'helm-recentf
   "r" 'projectile-recentf
 
@@ -208,6 +212,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; "v" 'wg-switch-to-workgroup
   "v" 'projectile-persp-switch-project
   "d" 'deft)
+
 (global-evil-leader-mode)
 (evil-leader/set-leader "|")
 (evil-define-key 'normal global-map "," 'evil-execute-in-god-state)
@@ -517,7 +522,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (js . t)
    (sh . t)
    (sql . t)
+   (dot . t)
    (clojure . t)))
+
+(add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
 
 (setq org-confirm-babel-evaluate nil)
 
@@ -544,6 +552,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "M-l") 'persp-next)
 (global-set-key (kbd "M-h") 'persp-prev)
 
+(global-set-key (kbd "C-+") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+
 
 (eval-after-load "org"
   '(progn (define-key org-mode-map (kbd "M-h") nil)))
@@ -552,3 +563,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   '(progn (define-key magit-mode-map (kbd "M-h") nil)))
 
 (add-hook 'eshell-mode-hook 'rename-uniquely)
+
+;; (setq ajb-bs-configuration "projectile")

@@ -97,27 +97,6 @@ autocmd PageLoad 'developer\.android\.com/' -js buffer.followLink(document.getEl
 command proxy -nargs=1 :set! network.proxy.type=<args>
 "}}}
 
-"{{{ Flashblock
-set fbwhitelist+=github.com
-set fbwhitelist+=dictionary.reference.com
-set fbwhitelist+=dictionary.com
-set fbwhitelist+=rubygems.org
-set fbwhitelist+=sae.sina.com.cn
-set fbwhitelist+=localhost
-set fbwhitelist+=local
-set fbwhitelist+=thefreedictionary.com
-set fbwhitelist+=youku.com
-set fbwhitelist+=silentneighbours.com
-set fbwhitelist+=iqiyi.com
-set fbwhitelist+=douban.fm
-set fbwhitelist+=coursera.org
-set fbwhitelist+=udacity.com
-set fbwhitelist+=duolingo.com
-set fbwhitelist+=tv.sohu.com
-set fbwhitelist+=bing.com
-set fbwhitelist+=khanacademy.org
-"}}}
-
 "{{{ Hint Style
 " hi Hint -a border:solid 1px #fff;color:#fff;background:#000;
 " hi HintElem background:#fff;color:#000;border-bottom:1px solid #000;
