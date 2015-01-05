@@ -91,6 +91,7 @@
                       perspective
                       graphviz-dot-mode
                       ;; diff-hl
+                      bison-mode
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -395,7 +396,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gs" 'python-shell-switch-to-shell)
 
 ; global evil key
-(define-key evil-normal-state-map "L" 'ido-switch-buffer)
+(define-key evil-normal-state-map "L" 'projectile-ibuffer)
+;; (define-key evil-normal-state-map "L" 'ido-switch-buffer)
 ;; (define-key evil-normal-state-map "L" 'helm-buffers-list)
 (define-key evil-normal-state-map "H" 'projectile-project-buffers-other-buffer)
 ;; (define-key evil-normal-state-map "H" 'previous-buffer)
