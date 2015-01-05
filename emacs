@@ -525,6 +525,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (sh . t)
    (sql . t)
    (dot . t)
+   (haskell . t)
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
@@ -567,3 +568,4 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'eshell-mode-hook 'rename-uniquely)
 
 ;; (setq ajb-bs-configuration "projectile")
+
