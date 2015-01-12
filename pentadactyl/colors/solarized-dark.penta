@@ -7,7 +7,7 @@
 " Reset the styles                                                  {{{1
 " ----------------------------------------------------------------------
 " This ensures they don't bleed over from other themes
-hi clear
+" hi clear
 
 " Solarized color mappings                                          {{{1
 " ----------------------------------------------------------------------
