@@ -26,7 +26,6 @@ datetime(){
 }
 
 alias vi="vim"
-alias e='emacs -nw'
 alias j="jobs -l"
 alias grep='grep --colour'
 alias grep-coffee='grep --include="*.coffee"'
@@ -898,7 +897,8 @@ use-local-http-proxy() {
 
 alias xev-simple="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
 
-alias emacs-server="env LC_CTYPE=zh_CN.UTF-8 emacs --daemon"
+alias emacs-daemon="env LC_CTYPE=zh_CN.UTF-8 emacs --daemon"
+alias e="emacsclient -nc"
 
 alias h2="java -jar $(find ~/.m2/repository/com/h2database/h2 -iname 'h2*.jar')"
 

@@ -69,6 +69,7 @@
                       subatomic-theme
                       flatui-theme
                       solarized-theme
+                      monokai-theme
                       stylus-mode
                       virtualenvwrapper
                       ;; elscreen
@@ -78,6 +79,8 @@
                       ace-jump-mode  ; easymotion
                       use-package
                       go-mode
+                      go-eldoc
+                      company-go
                       linum-relative
                       volatile-highlights
                       know-your-http-well
@@ -92,6 +95,9 @@
                       graphviz-dot-mode
                       ;; diff-hl
                       bison-mode
+                      ghc
+                      company-ghc
+                      guide-key
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -153,9 +159,10 @@
 
 ;; theme and modes
 
-(load-theme 'subatomic t)
+;; (load-theme 'subatomic t)
 ;; (load-theme 'solarized-dark t)
 ;; (load-theme 'zenburn t)
+(load-theme 'monokai t)
 
 ; powerline
 ;; (powerline-default-theme)
@@ -267,10 +274,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 ; org-mode
-(evil-set-initial-state 'org-mode 'emacs)
-
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cb" 'org-iswitchb)
+;; (evil-set-initial-state 'org-mode 'emacs)
 
 (setq org-src-fontify-natively t)  ; code block
 
@@ -283,9 +287,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         ("c" "Collection" entry (file+datetree "collect.org" "Collections")
          "* %x")
         ("j" "Journal" entry (file+datetree "journal.org" "* %?\nEntered on %U\n  %i\n  %a"))))
-
-(evil-define-key 'motion calendar-mode-map
-  (kbd "RET") 'org-journal-read-entry)
 
 (setq calendar-week-start-day 1)
 
@@ -323,8 +324,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "k" 'org-agenda-previous-line
   (kbd "C-j") 'org-agenda-goto-date  ; "j"
   "n" 'org-agenda-capture)           ; "k"
-
-(winner-mode)
 
 ; shell
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
@@ -476,8 +475,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (define-key *grizzl-keymap* (kbd "C-k") 'grizzl-set-selection+1)))
 
 ;; golang
-(add-hook 'before-save-hook 'gofmt-before-save)
-;; (add-hook 'go-mode-hook 'go-eldoc-setup)
+(defun my-go-mode-hook ()
+  (add-to-list (make-local-variable 'company-backends) 'company-go)
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  (go-eldoc-setup))
+
+(add-hook 'go-mode-hook 'my-go-mode-hook)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file t)
@@ -569,3 +573,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; (setq ajb-bs-configuration "projectile")
 
+(autoload 'ghc-init "ghc" nil t)
+(autoload 'ghc-debug "ghc" nil t)
+
+(defun my-haskell-mode-hook ()
+  (add-to-list (make-local-variable'company-backends) 'company-ghc)
+  (ghc-init)
+  (custom-set-variables '(company-ghc-show-info t)))
+
+(add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
+
+(setq guide-key/guide-key-sequence t)
+(guide-key-mode 1)
+
+
+(evil-set-initial-state 'image-mode 'emacs)

@@ -13,6 +13,7 @@ group user
 
 set hlfind
 set go=sn
+set showtabline=never
 colorscheme solarized-dark
 
 " set ds=yubnub
