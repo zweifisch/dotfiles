@@ -51,11 +51,11 @@
                                                "backups"))))
 
 (require 'package)
-(package-initialize)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
@@ -98,6 +98,7 @@
                       ghc
                       company-ghc
                       guide-key
+                      helm
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -120,7 +121,6 @@
         ; jedi
         ; ein
         grizzl
-        projectile
         help-fns+
         evil-surround
         coffee-mode
@@ -143,7 +143,6 @@
         js2-mode
         smart-tab
         mmm-mode
-        helm
         dizzee  ; process management
         rainbow-delimiters
         calfw
@@ -243,11 +242,34 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (recentf-mode 1)
 (setq recentf-max-saved-items 512)
 
+(require 'use-package)
+
 ; projectile
-(projectile-global-mode)
-(setq projectile-completion-system 'grizzl
-      projectile-switch-project-action 'projectile-dired
-      projectile-remember-window-configs t)
+(use-package projectile
+  :ensure t
+  :config
+  (progn
+    (projectile-global-mode)
+    (setq projectile-completion-system 'helm
+          projectile-switch-project-action 'projectile-dired
+          projectile-remember-window-configs t)
+  ))
+
+(use-package helm
+  :config
+  (progn
+    (use-package helm-config)
+    (define-key helm-map (kbd "C-j") 'helm-next-line)
+    (define-key helm-map (kbd "C-k") 'helm-previous-line)))
+
+(use-package grizzl
+  :config
+  (progn
+    (define-key *grizzl-keymap* (kbd "C-j") 'grizzl-set-selection-1)
+    (define-key *grizzl-keymap* (kbd "C-k") 'grizzl-set-selection+1)))
+
+(use-package helm-projectile
+  :config (helm-projectile-on))
 
 ;; virtualenv
 ;; (require 'virtualenvwrapper)
@@ -455,24 +477,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (when (member "DejaVu Sans Mono for Powerline" (font-family-list))
   (set-face-attribute 'default nil :font "DejaVu Sans Mono for Powerline-10"))
 
-;; (set-face-attribute 'helm-selection nil :background "#441100")
-
 ;; dangerous
 (setq enable-local-variables :all)
-
-(require 'use-package)
-(use-package helm
-  :config
-  (progn
-    (use-package helm-config)
-    (define-key helm-map (kbd "C-j") 'helm-next-line)
-    (define-key helm-map (kbd "C-k") 'helm-previous-line)))
-
-(use-package grizzl
-  :config
-  (progn
-    (define-key *grizzl-keymap* (kbd "C-j") 'grizzl-set-selection-1)
-    (define-key *grizzl-keymap* (kbd "C-k") 'grizzl-set-selection+1)))
 
 ;; golang
 (defun my-go-mode-hook ()
@@ -546,8 +552,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (elpy-enable)
 
 (persp-mode)
-(require 'persp-projectile)
-
+(use-package persp-projectile
+  :ensure t)
 
 (global-set-key (kbd "M-/") 'hippie-expand)
 
