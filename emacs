@@ -197,19 +197,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; evil-leader
 (evil-leader/set-key
-  "F" 'projectile-find-file
+  ;; "F" 'projectile-find-file
+  "F" 'helm-projectile-find-file
   "f" 'ido-find-file
   ;; "B" 'ido-switch-buffer
   "B" 'helm-buffers-list
-  "b" 'projectile-switch-to-buffer
+  ;; "b" 'projectile-switch-to-buffer
+  "b" 'helm-projectile-switch-to-buffer
   ;; "b" 'ace-jump-buffer
   "R" 'helm-recentf
-  "r" 'projectile-recentf
+  "r" 'helm-projectile-recentf
 
   "a" 'org-agenda
 
-  "p" 'projectile-switch-project
-  "g" 'projectile-grep
+  "g" 'helm-projectile-grep
   "o" 'browse-url
   "e" 'eshell
   "i" 'ein:notebooklist-open
@@ -218,7 +219,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "j" 'ace-jump-mode
   ;; "v" 'wg-switch-to-workgroup
   "v" 'projectile-persp-switch-project
-  "d" 'deft)
+  ;; "v" 'helm-projectile-switch-project
+  "d" 'vc-diff)
 
 (global-evil-leader-mode)
 (evil-leader/set-leader "|")
@@ -269,6 +271,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (define-key *grizzl-keymap* (kbd "C-k") 'grizzl-set-selection+1)))
 
 (use-package helm-projectile
+  :ensure t
   :config (helm-projectile-on))
 
 ;; virtualenv
@@ -594,3 +597,27 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 
 (evil-set-initial-state 'image-mode 'emacs)
+
+(defun projectile-persp-switch-project (project-to-switch)
+  "Switch to a project or perspective we have visited before.
+If the perspective of corresponding project does not exist, this
+function will call `persp-switch' to create one and switch to
+that before `projectile-switch-project' invokes
+`projectile-switch-project-action'.
+
+Otherwise, this function calls `persp-switch' to switch to an
+existing perspective of the project unless we're already in that
+perspective in which case `projectile-switch-project' is called."
+  (interactive (list (projectile-completing-read
+                      "Switch to project: "
+                      (projectile-relevant-known-projects))))
+  (let* ((name (file-name-nondirectory (directory-file-name project-to-switch)))
+         (persp (gethash name perspectives-hash))
+         (is-curr (and persp (equal persp persp-curr))))
+    (when (or (not persp) (not is-curr))
+      (persp-switch name))
+    (when (or (not persp) is-curr)
+      (projectile-switch-project-by-name project-to-switch))))
+
+(evil-set-initial-state 'process-menu-mode 'emacs)
+
