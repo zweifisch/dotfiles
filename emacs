@@ -91,7 +91,6 @@
                       elpy
                       evil-god-state
                       geiser
-                      perspective
                       graphviz-dot-mode
                       ;; diff-hl
                       bison-mode
@@ -554,7 +553,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (elpy-enable)
 
-(persp-mode)
+(use-package perspective
+  :ensure t
+  :config (persp-mode)
+  :bind (("M-l" . persp-next)
+         ("M-h" . persp-prev)))
+
 (use-package persp-projectile
   :ensure t)
 
@@ -564,9 +568,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
-
-(global-set-key (kbd "M-l") 'persp-next)
-(global-set-key (kbd "M-h") 'persp-prev)
 
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
@@ -588,7 +589,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (defun my-haskell-mode-hook ()
   (add-to-list (make-local-variable'company-backends) 'company-ghc)
   (ghc-init)
-  (custom-set-variables '(company-ghc-show-info t)))
+  (custom-set-variables '(company-ghc-show-info t)
+                        '(haskell-process-type 'cabal-repl)))
+
+(eval-after-load "haskell-mode"
+  '(progn
+    (define-key haskell-mode-map (kbd "C-x C-d") nil)
+    (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
+    (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
+    (define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-switch)
+    (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+    (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+    (define-key haskell-mode-map (kbd "C-c M-.") nil)
+    (define-key haskell-mode-map (kbd "C-c C-d") nil)))
 
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 
@@ -620,4 +633,6 @@ perspective in which case `projectile-switch-project' is called."
       (projectile-switch-project-by-name project-to-switch))))
 
 (evil-set-initial-state 'process-menu-mode 'emacs)
+
+(setq doc-view-resolution 200)
 
