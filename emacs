@@ -118,7 +118,6 @@
         python
         ; jedi
         ; ein
-        grizzl
         help-fns+
         evil-surround
         coffee-mode
@@ -141,7 +140,6 @@
         js2-mode
         smart-tab
         mmm-mode
-        dizzee  ; process management
         rainbow-delimiters
         calfw
         anaphora
@@ -270,12 +268,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (define-key helm-map (kbd "ESC") 'helm-keyboard-quit)
     (define-key helm-map (kbd "C-j") 'helm-next-line)
     (define-key helm-map (kbd "C-k") 'helm-previous-line)))
-
-(use-package grizzl
-  :config
-  (progn
-    (define-key *grizzl-keymap* (kbd "C-j") 'grizzl-set-selection-1)
-    (define-key *grizzl-keymap* (kbd "C-k") 'grizzl-set-selection+1)))
 
 (use-package helm-projectile
   :ensure t
