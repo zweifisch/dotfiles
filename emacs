@@ -75,7 +75,6 @@
                       ;; elscreen
                       elm-mode
                       org-present
-                      smex  ; replace M-x
                       ace-jump-mode  ; easymotion
                       use-package
                       go-mode
@@ -225,6 +224,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-leader/set-leader "|")
 (evil-define-key 'normal global-map "," 'evil-execute-in-god-state)
 
+(global-set-key (kbd "C-a") nil)
+(global-set-key (kbd "C-a |") 'evil-window-vsplit)
+(global-set-key (kbd "C-a -") 'evil-window-split)
+(global-set-key (kbd "C-a p") 'persp-prev)
+(global-set-key (kbd "C-a n") 'persp-next)
+(global-set-key (kbd "C-a c") 'projectile-persp-switch-project)
+(global-set-key (kbd "C-a x") 'persp-kill)
+
 ; evil-nerd-commenter
 (setq evilnc-hotkey-comment-operator "gc")
 (evilnc-default-hotkeys)
@@ -260,6 +267,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :config
   (progn
     (use-package helm-config)
+    (define-key helm-map (kbd "ESC") 'helm-keyboard-quit)
     (define-key helm-map (kbd "C-j") 'helm-next-line)
     (define-key helm-map (kbd "C-k") 'helm-previous-line)))
 
@@ -273,16 +281,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :ensure t
   :config (helm-projectile-on))
 
-;; virtualenv
-;; (require 'virtualenvwrapper)
-;; (venv-initialize-eshell)
-;; (setq venv-location "~/.venv/")
-;; (setq eshell-prompt-function
-      ;; (lambda ()
-        ;; (concat venv-current-name " $ ")))
-;; virtualenv in modline
-;; (setq-default mode-line-format (cons '(:exec venv-current-name) mode-line-format))
-
+(use-package switch-window
+  :ensure t
+  :config (setq switch-window-shortcut-style 'qwerty)
+  :bind ("C-a o" . switch-window))
+ 
 ; ein
 
 ; python
@@ -472,10 +475,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq slime-contribs '(slime-fancy slime-js))
 
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-
-
 (when (member "DejaVu Sans Mono for Powerline" (font-family-list))
   (set-face-attribute 'default nil :font "DejaVu Sans Mono for Powerline-10"))
 
@@ -527,6 +526,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'quack)
 
+(add-to-list 'load-path "~/.dotfiles/el")
+
 ;; babel
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -538,6 +539,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (sql . t)
    (dot . t)
    (haskell . t)
+   (mongo . t)
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
@@ -627,12 +629,13 @@ perspective in which case `projectile-switch-project' is called."
   (let* ((name (file-name-nondirectory (directory-file-name project-to-switch)))
          (persp (gethash name perspectives-hash))
          (is-curr (and persp (equal persp persp-curr))))
-    (when (or (not persp) (not is-curr))
-      (persp-switch name))
-    (when (or (not persp) is-curr)
-      (projectile-switch-project-by-name project-to-switch))))
+    (when (and (not (string= "" name)) (or (not persp) (not is-curr)))
+        (persp-switch name))
+    (when (and (not (string= "" name)) (or (not persp) is-curr))
+        (projectile-switch-project-by-name project-to-switch))))
 
 (evil-set-initial-state 'process-menu-mode 'emacs)
 
 (setq doc-view-resolution 200)
 
+(global-set-key (kbd "M-x") 'helm-M-x)
