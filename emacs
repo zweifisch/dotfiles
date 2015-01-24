@@ -451,6 +451,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+
+(use-package jsx-mode
+  :ensure t)
 
 (display-time-mode 1)
 
@@ -518,7 +522,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'quack)
 
-(add-to-list 'load-path "~/.dotfiles/el")
+(add-to-list 'load-path "~/.el")
 
 ;; babel
 (org-babel-do-load-languages
@@ -532,6 +536,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (dot . t)
    (haskell . t)
    (mongo . t)
+   (coffee . t)
+   (redis . t)
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
@@ -631,3 +637,10 @@ perspective in which case `projectile-switch-project' is called."
 (setq doc-view-resolution 200)
 
 (global-set-key (kbd "M-x") 'helm-M-x)
+
+(defun my-minibuffer-hook ()
+  (local-set-key (kbd "M-p") 'clipboard-yank))
+
+(add-hook 'minibuffer-setup-hook 'my-minibuffer-hook)
+
+(use-package dictionary :ensure t)
