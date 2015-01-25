@@ -538,6 +538,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (mongo . t)
    (coffee . t)
    (redis . t)
+   (http . t)
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
