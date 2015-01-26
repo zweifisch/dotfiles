@@ -539,6 +539,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (coffee . t)
    (redis . t)
    (http . t)
+   (go . t)
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
@@ -645,3 +646,4 @@ perspective in which case `projectile-switch-project' is called."
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-hook)
 
 (use-package dictionary :ensure t)
+

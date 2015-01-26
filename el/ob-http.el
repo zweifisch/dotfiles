@@ -1,4 +1,14 @@
+(require 'org)
 (require 'ob)
+
+(defgroup ob-http nil
+  "org-mode blocks for http request"
+  :group 'org)
+
+(defcustom ob-http:max-time 10
+  "maximum time in seconds that you allow the whole operation to take"
+  :group 'ob-http
+  :type 'integer)
 
 (defstruct ob-http/request method url headers body)
 
@@ -39,7 +49,7 @@
   (let* ((req (ob-http/parse-input body))
          (proxy (cdr (assoc :proxy params)))
          (body (ob-http/request-body req))
-         (cmd (format "curl -i %s -X %s %s %s %s"
+         (cmd (format "curl -i %s -X %s %s %s \"%s\" --max-time %d"
                       (if proxy (format "-x %s" proxy) "")
                       (ob-http/request-method req)
                       (mapconcat (lambda (x) (format "-H \"%s\"" x))
@@ -50,6 +60,7 @@
                             (format "-d @\"%s\"" tmp))
                         "")
                       (ob-http/request-url req)
+                      ob-http:max-time
                       )))
     (message cmd)
     (org-babel-eval cmd "")))

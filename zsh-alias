@@ -895,6 +895,10 @@ use-local-http-proxy() {
     export HTTP_PROXYS=127.0.0.1:8118
 }
 
+use-dev-http-proxy() {
+    export http_proxy=127.0.0.1:8080
+}
+
 alias xev-simple="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
 
 alias emacs-daemon="env LC_CTYPE=zh_CN.UTF-8 emacs --daemon"
