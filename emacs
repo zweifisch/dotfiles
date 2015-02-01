@@ -275,7 +275,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package switch-window
   :ensure t
-  :config (setq switch-window-shortcut-style 'qwerty)
+  :config (setq switch-window-shortcut-style 'qwerty
+                switch-window-relative)
   :bind ("C-a o" . switch-window))
  
 ; ein
@@ -647,3 +648,19 @@ perspective in which case `projectile-switch-project' is called."
 
 (use-package dictionary :ensure t)
 
+(require 'mu4e)
+
+(setq mu4e-maildir "~/mail")
+(setq mu4e-drafts-folder "/primary/[Gmail].Drafts")
+(setq mu4e-sent-folder   "/primary/[Gmail].Sent Mail")
+(setq mu4e-trash-folder  "/primary/[Gmail].Trash")
+
+(setq mu4e-sent-messages-behavior 'delete)
+
+(setq mu4e-get-mail-command "tsocks offlineimap")
+
+(setq message-kill-buffer-on-exit t)
+
+(setq mu4e-headers-skip-duplicates t)
+
+(use-package list-processes+ :ensure t)
