@@ -209,7 +209,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "g" 'helm-projectile-grep
   "o" 'browse-url
   "e" 'eshell
-  "i" 'ein:notebooklist-open
+  ;; "i" 'ein:notebooklist-open
   "c" 'org-capture
   "s" 'magit-status
   "j" 'ace-jump-mode
@@ -523,6 +523,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'quack)
 
+(use-package ob-http :ensure t)
+
 (add-to-list 'load-path "~/.el")
 
 ;; babel
@@ -577,12 +579,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 
 (eval-after-load "org"
-  '(progn (define-key org-mode-map (kbd "M-h") nil)))
+  '(progn (define-key org-mode-map (kbd "M-h") nil)
+          (define-key org-mode-map (kbd "C-a") nil)))
 
 (eval-after-load "magit"
   '(progn (define-key magit-mode-map (kbd "M-h") nil)))
 
+(defun my-eshell-mode-hook ()
+  (define-key eshell-mode-map (kbd "C-a") nil)
+  (evil-define-key 'normal eshell-mode-map "^" 'eshell-bol))
 (add-hook 'eshell-mode-hook 'rename-uniquely)
+(add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 
 ;; (setq ajb-bs-configuration "projectile")
 
@@ -664,3 +671,9 @@ perspective in which case `projectile-switch-project' is called."
 (setq mu4e-headers-skip-duplicates t)
 
 (use-package list-processes+ :ensure t)
+
+(use-package elnode :ensure t)
+
+(use-package symon :ensure t)
+(symon-mode)
+
