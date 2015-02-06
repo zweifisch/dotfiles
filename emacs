@@ -144,7 +144,7 @@
         calfw
         anaphora
         ;; workgroups2
-        magit))
+        ))
 (el-get 'sync my:el-get-packages)
 
 ;; powerline fiplr slime-repl swank-clojure
@@ -220,7 +220,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (global-evil-leader-mode)
 (evil-leader/set-leader "|")
-(evil-define-key 'normal global-map "," 'evil-execute-in-god-state)
+(evil-define-key 'normal global-map
+  "gj" 'ace-jump-mode
+  "," 'evil-execute-in-god-state)
 
 (global-set-key (kbd "C-a") nil)
 (global-set-key (kbd "C-a |") 'evil-window-vsplit)
@@ -229,6 +231,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-a n") 'persp-next)
 (global-set-key (kbd "C-a c") 'projectile-persp-switch-project)
 (global-set-key (kbd "C-a x") 'persp-kill)
+(global-set-key (kbd "C-a l") 'evil-window-right)
+(global-set-key (kbd "C-a h") 'evil-window-left)
+(global-set-key (kbd "C-a j") 'evil-window-down)
+(global-set-key (kbd "C-a k") 'evil-window-up)
 
 ; evil-nerd-commenter
 (setq evilnc-hotkey-comment-operator "gc")
@@ -273,11 +279,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :ensure t
   :config (helm-projectile-on))
 
-(use-package switch-window
-  :ensure t
-  :config (setq switch-window-shortcut-style 'qwerty
-                switch-window-relative)
-  :bind ("C-a o" . switch-window))
+;; (use-package switch-window
+;;   :ensure t
+;;   :config (setq switch-window-shortcut-style 'qwerty
+;;                 switch-window-relative)
+;;   :bind ("C-a o" . switch-window))
  
 ; ein
 
@@ -402,10 +408,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       cider-repl-popup-stacktraces t)
 
 ; magit
-(evil-define-key 'normal magit-mode-map
-  "j" 'magit-goto-next-section)
-(evil-define-key 'normal magit-mode-map
-  "k" 'magit-goto-previous-section)
+(use-package magit
+  :ensure t
+  :bind (("<escape>" . magit-mode-quit-window)))
 
 ; python
 (evil-define-key 'visual python-mode-map
@@ -542,6 +547,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (coffee . t)
    (redis . t)
    (http . t)
+   (cypher . t)
    (go . t)
    (clojure . t)))
 
@@ -674,6 +680,29 @@ perspective in which case `projectile-switch-project' is called."
 
 (use-package elnode :ensure t)
 
-(use-package symon :ensure t)
-(symon-mode)
+;; (use-package symon :ensure t)
+;; (symon-mode)
 
+(use-package hydra :ensure t)
+
+(use-package discover :ensure t)
+(global-discover-mode t)
+
+(use-package winner
+  :ensure t
+  :config (winner-mode))
+
+(defun toggle-windows-split()
+  (interactive)
+  (if (not (window-minibuffer-p))
+      (if (< 1 (count-windows))
+          (progn
+            (window-configuration-to-register ?u)
+            (delete-other-windows))
+        (jump-to-register ?u))))
+
+(define-key global-map (kbd "C-a o") 'toggle-windows-split)
+
+(use-package cypher-mode :ensure t)
+
+(use-package dash :ensure t)
