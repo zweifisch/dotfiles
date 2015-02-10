@@ -409,8 +409,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; magit
 (use-package magit
-  :ensure t
-  :bind (("<escape>" . magit-mode-quit-window)))
+  :ensure t)
 
 ; python
 (evil-define-key 'visual python-mode-map
@@ -644,9 +643,9 @@ perspective in which case `projectile-switch-project' is called."
          (persp (gethash name perspectives-hash))
          (is-curr (and persp (equal persp persp-curr))))
     (when (and (not (string= "" name)) (or (not persp) (not is-curr)))
-        (persp-switch name))
+      (persp-switch name))
     (when (and (not (string= "" name)) (or (not persp) is-curr))
-        (projectile-switch-project-by-name project-to-switch))))
+      (projectile-switch-project-by-name project-to-switch))))
 
 (evil-set-initial-state 'process-menu-mode 'emacs)
 
@@ -683,7 +682,7 @@ perspective in which case `projectile-switch-project' is called."
 ;; (use-package symon :ensure t)
 ;; (symon-mode)
 
-(use-package hydra :ensure t)
+;; (use-package hydra :ensure t)
 
 (use-package discover :ensure t)
 (global-discover-mode t)
@@ -706,3 +705,11 @@ perspective in which case `projectile-switch-project' is called."
 (use-package cypher-mode :ensure t)
 
 (use-package dash :ensure t)
+
+(defun copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
