@@ -65,12 +65,7 @@
                       evil-matchit
                       evil-nerd-commenter
                       evil-leader
-                      paredit
-                      subatomic-theme
-                      flatui-theme
-                      solarized-theme
                       monokai-theme
-                      stylus-mode
                       virtualenvwrapper
                       ;; elscreen
                       elm-mode
@@ -114,41 +109,28 @@
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
 (setq my:el-get-packages
-      '(org-mode deft
-        python
+      '(python
         ; jedi
         ; ein
         help-fns+
         evil-surround
-        coffee-mode
         ; zencoding-mode
         markdown-mode
         ; mustache-mode
-        yaml-mode
         ;; auto-complete
-        web-mode
-        jade-mode
         haskell-mode
-        clojure-mode
-        cider
-        exec-path-from-shell
         kivy-mode
-        ; auctex
-        multi-term
+        ;; auctex
         slime
         swank-js
         js2-mode
         smart-tab
         mmm-mode
         rainbow-delimiters
-        calfw
-        anaphora
-        ;; workgroups2
-        ))
+        calfw))
 (el-get 'sync my:el-get-packages)
 
-;; powerline fiplr slime-repl swank-clojure
-;; yasnippet emms dired-sort dired+ auto-dictionnary
+;; yasnippet emms dired-sort auto-dictionnary
 ;; autopair google-maps org2blog rainbow-mode switch-window
 ;; sr-speedbar typopunct
 
@@ -299,9 +281,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       python-shell-completion-string-code
       "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
-; org-mode
-;; (evil-set-initial-state 'org-mode 'emacs)
-
 (setq org-src-fontify-natively t)  ; code block
 
 (setq org-directory "~/.org/")
@@ -319,13 +298,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq org-todo-keywords
       '((sequence "TODO" "NEXT" "|" "DONE" "ABORTED")))
 
-; deft
-(setq deft-extension "org"
-      deft-directory org-directory
-      deft-text-mode 'org-mode)
-
-; org-mode
-
 (evil-define-key 'normal org-mode-map
   "gh" 'outline-up-heading
   "gj" 'org-forward-heading-same-level
@@ -339,6 +311,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "<" 'org-metaleft
   ">" 'org-metaright
   "ga" 'org-agenda
+  " " 'org-toggle-inline-images
   ;; "-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle)
 
@@ -358,16 +331,27 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (exec-path-from-shell-initialize)
 
-; paredit
+(use-package cider
+  :ensure t
+  :config (progn
+    (evil-define-key 'normal cider-mode-map
+      (kbd "RET") 'cider-eval-last-sexp)
+    (evil-define-key 'visual cider-mode-map
+      (kbd "RET") 'cider-eval-region)
+    (setq nrepl-hide-special-buffers t
+          cider-repl-pop-to-buffer-on-connect nil
+          cider-popup-stacktraces t
+          cider-repl-popup-stacktraces t)))
 
-;; (add-hook 'emacs-lisp-mode-hook 'evil-paredit-mode)
-;; (add-hook 'clojure-mode-hook 'evil-paredit-mode)
-(add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+(use-package paredit
+  :ensure t
+  :config (add-hook 'emacs-lisp-mode-hook 'paredit-mode))
 
-;; clojure
-
-(add-hook 'clojure-mode-hook 'paredit-mode)
-(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
+(use-package clojure-mode
+  :ensure t
+  :config (progn
+            (add-hook 'clojure-mode-hook 'paredit-mode)
+            (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)))
 
 (evil-define-key 'normal paredit-mode-map
   "D" 'paredit-kill
@@ -395,17 +379,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal scheme-mode-map
   (kbd "RET") 'geiser-eval-last-sexp)
 
-; cider
-(evil-define-key 'normal cider-mode-map
-  (kbd "RET") 'cider-eval-last-sexp)
-
-(evil-define-key 'visual cider-mode-map
-  (kbd "RET") 'cider-eval-region)
-
-(setq nrepl-hide-special-buffers t
-      cider-repl-pop-to-buffer-on-connect nil
-      cider-popup-stacktraces t
-      cider-repl-popup-stacktraces t)
 
 ; magit
 (use-package magit
@@ -447,24 +420,23 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
 ;; (setq dired-isearch-filenames t)
 
-;; coffee
-(evil-define-key 'visual coffee-mode-map
-  "r" 'coffee-compile-region)
+(use-package coffee-mode
+  :ensure t
+  :config (evil-define-key 'visual coffee-mode-map "r" 'coffee-compile-region))
 ;; (setq coffee-indent-tabs-mode t)
 
-;; web-mode
-(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))
+(use-package web-mode
+  :ensure t
+  :config (progn 
+            (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+            (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+            (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+            (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))))
 
 (use-package jsx-mode
   :ensure t)
 
 (display-time-mode 1)
-
-(add-to-list 'term-unbind-key-list "C-a")
-(add-to-list 'term-bind-key-alist '("C-z" . term-stop-subjob))
 
 (setq-default TeX-engine 'xetex)
 
@@ -528,6 +500,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'quack)
 
 (use-package ob-http :ensure t)
+(use-package ob-cypher :ensure t)
 
 (add-to-list 'load-path "~/.el")
 
@@ -544,15 +517,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (haskell . t)
    (mongo . t)
    (coffee . t)
+   (hy . t)
    (redis . t)
    (http . t)
    (cypher . t)
+   (racket . t)
    (go . t)
+   ;; (eukleides . t)
+   ;; (fomus . t)
+   ;; (mathomatic . t)
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
-
-(setq org-confirm-babel-evaluate nil)
 
 (setq org-edit-src-content-indentation 0
       org-src-tab-acts-natively t
@@ -582,6 +558,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
+(use-package deft
+  :ensure t
+  :config (setq deft-extension "org"
+                deft-directory org-directory
+                deft-text-mode 'org-mode))
+
+(use-package org :ensure t)
 
 (eval-after-load "org"
   '(progn (define-key org-mode-map (kbd "M-h") nil)
@@ -704,8 +687,6 @@ perspective in which case `projectile-switch-project' is called."
 
 (use-package cypher-mode :ensure t)
 
-(use-package dash :ensure t)
-
 (defun copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
@@ -713,3 +694,15 @@ perspective in which case `projectile-switch-project' is called."
     (when filename
       (kill-new filename)
       (message "Copied buffer file name '%s' to the clipboard." filename))))
+
+(use-package yaml-mode :ensure t)
+(use-package jade-mode :ensure t)
+(use-package stylus-mode :ensure t)
+
+(setq org-babel-default-header-args
+           (cons '(:tangle . "yes")
+                 (assq-delete-all :tangle org-babel-default-header-args)))
+
+(use-package paradox :ensure t)
+
+(use-package htmlize :ensure t)
