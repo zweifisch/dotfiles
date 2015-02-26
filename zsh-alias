@@ -745,7 +745,9 @@ qr() {
         content="$(xclip -o)"
     fi
     if [ -n "$content" ]; then
-        qrencode "$content" -o /tmp/qrencode.png && qiv /tmp/qrencode.png
+        qrencode -t UTF8 "$content"
+        # pth="$(mktemp)"
+        # qrencode -t png "$content" -o "$pth" -s 6 && qiv "$pth"
     else
         echo empty input
     fi

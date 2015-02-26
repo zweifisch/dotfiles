@@ -1,9 +1,10 @@
-;; Prevent the cursor from blinking
 (blink-cursor-mode -1)
 
 (setq initial-scratch-message ""
       inhibit-startup-message t
       visible-bell t)
+
+(setq enable-local-variables :safe)
 
 (ido-mode t)
 (setq ido-enable-flex-matching t)
@@ -110,28 +111,16 @@
 
 (setq my:el-get-packages
       '(python
-        ; jedi
-        ; ein
-        help-fns+
-        evil-surround
-        ; zencoding-mode
-        markdown-mode
-        ; mustache-mode
-        ;; auto-complete
         haskell-mode
-        kivy-mode
-        ;; auctex
         slime
-        swank-js
-        js2-mode
         smart-tab
         mmm-mode
         rainbow-delimiters
         calfw))
 (el-get 'sync my:el-get-packages)
 
-;; yasnippet emms dired-sort auto-dictionnary
-;; autopair google-maps org2blog rainbow-mode switch-window
+;; emms dired-sort auto-dictionnary
+;; autopair google-maps
 ;; sr-speedbar typopunct
 
 ;; theme and modes
@@ -238,6 +227,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'use-package)
 
+(use-package evil-surround :ensure t)
+(use-package markdown-mode :ensure t)
+(use-package help-fns+ :ensure t)
+
 ; projectile
 (use-package projectile
   :ensure t
@@ -246,8 +239,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (projectile-global-mode)
     (setq projectile-completion-system 'helm
           projectile-switch-project-action 'projectile-dired
-          projectile-remember-window-configs t)
-  ))
+          projectile-remember-window-configs t)))
 
 (use-package helm
   :config
@@ -261,12 +253,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :ensure t
   :config (helm-projectile-on))
 
-;; (use-package switch-window
-;;   :ensure t
-;;   :config (setq switch-window-shortcut-style 'qwerty
-;;                 switch-window-relative)
-;;   :bind ("C-a o" . switch-window))
- 
 ; ein
 
 ; python
@@ -440,19 +426,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq-default TeX-engine 'xetex)
 
+(use-package js2-mode :ensure t)
+
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-(add-hook 'js2-mode-hook
-          (lambda ()
-            (slime-js-minor-mode 1)))
-
-(setq slime-contribs '(slime-fancy slime-js))
 
 (when (member "DejaVu Sans Mono for Powerline" (font-family-list))
   (set-face-attribute 'default nil :font "DejaVu Sans Mono for Powerline-10"))
-
-;; dangerous
-(setq enable-local-variables :all)
 
 ;; golang
 (defun my-go-mode-hook ()
@@ -512,6 +492,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (python . t)
    (js . t)
    (sh . t)
+   (shell . t)
    (sql . t)
    (dot . t)
    (haskell . t)
@@ -609,27 +590,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (evil-set-initial-state 'image-mode 'emacs)
 
-(defun projectile-persp-switch-project (project-to-switch)
-  "Switch to a project or perspective we have visited before.
-If the perspective of corresponding project does not exist, this
-function will call `persp-switch' to create one and switch to
-that before `projectile-switch-project' invokes
-`projectile-switch-project-action'.
-
-Otherwise, this function calls `persp-switch' to switch to an
-existing perspective of the project unless we're already in that
-perspective in which case `projectile-switch-project' is called."
-  (interactive (list (projectile-completing-read
-                      "Switch to project: "
-                      (projectile-relevant-known-projects))))
-  (let* ((name (file-name-nondirectory (directory-file-name project-to-switch)))
-         (persp (gethash name perspectives-hash))
-         (is-curr (and persp (equal persp persp-curr))))
-    (when (and (not (string= "" name)) (or (not persp) (not is-curr)))
-      (persp-switch name))
-    (when (and (not (string= "" name)) (or (not persp) is-curr))
-      (projectile-switch-project-by-name project-to-switch))))
-
 (evil-set-initial-state 'process-menu-mode 'emacs)
 
 (setq doc-view-resolution 200)
@@ -674,26 +634,7 @@ perspective in which case `projectile-switch-project' is called."
   :ensure t
   :config (winner-mode))
 
-(defun toggle-windows-split()
-  (interactive)
-  (if (not (window-minibuffer-p))
-      (if (< 1 (count-windows))
-          (progn
-            (window-configuration-to-register ?u)
-            (delete-other-windows))
-        (jump-to-register ?u))))
-
-(define-key global-map (kbd "C-a o") 'toggle-windows-split)
-
 (use-package cypher-mode :ensure t)
-
-(defun copy-file-name-to-clipboard ()
-  "Copy the current buffer file name to the clipboard."
-  (interactive)
-  (let ((filename (buffer-file-name)))
-    (when filename
-      (kill-new filename)
-      (message "Copied buffer file name '%s' to the clipboard." filename))))
 
 (use-package yaml-mode :ensure t)
 (use-package jade-mode :ensure t)
@@ -706,3 +647,5 @@ perspective in which case `projectile-switch-project' is called."
 (use-package paradox :ensure t)
 
 (use-package htmlize :ensure t)
+
+(require 'misc-conf)
