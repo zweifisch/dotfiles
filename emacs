@@ -206,6 +206,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-a h") 'evil-window-left)
 (global-set-key (kbd "C-a j") 'evil-window-down)
 (global-set-key (kbd "C-a k") 'evil-window-up)
+(global-set-key (kbd "C-a H") 'winner-undo)
+(global-set-key (kbd "C-a L") 'winner-redo)
 
 ; evil-nerd-commenter
 (setq evilnc-hotkey-comment-operator "gc")
@@ -643,6 +645,31 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq org-babel-default-header-args
            (cons '(:tangle . "yes")
                  (assq-delete-all :tangle org-babel-default-header-args)))
+
+(setq org-publish-project-alist
+      '(("blog"
+         :base-directory "~/notes/write"
+         :html-extension "html"
+         :base-extension "org"
+         :publishing-directory "~/.blog"
+         :publishing-function (org-html-publish-to-html)
+         :html-preamble nil
+         :html-postamble nil
+         :port 9001)
+        ("wiki"
+         :base-directory "~/notes/wiki"
+         :html-extension "html"
+         :base-extension "org"
+         :publishing-directory "~/.wiki"
+         :publishing-function (org-html-publish-to-html)
+         :html-preamble nil
+         :html-postamble nil
+         :port 9000)
+        ))
+
+(setq org-html-head-include-default-style nil
+      org-html-head-include-scripts nil
+      org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"markdown.css\" />")
 
 (use-package paradox :ensure t)
 
