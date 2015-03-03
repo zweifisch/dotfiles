@@ -4,7 +4,8 @@
       inhibit-startup-message t
       visible-bell t)
 
-(setq enable-local-variables :safe)
+;; dangerous
+(setq enable-local-variables :all)
 
 (ido-mode t)
 (setq ido-enable-flex-matching t)
@@ -505,6 +506,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (http . t)
    (cypher . t)
    (racket . t)
+   (cfdg . t)
    (go . t)
    ;; (eukleides . t)
    ;; (fomus . t)
@@ -676,3 +678,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package htmlize :ensure t)
 
 (require 'misc-conf)
+
+(define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
+(define-key doc-view-mode-map (kbd "k") 'doc-view-previous-line-or-previous-page)
