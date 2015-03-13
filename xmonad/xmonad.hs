@@ -23,14 +23,14 @@ myTerminal = "urxvt"
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = False
 
-myBorderWidth = 0
+myBorderWidth = 4
 
 myModMask = mod4Mask
 
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 
-myNormalBorderColor = "#dddddd"
-myFocusedBorderColor = "#ff0000"
+myNormalBorderColor = "#333333"
+myFocusedBorderColor = "#000000"
 
 
 -- get the list of connections using nmcli

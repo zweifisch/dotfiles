@@ -43,7 +43,9 @@ alias vbox='VBoxManage startvm'
 alias vbox-list="VBoxManage -nologo list vms"
 alias nb='newsbeuter'
 alias pb='podbeuter'
-alias docker='sudo docker.io'
+alias docker='sudo docker'
+alias docker-rm-all='docker rm $(docker ps -a -q)'
+alias docker-kill-all='docker kill $(docker ps -a -q)'
 
 alias curl-json="curl -H 'Content-Type: applicaiton/json' "
 alias curl-ajax="curl -H 'X-Requested-With: XMLHttpRequest' "
@@ -909,3 +911,5 @@ alias e="emacsclient -nc"
 alias h2="java -jar $(find ~/.m2/repository/com/h2database/h2 -iname 'h2*.jar')"
 
 export LEIN_FAST_TRAMPOLINE=y
+
+alias chinse-encoding="sed 'y/ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ０１２３４５６７８９/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/'"

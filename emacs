@@ -186,7 +186,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "s" 'magit-status
   "j" 'ace-jump-mode
   ;; "v" 'wg-switch-to-workgroup
-  "v" 'projectile-persp-switch-project
+  "V" 'projectile-persp-switch-project
+  "v" 'persp-switch
   ;; "v" 'helm-projectile-switch-project
   "d" 'vc-diff)
 
@@ -484,6 +485,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package ob-http :ensure t)
 (use-package ob-cypher :ensure t)
+(use-package ob-kotlin :ensure t)
 
 (add-to-list 'load-path "~/.el")
 
@@ -507,6 +509,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (cypher . t)
    (racket . t)
    (cfdg . t)
+   (kotlin . t)
    (go . t)
    ;; (eukleides . t)
    ;; (fomus . t)
@@ -514,6 +517,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
+(add-to-list 'org-src-lang-modes (quote ("shell". sh)))
 
 (setq org-edit-src-content-indentation 0
       org-src-tab-acts-natively t
@@ -603,7 +607,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (defun my-minibuffer-hook ()
   (local-set-key (kbd "M-p") 'clipboard-yank))
 
-(add-hook 'minibuffer-setup-hook 'my-minibuffer-hook)
+;; (add-hook 'minibuffer-setup-hook 'my-minibuffer-hook)
 
 (use-package dictionary :ensure t)
 
@@ -681,3 +685,23 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
 (define-key doc-view-mode-map (kbd "k") 'doc-view-previous-line-or-previous-page)
+
+(use-package top-mode :ensure t)
+
+(require 'cfdg-mode)
+
+(require 'kotlin-mode)
+
+(use-package android-mode :ensure t)
+(custom-set-variables '(android-mode-sdk-dir "~/.android"))
+
+(use-package gradle-mode :ensure t
+  :config (progn
+            (add-to-list 'auto-mode-alist '("\\.gradle\\'" . groovy-mode))))
+
+(use-package groovy-mode :ensure t)
+
+(setq tramp-default-method "ssh")
+
+(eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
+

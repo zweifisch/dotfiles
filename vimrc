@@ -59,13 +59,11 @@ Bundle 'vim-coffee-script'
 " Bundle 'klen/python-mode'
 " Bundle 'pangloss/vim-javascript'
 " Bundle 'johnhamelink/blade.vim'
-" Bundle 'jceb/vim-orgmode'
-" Bundle 'hsitz/VimOrganizer'
 
-Bundle 'VimClojure'
-Bundle 'tpope/vim-fireplace'
-Bundle 'tpope/vim-classpath'
-Bundle 'guns/vim-clojure-static'
+" Bundle 'VimClojure'
+" Bundle 'tpope/vim-fireplace'
+" Bundle 'tpope/vim-classpath'
+" Bundle 'guns/vim-clojure-static'
 Bundle 'kien/rainbow_parentheses.vim'
 
 " Bundle 'derekwyatt/vim-scala.git'
@@ -120,13 +118,11 @@ Bundle 'Valloric/MatchTagAlways.git'
 " Bundle 'Lokaltog/vim-easymotion'
 " Bundle 'scrooloose/nerdtree.git'
 " Bundle 'scrooloose/nerdcommenter'
-" ack
 " eunuch
 " clam
 " ragtag
 " voom
 " vimroom
-" fcitx
 " css-color
 " yankering
 Bundle 'jdonaldson/vaxe'
@@ -698,11 +694,7 @@ function! RedirctTest()
   setlocal noswapfile
 endfunction
 
-" map <leader>jt  <Esc>:%!json_xs -f json -t json-pretty<CR>
 au BufRead,BufNewFile *.json setl foldmethod=indent
-
-" au BufRead,BufNewFile *.java javacomplete#AddClassPath('/opt/android-sdk/platforms/android-7/android.jar')
-" au BufRead,BufNewFile *.java setlocal omnifunc=javacomplete#Complete
 
 augroup otl
 	au FileType vo_base setl foldlevel=0
@@ -727,28 +719,9 @@ augroup python
 augroup end
 
 augroup coffee
-	" au BufWritePost *.coffee silent CoffeeMake! -b | cwindow | redraw!
 	au BufNewFile,BufReadPost *.coffee setl foldmethod=indent foldnestmax=2
-	" au BufNewFile,BufReadPost *.coffee setl fdm=expr fde=getline(v:lnum)=~'[-=]>$'?'>1':getline(v:lnum)=~'^\\s*$'?0:'='
-	" au BufNewFile,BufReadPost *.coffee setl fdm=expr fde=getline(v:lnum)=~'[-=]>$'&&indent(v:lnum)<indent(v:lnum+2)?'a1':'s1'
 	au BufNewFile,BufReadPost *.coffee vm <buffer> <leader><space> :!coffee -ps<CR>
 augroup end
-
-" augroup js 
-	" au BufNewFile,BufReadPost *.js :call JavaScriptFold()
-" augroup end
-
-function! JavaScriptFold()
-    setl foldmethod=syntax
-    setl foldlevelstart=1
-    set fillchars=fold:\ 
-    syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
-
-    function! FoldText()
-        return substitute(getline(v:foldstart), '{.*', '{...}', '')
-    endfunction
-    setl foldtext=FoldText()
-endfunction
 
 augroup php
 	au BufRead,BufNewFile *.php setlocal keywordprg=pman
@@ -760,22 +733,8 @@ au FileType html,xml setlocal fdm=indent
 
 augroup wiki
 	au BufRead,BufNewFile *.wiki nm <leader>vo :Voom vimwiki<CR>
-	" au BufRead,BufNewFile *.wiki :call Voom vimwiki<cr>
-	" au BufRead,BufNewFile *.wiki set ft=markdown
 	au BufRead,BufNewFile *.wiki setl foldlevel=1
 augroup end
-
-augroup clojure
-    au VimEnter *.clj RainbowParenthesesToggle
-    au Syntax *.clj RainbowParenthesesLoadRound
-    " au Syntax *.clj RainbowParenthesesLoadSquare
-    " au Syntax *.clj RainbowParenthesesLoadBraces
-augroup end
-
-au BufWritePost *.scss !sass %\:%:t:r.css
-
-" vm \cl :!nc -w 1 localhost 1234<CR>
-"| sed 's/clojure.core=> //' 
 
 autocmd BufReadCmd *.doc,*.xls,*.ppt exe ":silent 1,$!gsf-dump %" | setlocal buftype=nofile
 " }}}
@@ -790,20 +749,10 @@ nmap ,sc :!scrot <c-r>=expand("%:t")<cr>.png
 " rcs {{{
 " autocmd bufwritepost .vimrc source $MYVIMRC
 nmap ,vrc :e $MYVIMRC<cr>
-nmap ,grc :e .gvimrc<cr>
 nmap ,zrc :e $HOME/.zshrc<cr>
 nmap ,trc :e $HOME/.tmux.conf<cr>
 nmap ,prc :e $HOME/.pentadactylrc<cr>
-nmap ,rem :e $HOME/.reminders<cr>
-nmap ,arc :e $HOME/.config/awesome/rc.lua<cr>
 "}}}
-" Mysql {{{
-function! Mysql()
-	let env = system("cat /dev/shm/repl.sql.*")
-	echo env
-endfunc
-com! Mysql :call Mysql()
-" }}}
 " Ranger {{{
 fun! RangerChooser()
 	exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")

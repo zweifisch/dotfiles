@@ -46,10 +46,16 @@ zstyle ':filter-select' max-lines 5
 bindkey '\e[A' history-substring-search-up
 bindkey '\e[B' history-substring-search-down
 
+export ANDROID_HOME=$HOME/.android-sdk-linux
+
 
 pathes=(
 $HOME/.bin
 $HOME/.cabal/bin
+$HOME/.android-sdk-linux/tools
+$HOME/.android-sdk-linux/platform-tools
+$HOME/.kotlinc/bin
+$HOME/.gradle/bin
 )
 
 for p in $pathes; do
