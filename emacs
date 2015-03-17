@@ -231,7 +231,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'use-package)
 
-(use-package evil-surround :ensure t)
+(use-package evil-surround :ensure t
+  :config (global-evil-surround-mode 1))
+
 (use-package markdown-mode :ensure t)
 (use-package help-fns+ :ensure t)
 
@@ -510,6 +512,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (racket . t)
    (cfdg . t)
    (kotlin . t)
+   (ocaml . t)
+   ;; (haxe . t)
    (go . t)
    ;; (eukleides . t)
    ;; (fomus . t)
@@ -705,3 +709,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 
+(use-package haxe-mode :ensure t)
+
+(use-package tuareg :ensure t)

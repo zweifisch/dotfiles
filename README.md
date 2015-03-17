@@ -164,3 +164,4 @@ setup-git
 * `memtop` http://code.google.com/p/memtop/ 1.0.2 
 * `output-dual` connecting to external monitor
 * [nmcli-dmenu](https://github.com/firecat53/nmcli-dmenu)
+* [pidcat](https://github.com/JakeWharton/pidcat)
