@@ -488,6 +488,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package ob-http :ensure t)
 (use-package ob-cypher :ensure t)
 (use-package ob-kotlin :ensure t)
+(use-package inf-ruby :ensure t)
 
 (add-to-list 'load-path "~/.el")
 
@@ -712,3 +713,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package haxe-mode :ensure t)
 
 (use-package tuareg :ensure t)
+
+(use-package clojure-cheatsheet :ensure t)
+
+(use-package helm-orgcard :ensure t)
+
+(use-package circe :ensure t)
