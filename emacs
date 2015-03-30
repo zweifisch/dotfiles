@@ -82,7 +82,6 @@
                       know-your-http-well
                       company
                       alchemist
-                      smart-mode-line
                       quack
                       elpy
                       evil-god-state
@@ -123,16 +122,6 @@
 ;; emms dired-sort auto-dictionnary
 ;; autopair google-maps
 ;; sr-speedbar typopunct
-
-;; theme and modes
-
-;; (load-theme 'subatomic t)
-;; (load-theme 'solarized-dark t)
-;; (load-theme 'zenburn t)
-(load-theme 'monokai t)
-
-; powerline
-;; (powerline-default-theme)
 
 ; evil
 (evil-mode)
@@ -180,7 +169,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
   "g" 'helm-projectile-grep
   "o" 'browse-url
-  "e" 'eshell
+  "e" 'switch-to-eshell-in-project
   ;; "i" 'ein:notebooklist-open
   "c" 'org-capture
   "s" 'magit-status
@@ -328,6 +317,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :config (progn
     (evil-define-key 'normal cider-mode-map
       (kbd "RET") 'cider-eval-last-sexp)
+    (evil-define-key 'normal cider-mode-map
+      (kbd "S-RET") 'cider-eval-print-last-sexp)
     (evil-define-key 'visual cider-mode-map
       (kbd "RET") 'cider-eval-region)
     (setq nrepl-hide-special-buffers t
@@ -476,13 +467,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-(require 'smart-mode-line)
-(sml/setup)
-(sml/apply-theme 'respectful)
-(add-to-list 'rm-blacklist " Undo-Tree")
-(add-to-list 'rm-blacklist " Paredit")
-(add-to-list 'rm-blacklist " VHl")
-
 (require 'quack)
 
 (use-package ob-http :ensure t)
@@ -595,6 +579,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (define-key haskell-mode-map (kbd "C-c M-.") nil)
     (define-key haskell-mode-map (kbd "C-c C-d") nil)))
 
+(eval-after-load "haskell-interactive-mode"
+  '(progn
+     (define-key haskell-interactive-mode-map (kbd "C-a") nil)
+     (evil-define-key 'normal haskell-interactive-mode-map "^" 'haskell-interactive-mode-beginning)))
+
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 
 (setq guide-key/guide-key-sequence t)
@@ -638,7 +627,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (use-package symon :ensure t)
 ;; (symon-mode)
 
-;; (use-package hydra :ensure t)
+(use-package hydra :ensure t)
 
 (use-package discover :ensure t)
 (global-discover-mode t)
@@ -719,3 +708,59 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package helm-orgcard :ensure t)
 
 (use-package circe :ensure t)
+
+(use-package swiper :ensure t)
+(setq swiper-completion-method 'helm)
+(global-set-key "\C-s" 'swiper)
+
+(use-package zone
+  :config (zone-when-idle 120))
+
+(add-hook 'org-mode-hook '(lambda () (setq mode-name " ꙮ ")))
+(add-hook 'clojure-mode-hook '(lambda () (setq mode-name " λ ")))
+(add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name " ξ ")))
+(add-hook 'eshell-mode-hook (lambda () (setq mode-name " $ ")))
+
+(use-package popwin :ensure t)
+(popwin-mode 1)
+
+;; (use-package 4clojure :ensure t)
+
+(global-set-key (kbd "C-x C-l") 'list-processes)
+
+(use-package helm-dash :ensure t)
+
+(setq helm-dash-common-docsets '("Redis" "Clojure")) 
+
+(global-set-key (kbd "C-x C-d") 'helm-dash)
+
+(global-set-key (kbd "C-c C-p C-&") 'projectile-run-async-shell-command-in-root)
+(global-set-key (kbd "C-c C-p") nil)
+
+;; themes
+(use-package helm-themes :ensure t)
+;; (use-package zenburn-theme :ensure t)
+;; (use-package color-theme-sanityinc-tomorrow :ensure t)
+;; (use-package moe-theme :ensure t)
+;; (use-package material-theme :ensure t)
+;; (use-package monokai-theme :ensure t)
+
+;; (load-theme 'subatomic t)
+;; (load-theme 'solarized-dark t)
+;; (load-theme 'zenburn t)
+(load-theme 'monokai t)
+
+;; (use-package powerline :ensure t)
+;; (setq powerline-arrow-shape 'curve)
+;; (powerline-default-theme)
+
+(use-package smart-mode-line :ensure t)
+(sml/setup)
+(sml/apply-theme 'respectful)
+(add-to-list 'rm-blacklist " Undo-Tree")
+(add-to-list 'rm-blacklist " Paredit")
+(add-to-list 'rm-blacklist " VHl")
+(add-to-list 'rm-blacklist " Guide")
+(add-to-list 'rm-blacklist " MRev")
+
+(setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))

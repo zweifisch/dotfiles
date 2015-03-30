@@ -79,4 +79,100 @@ perspective in which case `projectile-switch-project' is called."
   (let ((settings (cdr (assoc project org-publish-project-alist))))
     (browse-url (format "http://localhost:%d" (plist-get settings :port)))))
 
+
+(defun eshell-buffer-names-in-project ()
+  (remove-if-not
+   (apply-partially 'string-prefix-p "*eshell*")
+   (projectile-project-buffer-names)))
+
+(defun switch-to-eshell-in-project ()
+  (interactive)
+  (helm :sources '((name . "eshell")
+                   (candidates . eshell-buffer-names-in-project)
+                   (action . (lambda (candidate)
+                               (switch-to-buffer candidate))))))
+
+(defun kill-process-at-point ()
+  (interactive)
+  (let* ((process (get-text-property (point) 'tabulated-list-id))
+         (buffer (process-buffer process)))
+    (if (y-or-n-p (format "kill process %s? " (process-name process)))
+        (progn 
+          (kill-process process)
+          (kill-buffer buffer)
+          (revert-buffer)))))
+
+(defun restart-process-at-point ()
+  (interactive)
+  (let ((process (get-text-property (point) 'tabulated-list-id)))
+    (if (y-or-n-p (format "restart process %s? " (process-name process)))
+        (progn 
+          (restart-process process)
+          (revert-buffer)))))
+
+(defun info-process-at-point ()
+  (interactive)
+  (let* ((process (get-text-property (point) 'tabulated-list-id))
+         (buffer (process-buffer process)))
+    (with-current-buffer buffer
+      (message
+       (format "%s %s" default-directory
+               (prin1-to-string (process-status process)))))))
+
+(defun restart-process (process)
+  (if (processp process)
+      (let ((name (process-name process))
+            (buffer (process-buffer process))
+            (command (process-command process)))
+        (kill-process process)
+        (sleep-for 1)
+        (message (prin1-to-string (process-status process)))
+        (with-current-buffer buffer
+          (apply 'start-process name buffer command)))
+    (error "can't find process!")))
+
+(define-key process-menu-mode-map (kbd "r") 'restart-process-at-point)
+(define-key process-menu-mode-map (kbd "k") 'kill-process-at-point)
+(define-key process-menu-mode-map (kbd "i") 'info-process-at-point)
+
+(defhydra helm-like-unite (:hint nil
+                           :color pink)
+  "
+Nav ^^^^^^^^^        Mark ^^          Other ^^       Quit
+^^^^^^^^^^------------^^----------------^^----------------------
+_K_ ^ ^ _k_ ^ ^     _m_ark           _v_iew         _i_: cancel
+^↕^ _h_ ^✜^ _l_     _t_oggle mark    _H_elp         _o_: quit
+_J_ ^ ^ _j_ ^ ^     _U_nmark all     _d_elete
+^^^^^^^^^^                           _f_ollow: %(helm-attr 'follow)
+"
+  ;; arrows
+  ("h" helm-beginning-of-buffer)
+  ("j" helm-next-line)
+  ("k" helm-previous-line)
+  ("l" helm-end-of-buffer)
+  ;; beginning/end
+  ("g" helm-beginning-of-buffer)
+  ("G" helm-end-of-buffer)
+  ;; scroll
+  ("K" helm-scroll-other-window-down)
+  ("J" helm-scroll-other-window)
+  ;; mark
+  ("m" helm-toggle-visible-mark)
+  ("t" helm-toggle-all-marks)
+  ("U" helm-unmark-all)
+  ;; exit
+  ("<escape>" keyboard-escape-quit "" :exit t)
+  ("o" keyboard-escape-quit :exit t)
+  ("i" nil)
+  ;; sources
+  ("}" helm-next-source)
+  ("{" helm-previous-source)
+  ;; rest
+  ("H" helm-help)
+  ("v" helm-execute-persistent-action)
+  ("d" helm-buffer-run-kill-persistent)
+  ("f" helm-follow-mode))
+
+(define-key helm-map (kbd "C-o") 'helm-like-unite/body)
+
 (provide 'misc-conf)
