@@ -326,6 +326,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
           cider-popup-stacktraces t
           cider-repl-popup-stacktraces t)))
 
+(use-package ac-cider :ensure t)
+(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
+(add-hook 'cider-mode-hook 'ac-cider-setup)
+(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+(eval-after-load "auto-complete"
+  '(progn
+     (add-to-list 'ac-modes 'cider-mode)
+     (add-to-list 'ac-modes 'cider-repl-mode)))
+
 (use-package paredit
   :ensure t
   :config (add-hook 'emacs-lisp-mode-hook 'paredit-mode))
