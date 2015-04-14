@@ -156,7 +156,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-leader/set-key
   ;; "F" 'projectile-find-file
   "F" 'helm-projectile-find-file
-  "f" 'ido-find-file
+  "f" 'helm-find-files
   ;; "B" 'ido-switch-buffer
   "B" 'helm-buffers-list
   ;; "b" 'projectile-switch-to-buffer
@@ -192,6 +192,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-a p") 'persp-prev)
 (global-set-key (kbd "C-a n") 'persp-next)
 (global-set-key (kbd "C-a c") 'projectile-persp-switch-project)
+(global-set-key (kbd "C-a ,") 'persp-rename)
 (global-set-key (kbd "C-a x") 'persp-kill)
 (global-set-key (kbd "C-a l") 'evil-window-right)
 (global-set-key (kbd "C-a h") 'evil-window-left)
@@ -384,7 +385,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gs" 'python-shell-switch-to-shell)
 
 ; global evil key
-(define-key evil-normal-state-map "L" 'projectile-ibuffer)
+(define-key evil-normal-state-map "L" 'helm-projectile-switch-to-buffer)
 ;; (define-key evil-normal-state-map "L" 'ido-switch-buffer)
 ;; (define-key evil-normal-state-map "L" 'helm-buffers-list)
 (define-key evil-normal-state-map "H" 'projectile-project-buffers-other-buffer)
@@ -482,6 +483,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package ob-cypher :ensure t)
 (use-package ob-kotlin :ensure t)
 (use-package inf-ruby :ensure t)
+(use-package ob-sml :ensure t)
 
 (add-to-list 'load-path "~/.el")
 
@@ -509,6 +511,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (ocaml . t)
    ;; (haxe . t)
    (go . t)
+   (sml . t)
    ;; (eukleides . t)
    ;; (fomus . t)
    ;; (mathomatic . t)
@@ -722,8 +725,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq swiper-completion-method 'helm)
 (global-set-key "\C-s" 'swiper)
 
-(use-package zone
-  :config (zone-when-idle 120))
+;; (use-package zone
+;;   :config (zone-when-idle 120))
 
 (add-hook 'org-mode-hook '(lambda () (setq mode-name " ꙮ ")))
 (add-hook 'clojure-mode-hook '(lambda () (setq mode-name " λ ")))
@@ -739,7 +742,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package helm-dash :ensure t)
 
-(setq helm-dash-common-docsets '("Redis" "Clojure")) 
+(setq helm-dash-common-docsets '("Redis" "Clojure" "Python 3")) 
 
 (global-set-key (kbd "C-x C-d") 'helm-dash)
 
@@ -773,3 +776,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-to-list 'rm-blacklist " MRev")
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
+
+(use-package xkcd :ensure t)
+
+(use-package sml-mode :ensure t)
+

@@ -141,7 +141,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- reset brightness
     , ((modm , xK_b ), spawn "xbacklight -set 90")
 
-    , ((modm , xK_a ), spawn "sudo sh -c 'echo 70 > /sys/class/backlight/mba6x_backlight/brightness'")
+    , ((modm , xK_a ), spawn "sudo sh -c 'echo 45 > /sys/class/backlight/mba6x_backlight/brightness'")
     ]
     ++
 
