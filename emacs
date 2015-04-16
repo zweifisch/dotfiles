@@ -271,7 +271,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq org-capture-templates
       '(("t" "Tasks" entry (file+headline "todo.org" "Tasks")
          "* TODO %?")
-        ("c" "Collection" entry (file+datetree "collect.org" "Collections")
+        ("c" "Collection" entry (file+headline "collect.org" "Collections")
          "* %x")
         ("j" "Journal" entry (file+datetree "journal.org" "* %?\nEntered on %U\n  %i\n  %a"))))
 
@@ -552,7 +552,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :ensure t
   :config (setq deft-extension "org"
                 deft-directory org-directory
-                deft-text-mode 'org-mode))
+                deft-text-mode 'org-mode
+                deft-use-filename-as-title t))
+(evil-set-initial-state 'deft-mode 'emacs)
 
 (use-package org :ensure t)
 
@@ -781,3 +783,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package sml-mode :ensure t)
 
+(use-package aggressive-indent :ensure t)
+
+;; (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+(add-hook 'clojure-mode-hook #'aggressive-indent-mode) 
+
+(defun browse-web-at-point ()
+  (interactive)
+  (let ((url (thing-at-point-url-at-point)))
+    (if url (browse-web url))))
+
+(global-set-key (kbd "C-c C-b") 'browse-web-at-point)
+
+(global-set-key (kbd "C-c C-d") 'dictionary-lookup-definition)
