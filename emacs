@@ -170,6 +170,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "g" 'helm-projectile-grep
   "o" 'browse-url
   "e" 'switch-to-eshell-in-project
+  "E" 'switch-to-eshell
   ;; "i" 'ein:notebooklist-open
   "c" 'org-capture
   "s" 'magit-status
@@ -178,7 +179,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "V" 'projectile-persp-switch-project
   "v" 'persp-switch
   ;; "v" 'helm-projectile-switch-project
-  "d" 'vc-diff)
+  "d" 'deft
+  "D" 'vc-diff)
 
 (global-evil-leader-mode)
 (evil-leader/set-leader "|")

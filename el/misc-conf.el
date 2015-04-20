@@ -81,14 +81,31 @@ perspective in which case `projectile-switch-project' is called."
 
 
 (defun eshell-buffer-names-in-project ()
-  (remove-if-not
-   (apply-partially 'string-prefix-p "*eshell*")
-   (projectile-project-buffer-names)))
+  (->> (projectile-project-buffer-names)
+       (-filter (lambda (buffer)
+                  (eq 'eshell-mode
+                      (with-current-buffer buffer major-mode))))))
 
 (defun switch-to-eshell-in-project ()
   (interactive)
+  (cond ((eshell-buffer-names-in-project) 
+         (helm :sources '((name . "eshell")
+                          (candidates . eshell-buffer-names-in-project)
+                          (action . (lambda (candidate)
+                                      (switch-to-buffer candidate))))))
+        (t (eshell))))
+
+(defun eshell-buffer-names ()
+  (->> (buffer-list)
+       (-filter (lambda (buffer)
+                  (eq 'eshell-mode
+                      (buffer-local-value 'major-mode buffer))))
+       (-map 'buffer-name)))
+
+(defun switch-to-eshell ()
+  (interactive)
   (helm :sources '((name . "eshell")
-                   (candidates . eshell-buffer-names-in-project)
+                   (candidates . eshell-buffer-names)
                    (action . (lambda (candidate)
                                (switch-to-buffer candidate))))))
 
