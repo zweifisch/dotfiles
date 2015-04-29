@@ -176,8 +176,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "s" 'magit-status
   "j" 'ace-jump-mode
   ;; "v" 'wg-switch-to-workgroup
-  "V" 'projectile-persp-switch-project
-  "v" 'persp-switch
+  "v" 'projectile-persp-switch-project
+  "V" 'persp-switch
   ;; "v" 'helm-projectile-switch-project
   "d" 'deft
   "D" 'vc-diff)
@@ -321,7 +321,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (evil-define-key 'normal cider-mode-map
       (kbd "RET") 'cider-eval-last-sexp)
     (evil-define-key 'normal cider-mode-map
-      (kbd "S-RET") 'cider-eval-print-last-sexp)
+      (kbd "<S-return>") 'cider-eval-print-last-sexp)
     (evil-define-key 'visual cider-mode-map
       (kbd "RET") 'cider-eval-region)
     (setq nrepl-hide-special-buffers t
@@ -362,10 +362,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "w<" 'paredit-wrap-angled
   "wh" 'paredit-forward-barf-sexp
   "wl" 'paredit-forward-slurp-sexp
-  "ww" 'paredit-splice-sexp
+  "ww" 'paredit-wrap-round
+  "wu" 'paredit-splice-sexp
 
   ;; "J" 'paredit-join-sexps
-  "O" 'paredit-split-sexp)
+  "ws" 'paredit-split-sexp)
 
 ;; elisp
 (evil-define-key 'normal emacs-lisp-mode-map
@@ -746,7 +747,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package helm-dash :ensure t)
 
-(setq helm-dash-common-docsets '("Redis" "Clojure" "Python 3")) 
+(setq helm-dash-common-docsets '("Redis" "Clojure" "Python 3" "Java")) 
 
 (global-set-key (kbd "C-x C-d") 'helm-dash)
 
@@ -798,3 +799,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-c C-b") 'browse-web-at-point)
 
 (global-set-key (kbd "C-c C-d") 'dictionary-lookup-definition)
+
+(use-package sx :ensure t)
+
+(use-package foreman-mode :ensure t)
+(evil-set-initial-state 'foreman-mode 'emacs)
+(global-set-key (kbd "C-x C-p") 'foreman)

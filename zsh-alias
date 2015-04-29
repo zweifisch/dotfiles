@@ -913,3 +913,7 @@ alias h2="java -jar $(find ~/.m2/repository/com/h2database/h2 -iname 'h2*.jar')"
 export LEIN_FAST_TRAMPOLINE=y
 
 alias chinse-encoding="sed 'y/ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ０１２３４５６７８９/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/'"
+
+remove-all-tun() {
+    ifconfig | grep 'tun[0-9]\+' | awk '{print $1}' | xargs -I % sudo ip link delete %
+}
