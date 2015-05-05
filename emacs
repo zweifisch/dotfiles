@@ -68,7 +68,6 @@
                       evil-nerd-commenter
                       evil-leader
                       monokai-theme
-                      virtualenvwrapper
                       ;; elscreen
                       elm-mode
                       org-present
@@ -315,19 +314,27 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (exec-path-from-shell-initialize)
 
+(defun cider-eval-print-last-sexp-comment ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (kill-line)
+  (cider-eval-print-last-sexp)
+  (sit-for .01)
+  (comment-region (line-beginning-position) (line-end-position)))
+
 (use-package cider
   :ensure t
   :config (progn
-    (evil-define-key 'normal cider-mode-map
-      (kbd "RET") 'cider-eval-last-sexp)
-    (evil-define-key 'normal cider-mode-map
-      (kbd "<S-return>") 'cider-eval-print-last-sexp)
-    (evil-define-key 'visual cider-mode-map
-      (kbd "RET") 'cider-eval-region)
-    (setq nrepl-hide-special-buffers t
-          cider-repl-pop-to-buffer-on-connect nil
-          cider-popup-stacktraces t
-          cider-repl-popup-stacktraces t)))
+            (evil-define-key 'normal cider-mode-map
+              (kbd "RET") 'cider-eval-last-sexp)
+            (evil-define-key 'normal cider-mode-map
+              (kbd "<C-return>") 'cider-eval-print-last-sexp-comment)
+            (evil-define-key 'visual cider-mode-map
+              (kbd "RET") 'cider-eval-region)
+            (setq nrepl-hide-special-buffers t
+                  cider-repl-pop-to-buffer-on-connect nil
+                  cider-popup-stacktraces t
+                  cider-repl-popup-stacktraces t)))
 
 (use-package ac-cider :ensure t)
 (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
@@ -805,3 +812,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package foreman-mode :ensure t)
 (evil-set-initial-state 'foreman-mode 'emacs)
 (global-set-key (kbd "C-x C-p") 'foreman)
+
+(define-key graphviz-dot-mode-map (kbd "C-c C-c") 'graphviz-dot-preview)
