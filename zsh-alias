@@ -49,6 +49,7 @@ alias docker-kill-all='docker kill $(docker ps -a -q)'
 
 alias curl-json="curl -H 'Content-Type: applicaiton/json' "
 alias curl-ajax="curl -H 'X-Requested-With: XMLHttpRequest' "
+alias curl-gzip="curl -H 'Accept-Encoding: gzip,deflate'"
 
 alias svn-url='svn info | grep -i url | cut -d " " -f 2'
 
@@ -920,4 +921,8 @@ remove-all-tun() {
 
 binary-clock() {
     perl -e 'for(;;sleep 1){printf"\r"."%.4b "x6,split"",`date +%H%M%S`}'
+}
+
+get-image-from-clipboard() {
+    xclip -selection clipboard -t image/png -o > $1
 }

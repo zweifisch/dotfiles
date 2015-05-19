@@ -82,7 +82,6 @@
                       company
                       alchemist
                       quack
-                      elpy
                       evil-god-state
                       geiser
                       graphviz-dot-mode
@@ -317,7 +316,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (defun cider-eval-print-last-sexp-comment ()
   (interactive)
   (move-beginning-of-line nil)
-  (kill-line)
+  (unless (eobp)
+    (kill-line))
   (cider-eval-print-last-sexp)
   (sit-for .01)
   (comment-region (line-beginning-position) (line-end-position)))
@@ -369,6 +369,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "w<" 'paredit-wrap-angled
   "wh" 'paredit-forward-barf-sexp
   "wl" 'paredit-forward-slurp-sexp
+  "wH" 'paredit-splice-sexp-killing-backward
   "ww" 'paredit-wrap-round
   "wu" 'paredit-splice-sexp
 
@@ -507,6 +508,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (sh . t)
    (shell . t)
    (sql . t)
+   (sqlite . t)
    (dot . t)
    (haskell . t)
    (mongo . t)
@@ -537,7 +539,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq org-babel-clojure-backend 'cider)
 
-(elpy-enable)
+(use-package elpy
+  :ensure t
+  :config (elpy-enable))
 
 (use-package perspective
   :ensure t
@@ -814,3 +818,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-x C-p") 'foreman)
 
 (define-key graphviz-dot-mode-map (kbd "C-c C-c") 'graphviz-dot-preview)
+
+(use-package focus :ensure t)
+

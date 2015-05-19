@@ -93,7 +93,9 @@ perspective in which case `projectile-switch-project' is called."
                           (candidates . eshell-buffer-names-in-project)
                           (action . (lambda (candidate)
                                       (switch-to-buffer candidate))))))
-        (t (eshell))))
+        (t (projectile-with-default-dir
+               (projectile-project-root)
+             (eshell)))))
 
 (defun eshell-buffer-names ()
   (->> (buffer-list)

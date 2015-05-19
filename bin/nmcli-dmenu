@@ -7,11 +7,12 @@ https://wiki.archlinux.org/index.php/NetworkManager#Set_up_PolicyKit_permissions
 
 OR running the script as root
 
-Add dmenu formatting options if desired to ~/.config/networkmanager-dmenu/config.ini
+Add dmenu formatting options and default terminal if desired to
+~/.config/networkmanager-dmenu/config.ini
 
 """
+import itertools
 from os.path import expanduser
-from shlex import split
 from subprocess import Popen, PIPE
 import sys
 try:
@@ -20,20 +21,43 @@ except ImportError:
     import ConfigParser as configparser
 
 
-def dmenu_cmd():
+def dmenu_cmd(num_lines, prompt="Networks"):
     """Parse config.ini if it exists and add options to the dmenu command
 
-    Returns: string  "dmenu -l {} -p {} -i ....."
+    Args: args - num_lines: number of lines to display
+                 prompt: prompt to show
+    Returns: command invocation (as a list of strings) for
+                dmenu -l <num_lines> -p <prompt> -i ...
 
     """
-    dmenu = "dmenu -l {} -p {} -i"
+    dmenu_command = "dmenu"
     conf = configparser.ConfigParser()
-    c = conf.read(expanduser("~/.config/networkmanager-dmenu/config.ini"))
-    if not c:
-        return dmenu
+    conf.read(expanduser("~/.config/networkmanager-dmenu/config.ini"))
+    try:
+        args = conf.items('dmenu')
+    except configparser.NoSectionError:
+        conf = False
+    if not conf:
+        res = [dmenu_command, "-i", "-l", str(num_lines), "-p", str(prompt)]
     else:
-        extras = ["-{} {}".format(*i) for i in conf.items('dmenu')]
-        return "{} {}".format(dmenu, " ".join(extras))
+        args_dict = dict(args)
+        if "dmenu_command" in args_dict:
+            dmenu_command = args_dict["dmenu_command"]
+            del args_dict["dmenu_command"]
+        if "p" in args_dict and prompt == "Networks":
+            prompt = args_dict["p"]
+            del args_dict["p"]
+        elif "p" in args_dict:
+            del args_dict["p"]
+        if "rofi" in dmenu_command:
+            lines = "-dmenu -lines"
+        else:
+            lines = "-i -l"
+        extras = (["-" + str(k), str(v)] for (k, v) in args_dict.items())
+        res = [dmenu_command, str(num_lines), "-p", str(prompt)] \
+            + list(itertools.chain.from_iterable(extras))
+        res[1:1] = lines.split()
+    return res
 
 
 def current_conns():
@@ -42,9 +66,8 @@ def current_conns():
     Returns: list of strings: ['firecat4153:WPA2', 'firecat4153x:WEP'...]
 
     """
-    conns = ("nmcli -t -f name,type con list")
-    return Popen(split(conns),
-                 stdout=PIPE).communicate()[0].decode().split('\n')
+    conns = ["nmcli", "-t", "-f", "name,type", "connection"]
+    return Popen(conns, stdout=PIPE).communicate()[0].decode().split('\n')
 
 
 def current_ssids():
@@ -55,12 +78,29 @@ def current_ssids():
         ["firecat4153:WPA2","firecat4153-guest:", "firecat4153x:WPA2"]
 
     """
-    scan = ("nmcli -t -f ssid,security,signal dev wifi list")
-    res = Popen(split(scan), stdout=PIPE).communicate()[0].decode().split("\n")
+    scan = ["nmcli", "-t", "-f", "ssid,security,signal",
+            "device", "wifi", "list"]
+    res = Popen(scan, stdout=PIPE).communicate()[0].decode().split("\n")
     del res[-1]
     res = [i.rsplit(':', 1) for i in res]
     res = sorted(res, key=lambda x: x[1], reverse=True)
+    res = unique_ssid(res)
     return [i[0].replace("'", "") for i in res]
+
+
+def unique_ssid(conns):
+    """Filters the list of ids, so that duplicate ids will only show the one
+    with the greatest strength. The list of ssids is already sorted by strength
+    so this just deletes any duplicates after the first item.
+
+    """
+    ssids = []
+    for conn in conns:
+        if conn[0] in ssids:
+            del conns[conns.index(conn)]
+        else:
+            ssids.append(conn[0])
+    return conns
 
 
 def vpn_connections(conns):
@@ -80,9 +120,9 @@ def get_network_status():
     Returns: string 'Enable' or 'Disable',
 
     """
-    stat = ("nmcli -t -f STATE nm status")
-    res = Popen(split(stat), stdout=PIPE).communicate()[0]
-    if 'connect' in res.decode():
+    stat = ["nmcli", "networking"]
+    res = Popen(stat, stdout=PIPE).communicate()[0]
+    if 'enabled' in res.decode():
         return 'Disable'
     else:
         return 'Enable'
@@ -94,8 +134,9 @@ def get_active_connections():
     Returns: list of strings
 
     """
-    status = ("nmcli -t -f name con status")
-    active = Popen(split(status), stdout=PIPE).communicate()[0]
+    status = ["nmcli", "-t", "-f", "name", "connection",
+              "show", "--active"]
+    active = Popen(status, stdout=PIPE).communicate()[0]
     active = active.decode().split('\n')
     del active[-1]
     return active
@@ -108,7 +149,7 @@ def mark_active(conns, active):
     Returns: list of strings (active prepended with a '**')
 
     """
-    conn_t = [i.split(":")[0] for i in conns]
+    conn_t = [i.rsplit(":", 1)[0] for i in conns]
     act = [i for i in conn_t if i and i in active]
     for i, conn in enumerate(conn_t):
         if conn in act:
@@ -136,9 +177,9 @@ def get_selection(ssids, vpns, other):
     active = get_active_connections()
     vpns = ["{}:VPN".format(i) for i in vpns]
     inp = mark_active(ssids, active) + [""] + \
-          mark_active(vpns, active) + [""] + other
+        mark_active(vpns, active) + [""] + other
     inp_bytes = "\n".join(inp).encode()
-    sel = Popen(split(dmenu_cmd().format(len(inp), "Actions")),
+    sel = Popen(dmenu_cmd(len(inp)),
                 stdin=PIPE,
                 stdout=PIPE).communicate(input=inp_bytes)[0].decode()
     if not sel.strip():
@@ -153,14 +194,14 @@ def toggle_existing(conn):
     Args: conn - string
 
     """
-    conn_status = ("nmcli -t -f GENERAL con status id {}".format(conn))
-    res = Popen(split(conn_status), stdout=PIPE).communicate()[0]
+    conn_status = ["nmcli", "-t", "-f", "GENERAL", "connection", "show", conn]
+    res = Popen(conn_status, stdout=PIPE).communicate()[0]
     if 'activated' not in res.decode():
         updown = 'up'
     else:
         updown = 'down'
-    conn_string = ("nmcli con {} id {}".format(updown, conn))
-    Popen(split(conn_string), stdout=PIPE).communicate()
+    conn_string = ["nmcli", "connection", updown, "id", conn]
+    Popen(conn_string, stdout=PIPE).communicate()
 
 
 def toggle_networking(sel):
@@ -170,18 +211,38 @@ def toggle_networking(sel):
 
     """
     if sel.startswith('Enable'):
-        updown = 'true'
+        updown = 'on'
     else:
-        updown = 'false'
-    net = ("nmcli nm enable {}".format(updown))
-    Popen(split(net), stdout=PIPE).communicate()
+        updown = 'off'
+    net = ["nmcli", "networking", updown]
+    Popen(net, stdout=PIPE).communicate()
 
 
 def launch_connection_editor():
-    """Launch the gui nm-connection-editor
+    """Launch nmtui or the gui nm-connection-editor
 
     """
-    Popen(["nm-connection-editor"]).communicate()
+    conf = configparser.ConfigParser()
+    terminal = "xterm"
+    gui_if_available = "True"
+    conf.read(expanduser("~/.config/networkmanager-dmenu/config.ini"))
+    try:
+        editor = conf.items("editor")
+    except configparser.NoSectionError:
+        conf = False
+    if conf:
+        opts = {str(k): str(v) for (k, v) in editor}
+        if "terminal" in opts:
+            terminal = opts["terminal"]
+        if "gui_if_available" in opts:
+            gui_if_available = opts["gui_if_available"]
+    if gui_if_available == "True":
+        try:
+            Popen(["nm-connection-editor"]).communicate()
+        except OSError:
+            Popen([terminal, "-e", "nmtui"]).communicate()
+    else:
+        Popen([terminal, "-e", "nmtui"]).communicate()
 
 
 def get_passphrase():
@@ -190,7 +251,7 @@ def get_passphrase():
     Returns: string
 
     """
-    return Popen(split(dmenu_cmd().format(0, "Passphrase")),
+    return Popen(dmenu_cmd(0, "Passphrase"),
                  stdin=PIPE, stdout=PIPE).communicate()[0].decode()
 
 
@@ -201,9 +262,21 @@ def set_new_connection(ssid, pw):
           pw - string
 
     """
-    pw = "password {}".format(pw)
-    new_conn = ("nmcli dev wifi connect {} {}".format(ssid, pw))
-    Popen(split(new_conn), stdout=PIPE).communicate()
+    pw = str(pw).strip()
+    new_conn = ["nmcli", "device", "wifi", "connect", ssid, "password", pw]
+    res = Popen(new_conn, stdout=PIPE).communicate()
+    # Delete connection if it fails somehow.
+    # With nmcli 0.9.10, you occasionally get an error message:
+    # "Error: Failed to add/activate new connection: Unknown error", which
+    # doesn't always mean the connection failed, so test for 'activated' or
+    # 'activating' in the connection status as well
+    status = ["nmcli", "-t", "-f", "GENERAL", "connection", "show", ssid]
+    active = Popen(status, stdout=PIPE).communicate()[0]
+    # Delete connections with errors
+    if "Error" in res and \
+            ('activating' not in active or 'activated' not in active):
+        delete = ["nmcli", "connection", "delete", ssid]
+        Popen(delete, stdout=PIPE).communicate()
 
 
 def run():
@@ -230,7 +303,7 @@ def run():
     else:
         sys.exit()
     # Decide if selection is existing connection or new
-    if ssid in [i.split(':')[0] for i in conns if i][1:]:
+    if ssid in [i.split(':')[0] for i in conns if i]:
         toggle_existing(ssid)
     else:
         if security:

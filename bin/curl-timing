@@ -9,5 +9,5 @@ time_redirect: %{time_redirect},
 time_starttransfer: %{time_starttransfer},
 time_total: %{time_total}'
 
-curl -w "$curl_format" -o /dev/null -s "$@"
+curl -H 'Accept-Encoding: gzip,deflate' -w "$curl_format" -o /dev/null -s "$@"
  
