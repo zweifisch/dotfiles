@@ -926,3 +926,16 @@ binary-clock() {
 get-image-from-clipboard() {
     xclip -selection clipboard -t image/png -o > $1
 }
+
+setup-ipython() {
+    sudo apt-get install gfortran libblas-dev liblapack-dev
+    pip install ipython \
+    pandas \
+    matplotlib \
+    scipy \
+    seaborn \
+    patsy \
+    statsmodels \
+    PyMC \
+    scikits.bootstrap
+}

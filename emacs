@@ -205,16 +205,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq evilnc-hotkey-comment-operator "gc")
 (evilnc-default-hotkeys)
 
-; jedi
-(add-hook 'python-mode-hook 'jedi:setup)
-(add-hook 'python-mode-hook 'auto-complete-mode)
-(add-hook 'python-mode-hook 'jedi:ac-setup)
-(setq jedi:complete-on-dot t)
-
-(add-hook 'python-mode-hook 'flycheck-mode)
-
-;; (setq flycheck-check-syntax-automatically '(mode-enabled save))
-
 ; recentf
 (recentf-mode 1)
 (setq recentf-max-saved-items 512)
@@ -264,6 +254,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 (setq org-src-fontify-natively t)  ; code block
+
+(add-hook 'python-mode-hook 'flycheck-mode)
+
 
 (setq org-directory "~/.org/")
 (setq org-agenda-files (list org-directory))
@@ -495,6 +488,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package ob-kotlin :ensure t)
 (use-package inf-ruby :ensure t)
 (use-package ob-sml :ensure t)
+(use-package ob-ipython :ensure t)
 
 (add-to-list 'load-path "~/.el")
 
@@ -521,9 +515,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (cfdg . t)
    (kotlin . t)
    (ocaml . t)
+   (ipython . t)
    ;; (haxe . t)
-   (go . t)
+   ;; (go . t)
    (sml . t)
+   (rust . t)
    ;; (eukleides . t)
    ;; (fomus . t)
    ;; (mathomatic . t)
@@ -580,9 +576,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   '(progn (define-key magit-mode-map (kbd "M-h") nil)))
 
 (defun my-eshell-mode-hook ()
+  (rename-uniquely)
   (define-key eshell-mode-map (kbd "C-a") nil)
+  (define-key eshell-mode-map
+    (kbd "M-p")
+    'helm-eshell-history)
   (evil-define-key 'normal eshell-mode-map "^" 'eshell-bol))
-(add-hook 'eshell-mode-hook 'rename-uniquely)
 (add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 
 ;; (setq ajb-bs-configuration "projectile")
@@ -809,7 +808,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (global-set-key (kbd "C-c C-b") 'browse-web-at-point)
 
-(global-set-key (kbd "C-c C-d") 'dictionary-lookup-definition)
+(global-set-key (kbd "C-x C-f") 'dictionary-lookup-definition)
 
 (use-package sx :ensure t)
 
@@ -820,4 +819,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key graphviz-dot-mode-map (kbd "C-c C-c") 'graphviz-dot-preview)
 
 (use-package focus :ensure t)
+
+(use-package rust-mode :ensure t)
+
+(use-package org-bullets :ensure t)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))) 
+
+(use-package emmet-mode :ensure t)
+(add-hook 'sgml-mode-hook 'emmet-mode)
+(add-hook 'css-mode-hook 'emmet-mode)
+(add-hook 'web-mode-hook 'emmet-mode)
 

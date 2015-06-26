@@ -88,14 +88,17 @@ perspective in which case `projectile-switch-project' is called."
 
 (defun switch-to-eshell-in-project ()
   (interactive)
-  (cond ((eshell-buffer-names-in-project) 
-         (helm :sources '((name . "eshell")
-                          (candidates . eshell-buffer-names-in-project)
-                          (action . (lambda (candidate)
-                                      (switch-to-buffer candidate))))))
-        (t (projectile-with-default-dir
-               (projectile-project-root)
-             (eshell)))))
+  (let ((eshell-buffers (eshell-buffer-names-in-project)))
+    (cond (eshell-buffers
+           (if (= 1 (length eshell-buffers))
+               (switch-to-buffer (car eshell-buffers))
+             (helm :sources '((name . "eshell")
+                              (candidates . eshell-buffer-names-in-project)
+                              (action . (lambda (candidate)
+                                          (switch-to-buffer candidate)))))))
+          (t (projectile-with-default-dir
+                 (projectile-project-root)
+               (eshell))))))
 
 (defun eshell-buffer-names ()
   (->> (buffer-list)
