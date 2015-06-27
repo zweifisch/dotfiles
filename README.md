@@ -1,11 +1,17 @@
 ## setup
 
-clone and link
-
 ```sh
 git clone https://github.com/zweifisch/dotfiles ~/.dotfiles
 cd !$
-rake install # or make install
+stow core
+stow zsh
+stow vim
+stow emacs
+stow dev
+stow pentadactyl
+stow x
+stow urxvt
+stow extra
 ```
 
 ohmyzsh/rbenv...
