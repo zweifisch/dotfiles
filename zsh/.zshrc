@@ -6,6 +6,8 @@ else
 	export TERM=screen-256color
 fi
 
+alias setup-zsh="git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh"
+
 ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 ZSH_CUSTOM=$HOME/.zsh

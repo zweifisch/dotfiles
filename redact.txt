@@ -1,0 +1,7 @@
+~/.muttrc.tpl
+~/.gitconfig.tpl
+~/.fetchmailrc.tpl
+~/.msmtprc.tpl
+~/.procmailrc.tpl
+~/.moc/config.tpl
+~/.offlineimaprc.tpl

@@ -507,19 +507,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    (haskell . t)
    (mongo . t)
    (coffee . t)
-   (hy . t)
+   ; (hy . t)
    (redis . t)
    (http . t)
    (cypher . t)
    (racket . t)
-   (cfdg . t)
+   ; (cfdg . t)
    (kotlin . t)
    (ocaml . t)
    (ipython . t)
    ;; (haxe . t)
    ;; (go . t)
    (sml . t)
-   (rust . t)
+   ;; (rust . t)
    ;; (eukleides . t)
    ;; (fomus . t)
    ;; (mathomatic . t)
@@ -698,7 +698,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       org-html-head-include-scripts nil
       org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"markdown.css\" />")
 
-(use-package paradox :ensure t)
+;; (use-package paradox :ensure t)
 
 (use-package htmlize :ensure t)
 
@@ -709,9 +709,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package top-mode :ensure t)
 
-(require 'cfdg-mode)
+; (require 'cfdg-mode)
 
-(require 'kotlin-mode)
+; (require 'kotlin-mode)
 
 (use-package android-mode :ensure t)
 (custom-set-variables '(android-mode-sdk-dir "~/.android"))

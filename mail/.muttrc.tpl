@@ -1,6 +1,6 @@
 #======================================================#
 
-set realname = "#{realname}"
+set realname = "#{fullname}"
 set from = "#{email}"
 set use_from = yes
 set envelope_from ="yes"
@@ -16,7 +16,6 @@ set sendmail = /usr/bin/msmtp
 
 set folder = $HOME/mail
 
-# set spoolfile = /var/spool/mail/#{username}
 set spoolfile = "+archive"
 
 #======================================================#

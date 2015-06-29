@@ -909,8 +909,6 @@ alias xev-simple="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycod
 alias emacs-daemon="env LC_CTYPE=zh_CN.UTF-8 emacs --daemon"
 alias e="emacsclient -nc"
 
-alias h2="java -jar $(find ~/.m2/repository/com/h2database/h2 -iname 'h2*.jar')"
-
 export LEIN_FAST_TRAMPOLINE=y
 
 alias chinse-encoding="sed 'y/ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ０１２３４５６７８９/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/'"

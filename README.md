@@ -14,7 +14,7 @@ stow urxvt
 stow extra
 ```
 
-ohmyzsh/rbenv...
+setup oh-my-zsh/rbenv...
 
 ```
 setup-zsh
@@ -23,12 +23,11 @@ setup-nvm
 setup-git
 ```
 
-github/gmail and mutt...
+fill in sensitive info using [redact](https://github.com/zweifisch/redact):
 
 ```
 sudo pip install redact
-vi redact.yaml
-redact redact.yaml
+redact --templates redact.txt --secrets ~/.secret
 ```
 
 ## keybindings
