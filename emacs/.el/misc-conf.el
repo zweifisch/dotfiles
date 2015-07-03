@@ -221,4 +221,11 @@ _p_rint
 
 (define-key org-mode-map (kbd "C-o") 'hydra-global-org/body)
 
+(defun helm-do-grep-recursive (&optional non-recursive)
+  "Like `helm-do-grep', but greps recursively by default."
+  (interactive "P")
+  (let* ((current-prefix-arg (not non-recursive))
+         (helm-current-prefix-arg non-recursive))
+    (call-interactively 'helm-do-grep)))
+
 (provide 'misc-conf)

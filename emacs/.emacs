@@ -165,7 +165,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
   "a" 'org-agenda
 
-  "g" 'helm-projectile-grep
+  "g" 'helm-do-grep-recursive
+  "G" 'helm-projectile-grep
   "o" 'browse-url
   "e" 'switch-to-eshell-in-project
   "E" 'switch-to-eshell
@@ -306,6 +307,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (exec-path-from-shell-initialize)
 
+
+(defun eval-print-last-sexp-comment ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (unless (eobp)
+    (kill-line))
+  (eval-print-last-sexp)
+  (sit-for .01)
+  (forward-line -2)
+  (kill-line)
+  (comment-region (line-beginning-position) (line-end-position)))
+
 (defun cider-eval-print-last-sexp-comment ()
   (interactive)
   (move-beginning-of-line nil)
@@ -372,6 +385,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; elisp
 (evil-define-key 'normal emacs-lisp-mode-map
   (kbd "RET") 'eval-last-sexp)
+
+(evil-define-key 'normal emacs-lisp-mode-map
+    (kbd "<C-return>") 'eval-print-last-sexp-comment)
 
 (evil-define-key 'normal scheme-mode-map
   (kbd "RET") 'geiser-eval-last-sexp)
@@ -519,6 +535,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    ;; (haxe . t)
    ;; (go . t)
    (sml . t)
+   (lfe . t)
    ;; (rust . t)
    ;; (eukleides . t)
    ;; (fomus . t)
@@ -830,3 +847,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'css-mode-hook 'emmet-mode)
 (add-hook 'web-mode-hook 'emmet-mode)
 
+(use-package lfe-mode :ensure t)
+
+(add-hook 'edebug-mode-hook (lambda ()
+                                (if edebug-mode
+                                    (evil-emacs-state)
+                                  (evil-normal-state))))
