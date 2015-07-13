@@ -505,6 +505,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package inf-ruby :ensure t)
 (use-package ob-sml :ensure t)
 (use-package ob-ipython :ensure t)
+(use-package ob-lfe :ensure t)
 
 (add-to-list 'load-path "~/.el")
 
@@ -728,7 +729,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; (require 'cfdg-mode)
 
-; (require 'kotlin-mode)
+(require 'kotlin-mode)
+(add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))
 
 (use-package android-mode :ensure t)
 (custom-set-variables '(android-mode-sdk-dir "~/.android"))
@@ -853,3 +855,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                                 (if edebug-mode
                                     (evil-emacs-state)
                                   (evil-normal-state))))
+
+;; (require 'bing-dict)

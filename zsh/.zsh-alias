@@ -341,12 +341,12 @@ EOF
 }
 
 init-venv2(){
-    virtualenv -p $(which python2) venv
+    virtualenv -p $(which python2) --no-site-packages ./.venv
     activate-venv
 }
 
 init-venv(){
-    virtualenv -p $(which python3) venv
+    virtualenv -p $(which python3) --no-site-packages ./.venv
     activate-venv
 }
 
@@ -356,7 +356,7 @@ activate-venv(){
         select yn in "Yes" "No"; do
             case $yn in
                 Yes)
-                    source .venv/bin/activate;break;
+                    source ./.venv/bin/activate;break;
                     export VENV_ACTIVATED="$(pwd)";
                     break;;
                 No)
@@ -936,4 +936,25 @@ setup-ipython() {
     statsmodels \
     PyMC \
     scikits.bootstrap
+}
+
+setup-kawa() {
+    mkdir -p ~/.install/kawa
+    wget -c ftp://ftp.gnu.org/pub/gnu/kawa/kawa-2.0.jar -O ~/.install/kawa/kawa.jar
+}
+
+kawa() {
+    java -cp ~/.install/kawa/kawa.jar kawa.repl
+}
+
+clear-iptables() {
+    sudo iptables -F
+    sudo iptables -X
+    sudo iptables -t nat -F
+    sudo iptables -t nat -X
+    sudo iptables -t mangle -F
+    sudo iptables -t mangle -X
+    sudo iptables -P INPUT ACCEPT
+    sudo iptables -P FORWARD ACCEPT
+    sudo iptables -P OUTPUT ACCEPT
 }
