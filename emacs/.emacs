@@ -71,7 +71,6 @@
                       ;; elscreen
                       elm-mode
                       org-present
-                      ace-jump-mode  ; easymotion
                       use-package
                       go-mode
                       go-eldoc
@@ -159,11 +158,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "B" 'helm-buffers-list
   ;; "b" 'projectile-switch-to-buffer
   "b" 'helm-projectile-switch-to-buffer
-  ;; "b" 'ace-jump-buffer
   "R" 'helm-recentf
   "r" 'helm-projectile-recentf
 
-  "a" 'org-agenda
+  "A" 'org-agenda
 
   "g" 'helm-do-grep-recursive
   "G" 'helm-projectile-grep
@@ -173,7 +171,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; "i" 'ein:notebooklist-open
   "c" 'org-capture
   "s" 'magit-status
-  "j" 'ace-jump-mode
+  "a" 'avy-goto-word-or-subword-1
   ;; "v" 'wg-switch-to-workgroup
   "v" 'projectile-persp-switch-project
   "V" 'persp-switch
@@ -184,7 +182,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-evil-leader-mode)
 (evil-leader/set-leader "|")
 (evil-define-key 'normal global-map
-  "gj" 'ace-jump-mode
+  "gj" 'avy-goto-word-or-subword-1
   "," 'evil-execute-in-god-state)
 
 (global-set-key (kbd "C-a") nil)
@@ -232,6 +230,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :config
   (progn
     (use-package helm-config)
+    (add-to-list 'helm-boring-buffer-regexp-list "\\*magit")
+    (add-to-list 'helm-boring-buffer-regexp-list "\\*scratch")
+    (add-to-list 'helm-boring-buffer-regexp-list "\\*eshell")
+    (add-to-list 'helm-boring-buffer-regexp-list "\\*cider")
+    (add-to-list 'helm-boring-buffer-regexp-list "\\*foreman")
     (define-key helm-map (kbd "ESC") 'helm-keyboard-quit)
     (define-key helm-map (kbd "C-j") 'helm-next-line)
     (define-key helm-map (kbd "C-k") 'helm-previous-line)))
@@ -396,6 +399,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; magit
 (use-package magit
   :ensure t)
+(eval-after-load "magit"
+  '(progn (define-key magit-mode-map (kbd "M-h") nil)))
+(evil-set-initial-state 'magit-mode 'emacs)
+(evil-set-initial-state 'magit-popup-mode 'emacs)
+(evil-set-initial-state 'magit-refs-mode 'emacs)
+(evil-set-initial-state 'magit-revision-mode 'emacs)
 
 ; python
 (evil-define-key 'visual python-mode-map
@@ -540,7 +549,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
    ;; (rust . t)
    ;; (eukleides . t)
    ;; (fomus . t)
-   ;; (mathomatic . t)
+   (mathomatic . t)
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
@@ -589,9 +598,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (eval-after-load "org"
   '(progn (define-key org-mode-map (kbd "M-h") nil)
           (define-key org-mode-map (kbd "C-a") nil)))
-
-(eval-after-load "magit"
-  '(progn (define-key magit-mode-map (kbd "M-h") nil)))
 
 (defun my-eshell-mode-hook ()
   (rename-uniquely)
@@ -857,3 +863,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                                   (evil-normal-state))))
 
 ;; (require 'bing-dict)
+
+(use-package pyenv-mode :ensure t)
+
+(use-package avy :ensure t)
+
+(use-package ranger :ensure t)
+

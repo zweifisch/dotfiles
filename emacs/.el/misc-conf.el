@@ -228,4 +228,10 @@ _p_rint
          (helm-current-prefix-arg non-recursive))
     (call-interactively 'helm-do-grep)))
 
+(defun helm-collections()
+  (interactive)
+  (helm :sources (helm-source-org-headings-for-files '("~/.org/collect.org"))
+        :candidate-number-limit 99999
+        :buffer "*helm org collections*"))
+
 (provide 'misc-conf)
