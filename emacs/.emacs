@@ -25,14 +25,15 @@
 
 (set-face-attribute 'default nil :height 110)
 
+(setq auto-save-default nil)
+(setq make-backup-files nil)
+(setq create-lockfiles nil)
+
 ;; (setq backup-directory-alist
 ;;       `((".*" . ,temporary-file-directory)))
+;; (setq auto-save-file-name-transforms
+;;       `((".*" ,temporary-file-directory t)))
 
-(setq backup-directory-alist '(("." . "~/.tmp")))
-;; (setq make-backup-files nil)
-
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
@@ -48,9 +49,7 @@
       save-interprogram-paste-before-kill t
       apropos-do-all t
       mouse-yank-at-point t
-      save-place-file (concat user-emacs-directory "places")
-      backup-directory-alist `(("." . ,(concat user-emacs-directory
-                                               "backups"))))
+      save-place-file (concat user-emacs-directory "places"))
 
 (require 'package)
 (add-to-list 'package-archives
@@ -67,7 +66,6 @@
                       evil-matchit
                       evil-nerd-commenter
                       evil-leader
-                      monokai-theme
                       ;; elscreen
                       elm-mode
                       org-present
@@ -795,11 +793,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (use-package color-theme-sanityinc-tomorrow :ensure t)
 ;; (use-package moe-theme :ensure t)
 ;; (use-package material-theme :ensure t)
-;; (use-package monokai-theme :ensure t)
 
 ;; (load-theme 'subatomic t)
 ;; (load-theme 'solarized-dark t)
 ;; (load-theme 'zenburn t)
+(use-package monokai-theme :ensure t)
 (load-theme 'monokai t)
 
 ;; (use-package powerline :ensure t)

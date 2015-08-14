@@ -896,8 +896,8 @@ mba-kbd-backlight() {
 }
 
 use-local-http-proxy() {
-    export http_proxy=127.0.0.1:8118
-    export HTTP_PROXYS=127.0.0.1:8118
+    export http_proxy=http://127.0.0.1:8118
+    export HTTP_PROXYS=http://127.0.0.1:8118
 }
 
 use-dev-http-proxy() {
