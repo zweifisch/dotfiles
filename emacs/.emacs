@@ -52,8 +52,8 @@
       save-place-file (concat user-emacs-directory "places"))
 
 (require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
+;(add-to-list 'package-archives
+;             '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
@@ -868,3 +868,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package ranger :ensure t)
 
+(evil-define-key 'normal helm-grep-mode
+  (kbd "RET") 'helm-grep-mode-jump-other-window)

@@ -1,0 +1,18 @@
+alias status='systemctl status'
+alias start='systemctl start'
+alias stop='systemctl stop'
+alias restart='systemctl restart'
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias ..='cd ..'
+alias ll='ls -alF'
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+unset HISTFILE
+PS1='\u@\h:\w \n\t '
+
+set -o vi

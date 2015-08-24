@@ -966,3 +966,41 @@ ss () {
 emacs-kill () {
     emacsclient -e '(kill-buffer "$1")'
 }
+
+color-of-image (){
+    convert $1 -format %c -depth 8 histogram:info:- | sort -nr
+}
+
+color-show (){
+    convert -size 1x1 xc:black -fill $1  \
+        -draw 'point 0,0' \
+        -scale 50x50 png:- | display -backdrop
+}
+
+color-extract () {
+    colors=$(convert $1 -format %c -depth 8 histogram:info:- | sort -nr | head -${2:-10} |\
+        sed "s/.*\(#.*\) .*/-gravity center label:'\1' xc:'\1'/")
+    eval $(echo 'convert -size 60x60 -font Courier '$colors' +append png:-' | tr "\\n" " ")
+}
+
+color-extract-anno () {
+    colors=$(convert $1 -format %c -depth 8 histogram:info:- | sort -nr | head -${2:-10} |\
+        sed "s/.*\(#.*\) .*/\1/")
+    eval $(echo 'convert -size 80x80 '$(echo $colors | sed "s/.*/xc:'\0'/")' +append /tmp/colors.png' | tr "\\n" " ")
+    eval $(echo 'convert -size 80x20 -gravity center -font Courier '$(echo $colors | sed "s/.*/label:'\0'/")' +append /tmp/labels.png' | tr "\\n" " ")
+    convert -append /tmp/colors.png /tmp/labels.png png:-
+}
+
+setup-quicklisp() {
+    tdir=`mktemp -d`
+    cd $tdir
+    curl -O https://beta.quicklisp.org/quicklisp.lisp
+    curl -O https://beta.quicklisp.org/quicklisp.lisp.asc
+    gpg --verify quicklisp.lisp.asc quicklisp.lisp
+    sbcl --load quicklisp.lisp
+    cd -
+}
+
+ssht() {
+    ssh -t $@ "bash --rcfile /dev/fd/3 3< <(echo \"$(cat ~/.remote-bashrc)\")"
+}
