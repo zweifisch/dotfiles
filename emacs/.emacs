@@ -354,7 +354,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package paredit
   :ensure t
-  :config (add-hook 'emacs-lisp-mode-hook 'paredit-mode))
+  :config (progn (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+                 (add-hook 'scheme-mode-hook 'paredit-mode)))
 
 (use-package clojure-mode
   :ensure t
@@ -390,9 +391,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal emacs-lisp-mode-map
     (kbd "<C-return>") 'eval-print-last-sexp-comment)
 
-(evil-define-key 'normal scheme-mode-map
-  (kbd "RET") 'geiser-eval-last-sexp)
+;; scheme
+(eval-after-load "geiser-repl"
+  '(progn (define-key geiser-repl-mode-map (kbd "C-a") nil)))
 
+(evil-define-key 'normal scheme-mode-map
+  (kbd "RET") 'geiser-eval-last-sexp
+  ;; (kbd "RET") 'scheme-send-last-sexp
+  )
+
+(use-package chicken-scheme :ensure t)
+
+(add-hook 'scheme-mode-hook 'setup-chicken-scheme)
+;; (define-key scheme-mode-map (kbd "C-?") 'chicken-show-help)
 
 ; magit
 (use-package magit

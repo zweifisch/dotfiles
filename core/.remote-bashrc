@@ -13,6 +13,6 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 
 unset HISTFILE
-PS1='\u@\h:\w \n\t '
+PS1='\u@\h($(hostname -I|sed s/\ $//)):\w \n\t '
 
 set -o vi
