@@ -901,7 +901,7 @@ use-local-http-proxy() {
 }
 
 use-dev-http-proxy() {
-    export http_proxy=127.0.0.1:8080
+    export http_proxy=http://127.0.0.1:8080
 }
 
 alias xev-simple="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'"
@@ -1003,4 +1003,9 @@ setup-quicklisp() {
 
 ssht() {
     ssh -t $@ "bash --rcfile /dev/fd/3 3< <(echo \"$(cat ~/.remote-bashrc)\")"
+}
+
+zhihu-daily() {
+    html="$(curl -sL daily.zhihu.com)"
+    paste -d ' ' <(echo $html | pup -c ".box a attr{href}") <(echo $html | pup -c ".box .title text{}")
 }

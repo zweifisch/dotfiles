@@ -234,4 +234,15 @@ _p_rint
         :candidate-number-limit 99999
         :buffer "*helm org collections*"))
 
+;; delete geiser-debug.elc
+(defun geiser-eval-print-last-sexp ()
+  (interactive)
+  (flet ((geiser-debug--wrap-region (str) (format "(pp %s)" str)))
+    (let* ((ret (geiser-eval-region (save-excursion (backward-sexp) (point))
+                                    (point)
+                                    nil
+                                    nil
+                                    t)))
+      (geiser-eval--retort-result-str ret nil))))
+
 (provide 'misc-conf)

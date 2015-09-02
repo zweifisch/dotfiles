@@ -78,16 +78,12 @@
                       know-your-http-well
                       company
                       alchemist
-                      quack
                       evil-god-state
-                      geiser
-                      graphviz-dot-mode
                       ;; diff-hl
                       bison-mode
                       ghc
                       company-ghc
                       guide-key
-                      helm
                       flycheck))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -224,15 +220,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
           projectile-switch-project-action 'projectile-dired
           projectile-remember-window-configs t)))
 
-(use-package helm
+(use-package helm :ensure t
   :config
   (progn
     (use-package helm-config)
-    (add-to-list 'helm-boring-buffer-regexp-list "\\*magit")
-    (add-to-list 'helm-boring-buffer-regexp-list "\\*scratch")
-    (add-to-list 'helm-boring-buffer-regexp-list "\\*eshell")
-    (add-to-list 'helm-boring-buffer-regexp-list "\\*cider")
-    (add-to-list 'helm-boring-buffer-regexp-list "\\*foreman")
+    (add-hook 'helm-before-initialize-hook
+              (lambda () 
+                (add-to-list 'helm-boring-buffer-regexp-list  "\\*magit")
+                (add-to-list 'helm-boring-buffer-regexp-list  "\\*scratch")
+                (add-to-list 'helm-boring-buffer-regexp-list  "\\*eshell")
+                (add-to-list 'helm-boring-buffer-regexp-list  "\\*cider")
+                (add-to-list 'helm-boring-buffer-regexp-list  "\\*foreman")))
     (define-key helm-map (kbd "ESC") 'helm-keyboard-quit)
     (define-key helm-map (kbd "C-j") 'helm-next-line)
     (define-key helm-map (kbd "C-k") 'helm-previous-line)))
@@ -240,8 +238,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package helm-projectile
   :ensure t
   :config (helm-projectile-on))
-
-; ein
 
 ; python
 (setq python-shell-interpreter "ipython"
@@ -391,20 +387,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal emacs-lisp-mode-map
     (kbd "<C-return>") 'eval-print-last-sexp-comment)
 
-;; scheme
-(eval-after-load "geiser-repl"
-  '(progn (define-key geiser-repl-mode-map (kbd "C-a") nil)))
-
-(evil-define-key 'normal scheme-mode-map
-  (kbd "RET") 'geiser-eval-last-sexp
-  ;; (kbd "RET") 'scheme-send-last-sexp
-  )
-
-(use-package chicken-scheme :ensure t)
-
-(add-hook 'scheme-mode-hook 'setup-chicken-scheme)
-;; (define-key scheme-mode-map (kbd "C-?") 'chicken-show-help)
-
 ; magit
 (use-package magit
   :ensure t)
@@ -476,9 +458,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-(when (member "DejaVu Sans Mono for Powerline" (font-family-list))
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono for Powerline-10"))
-
 ;; golang
 (defun my-go-mode-hook ()
   (add-to-list (make-local-variable 'company-backends) 'company-go)
@@ -514,8 +493,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (volatile-highlights-mode t)
 
 (add-hook 'after-init-hook 'global-company-mode)
-
-(require 'quack)
 
 (use-package ob-http :ensure t)
 (use-package ob-cypher :ensure t)
@@ -833,7 +810,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package aggressive-indent :ensure t)
 
 ;; (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'clojure-mode-hook #'aggressive-indent-mode) 
+(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+(add-hook 'scheme-mode-hook #'aggressive-indent-mode)
 
 (defun browse-web-at-point ()
   (interactive)
@@ -850,6 +828,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-set-initial-state 'foreman-mode 'emacs)
 (global-set-key (kbd "C-x C-p") 'foreman)
 
+(use-package graphviz-dot-mode :ensure t)
 (define-key graphviz-dot-mode-map (kbd "C-c C-c") 'graphviz-dot-preview)
 
 (use-package focus :ensure t)
@@ -871,8 +850,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                                     (evil-emacs-state)
                                   (evil-normal-state))))
 
-;; (require 'bing-dict)
-
 (use-package pyenv-mode :ensure t)
 
 (use-package avy :ensure t)
@@ -881,3 +858,30 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (evil-define-key 'normal helm-grep-mode
   (kbd "RET") 'helm-grep-mode-jump-other-window)
+
+(use-package enlive :ensure t)
+
+(require 'bing-dict)
+
+;; font
+
+(when (member "DejaVu Sans Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
+
+;; (set-frame-font "Hack-10")
+;; (set-frame-font "Input Mono Light 10")
+
+;; scheme
+(use-package quack :ensure t
+  :config (setq quack-fontify-style 'emacs))
+
+(use-package geiser :ensure t
+  :config
+  (progn
+    (define-key scheme-mode-map (kbd "C-c C-p") 'geiser-eval-print-last-sexp)
+    (evil-define-key 'normal scheme-mode-map
+      (kbd "RET") 'geiser-eval-last-sexp)))
+
+(eval-after-load "geiser-repl"
+  '(progn (define-key geiser-repl-mode-map (kbd "C-a") nil)))
+
