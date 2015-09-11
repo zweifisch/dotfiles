@@ -1007,5 +1007,12 @@ ssht() {
 
 zhihu-daily() {
     html="$(curl -sL daily.zhihu.com)"
-    paste -d ' ' <(echo $html | pup -c ".box a attr{href}") <(echo $html | pup -c ".box .title text{}")
+    paste -d ' ' <(echo $html | pup -c ".box a attr{href}" | awk '{print "http://daily.zhihu.com"$1}') <(echo $html | pup -c ".box .title text{}")
+}
+
+function git-retag {
+    git tag -d $1
+    git tag $1
+    git push origin :refs/tags/$1
+    git push --tags
 }

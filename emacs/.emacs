@@ -64,7 +64,6 @@
 (defvar my-packages '(evil
                       evil-indent-textobject
                       evil-matchit
-                      evil-nerd-commenter
                       evil-leader
                       ;; elscreen
                       elm-mode
@@ -102,7 +101,6 @@
 
 (setq my:el-get-packages
       '(python
-        haskell-mode
         slime
         smart-tab
         mmm-mode
@@ -194,15 +192,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-a H") 'winner-undo)
 (global-set-key (kbd "C-a L") 'winner-redo)
 
-; evil-nerd-commenter
-(setq evilnc-hotkey-comment-operator "gc")
-(evilnc-default-hotkeys)
-
 ; recentf
 (recentf-mode 1)
 (setq recentf-max-saved-items 512)
 
 (require 'use-package)
+
+
+; evil-nerd-commenter
+(eval-after-load 'evil-nerd-commenter-operator
+  '(progn
+     (define-key evil-normal-state-map "gc" 'evilnc-comment-operator)
+     (define-key evil-visual-state-map "gc" 'evilnc-comment-operator)))
+
+(use-package evil-nerd-commenter :ensure t)
 
 (use-package evil-surround :ensure t
   :config (global-evil-surround-mode 1))
@@ -389,7 +392,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; magit
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config
+  (progn
+    (setq magit-push-always-verify nil)
+    (setq magit-revert-buffers t)))
 (eval-after-load "magit"
   '(progn (define-key magit-mode-map (kbd "M-h") nil)))
 (evil-set-initial-state 'magit-mode 'emacs)
@@ -781,7 +788,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (use-package color-theme-sanityinc-tomorrow :ensure t)
 ;; (use-package moe-theme :ensure t)
 ;; (use-package material-theme :ensure t)
-
+;; (use-package leuven-theme :ensure t)
+;; (use-package twilight-bright-theme :ensure t)
 ;; (load-theme 'subatomic t)
 ;; (load-theme 'solarized-dark t)
 ;; (load-theme 'zenburn t)
@@ -789,7 +797,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (load-theme 'monokai t)
 
 ;; (use-package powerline :ensure t)
-;; (setq powerline-arrow-shape 'curve)
+;; (setq powerline-default-separator 'wave)
 ;; (powerline-default-theme)
 
 (use-package smart-mode-line :ensure t)
@@ -811,7 +819,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
-(add-hook 'scheme-mode-hook #'aggressive-indent-mode)
+;; (add-hook 'scheme-mode-hook #'aggressive-indent-mode)
 
 (defun browse-web-at-point ()
   (interactive)
@@ -865,11 +873,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; font
 
-(when (member "DejaVu Sans Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
+;; (when (member "DejaVu Sans Mono" (font-family-list))
+;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
 
 ;; (set-frame-font "Hack-10")
-;; (set-frame-font "Input Mono Light 10")
+(set-frame-font "Input Mono Light 10")
+;; (set-frame-font "Source Code Pro 10")
 
 ;; scheme
 (use-package quack :ensure t
@@ -885,3 +894,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (eval-after-load "geiser-repl"
   '(progn (define-key geiser-repl-mode-map (kbd "C-a") nil)))
 
+(setq geiser-active-implementations '(chicken))
+
+(use-package litable :ensure t)
+
+;; (use-package mediawiki :ensure t)
+
+(use-package nginx-mode :ensure t)
