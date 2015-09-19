@@ -245,4 +245,12 @@ _p_rint
                                     t)))
       (geiser-eval--retort-result-str ret nil))))
 
+(defun use-local-http-proxy ()
+  (interactive)
+  (setq url-proxy-services '(("http" . "localhost:8118"))))
+
+(defun no-local-http-proxy ()
+  (interactive)
+  (setq url-proxy-services '()))
+
 (provide 'misc-conf)

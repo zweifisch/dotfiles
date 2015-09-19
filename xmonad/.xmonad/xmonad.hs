@@ -23,7 +23,7 @@ myTerminal = "urxvt"
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = False
 
-myBorderWidth = 4
+myBorderWidth = 0
 
 myModMask = mod4Mask
 
@@ -82,7 +82,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0, xK_Print), spawn "scrot -e 'mv $f ~/screenshots/'")
     , ((modm, xK_s), spawn "scrot -e 'mv $f ~/screenshots/'")
 
-    , ((shiftMask, xK_Print), spawn "import ~/shot.png")
+    , ((modm .|. shiftMask, xK_s), spawn "import ~/screenshots/$(date -d now +%Y-%m-%d-%H-%M-%S).png")
 
     -- Move focus to the next window
     , ((modm, xK_Tab ), windows W.focusDown)

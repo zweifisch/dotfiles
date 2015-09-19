@@ -1,3 +1,9 @@
 #!/bin/sh
 
-echo "$(cat /sys/class/power_supply/BAT0/energy_now) $(cat /sys/class/power_supply/BAT0/energy_full)" | awk '{printf "%.2f", $1 / $2 * 100}'
+if [ -f "/sys/class/power_supply/BAT0/energy_now" ]; then
+    echo "$(cat /sys/class/power_supply/BAT0/energy_now) $(cat /sys/class/power_supply/BAT0/energy_full)" | awk '{printf "%.2f", $1 / $2 * 100}'
+fi
+
+if [ -f "/sys/class/power_supply/BAT1/charge_now" ]; then
+    echo "$(cat /sys/class/power_supply/BAT1/charge_now) $(cat /sys/class/power_supply/BAT1/charge_full)" | awk '{printf "%.2f", $1 / $2 * 100}'
+fi

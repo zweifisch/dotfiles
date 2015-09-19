@@ -720,7 +720,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       org-html-head-include-scripts nil
       org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"markdown.css\" />")
 
-;; (use-package paradox :ensure t)
+(use-package paradox :ensure t)
 
 (use-package htmlize :ensure t)
 
@@ -749,7 +749,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 
-(use-package haxe-mode :ensure t)
+;; (use-package haxe-mode :ensure t)
 
 (use-package tuareg :ensure t)
 
@@ -882,7 +882,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
 
 ;; (set-frame-font "Hack-10")
-(set-frame-font "Input Mono Light 10")
+;; (set-frame-font "Input Mono Light 10")
 ;; (set-frame-font "Source Code Pro 10")
 
 ;; scheme
@@ -907,10 +907,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package nginx-mode :ensure t)
 
+
 (use-package org-plus-contrib :ensure t)
 
 (add-hook 'org-mode-hook (lambda ()
                            (org-indent-mode)))
 
 (require 'org-mime)
+
+(use-package eww-lnum :ensure t)
+(eval-after-load "eww"
+  '(progn (define-key eww-mode-map "f" 'eww-lnum-follow)
+          (define-key eww-mode-map "F" 'eww-lnum-universal)))
 
