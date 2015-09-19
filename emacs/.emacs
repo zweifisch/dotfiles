@@ -56,6 +56,8 @@
 ;             '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("org" . "http://orgmode.org/elpa/") t)
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -168,6 +170,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "v" 'projectile-persp-switch-project
   "V" 'persp-switch
   ;; "v" 'helm-projectile-switch-project
+  "m" 'mu4e
   "d" 'deft
   "D" 'vc-diff)
 
@@ -642,27 +645,21 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (global-set-key (kbd "M-x") 'helm-M-x)
 
-(defun my-minibuffer-hook ()
-  (local-set-key (kbd "M-p") 'clipboard-yank))
-
-;; (add-hook 'minibuffer-setup-hook 'my-minibuffer-hook)
-
 (use-package dictionary :ensure t)
 
 (require 'mu4e)
 
 (setq mu4e-maildir "~/mail")
-(setq mu4e-drafts-folder "/primary/[Gmail].Drafts")
-(setq mu4e-sent-folder   "/primary/[Gmail].Sent Mail")
-(setq mu4e-trash-folder  "/primary/[Gmail].Trash")
+(setq mu4e-drafts-folder "/Drafts")
+(setq mu4e-sent-folder   "/Sent Messages")
+(setq mu4e-trash-folder  "/Deleted Messages")
 
 (setq mu4e-sent-messages-behavior 'delete)
-
-(setq mu4e-get-mail-command "tsocks offlineimap")
-
+(setq mu4e-get-mail-command "offlineimap")
+(setq mu4e-html2text-command "html2text")
 (setq message-kill-buffer-on-exit t)
-
 (setq mu4e-headers-skip-duplicates t)
+
 
 (use-package list-processes+ :ensure t)
 
@@ -691,15 +688,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                  (assq-delete-all :tangle org-babel-default-header-args)))
 
 (setq org-publish-project-alist
-      '(("blog"
+      '(("writing"
          :base-directory "~/notes/write"
+         :html-extension "html"
+         :base-extension "org"
+         :publishing-directory "~/.writing"
+         :publishing-function (org-html-publish-to-html)
+         :html-preamble nil
+         :html-postamble nil
+         :port 9001)
+        ("blog"
+         :base-directory "~/pg/blog"
          :html-extension "html"
          :base-extension "org"
          :publishing-directory "~/.blog"
          :publishing-function (org-html-publish-to-html)
          :html-preamble nil
          :html-postamble nil
-         :port 9001)
+         :port 9002)
         ("wiki"
          :base-directory "~/notes/wiki"
          :html-extension "html"
@@ -708,8 +714,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
          :publishing-function (org-html-publish-to-html)
          :html-preamble nil
          :html-postamble nil
-         :port 9000)
-        ))
+         :port 9000)))
 
 (setq org-html-head-include-default-style nil
       org-html-head-include-scripts nil
@@ -873,8 +878,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; font
 
-;; (when (member "DejaVu Sans Mono" (font-family-list))
-;;   (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
+(when (member "DejaVu Sans Mono" (font-family-list))
+  (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
 
 ;; (set-frame-font "Hack-10")
 (set-frame-font "Input Mono Light 10")
@@ -901,3 +906,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (use-package mediawiki :ensure t)
 
 (use-package nginx-mode :ensure t)
+
+(use-package org-plus-contrib :ensure t)
+
+(add-hook 'org-mode-hook (lambda ()
+                           (org-indent-mode)))
+
+(require 'org-mime)
+

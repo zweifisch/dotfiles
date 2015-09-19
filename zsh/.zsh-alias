@@ -172,7 +172,7 @@ alias chrome-dev='z chromium-browser --disk-cache-dir="/dev/shm/chrome/" --allow
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias mpv='VDPAU_DRIVER=va_gl mpv'
 alias play='mplayer'
-alias play-shuffle='mplayer -shuffle -playlist <(find $(pwd) -iname \*.mp3)'
+alias play-shuffle='mplayer -shuffle -playlist <(find "$(pwd)" -name "*.mp3")'
 
 alias datafart='curl --data-binary @- datafart.com'
 
@@ -1016,3 +1016,5 @@ function git-retag {
     git push origin :refs/tags/$1
     git push --tags
 }
+
+alias android-platforms='ls $ANDROID_HOME/platforms'
