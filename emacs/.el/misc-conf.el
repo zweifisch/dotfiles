@@ -253,4 +253,11 @@ _p_rint
   (interactive)
   (setq url-proxy-services '()))
 
+(defun browse-web-at-point ()
+  (interactive)
+  (let ((url (thing-at-point-url-at-point)))
+    (if url (browse-web url))))
+
+(global-set-key (kbd "C-c C-b") 'browse-web-at-point)
+
 (provide 'misc-conf)

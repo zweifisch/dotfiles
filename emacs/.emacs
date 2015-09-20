@@ -504,59 +504,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-(use-package ob-http :ensure t)
-(use-package ob-cypher :ensure t)
-(use-package ob-kotlin :ensure t)
-(use-package inf-ruby :ensure t)
-(use-package ob-sml :ensure t)
-(use-package ob-ipython :ensure t)
-(use-package ob-lfe :ensure t)
-
-(add-to-list 'load-path "~/.el")
-
-;; babel
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((ruby . t)
-   (scheme . t)
-   (python . t)
-   (js . t)
-   (sh . t)
-   (shell . t)
-   (sql . t)
-   (sqlite . t)
-   (dot . t)
-   (haskell . t)
-   (mongo . t)
-   (coffee . t)
-   ; (hy . t)
-   (redis . t)
-   (http . t)
-   (cypher . t)
-   (racket . t)
-   ; (cfdg . t)
-   (kotlin . t)
-   (ocaml . t)
-   (ipython . t)
-   ;; (haxe . t)
-   ;; (go . t)
-   (sml . t)
-   (lfe . t)
-   ;; (rust . t)
-   ;; (eukleides . t)
-   ;; (fomus . t)
-   (mathomatic . t)
-   (clojure . t)))
-
-(add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
-(add-to-list 'org-src-lang-modes (quote ("shell". sh)))
-
-(setq org-edit-src-content-indentation 0
-      org-src-tab-acts-natively t
-      org-src-fontify-natively t
-      org-confirm-babel-evaluate nil)
-
-(setq org-babel-clojure-backend 'cider)
 
 (use-package elpy
   :ensure t
@@ -647,19 +594,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package dictionary :ensure t)
 
-(require 'mu4e)
-
-(setq mu4e-maildir "~/mail")
-(setq mu4e-drafts-folder "/Drafts")
-(setq mu4e-sent-folder   "/Sent Messages")
-(setq mu4e-trash-folder  "/Deleted Messages")
-
-(setq mu4e-sent-messages-behavior 'delete)
-(setq mu4e-get-mail-command "offlineimap")
-(setq mu4e-html2text-command "html2text")
-(setq message-kill-buffer-on-exit t)
-(setq mu4e-headers-skip-duplicates t)
-
 
 (use-package list-processes+ :ensure t)
 
@@ -683,47 +617,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package jade-mode :ensure t)
 (use-package stylus-mode :ensure t)
 
-(setq org-babel-default-header-args
-           (cons '(:tangle . "yes")
-                 (assq-delete-all :tangle org-babel-default-header-args)))
-
-(setq org-publish-project-alist
-      '(("writing"
-         :base-directory "~/notes/write"
-         :html-extension "html"
-         :base-extension "org"
-         :publishing-directory "~/.writing"
-         :publishing-function (org-html-publish-to-html)
-         :html-preamble nil
-         :html-postamble nil
-         :port 9001)
-        ("blog"
-         :base-directory "~/pg/blog"
-         :html-extension "html"
-         :base-extension "org"
-         :publishing-directory "~/.blog"
-         :publishing-function (org-html-publish-to-html)
-         :html-preamble nil
-         :html-postamble nil
-         :port 9002)
-        ("wiki"
-         :base-directory "~/notes/wiki"
-         :html-extension "html"
-         :base-extension "org"
-         :publishing-directory "~/.wiki"
-         :publishing-function (org-html-publish-to-html)
-         :html-preamble nil
-         :html-postamble nil
-         :port 9000)))
-
-(setq org-html-head-include-default-style nil
-      org-html-head-include-scripts nil
-      org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"markdown.css\" />")
-
 (use-package paradox :ensure t)
 
-(use-package htmlize :ensure t)
 
+(add-to-list 'load-path "~/.el")
+(require 'org-conf)
+(require 'mu4e-conf)
+(require 'scheme-conf)
+(require 'theme-conf)
 (require 'misc-conf)
 
 (define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
@@ -787,35 +688,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-c C-p C-&") 'projectile-run-async-shell-command-in-root)
 (global-set-key (kbd "C-c C-p") nil)
 
-;; themes
-(use-package helm-themes :ensure t)
-;; (use-package zenburn-theme :ensure t)
-;; (use-package color-theme-sanityinc-tomorrow :ensure t)
-;; (use-package moe-theme :ensure t)
-;; (use-package material-theme :ensure t)
-;; (use-package leuven-theme :ensure t)
-;; (use-package twilight-bright-theme :ensure t)
-;; (load-theme 'subatomic t)
-;; (load-theme 'solarized-dark t)
-;; (load-theme 'zenburn t)
-(use-package monokai-theme :ensure t)
-(load-theme 'monokai t)
-
-;; (use-package powerline :ensure t)
-;; (setq powerline-default-separator 'wave)
-;; (powerline-default-theme)
-
-(use-package smart-mode-line :ensure t)
-(sml/setup)
-(sml/apply-theme 'respectful)
-(add-to-list 'rm-blacklist " Undo-Tree")
-(add-to-list 'rm-blacklist " Paredit")
-(add-to-list 'rm-blacklist " VHl")
-(add-to-list 'rm-blacklist " Guide")
-(add-to-list 'rm-blacklist " MRev")
-
-(setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
-
 (use-package xkcd :ensure t)
 
 (use-package sml-mode :ensure t)
@@ -825,13 +697,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
 ;; (add-hook 'scheme-mode-hook #'aggressive-indent-mode)
-
-(defun browse-web-at-point ()
-  (interactive)
-  (let ((url (thing-at-point-url-at-point)))
-    (if url (browse-web url))))
-
-(global-set-key (kbd "C-c C-b") 'browse-web-at-point)
 
 (global-set-key (kbd "C-x C-f") 'dictionary-lookup-definition)
 
@@ -847,9 +712,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package focus :ensure t)
 
 (use-package rust-mode :ensure t)
-
-(use-package org-bullets :ensure t)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))) 
 
 (use-package emmet-mode :ensure t)
 (add-hook 'sgml-mode-hook 'emmet-mode)
@@ -876,31 +738,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'bing-dict)
 
-;; font
-
-(when (member "DejaVu Sans Mono" (font-family-list))
-  (set-face-attribute 'default nil :font "DejaVu Sans Mono-10"))
-
-;; (set-frame-font "Hack-10")
-;; (set-frame-font "Input Mono Light 10")
-;; (set-frame-font "Source Code Pro 10")
-
-;; scheme
-(use-package quack :ensure t
-  :config (setq quack-fontify-style 'emacs))
-
-(use-package geiser :ensure t
-  :config
-  (progn
-    (define-key scheme-mode-map (kbd "C-c C-p") 'geiser-eval-print-last-sexp)
-    (evil-define-key 'normal scheme-mode-map
-      (kbd "RET") 'geiser-eval-last-sexp)))
-
-(eval-after-load "geiser-repl"
-  '(progn (define-key geiser-repl-mode-map (kbd "C-a") nil)))
-
-(setq geiser-active-implementations '(chicken))
-
 (use-package litable :ensure t)
 
 ;; (use-package mediawiki :ensure t)
@@ -908,15 +745,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package nginx-mode :ensure t)
 
 
-(use-package org-plus-contrib :ensure t)
-
-(add-hook 'org-mode-hook (lambda ()
-                           (org-indent-mode)))
-
-(require 'org-mime)
-
 (use-package eww-lnum :ensure t)
 (eval-after-load "eww"
   '(progn (define-key eww-mode-map "f" 'eww-lnum-follow)
           (define-key eww-mode-map "F" 'eww-lnum-universal)))
 
+(use-package ruby-mode :ensure t)
+(add-to-list 'auto-mode-alist '("\\.cr\\'" . ruby-mode))
