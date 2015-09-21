@@ -51,6 +51,7 @@
       mouse-yank-at-point t
       save-place-file (concat user-emacs-directory "places"))
 
+
 (require 'package)
 ;(add-to-list 'package-archives
 ;             '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -114,6 +115,7 @@
 ;; autopair google-maps
 ;; sr-speedbar typopunct
 
+
 ; evil
 (evil-mode)
 
@@ -200,7 +202,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq recentf-max-saved-items 512)
 
 (require 'use-package)
-
 
 ; evil-nerd-commenter
 (eval-after-load 'evil-nerd-commenter-operator
@@ -626,6 +627,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'scheme-conf)
 (require 'theme-conf)
 (require 'misc-conf)
+(require 'hydra-conf)
 
 (define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
 (define-key doc-view-mode-map (kbd "k") 'doc-view-previous-line-or-previous-page)
@@ -744,7 +746,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package nginx-mode :ensure t)
 
-
 (use-package eww-lnum :ensure t)
 (eval-after-load "eww"
   '(progn (define-key eww-mode-map "f" 'eww-lnum-follow)
@@ -752,3 +753,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package ruby-mode :ensure t)
 (add-to-list 'auto-mode-alist '("\\.cr\\'" . ruby-mode))
+
+(use-package page-break-lines :ensure t)
+(global-page-break-lines-mode)
+
+(use-package helm-pages :ensure t)

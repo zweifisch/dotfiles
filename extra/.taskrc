@@ -10,7 +10,7 @@
 
 # Use the command 'task show' to see all defaults and overrides
 
-data.location=~/notes/task/
+data.location=~/.task/
 
 # include /usr/share/task/solarized-dark-256.theme
 

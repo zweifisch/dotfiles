@@ -12,6 +12,7 @@
 (setq message-kill-buffer-on-exit t)
 (setq mu4e-headers-skip-duplicates t)
 
+(setq message-send-mail-function 'smtpmail-send-it)
 
 (defun gnus-dired-mail-buffers ()
   "Return a list of active message buffers."

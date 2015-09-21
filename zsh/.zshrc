@@ -54,10 +54,11 @@ export ANDROID_HOME=$HOME/.android-sdk-linux
 pathes=(
 $HOME/.bin
 $HOME/.cabal/bin
-$HOME/.android-sdk-linux/tools
-$HOME/.android-sdk-linux/platform-tools
+$ANDROID_HOME/tools
+$ANDROID_HOME/platform-tools
 $HOME/.kotlinc/bin
 $HOME/.gradle/bin
+$HOME/.cask/bin
 )
 
 for p in $pathes; do

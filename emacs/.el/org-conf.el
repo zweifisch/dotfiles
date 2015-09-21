@@ -12,6 +12,7 @@
 (use-package org-bullets :ensure t)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))) 
 
+(setq org-use-speed-commands t)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -99,5 +100,7 @@
                            (org-indent-mode)))
 
 (require 'org-mime)
+
+(require 'org-velocity)
 
 (provide 'org-conf)
