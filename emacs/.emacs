@@ -169,8 +169,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "s" 'magit-status
   "a" 'avy-goto-word-or-subword-1
   ;; "v" 'wg-switch-to-workgroup
-  "v" 'projectile-persp-switch-project
-  "V" 'persp-switch
+  "V" 'projectile-persp-switch-project
+  "v" 'persp-switch
   ;; "v" 'helm-projectile-switch-project
   "m" 'mu4e
   "d" 'deft
@@ -668,11 +668,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; (use-package zone
 ;;   :config (zone-when-idle 120))
-
-(add-hook 'org-mode-hook '(lambda () (setq mode-name " ꙮ ")))
-(add-hook 'clojure-mode-hook '(lambda () (setq mode-name " λ ")))
-(add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name " ξ ")))
-(add-hook 'eshell-mode-hook (lambda () (setq mode-name " $ ")))
 
 (use-package popwin :ensure t)
 (popwin-mode 1)

@@ -112,7 +112,7 @@
 ;; delete geiser-debug.elc
 (defun geiser-eval-print-last-sexp ()
   (interactive)
-  (flet ((geiser-debug--wrap-region (str) (format "(pp %s)" str)))
+  (cl-flet ((geiser-debug--wrap-region (str) (format "(pp %s)" str)))
     (let* ((ret (geiser-eval-region (save-excursion (backward-sexp) (point))
                                     (point)
                                     nil

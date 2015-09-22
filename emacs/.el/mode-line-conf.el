@@ -55,10 +55,7 @@
                                      
                                      (powerline-vc face1 'r)
                                      (powerline-raw " " face1)
-                                     (funcall separator-right face1 face2)
-                                     
-                                     (when (bound-and-true-p nyan-mode)
-                                       (powerline-raw (list (nyan-create)) face2 'l))))
+                                     (funcall separator-right face1 face2)))
                           (rhs (list (powerline-raw global-mode-string face2 'r)
                                      (funcall separator-right face2 face1)
                                      (unless window-system
@@ -77,38 +74,30 @@
 
 (setq display-time-mail-string "")
 
-(defvar mode-line-cleaner-alist
-  `((auto-complete-mode . " α")
-    (yas/minor-mode . " υ")
-    (paredit-mode . " π")
-    (eldoc-mode . "")
-    (abbrev-mode . "")
-    ;; Major modes
-    (lisp-interaction-mode . "λ")
-    (hi-lock-mode . "")
-    (python-mode . "Py")
-    (emacs-lisp-mode . "EL")
-    (nxhtml-mode . "nx")))
+(setq mode-line-cleaner-alist
+      '((paredit-mode . "")
+        (page-break-lines-mode . "")
+        (guide-key-mode . "")
+        (volatile-highlights-mode . "")
+        (undo-tree-mode . "")
+        (org-indent-mode . "")))
 
-;; (add-to-list 'rm-blacklist " Undo-Tree")
-;; (add-to-list 'rm-blacklist " Paredit")
-;; (add-to-list 'rm-blacklist " VHl")
-;; (add-to-list 'rm-blacklist " Guide")
-;; (add-to-list 'rm-blacklist " MRev")
+(add-hook 'org-mode-hook '(lambda () (setq mode-name "ꙮ")))
+(add-hook 'clojure-mode-hook '(lambda () (setq mode-name "λ")))
+(add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "ξ")))
+(add-hook 'eshell-mode-hook (lambda () (setq mode-name "$")))
 
 (defun clean-mode-line ()
   (interactive)
   (loop for cleaner in mode-line-cleaner-alist
         do (let* ((mode (car cleaner))
-                 (mode-str (cdr cleaner))
-                 (old-mode-str (cdr (assq mode minor-mode-alist))))
+                  (mode-str (cdr cleaner))
+                  (old-mode-str (cdr (assq mode minor-mode-alist))))
              (when old-mode-str
-                 (setcar old-mode-str mode-str))
-               ;; major mode
-             (when (eq mode major-mode)
-               (setq mode-name mode-str)))))
+               (setcar old-mode-str mode-str)))))
 
 (add-hook 'after-change-major-mode-hook 'clean-mode-line)
 
+(setq persp-show-modestring nil)
 
 (provide 'mode-line-conf)

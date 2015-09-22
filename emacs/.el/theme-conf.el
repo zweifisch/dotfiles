@@ -10,12 +10,6 @@
 (load-theme 'material t)
 
 ;; (use-package smart-mode-line :ensure t)
-;; (add-to-list 'rm-blacklist " Undo-Tree")
-;; (add-to-list 'rm-blacklist " Paredit")
-;; (add-to-list 'rm-blacklist " VHl")
-;; (add-to-list 'rm-blacklist " Guide")
-;; (add-to-list 'rm-blacklist " MRev")
-;; (sml/setup)
 ;; (sml/apply-theme 'respectful)
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
