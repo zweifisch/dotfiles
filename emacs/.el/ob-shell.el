@@ -8,6 +8,10 @@
   :group 'ob-shell
   :type 'string)
 
+(defconst org-babel-header-args:shell
+  '((ssh . :any))
+  "shell header arguments")
+
 (defun ob-shell/parse-result (output)
   (mapcar (lambda (x) (s-split "[\t,]" x)) (s-lines (s-chomp output))))
 

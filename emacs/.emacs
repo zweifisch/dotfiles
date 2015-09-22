@@ -758,3 +758,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-page-break-lines-mode)
 
 (use-package helm-pages :ensure t)
+
+(require 'local-conf nil 'noerror)

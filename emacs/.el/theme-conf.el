@@ -3,24 +3,20 @@
 ;; (use-package zenburn-theme :ensure t)
 ;; (use-package color-theme-sanityinc-tomorrow :ensure t)
 ;; (use-package moe-theme :ensure t)
-;; (use-package material-theme :ensure t)
+(use-package material-theme :ensure t)
 ;; (use-package leuven-theme :ensure t)
 ;; (use-package twilight-bright-theme :ensure t)
 ;; (use-package monokai-theme :ensure t)
-(load-theme 'monokai t)
+(load-theme 'material t)
 
-;; (use-package powerline :ensure t)
-;; (setq powerline-default-separator 'wave)
-;; (powerline-default-theme)
-
-(use-package smart-mode-line :ensure t)
-(add-to-list 'rm-blacklist " Undo-Tree")
-(add-to-list 'rm-blacklist " Paredit")
-(add-to-list 'rm-blacklist " VHl")
-(add-to-list 'rm-blacklist " Guide")
-(add-to-list 'rm-blacklist " MRev")
-(sml/setup)
-(sml/apply-theme 'respectful)
+;; (use-package smart-mode-line :ensure t)
+;; (add-to-list 'rm-blacklist " Undo-Tree")
+;; (add-to-list 'rm-blacklist " Paredit")
+;; (add-to-list 'rm-blacklist " VHl")
+;; (add-to-list 'rm-blacklist " Guide")
+;; (add-to-list 'rm-blacklist " MRev")
+;; (sml/setup)
+;; (sml/apply-theme 'respectful)
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
 
@@ -32,5 +28,13 @@
 ;; (set-frame-font "Input Mono Light 10")
 ;; (set-frame-font "Source Code Pro 10")
 
+
+(use-package powerline :ensure t)
+(setq powerline-default-separator 'wave)
+;; (powerline-default-theme)
+
+(require 'mode-line-conf)
+;; (setq powerline-height 20)
+(powerline-spacemacs-imitation-theme)
 
 (provide 'theme-conf)

@@ -99,6 +99,47 @@
 (add-hook 'org-mode-hook (lambda ()
                            (org-indent-mode)))
 
+
+(defun org-project-running ()
+  (delq nil
+        (mapcar (lambda (x)
+                  (if (plist-get (cdr x) :started) (car x)))
+                org-publish-project-alist)))
+
+(defun org-project-idle ()
+  (delq nil
+        (mapcar (lambda (x)
+                  (if (plist-get (cdr x) :started) nil (car x)))
+                org-publish-project-alist)))
+
+(defun serve-org-project (project)
+  (interactive
+   (list
+    (completing-read "Project: " (org-project-idle))))
+  (let ((settings (cdr (assoc project org-publish-project-alist))))
+    (elnode-make-webserver
+     (plist-get settings :publishing-directory)
+     (plist-get settings :port))
+    (plist-put settings :started t)))
+
+(defun stop-org-project (project)
+  (interactive
+   (list
+    (completing-read
+     "Project: " (org-project-running))))
+  (let ((settings (cdr (assoc project org-publish-project-alist))))
+    (elnode-stop (plist-get settings :port))
+    (plist-put settings :started nil)))
+
+(defun browse-org-project (project)
+  (interactive
+   (list
+    (completing-read
+     "Project: " (org-project-running))))
+  (let ((settings (cdr (assoc project org-publish-project-alist))))
+    (browse-url (format "http://localhost:%d" (plist-get settings :port)))))
+
+
 (require 'org-mime)
 
 (require 'org-velocity)

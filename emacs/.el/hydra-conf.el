@@ -69,3 +69,5 @@ _p_rint
   ("l" org-capture-goto-last-stored))
 
 (define-key org-mode-map (kbd "C-o") 'hydra-global-org/body)
+
+(provide 'hydra-conf)
