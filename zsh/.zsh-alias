@@ -1022,3 +1022,7 @@ function git-retag {
 }
 
 alias android-platforms='ls $ANDROID_HOME/platforms'
+
+android-update(){
+    android update sdk -a -u -t $1 --proxy-port 8118 --proxy-host localhost --no-https
+}
