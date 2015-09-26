@@ -135,4 +135,12 @@
 
 (global-set-key (kbd "C-c C-b") 'browse-web-at-point)
 
+(defun gradle-gdx-android ()
+  (interactive)
+  (with-current-buffer (get-buffer-create "*gradle output*")
+    (seq default-directory (projectile-project-root))
+    (pop-to-buffer (current-buffer))
+    (erase-buffer)
+    (start-process "gradle" (current-buffer) "sh" "-c" "./gradlew android:installDebug" "android:run")))
+
 (provide 'misc-conf)
