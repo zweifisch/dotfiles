@@ -238,9 +238,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                 (add-to-list 'helm-boring-buffer-regexp-list  "\\*eshell")
                 (add-to-list 'helm-boring-buffer-regexp-list  "\\*cider")
                 (add-to-list 'helm-boring-buffer-regexp-list  "\\*foreman")))
-    (define-key helm-map (kbd "ESC") 'helm-keyboard-quit)
-    (define-key helm-map (kbd "C-j") 'helm-next-line)
-    (define-key helm-map (kbd "C-k") 'helm-previous-line)))
+    (define-key helm-map (kbd "ESC") 'helm-keyboard-quit)))
 
 (use-package helm-projectile
   :ensure t
@@ -753,5 +751,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-page-break-lines-mode)
 
 (use-package helm-pages :ensure t)
+
+(use-package wgrep-helm :ensure t)
+
+(use-package nim-mode :ensure t)
 
 (require 'local-conf nil 'noerror)

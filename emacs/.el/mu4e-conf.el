@@ -13,6 +13,7 @@
 (setq mu4e-headers-skip-duplicates t)
 
 (setq message-send-mail-function 'smtpmail-send-it)
+(setq mu4e-update-interval 300)
 
 (defun gnus-dired-mail-buffers ()
   "Return a list of active message buffers."

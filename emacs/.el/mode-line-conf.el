@@ -70,6 +70,8 @@
                              (powerline-fill face2 (powerline-width rhs))
                              (powerline-render rhs)))))))
 
+(setq display-time-day-and-date t)
+
 (setq display-time-24hr-format t)
 
 (setq display-time-mail-string "")

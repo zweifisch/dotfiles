@@ -25,3 +25,5 @@ unset HISTFILE
 PS1='\u@\h($(hostname -I|sed s/\ $//)):\w \n\t '
 
 set -o vi
+
+bind -m vi-insert '\\C-l':clear-screen

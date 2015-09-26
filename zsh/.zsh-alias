@@ -971,6 +971,10 @@ ss () {
     avconv -ss 00:$2:00 -i $1 -r 1 -t 1 $1.jpg
 }
 
+emacs-list () {
+    emacsclient -e '(buffer-list)'
+}
+
 emacs-kill () {
     emacsclient -e '(kill-buffer "$1")'
 }
