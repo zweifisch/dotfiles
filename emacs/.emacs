@@ -660,9 +660,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package circe :ensure t)
 
-(use-package swiper :ensure t)
-(setq swiper-completion-method 'helm)
-(global-set-key "\C-s" 'swiper)
+;; (use-package swiper :ensure t)
+;; (setq swiper-completion-method 'helm)
+;; (global-set-key "\C-s" 'swiper)
+
+(use-package helm-swoop :ensure t)
+(global-set-key "\C-s" 'helm-swoop)
 
 ;; (use-package zone
 ;;   :config (zone-when-idle 120))
@@ -757,3 +760,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package nim-mode :ensure t)
 
 (require 'local-conf nil 'noerror)
+
+(require 'evil-indent-textobject)

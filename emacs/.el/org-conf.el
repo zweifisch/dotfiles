@@ -41,6 +41,7 @@
    ;; (go . t)
    (sml . t)
    (lfe . t)
+   (elixir . t)
    ;; (rust . t)
    ;; (eukleides . t)
    ;; (fomus . t)
@@ -82,7 +83,7 @@
          :html-postamble nil
          :port 9002)
         ("wiki"
-         :base-directory "~/notes/wiki"
+         :base-directory "~/notes/org"
          :html-extension "html"
          :base-extension "org"
          :publishing-directory "~/.wiki"
@@ -95,6 +96,7 @@
       org-html-head-include-scripts nil
       org-html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"markdown.css\" />")
 
+(setq org-export-babel-evaluate nil)
 
 (add-hook 'org-mode-hook (lambda ()
                            (org-indent-mode)))

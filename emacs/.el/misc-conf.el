@@ -138,7 +138,7 @@
 (defun gradle-gdx-android ()
   (interactive)
   (with-current-buffer (get-buffer-create "*gradle output*")
-    (seq default-directory (projectile-project-root))
+    (setq default-directory (projectile-project-root))
     (pop-to-buffer (current-buffer))
     (erase-buffer)
     (start-process "gradle" (current-buffer) "sh" "-c" "./gradlew android:installDebug" "android:run")))

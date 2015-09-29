@@ -12,7 +12,7 @@ alias rm-empty-dir='find . -type d -empty -delete'
 
 alias timestamp='date +%s'
 
-alias iex='rlwrap -a iex'
+# alias iex='rlwrap -a iex'
 alias pry='rlwrap -a pry'
 alias erl='rlwrap -a erl'
 
