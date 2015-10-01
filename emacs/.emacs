@@ -762,3 +762,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'local-conf nil 'noerror)
 
 (require 'evil-indent-textobject)
+
+(evil-set-initial-state 'epa-key-list-mode 'emacs)
