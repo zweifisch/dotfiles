@@ -7,6 +7,7 @@
 (use-package ob-sml :ensure t)
 (use-package ob-ipython :ensure t)
 (use-package ob-lfe :ensure t)
+(use-package ob-elixir :ensure t)
 (use-package htmlize :ensure t)
 
 (use-package org-bullets :ensure t)
@@ -27,7 +28,7 @@
    (dot . t)
    (haskell . t)
    (mongo . t)
-   (coffee . t)
+   ;; (coffee . t)
    ; (hy . t)
    (redis . t)
    (http . t)
@@ -41,6 +42,7 @@
    ;; (go . t)
    (sml . t)
    (lfe . t)
+   (perl . t)
    (elixir . t)
    ;; (rust . t)
    ;; (eukleides . t)
@@ -50,6 +52,8 @@
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
 (add-to-list 'org-src-lang-modes (quote ("shell". sh)))
+
+(setq org-babel-perl-command "perl6")
 
 (setq org-edit-src-content-indentation 0
       org-src-tab-acts-natively t

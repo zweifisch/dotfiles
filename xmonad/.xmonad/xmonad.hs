@@ -7,7 +7,9 @@ import XMonad.Actions.CycleWS
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
-import XMonad.Hooks.EwmhDesktops
+-- import XMonad.Hooks.EwmhDesktops
+import XMonad.Layout.SimpleFloat
+
 
 import XMonad.Config
 import XMonad.Prompt
@@ -16,12 +18,6 @@ import XMonad.Util.Run (runProcessWithInput)
 import Data.Bits ((.|.))
 
 
-
-myTerminal = "urxvt"
-
--- Whether focus follows the mouse pointer.
-myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = False
 
 myBorderWidth = 0
 
@@ -188,7 +184,7 @@ symbolKeys = [ xK_exclam, xK_at, xK_numbersign
              , xK_parenright]
 
 
-myLayout = Full ||| tiled ||| Mirror tiled
+myLayout = Full ||| tiled ||| Mirror tiled ||| simpleFloat
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled = Tall nmaster delta ratio
@@ -203,7 +199,7 @@ myLayout = Full ||| tiled ||| Mirror tiled
      delta = 3/100
 
 -- myEventHook = mempty
-myEventHook = fullscreenEventHook
+-- myEventHook = fullscreenEventHook
 
 myLogHook = return ()
 
@@ -213,8 +209,11 @@ main = xmonad defaults
 
 defaults = defaultConfig {
 
-        terminal = myTerminal,
-        focusFollowsMouse = myFocusFollowsMouse,
+        terminal = "urxvt",
+
+        -- Whether focus follows the mouse pointer.
+        focusFollowsMouse = False,
+
         borderWidth = myBorderWidth,
         modMask = myModMask,
         workspaces = myWorkspaces,
@@ -225,7 +224,7 @@ defaults = defaultConfig {
         mouseBindings = myMouseBindings,
 
         layoutHook = myLayout,
-        handleEventHook = myEventHook,
+        -- handleEventHook = myEventHook,
         logHook = myLogHook,
         startupHook = myStartupHook
     }

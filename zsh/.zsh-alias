@@ -731,23 +731,14 @@ setup-kotlin() {
     unzip -j kotlin-compiler-$version.zip kotlinc -d ~/.kotlinc && rm kotlin-compiler-$version.zip
 }
 
-html-coffee() {
-    cat > $1.html << EOF
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-    
-<script src="$1.js"></script>
-</body>
-</html>
-EOF
-
-touch $1.{coffee,js}
+setup-idea() {
+    version=14.1.5
+    wget -c http://download.jetbrains.com/idea/ideaIC-$version.tar.gz
+    mkdir -p ~/.idea
+    tar xaf ideaIC-$version.tar.gz --strip-components=1 -C ~/.idea
 }
+
+alias idea=~/.idea/bin/idea.sh
 
 alias pip-install='pip install -r requirements.txt -i http://pypi.douban.com/simple'
 
