@@ -95,6 +95,8 @@ if [ -f $HOME/.ppa ]; then
     uname -a | grep -i ubuntu > /dev/null && source $HOME/.ppa
 fi
 
+export ELM_HOME=${NODE_PATH//:/}/elm/share
+
 source $HOME/.zsh-alias
 
 eval `dircolors ~/.dir_colors`

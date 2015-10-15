@@ -34,6 +34,7 @@
 ;; (setq auto-save-file-name-transforms
 ;;       `((".*" ,temporary-file-directory t)))
 
+(setq debug-on-error t)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
