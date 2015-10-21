@@ -10,6 +10,8 @@ alias ls-empty='find . -type f -empty -exec ls -l {} \;'
 alias rm-empty='find . -type f -empty -delete'
 alias rm-empty-dir='find . -type d -empty -delete'
 
+alias rm-last='rm -i "$(ls -rt | tail -1)"'
+
 alias timestamp='date +%s'
 
 # alias iex='rlwrap -a iex'

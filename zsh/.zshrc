@@ -107,3 +107,6 @@ if [ -f $HOME/.zshrc-local ]; then
 fi
 
 export GOPATH=$GOPATH:$HOME/.projects
+
+# OPAM configuration
+. /home/zf/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

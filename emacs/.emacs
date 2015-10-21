@@ -35,6 +35,7 @@
 ;;       `((".*" ,temporary-file-directory t)))
 
 (setq debug-on-error t)
+(setq debug-on-error nil)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
@@ -765,3 +766,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'evil-indent-textobject)
 
 (evil-set-initial-state 'epa-key-list-mode 'emacs)
+
+(use-package shell-pop :ensure t)

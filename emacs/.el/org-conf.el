@@ -13,6 +13,7 @@
 (use-package org-bullets :ensure t)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))) 
 
+(setq org-log-done 'time)
 (setq org-use-speed-commands t)
 
 (org-babel-do-load-languages
@@ -48,6 +49,8 @@
    ;; (eukleides . t)
    ;; (fomus . t)
    (mathomatic . t)
+   ;; (ansible . t)
+   ;; (elm . t)
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))

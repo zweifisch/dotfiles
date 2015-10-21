@@ -120,7 +120,9 @@ bindsym $mod+r mode "resize"
 bindsym $mod+Up exec "amixer -q sset Master 5%+ unmute"
 bindsym $mod+Down exec "amixer -q sset Master 5%- unmute"
 
-bindsym $mod+Shift+s exec "scrot -e 'mv $f ~/screenshots/'"
+bindsym $mod+z exec scrot -e 'mv $f ~/screenshots/'
+bindsym $mod+x exec scrot -u -e 'mv $f ~/screenshots/'
+bindsym --release $mod+c exec scrot -s -e 'mv $f ~/screenshots/'
 
 for_window [class="mplayer2"] floating enable, border none
 for_window [class="URxvt"] border none
