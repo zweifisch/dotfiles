@@ -1048,3 +1048,16 @@ alias android-platforms='ls $ANDROID_HOME/platforms'
 android-update(){
     android update sdk -a -u -t $1 --proxy-port 8118 --proxy-host localhost --no-https
 }
+
+setup-dwb(){
+    mkdir -p ~/.setup/dwb
+    cd ~/.setup/dwb
+    wget -c https://bitbucket.org/portix/dwb/get/master.tar.bz2
+    tar xaf master.tar.bz2 --strip-components=1 -C source
+    cd source
+    sudo make install
+}
+
+ip-geo(){
+    curl "http://ip.cn/index.php?ip=$1"
+}

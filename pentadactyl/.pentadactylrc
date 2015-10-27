@@ -36,21 +36,6 @@ set complete=sl
 "}}}
 
 "{{{ PassKeys
-set passkeys+=mail.google.com:cjk<CR>,gi
-" set passkeys+='google\.com/search?':jk/<Enter><Return>
-" set passkeys+='mail\.google\.com':c/jkhnpovuelxsfra#`[]z?*nrtgidIU+-=<Tab><Return>
-" set passkeys+='mail\.google\.com/tasks/canvas':<Tab><S-Tab><Return>
-" set passkeys+='groups\.google\.com/forum':glmo<Enter>j<S-j>k<S-k>n<S-n>p<S-p>ufh<S-a>rc/?<Esc><Return>
-set passkeys+=google.com/reader:anpjkmovsSlteufOJKAM,gf,gu,gt,gs
-" set passkeys+='google\.com/reader':jkvnpbumoaAXNOVPJK?gehtl<Return>
-" set passkeys+='twitter\.com':jk<Space>/.frtmn?ghrpu<Return>
-" set passkeys+='rememberthemilk\.com/home/m':trsjkdhyucpgfinalez1234<Return>
-" set passkeys+='www\.google\.com/calendar':dwmxajkcnqetp?<Del>s12345<Return>
-" set passkeys+='springpadit\.com/springpad':?hgmfntljk/c<Return>
-" set passkeys+='toodledo\.com/':?fn*aitzwjklmocdgxpsheybr123456789<Esc><Return>
-" set passkeys+='duckduckgo\.com/':\!l'o<C-Return>jkh<Esc>\'v/rs1<Return>
-" set passkeys+='github\.com/':s?l<Return>
-" set passkeys+='readability\.com/articles/':<Shift><Space><S-Space><Return>
 set passkeys+=*:<Left><Right><Up><Down><Space>
 "}}}
 
@@ -60,8 +45,6 @@ map K :tabopen! http://dict.bing.com.cn/#
 
 map <C-j> :set go=<CR>
 map <C-k> :set go=s<CR>
-
-map <C-l> :firebug close<CR>
 
 " ! is a search keyword for google's first result
 cmap -builtin <C-r> <C-a><A-Right> !<C-e>
@@ -85,13 +68,6 @@ imap <C-f> <Right>
 imap <C-p> <Up>
 imap <C-n> <Down>
 map ,, <C-^>
-"}}}
-
-"{{{ Site Specific
-" Don't focus on Reddit frame
-autocmd LocationChange 'reddit\.com/tb/' -js buffer.focusElement(buffer.allFrames()[2]);
-" Focus on the Android docs
-autocmd PageLoad 'developer\.android\.com/' -js buffer.followLink(document.getElementById("doc-content"));
 "}}}
 
 "{{{ proxy
