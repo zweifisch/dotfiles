@@ -51,6 +51,7 @@
    (mathomatic . t)
    ;; (ansible . t)
    ;; (elm . t)
+   (ditaa . t)
    (clojure . t)))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
@@ -63,12 +64,11 @@
       org-src-fontify-natively t
       org-confirm-babel-evaluate nil)
 
+(setq org-image-actual-width nil)
+
+(setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
+
 (setq org-babel-clojure-backend 'cider)
-
-(setq org-babel-default-header-args
-           (cons '(:tangle . "yes")
-                 (assq-delete-all :tangle org-babel-default-header-args)))
-
 
 (setq org-publish-project-alist
       '(("writing"
