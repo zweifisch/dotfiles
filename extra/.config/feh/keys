@@ -1,0 +1,16 @@
+
+save_filelist
+toggle_fullscreen f
+
+zoom_in equal
+zoom_out minus
+
+scroll_left l
+scroll_down j
+scroll_up k
+scroll_right h
+
+remove d
+
+reload_image R
+render r
