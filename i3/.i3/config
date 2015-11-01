@@ -128,6 +128,7 @@ for_window [class="mplayer2"] floating enable, border none
 for_window [class="MPlayer"] floating enable, border none
 for_window [class="URxvt"] border none
 for_window [class="Emacs"] border none
+for_window [class="qutebrowser"] border none
 for_window [class="feh"] floating enable, border none
 for_window [class="mpv"] floating enable, border none
 
