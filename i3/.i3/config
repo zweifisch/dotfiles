@@ -34,10 +34,13 @@ bindsym $mod+p exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+Ctrl+h focus left
+bindsym $mod+Ctrl+j focus down
+bindsym $mod+Ctrl+k focus up
+bindsym $mod+Ctrl+l focus right
+
+bindsym $mod+h workspace prev
+bindsym $mod+l workspace next
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -131,6 +134,10 @@ for_window [class="Emacs"] border none
 for_window [class="qutebrowser"] border none
 for_window [class="feh"] floating enable, border none
 for_window [class="mpv"] floating enable, border none
+for_window [class="MuPDF"] floating enable, border none
+# for_window [class="jetbrains-idea-ce"] border none
+for_window [class="Firefox-dev"] border none
+for_window [class="Firefox"] border none
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

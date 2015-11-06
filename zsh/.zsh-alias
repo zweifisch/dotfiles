@@ -879,9 +879,17 @@ tcpdump-http() {
     sudo tcpdump -A -s 0 -i lo "tcp port $port and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)"
 }
 
-mysql-create-user() {
+mysql-create-db() {
     db=$1
-    user=$2
+    host=localhost
+    mysql -uroot -p -e "create database $db"
+}
+
+mysql-create-user() {
+    echo -n "db: "
+    read db
+    echo -n "user: "
+    read user
     host=localhost
     echo -n "password for $user: "
     read password
