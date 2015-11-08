@@ -1072,3 +1072,9 @@ ip-geo(){
 
 alias audio-hdmi='pacmd set-card-profile 0 output:hdmi-stereo+input:analog-stereo'
 alias audio-laptop='pacmd set-card-profile 0 output:analog-stereo+input:analog-stereo'
+
+start-vncserver(){
+    cookie=$(mktemp)
+    xvfb-run -f "$cookie" -s '-screen 0 1280x720x24' -n 3 i3 &
+    x11vnc -auth "$cookie" -display :3
+}
