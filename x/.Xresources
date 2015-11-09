@@ -35,7 +35,7 @@ URxvt.scrollStyle: rxvt
 URxvt.scrollBar: false
 
 ! Extensions
-URxvt.perl-ext-common: default,keyboard-select,url-select,clipboard
+URxvt.perl-ext-common: default,keyboard-select,url-select,clipboard,font-size
 ! URxvt.keysym.M-m: perl:keyboard-select:activate
 ! URxvt.keysym.M-s: perl:keyboard-select:search
 URxvt.keysym.M-u: perl:url-select:select_next
@@ -51,6 +51,11 @@ URxvt.clipboard.copycmd: xclip -i -selection clipboard
 URxvt.clipboard.pastecmd: xclip -o -selection clipboard
 URxvt.clipboard.autocopy: true
 URxvt.iso14755_52: False
+
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
 
 ! Cursor
 URxvt.cursorBlink: false
