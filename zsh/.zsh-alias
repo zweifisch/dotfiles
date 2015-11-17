@@ -1039,6 +1039,10 @@ ssht() {
     ssh -t $@ "bash --rcfile /dev/fd/3 3< <(echo \"$(cat ~/.remote-bashrc)\")"
 }
 
+sshtpass() {
+    sshpass -p $1 ssh -t $2 "bash --rcfile /dev/fd/3 3< <(echo \"$(cat ~/.remote-bashrc)\")"
+}
+
 zhihu-daily() {
     html="$(curl -sL daily.zhihu.com)"
     paste -d ' ' <(echo $html | pup -c ".box a attr{href}" | awk '{print "http://daily.zhihu.com"$1}') <(echo $html | pup -c ".box .title text{}")
@@ -1077,4 +1081,8 @@ start-vncserver(){
     cookie=$(mktemp)
     xvfb-run -f "$cookie" -s '-screen 0 1280x720x24' -n 3 i3 &
     x11vnc -auth "$cookie" -display :3
+}
+
+mount-vfat() {
+    sudo mount -t vfat $1 $2 -o uid=$UID,gid=$GID
 }

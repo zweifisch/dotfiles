@@ -768,3 +768,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-set-initial-state 'epa-key-list-mode 'emacs)
 
 (use-package shell-pop :ensure t)
+
+(defun npm-test ()
+  "npm test"
+  (interactive)
+  (let ((compilation-save-buffers-predicate 'ignore)
+        (compilation-ask-about-save nil))
+    (compile "npm test" t)))
+
+(add-hook 'term-mode-hook
+  (lambda () 
+    (define-key term-raw-map (kbd "M-h") nil)
+    (define-key term-raw-map (kbd "M-l") nil)
+    (define-key term-raw-map (kbd "C-a") nil)
+    (define-key term-raw-map (kbd "C-t") nil)))
