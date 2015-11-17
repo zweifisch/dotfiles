@@ -1,1 +1,1 @@
-xmodmap ~/.Xmodmap && exec xmonad
+xmodmap ~/.Xmodmap && exec i3
