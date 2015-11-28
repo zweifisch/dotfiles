@@ -45,9 +45,9 @@ alias vbox='VBoxManage startvm'
 alias vbox-list="VBoxManage -nologo list vms"
 alias nb='newsbeuter'
 alias pb='podbeuter'
-alias docker='sudo docker'
 alias docker-rm-all='docker rm $(docker ps -a -q)'
 alias docker-kill-all='docker kill $(docker ps -a -q)'
+alias get-docker="curl -sSL https://get.docker.com/ | sh"
 
 alias curl-json="curl -H 'Content-Type: applicaiton/json' "
 alias curl-ajax="curl -H 'X-Requested-With: XMLHttpRequest' "
