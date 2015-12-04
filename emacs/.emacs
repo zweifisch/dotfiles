@@ -34,7 +34,7 @@
 ;; (setq auto-save-file-name-transforms
 ;;       `((".*" ,temporary-file-directory t)))
 
-(setq debug-on-error t)
+;; (setq debug-on-error t)
 (setq debug-on-error nil)
 
 (require 'uniquify)
@@ -761,8 +761,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package nim-mode :ensure t)
 
-(require 'local-conf nil 'noerror)
-
 (require 'evil-indent-textobject)
 
 (evil-set-initial-state 'epa-key-list-mode 'emacs)
@@ -782,3 +780,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (define-key term-raw-map (kbd "M-l") nil)
     (define-key term-raw-map (kbd "C-a") nil)
     (define-key term-raw-map (kbd "C-t") nil)))
+
+(require 'local-conf nil 'noerror)

@@ -1086,3 +1086,9 @@ start-vncserver(){
 mount-vfat() {
     sudo mount -t vfat $1 $2 -o uid=$UID,gid=$GID
 }
+
+dirdiff(){
+	for file in $1/*; do
+		cmp "$file" "$2/${file##*/}" || vimdiff "$file" "$2/${file##*/}"
+	done
+}
