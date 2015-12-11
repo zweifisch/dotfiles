@@ -59,6 +59,7 @@ $ANDROID_HOME/platform-tools
 $HOME/.kotlinc/bin
 $HOME/.gradle/bin
 $HOME/.cask/bin
+$HOME/.swift/usr/bin
 )
 
 for p in $pathes; do

@@ -81,7 +81,6 @@
                       volatile-highlights
                       know-your-http-well
                       company
-                      alchemist
                       evil-god-state
                       ;; diff-hl
                       bison-mode
@@ -360,11 +359,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :config (progn (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
                  (add-hook 'scheme-mode-hook 'paredit-mode)))
 
+(use-package clj-refactor :ensure t)
+
+(defun my-clojure-mode-hook ()
+  (paredit-mode)
+  (rainbow-delimiters-mode)
+  (clj-refactor-mode 1)
+  (yas-minor-mode 1) ; for adding require/use/import statements
+  ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+  (cljr-add-keybindings-with-prefix "C-c C-m"))
+
 (use-package clojure-mode
   :ensure t
   :config (progn
-            (add-hook 'clojure-mode-hook 'paredit-mode)
-            (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)))
+            (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)))
 
 (evil-define-key 'normal paredit-mode-map
   "D" 'paredit-kill
@@ -407,6 +415,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-set-initial-state 'magit-popup-mode 'emacs)
 (evil-set-initial-state 'magit-refs-mode 'emacs)
 (evil-set-initial-state 'magit-revision-mode 'emacs)
+
+; elixir
+(use-package alchemist
+  :ensure t)
+
+(use-package elixir-mode
+  :ensure t)
 
 ; python
 (evil-define-key 'visual python-mode-map
@@ -631,8 +646,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
 (define-key doc-view-mode-map (kbd "k") 'doc-view-previous-line-or-previous-page)
-
-(use-package top-mode :ensure t)
 
 ; (require 'cfdg-mode)
 
