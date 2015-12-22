@@ -1092,3 +1092,14 @@ dirdiff(){
 		cmp "$file" "$2/${file##*/}" || vimdiff "$file" "$2/${file##*/}"
 	done
 }
+
+renew() {
+    sudo dhclient -v -r wlan0
+    sudo dhclient -v wlan0
+}
+
+use-swap() {
+    sudo fallocate -l ${1:-3}G /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile
+}

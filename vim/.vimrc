@@ -141,7 +141,6 @@ syntax enable
 if empty($INSIDE_EMACS)
 	set background=dark
 	colorscheme solarized
-	" Bundle 'Lokaltog/powerline'
 	Bundle 'bling/vim-airline'
 	" Bundle 'itchyny/lightline.vim'
 	" Bundle 'edkolev/tmuxline.vim'

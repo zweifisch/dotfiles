@@ -72,7 +72,7 @@
                       evil-leader
                       ;; elscreen
                       elm-mode
-                      org-present
+                      ;; org-present
                       use-package
                       go-mode
                       go-eldoc
