@@ -34,13 +34,13 @@ bindsym $mod+p exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+Ctrl+h focus left
-bindsym $mod+Ctrl+j focus down
-bindsym $mod+Ctrl+k focus up
-bindsym $mod+Ctrl+l focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
-bindsym $mod+h workspace prev
-bindsym $mod+l workspace next
+bindsym $mod+Ctrl+h workspace prev
+bindsym $mod+Ctrl+l workspace next
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -123,10 +123,11 @@ bindsym $mod+r mode "resize"
 bindsym $mod+Up exec "amixer -q sset Master 5%+ unmute"
 bindsym $mod+Down exec "amixer -q sset Master 5%- unmute"
 
-bindsym $mod+z exec scrot -e 'mv $f ~/screenshots/'
-bindsym $mod+x exec scrot -u -e 'mv $f ~/screenshots/'
-bindsym --release $mod+c exec scrot -s -e 'mv $f ~/screenshots/'
+bindsym $mod+z exec scrot -e 'mv $f ~/.screenshots/'
+bindsym $mod+x exec scrot -u -e 'mv $f ~/.screenshots/'
+bindsym --release $mod+c exec scrot -s -e 'mv $f ~/.screenshots/'
 
+# xprop | grep -i class
 for_window [class="mplayer2"] floating enable, border none
 for_window [class="MPlayer"] floating enable, border none
 for_window [class="URxvt"] border none
@@ -138,6 +139,7 @@ for_window [class="MuPDF"] floating enable, border none
 # for_window [class="jetbrains-idea-ce"] border none
 for_window [class="Firefox-dev"] border none
 for_window [class="Firefox"] border none
+for_window [class="chromium-browser"] border none
 
 bar {
     colors {

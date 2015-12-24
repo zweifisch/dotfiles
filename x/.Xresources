@@ -116,7 +116,7 @@ URxvt.pointerBlank: true
 ! URxvt*boldItalicFont:       xft:Monaco for Powerline:bold:italic:size=9, xft:WenQuanYi Micro Mono:bold:italic:size=9
 
 ! URxvt*font: xft:Inconsolata for Powerline:size=12
-URxvt*font: xft:Fira Code:style=Light:size=12,xft:WenQuanYi Micro Hei Mono:regular:size=12
+URxvt*font: xft:Fira Code:style=Light:size=12,xft:WenQuanYi Micro Hei Mono:regular:size=11
 
 ! URxvt*font: xft:Meslo LG S for Powerline:style=RegularForPowerline:size=9,xft:WenQuanYi Micro Hei Mono:regular:size=9
 

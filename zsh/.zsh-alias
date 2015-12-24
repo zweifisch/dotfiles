@@ -10,7 +10,7 @@ alias ls-empty='find . -type f -empty -exec ls -l {} \;'
 alias rm-empty='find . -type f -empty -delete'
 alias rm-empty-dir='find . -type d -empty -delete'
 
-alias rm-last='rm -i "$(ls -rt | tail -1)"'
+alias rm-last='rm -i "$(ls -t | head -1)"'
 
 alias timestamp='date +%s'
 
@@ -369,6 +369,25 @@ activate-venv(){
         echo "venv (from $VENV_ACTIVATED) already activated"
     fi
 }
+
+venv-list() {
+	find -maxdepth 1 -type d -iname ".*venv*" | sed "s/\.\/\.//"
+}
+
+venv-switch() {
+	if [ -f .$1/bin/activate ]; then
+		which deactivate &> /dev/null
+		if [ $? = 0 ]; then
+			deactivate
+		fi
+		source .$1/bin/activate
+	fi
+}
+
+_venv_list() {
+    _arguments ":::($(venv-list))"
+}
+compdef _venv_list venv-switch
 
 load_env_sh(){
     if [ -z "$ENVSH_SOURCED" ]; then
@@ -1102,4 +1121,14 @@ use-swap() {
     sudo fallocate -l ${1:-3}G /swapfile
     sudo mkswap /swapfile
     sudo swapon /swapfile
+}
+
+qiv-last() {
+    path=${1}
+}
+
+last-shot() {
+    count=${1:-1}
+    ls -t $HOME/.screenshots/* | head -$count | qiv --fullscreen -i --file -
+    # ls -t $HOME/.screenshots/* | head -$count | feh --filelist -
 }
