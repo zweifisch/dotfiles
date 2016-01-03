@@ -1,105 +1,91 @@
 
-(defface powerline-custom1 '((t (:background "#EEAD0E" :foreground "black" :weight bold)))
-  "Custom face for bright sections"
-  :group 'powerline)
-
-(defface powerline-custom2 '((t (:foreground "#EEAD0E" :weight bold)))
-  "Custom face for text"
-  :group 'powerline)
-
 (use-package evil-anzu :ensure t)
 
-(defun powerline-spacemacs-imitation-theme ()
-  "An attempt to imitate the spacemacs powerline theme."
-  (interactive)
-  (setq-default mode-line-format
-                '("%e"
-                  (:eval
-                   (let* ((active (powerline-selected-window-active))
-                          (mode-line (if active 'mode-line 'mode-line-inactive))
-                          (face1 (if active 'powerline-active1 'powerline-inactive1))
-                          (face2 (if active 'powerline-active2 'powerline-inactive2))
-                          (face3 (if active 'powerline-custom1 mode-line))
-                          (face4 (if active 'powerline-custom2 mode-line))
-                          (separator-left (intern (format "powerline-%s-%s"
-                                                          (powerline-current-separator)
-                                                          (car powerline-default-separator-dir))))
-                          (separator-right (intern (format "powerline-%s-%s"
-                                                           (powerline-current-separator)
-                                                           (cdr powerline-default-separator-dir))))
-                          (lhs (list (powerline-raw "%*" face3 'l)
-                                     (powerline-raw " " face3)
-                                     (funcall separator-left face3 mode-line)
-                                     
-                                     (when powerline-display-buffer-size
-                                       (powerline-buffer-size nil 'l))
-                                     (when powerline-display-mule-info
-                                       (powerline-raw mode-line-mule-info face4 'l))
-                                     (powerline-buffer-id face4 'l)
-                                     (when (and (boundp 'which-func-mode) which-func-mode)
-                                       (powerline-raw which-func-format nil 'l))
-                                     (powerline-raw " ")
-                                     (funcall separator-left mode-line face1)
-                                     
-                                     (when (boundp 'erc-modified-channels-object)
-                                       (powerline-raw erc-modified-channels-object face1 'l))
-                                     (powerline-major-mode face1 'l)
-                                     (powerline-process face1)
-                                     (powerline-raw " " face1)
-                                     (funcall separator-right face1 mode-line)
-                                     
-                                     (powerline-minor-modes mode-line 'l)
-                                     (powerline-narrow mode-line 'l)
-                                     (powerline-raw " " mode-line)
-                                     (funcall separator-left mode-line face1)
-                                     
-                                     (powerline-vc face1 'r)
-                                     (powerline-raw " " face1)
-                                     (funcall separator-right face1 face2)))
-                          (rhs (list (powerline-raw global-mode-string face2 'r)
-                                     (funcall separator-right face2 face1)
-                                     (unless window-system
-                                       (powerline-raw (char-to-string #xe0a1) face1 'l))
-                                     (powerline-raw "%4l" face1 'l)
-                                     (powerline-raw ":" face1 'l)
-                                     (powerline-raw "%3c" face1 'r)
-                                     (funcall separator-right face1 mode-line)
-                                     (powerline-raw " ")
-                                     (powerline-raw "%6p" nil 'r))))
-                     (concat (powerline-render lhs)
-                             (powerline-fill face2 (powerline-width rhs))
-                             (powerline-render rhs)))))))
-
-(setq display-time-day-and-date t)
-
-(setq display-time-24hr-format t)
-
-(setq display-time-mail-string "")
-
-(setq mode-line-cleaner-alist
-      '((paredit-mode . "")
-        (page-break-lines-mode . "")
-        (guide-key-mode . "")
-        (volatile-highlights-mode . "")
-        (undo-tree-mode . "")
-        (org-indent-mode . "")))
+;; (setq display-time-day-and-date t)
+;; (setq display-time-24hr-format t)
+;; (setq display-time-mail-string "")
 
 (add-hook 'org-mode-hook '(lambda () (setq mode-name "ꙮ")))
 (add-hook 'clojure-mode-hook '(lambda () (setq mode-name "λ")))
 (add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "ξ")))
 (add-hook 'eshell-mode-hook (lambda () (setq mode-name "$")))
 
-(defun clean-mode-line ()
-  (interactive)
-  (loop for cleaner in mode-line-cleaner-alist
-        do (let* ((mode (car cleaner))
-                  (mode-str (cdr cleaner))
-                  (old-mode-str (cdr (assq mode minor-mode-alist))))
-             (when old-mode-str
-               (setcar old-mode-str mode-str)))))
+(defun set-simple-mode-line-face ()
+  ""
+  (make-face 'mode-line-input-method-title-face)
+  (make-face 'mode-line-editable-face)
+  (make-face 'mode-line-read-only-face)
+  (make-face 'mode-line-modified-face)
+  (make-face 'mode-line-80+-face)
+  (make-face 'mode-line-position-face)
 
-(add-hook 'after-change-major-mode-hook 'clean-mode-line)
+  (set-face-attribute 'mode-line nil
+                      :height (face-attribute 'default :height)
+                      :foreground "white"
+                      :background "black"
+                      :inverse-video nil
+                      :box (list :line-width 10 :color "black" :style nil))
+  (set-face-attribute 'mode-line-inactive nil
+                      :height (- (face-attribute 'default :height) 20)
+                      :foreground "#888"
+                      :background "black"
+                      :inverse-video nil
+                      :box (list :line-width 5 :color "black" :style nil))
+  (set-face-attribute 'mode-line-editable-face nil
+                      :inherit 'mode-line-face
+                      :foreground "sky blue")
+  (set-face-attribute 'mode-line-input-method-title-face nil
+                      :inherit 'mode-line-face
+                      :foreground "dark orange"
+                      :background "#000")
+  (set-face-attribute 'mode-line-read-only-face nil
+                      :inherit 'mode-line-face
+                      :foreground "white")
+  (set-face-attribute 'mode-line-modified-face nil
+                      :inherit 'mode-line-face
+                      :foreground "pink")
+  (set-face-attribute 'mode-line-80+-face nil
+                      :inherit 'mode-line-face
+                      :foreground "dark orange")
+  (set-face-attribute 'mode-line-position-face nil
+                      :inherit 'mode-line-face))
 
-(setq persp-show-modestring nil)
+(setq simple-mode-line-format
+   '(;; input method
+     (:propertize (:eval (if current-input-method-title current-input-method-title "")) 'face mode-line-input-method-title-face)
+     " "
+     (:eval
+      (cond ((eq buffer-file-coding-system 'utf-8-unix) "")
+            (t "%z ")))
+     (:eval
+      (cond (buffer-read-only
+             (propertize "%b" 'face 'mode-line-read-only-face))
+            ((buffer-modified-p)
+             (propertize "%b" 'face 'mode-line-modified-face))
+            (t (propertize "%b" 'face 'mode-line-editable-face))))
+     " "
+     ;; is remote or local?
+     (:eval (if buffer-file-name mode-line-remote ""))
+     (:eval (if buffer-file-name " " ""))
+     ;; Display a current cursor position
+     (:propertize (:eval (if buffer-file-name "%l" "")) 'face mode-line-position-face)
+     (:eval (propertize (if buffer-file-name ":%c " "")
+                        'face
+                        (if (>= (current-column) 80) 'mode-line-80+-face
+                          'mode-line-position-face)))
+     ;; Other buffer file infomations
+     (:eval (if buffer-file-name "%p " ""))
+     (:eval (if buffer-file-name "%I " ""))
+     ;; vc mode
+     (vc-mode vc-mode)
+     " "
+     ;; Major mode
+     "%m"))
+
+(setq-default mode-line-format nil)
+
+(set-simple-mode-line-face)
+
+(setq-default mode-line-format simple-mode-line-format)
 
 (provide 'mode-line-conf)

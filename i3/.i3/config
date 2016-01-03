@@ -39,8 +39,8 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-bindsym $mod+Ctrl+h workspace prev
-bindsym $mod+Ctrl+l workspace next
+bindsym Ctrl+Shift+h workspace prev
+bindsym Ctrl+Shift+l workspace next
 
 # move focused window
 bindsym $mod+Shift+h move left

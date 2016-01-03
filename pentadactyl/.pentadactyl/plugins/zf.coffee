@@ -5,68 +5,71 @@
 
 "use strict"
 
-# Object::first = -> return @[0] if @?[0] 
+# Object::first = -> return @[0] if @?[0]
 # first = (object)-> return object[0] if object?[0]
 # document.getElementByTagName = (args...)-> document.getElementsByTagName(args...).first()
 
 helpers =
-	inject: (url)->
-		document = content.document
-		scriptTag = document.createElement 'script'
-		scriptTag.setAttribute 'src', url
-		document.body.appendChild scriptTag
-	clearStyle : ->
-		document = content.document
-		for style in document.getElementsByTagName('style') then style?.parentNode?.removeChild style
-		for link in document.getElementsByTagName('link') then link?.parentNode?.removeChild link
-	removeScript : ->
-		document = content.document
-		for script in document.getElementsByTagName 'script' then script.parentNode?.removeChild script
-	requireCSS : (style)->
-		document = content.document
-		head = document.getElementsByTagName('head')[0]
-		styleTag = document.createElement 'style'
-		styleTag.appendChild document.createTextNode style
-		head.appendChild styleTag
+    inject: (url)->
+        document = content.document
+        scriptTag = document.createElement 'script'
+        scriptTag.setAttribute 'src', url
+        document.body.appendChild scriptTag
+    clearStyle : ->
+        document = content.document
+        for style in document.getElementsByTagName('style') then style?.parentNode?.removeChild style
+        for link in document.getElementsByTagName('link') then link?.parentNode?.removeChild link
+    removeScript : ->
+        document = content.document
+        for script in document.getElementsByTagName 'script' then script.parentNode?.removeChild script
+    requireCSS : (style)->
+        document = content.document
+        head = document.getElementsByTagName('head')[0]
+        styleTag = document.createElement 'style'
+        styleTag.appendChild document.createTextNode style
+        head.appendChild styleTag
 
 app =
-	version: '0.1'
-	urls: ->
-		browser = gBrowser
-		tabs = (browser.getBrowserForTab(tab).contentDocument for tab in browser.mTabContainer.childNodes)
-		dactyl.clipboardWrite ("#{tab.location} #{tab.title}" for tab in tabs when tab.location isnt 'about:blank').join("\n"),true
-	whatFont:->
-		helpers.inject 'http://chengyinliu.com/wf.js'
-	toggleVisualEvent: ->
-		if VisualEvent?
-			document = content.document
-			if document.getElementsById 'Event_display'
-				VisualEvent.fnClose()
-			else
-				VisualEvent.fnInit()
-		else
-			helpers.inject 'http://www.sprymedia.co.uk/design/event/media/js/event-loader.js'
-	readability: ->
-		helpers.clearStyle()
-		helpers.requireCSS(res.markdown)
-	solarized: ->
-		helpers.clearStyle()
-		for tag in ['iframe','embed','object']
-			for t in document.getElementsByTagName tag then t?.parentNode?.removeChild t
-		for tag in document.getElementsByTagName '*' then tag.removeAttribute 'style'
-		helpers.requireCSS(res.solarized)
-	fun: ->
-		for tag in document.getElementsByTagName '*' then tag?.parentNode?.removeChild tag
-	jquery: ->
-		helpers.inject 'http://code.jquery.com/jquery-1.10.2.min.js'
+    version: '0.1'
+    urls: ->
+        browser = gBrowser
+        tabs = (browser.getBrowserForTab(tab).contentDocument for tab in browser.mTabContainer.childNodes)
+        dactyl.clipboardWrite ("#{tab.location} #{tab.title}" for tab in tabs when tab.location isnt 'about:blank').join("\n"), true
+    org: ->
+        tabs = (gBrowser.getBrowserForTab(tab).contentDocument for tab in gBrowser.mTabContainer.childNodes)
+        dactyl.clipboardWrite ("[[#{tab.location}][#{if tab.title then tab.title else tab.location}]]" for tab in tabs when tab.location isnt 'about:blank').join("\n"), true
+    whatFont:->
+        helpers.inject 'http://chengyinliu.com/wf.js'
+    toggleVisualEvent: ->
+        if VisualEvent?
+            document = content.document
+            if document.getElementsById 'Event_display'
+                VisualEvent.fnClose()
+            else
+                VisualEvent.fnInit()
+        else
+            helpers.inject 'http://www.sprymedia.co.uk/design/event/media/js/event-loader.js'
+    readability: ->
+        helpers.clearStyle()
+        helpers.requireCSS(res.markdown)
+    solarized: ->
+        helpers.clearStyle()
+        for tag in ['iframe','embed','object']
+            for t in document.getElementsByTagName tag
+                t?.parentNode?.removeChild t
+        for tag in document.getElementsByTagName '*'
+            tag?.removeAttribute 'style'
+        helpers.requireCSS(res.solarized)
+    jquery: ->
+        helpers.inject 'http://code.jquery.com/jquery-1.10.2.min.js'
 
 group.commands.add ['whatfont', 'wf'], "what font", app.whatFont
 group.commands.add ['freeze'], "export urls", app.urls
+group.commands.add ['tabs2org'], "export urls for org-mode", app.org
 group.commands.add ['visualevent'], "visual event", app.toggleVisualEvent
 group.commands.add ['readability'], "improve readability", app.readability
 group.commands.add ['solarized'], "solarized", app.solarized
 group.commands.add ['jquery', 'jq'], "inject jquery", app.jquery
-group.commands.add ['hack'], "hack", app.hack
 
 
 res = {}
@@ -462,6 +465,6 @@ input:submit {
 """
 """
 *{
-	font-family:Bitter, Georgia, sans-serif;
+    font-family:Bitter, Georgia, sans-serif;
 }
 """

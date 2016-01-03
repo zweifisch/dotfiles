@@ -9,9 +9,6 @@
 ;; (use-package monokai-theme :ensure t)
 (load-theme 'material t)
 
-;; (use-package smart-mode-line :ensure t)
-;; (sml/apply-theme 'respectful)
-
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
 
 
@@ -20,11 +17,11 @@
 
 ;; (set-face-attribute 'default nil :font "")
 
-(set-default-font "DejaVu Sans Mono-10")
-(set-fontset-font nil 'chinese-gbk '"WenQuanYi Micro Hei Mono-12")
+;; (set-default-font "DejaVu Sans Mono-10")
+;; (set-fontset-font nil 'chinese-gbk '"WenQuanYi Micro Hei Mono-12")
 
-;; (when (member "Fira Code" (font-family-list))
-;;   (set-face-attribute 'default nil :font "Fira Code-10" :weight 'Light))
+(set-face-attribute 'default nil :font "Fira Code-10.5" :weight 'Light)
+(set-fontset-font nil 'chinese-gbk '"WenQuanYi Micro Hei Mono-12")
 
 ;; (set-frame-font "Hack-10")
 
@@ -32,12 +29,10 @@
 
 ;; (set-face-attribute 'default nil :font "Source Code Pro 10")
 
-(use-package powerline :ensure t)
-(setq powerline-default-separator 'wave)
+;; (use-package powerline :ensure t)
+;; (setq powerline-default-separator 'wave)
 ;; (powerline-default-theme)
 
 (require 'mode-line-conf)
-;; (setq powerline-height 20)
-(powerline-spacemacs-imitation-theme)
 
 (provide 'theme-conf)

@@ -957,6 +957,7 @@ alias xev-simple="xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycod
 
 alias emacs-daemon="env LC_CTYPE=zh_CN.UTF-8 emacs --daemon"
 alias e="emacsclient -nc"
+alias em="env LC_CTYPE=zh_CN.UTF-8 emacs"
 
 export LEIN_FAST_TRAMPOLINE=y
 
@@ -1124,11 +1125,16 @@ use-swap() {
 }
 
 qiv-last() {
-    path=${1}
+    count=${1:-1}
+    ls -t | head -$count | qiv --fullscreen -i --file -
 }
 
 last-shot() {
     count=${1:-1}
     ls -t $HOME/.screenshots/* | head -$count | qiv --fullscreen -i --file -
     # ls -t $HOME/.screenshots/* | head -$count | feh --filelist -
+}
+
+wakeup-time() {
+    grep Awak /var/log/pm-suspend.log | tail -1
 }

@@ -149,8 +149,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; evil-leader
 (evil-leader/set-key
   ;; "F" 'projectile-find-file
-  "F" 'helm-projectile-find-file
-  "f" 'helm-find-files
+  "f" 'helm-projectile-find-file
+  "F" 'helm-find-files
   ;; "B" 'ido-switch-buffer
   "B" 'helm-buffers-list
   ;; "b" 'projectile-switch-to-buffer
