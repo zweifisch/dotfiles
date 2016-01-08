@@ -66,61 +66,45 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(evil
-                      evil-indent-textobject
-                      evil-matchit
-                      evil-leader
-                      ;; elscreen
-                      elm-mode
-                      ;; org-present
+(defvar my-packages '(elm-mode
                       use-package
-                      go-mode
-                      go-eldoc
-                      company-go
-                      linum-relative
                       volatile-highlights
                       know-your-http-well
                       company
-                      evil-god-state
-                      ;; diff-hl
                       bison-mode
                       ghc
                       company-ghc
-                      guide-key
-                      flycheck))
+                      guide-key))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
 
-;; el-get
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (goto-char (point-max))
-    (eval-print-last-sexp)))
-
-(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-
-(setq my:el-get-packages
-      '(python
-        slime
-        smart-tab
-        mmm-mode
-        rainbow-delimiters
-        calfw))
-(el-get 'sync my:el-get-packages)
-
+;; smart-tab mmm-mode
 ;; emms dired-sort auto-dictionnary
 ;; autopair google-maps
 ;; sr-speedbar typopunct
 
 
+(require 'use-package)
+
 ; evil
+
+(use-package evil :ensure t)
+(use-package evil-indent-textobject :ensure t)
+(use-package evil-matchit :ensure t)
+(use-package evil-leader :ensure t)
+(use-package evil-god-state :ensure t)
+
 (evil-mode)
 
 (setq-default evil-symbol-word-search t)
+
+(evil-set-initial-state 'ibuffer-mode 'normal)
+(evil-define-key 'normal ibuffer-mode
+  "j" 'ibuffer-forward-line
+  "k" 'ibuffer-backward-line)
+
+;; Don't wait for any other keys after escape is pressed.
+(setq evil-esc-delay 0)
 
 (define-key evil-normal-state-map " " 'evil-toggle-fold)
 (define-key evil-normal-state-map ";" 'evil-ex)
@@ -160,8 +144,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
   "A" 'org-agenda
 
-  "g" 'helm-do-grep-recursive
-  "G" 'helm-projectile-grep
+  "g" 'helm-projectile-grep
   "o" 'browse-url
   "e" 'switch-to-eshell-in-project
   "E" 'switch-to-eshell
@@ -202,8 +185,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (recentf-mode 1)
 (setq recentf-max-saved-items 512)
 
-(require 'use-package)
-
 ; evil-nerd-commenter
 (eval-after-load 'evil-nerd-commenter-operator
   '(progn
@@ -226,7 +207,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (projectile-global-mode)
     (setq projectile-completion-system 'helm
           projectile-switch-project-action 'projectile-dired
-          projectile-remember-window-configs t)))
+          projectile-remember-window-configs t
+          projectile-use-git-grep 1)))
 
 (use-package helm :ensure t
   :config
@@ -246,6 +228,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :config (helm-projectile-on))
 
 ; python
+;; (use-package python-mode :ensure t)
+(use-package flycheck :ensure t)
+(use-package elpy
+  :ensure t
+  :config (elpy-enable))
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args ""
       python-shell-prompt-regexp "In \\[[0-9]+\\]: "
@@ -257,10 +244,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       python-shell-completion-string-code
       "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
-(setq org-src-fontify-natively t)  ; code block
+; python
+(evil-define-key 'visual python-mode-map
+  (kbd "RET") 'python-shell-send-region)
+
+(evil-define-key 'normal python-mode-map
+  "gs" 'python-shell-switch-to-shell)
 
 (add-hook 'python-mode-hook 'flycheck-mode)
 
+; org
+(setq org-src-fontify-natively t)  ; code block
 
 (setq org-directory "~/.org/")
 (setq org-agenda-files (list org-directory))
@@ -273,6 +267,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         ("j" "Journal" entry (file+datetree "journal.org" "* %?\nEntered on %U\n  %i\n  %a"))))
 
 (setq calendar-week-start-day 1)
+
+(setq org-agenda-include-diary t)
 
 (setq org-todo-keywords
       '((sequence "TODO" "NEXT" "|" "DONE" "ABORTED")))
@@ -308,8 +304,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq-default truncate-lines t)
 
+(use-package exec-path-from-shell :ensure t)
 (exec-path-from-shell-initialize)
 
+; sql
+(evil-define-key 'visual sql-mode-map
+  (kbd "RET") 'sql-send-region)
 
 (defun eval-print-last-sexp-comment ()
   (interactive)
@@ -360,6 +360,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                  (add-hook 'scheme-mode-hook 'paredit-mode)))
 
 (use-package clj-refactor :ensure t)
+(use-package rainbow-delimiters :ensure t)
 
 (defun my-clojure-mode-hook ()
   (paredit-mode)
@@ -423,17 +424,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package elixir-mode
   :ensure t)
 
-; python
-(evil-define-key 'visual python-mode-map
-  (kbd "RET") 'python-shell-send-region)
-
-(evil-define-key 'normal python-mode-map
-  "gs" 'python-shell-switch-to-shell)
-
 ; global evil key
-(define-key evil-normal-state-map "L" 'helm-projectile-switch-to-buffer)
+;; (define-key evil-normal-state-map "L" 'helm-projectile-switch-to-buffer)
 ;; (define-key evil-normal-state-map "L" 'ido-switch-buffer)
-;; (define-key evil-normal-state-map "L" 'helm-buffers-list)
+(define-key evil-normal-state-map "L" 'helm-mini)
 (define-key evil-normal-state-map "H" 'projectile-project-buffers-other-buffer)
 ;; (define-key evil-normal-state-map "H" 'previous-buffer)
 ;; (define-key evil-normal-state-map "L" 'next-buffer)
@@ -485,6 +479,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; golang
+
+(use-package go-mode :ensure t)
+(use-package go-eldoc :ensure t)
+(use-package company-go :ensure t)
+
 (defun my-go-mode-hook ()
   (add-to-list (make-local-variable 'company-backends) 'company-go)
   (setq gofmt-command "goimports")
@@ -496,34 +495,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file t)
 
-(evil-set-initial-state 'ibuffer-mode 'normal)
-(evil-define-key 'normal ibuffer-mode
-  "j" 'ibuffer-forward-line
-  "k" 'ibuffer-backward-line)
-
-;; Don't wait for any other keys after escape is pressed.
-(setq evil-esc-delay 0)
-
-;; (require 'calfw)
-
-(setq org-agenda-include-diary t)
-
-(setq wg-prefix-key (kbd "C-a"))
-(setq wg-mode-line-display-on t)
-
-;; (workgroups-mode 1)
-
-(require 'linum-relative)
 
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-
-(use-package elpy
-  :ensure t
-  :config (elpy-enable))
 
 (use-package perspective
   :ensure t
@@ -793,5 +770,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (define-key term-raw-map (kbd "M-l") nil)
     (define-key term-raw-map (kbd "C-a") nil)
     (define-key term-raw-map (kbd "C-t") nil)))
+
+(use-package slime :ensure t)
 
 (require 'local-conf nil 'noerror)
