@@ -53,6 +53,8 @@
       mouse-yank-at-point t
       save-place-file (concat user-emacs-directory "places"))
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 
 (require 'package)
 ;(add-to-list 'package-archives
@@ -215,7 +217,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (progn
     (use-package helm-config)
     (add-hook 'helm-before-initialize-hook
-              (lambda () 
+              (lambda ()
                 (add-to-list 'helm-boring-buffer-regexp-list  "\\*magit")
                 (add-to-list 'helm-boring-buffer-regexp-list  "\\*scratch")
                 (add-to-list 'helm-boring-buffer-regexp-list  "\\*eshell")
@@ -460,7 +462,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package web-mode
   :ensure t
-  :config (progn 
+  :config (progn
             (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
@@ -671,7 +673,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package helm-dash :ensure t)
 
-(setq helm-dash-common-docsets '("Redis" "Clojure" "Python 3" "Java")) 
+(setq helm-dash-common-docsets '("Redis" "Clojure" "Python 3" "Java"))
 
 (global-set-key (kbd "C-x C-d") 'helm-dash)
 
@@ -765,7 +767,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (compile "npm test" t)))
 
 (add-hook 'term-mode-hook
-  (lambda () 
+  (lambda ()
     (define-key term-raw-map (kbd "M-h") nil)
     (define-key term-raw-map (kbd "M-l") nil)
     (define-key term-raw-map (kbd "C-a") nil)
