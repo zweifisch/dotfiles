@@ -766,13 +766,21 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (compilation-ask-about-save nil))
     (compile "npm test" t)))
 
+(evil-set-initial-state 'term-mode 'emacs)
 (add-hook 'term-mode-hook
   (lambda ()
     (define-key term-raw-map (kbd "M-h") nil)
     (define-key term-raw-map (kbd "M-l") nil)
+    (define-key term-raw-map (kbd "M-x") nil)
     (define-key term-raw-map (kbd "C-a") nil)
-    (define-key term-raw-map (kbd "C-t") nil)))
+    (define-key term-raw-map (kbd "C-t") nil)
+    (define-key term-raw-map [escape] (lambda ()
+                                        (interactive)
+                                        (term-send-raw-string "\e")))))
 
 (use-package slime :ensure t)
+
+(use-package multi-term :ensure t)
+(setq multi-term-program "/bin/zsh")
 
 (require 'local-conf nil 'noerror)

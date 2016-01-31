@@ -1135,3 +1135,7 @@ last-shot() {
 wakeup-time() {
     grep Awak /var/log/pm-suspend.log | tail -1
 }
+
+last-modified() {
+    find . -type f -exec stat --format '%Y :%y %n' "{}" \; | sort -nr | cut -d: -f2- | head
+}

@@ -1,7 +1,7 @@
 if [ -n "$INSIDE_EMACS" ]; then
 	print -P "\033AnSiTu %n"
 	print -P "\033AnSiTc %d"
-	export TERM=xterm-256color
+	export TERM=xterm-color
 else
 	export TERM=screen-256color
 fi

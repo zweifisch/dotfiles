@@ -165,9 +165,9 @@ set shiftwidth=4
 set smartindent
 set autoindent
 
-autocmd InsertEnter * :set number
-autocmd InsertLeave * :set relativenumber
-set relativenumber
+" autocmd InsertEnter * :set number
+" autocmd InsertLeave * :set relativenumber
+" set relativenumber
 
 " dispaly position info
 set ruler
@@ -223,7 +223,7 @@ set fdm=syntax
 " let g:php_folding=1
 
 " set cursorline cursorcolumn
-set cursorline
+" set cursorline
 
 " make searches case-insensitive, unless they contain upper-case letters:
 set ignorecase
