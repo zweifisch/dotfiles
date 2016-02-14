@@ -773,10 +773,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (define-key term-raw-map (kbd "M-l") nil)
     (define-key term-raw-map (kbd "M-x") nil)
     (define-key term-raw-map (kbd "C-a") nil)
-    (define-key term-raw-map (kbd "C-t") nil)
-    (define-key term-raw-map [escape] (lambda ()
-                                        (interactive)
-                                        (term-send-raw-string "\e")))))
+    (define-key term-raw-map (kbd "C-t") nil)))
 
 (use-package slime :ensure t)
 
@@ -784,3 +781,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq multi-term-program "/bin/zsh")
 
 (require 'local-conf nil 'noerror)
+
+(add-to-list 'comint-preoutput-filter-functions
+             (lambda (output)
+               (replace-regexp-in-string "\\[0G" "" output)))
