@@ -1145,3 +1145,5 @@ ssh-copy-pub() {
     host=$2
     cat $key | ssh $host "mkdir -p ~/.ssh; cat >> ~/.ssh/authorized_keys"
 }
+
+alias wget-retry='wget -c --read-timeout 5 --tries 0'

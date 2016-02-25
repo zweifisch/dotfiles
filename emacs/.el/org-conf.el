@@ -11,7 +11,7 @@
 (use-package htmlize :ensure t)
 
 (use-package org-bullets :ensure t)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))) 
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
 (setq org-log-done 'time)
 (setq org-use-speed-commands t)
@@ -148,6 +148,7 @@
   (let ((settings (cdr (assoc project org-publish-project-alist))))
     (browse-url (format "http://localhost:%d" (plist-get settings :port)))))
 
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
 (require 'org-mime)
 
