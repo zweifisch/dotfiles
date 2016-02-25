@@ -148,8 +148,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
   "g" 'helm-projectile-grep
   "o" 'browse-url
-  "e" 'switch-to-eshell-in-project
-  "E" 'switch-to-eshell
+  "e" 'switch-to-shell-in-project
+  "E" 'switch-to-shell
   ;; "i" 'ein:notebooklist-open
   "c" 'org-capture
   "s" 'magit-status
@@ -620,6 +620,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'mu4e-conf)
 (require 'scheme-conf)
 (require 'theme-conf)
+(require 'shell-switch)
 (require 'misc-conf)
 (require 'hydra-conf)
 

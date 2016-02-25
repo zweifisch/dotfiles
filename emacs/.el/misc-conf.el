@@ -19,46 +19,12 @@
 (define-key global-map (kbd "C-a o") 'toggle-windows-split)
 
 
-(defun eshell-buffer-names-in-project ()
-  (->> (projectile-project-buffer-names)
-       (-filter (lambda (buffer)
-                  (eq 'eshell-mode
-                      (with-current-buffer buffer major-mode))))))
-
-(defun switch-to-eshell-in-project ()
-  (interactive)
-  (let ((eshell-buffers (eshell-buffer-names-in-project)))
-    (cond (eshell-buffers
-           (if (= 1 (length eshell-buffers))
-               (switch-to-buffer (car eshell-buffers))
-             (helm :sources '((name . "eshell")
-                              (candidates . eshell-buffer-names-in-project)
-                              (action . (lambda (candidate)
-                                          (switch-to-buffer candidate)))))))
-          (t (projectile-with-default-dir
-                 (projectile-project-root)
-               (eshell))))))
-
-(defun eshell-buffer-names ()
-  (->> (buffer-list)
-       (-filter (lambda (buffer)
-                  (eq 'eshell-mode
-                      (buffer-local-value 'major-mode buffer))))
-       (-map 'buffer-name)))
-
-(defun switch-to-eshell ()
-  (interactive)
-  (helm :sources '((name . "eshell")
-                   (candidates . eshell-buffer-names)
-                   (action . (lambda (candidate)
-                               (switch-to-buffer candidate))))))
-
 (defun kill-process-at-point ()
   (interactive)
   (let* ((process (get-text-property (point) 'tabulated-list-id))
          (buffer (process-buffer process)))
     (if (y-or-n-p (format "kill process %s? " (process-name process)))
-        (progn 
+        (progn
           (kill-process process)
           (kill-buffer buffer)
           (revert-buffer)))))
@@ -67,7 +33,7 @@
   (interactive)
   (let ((process (get-text-property (point) 'tabulated-list-id)))
     (if (y-or-n-p (format "restart process %s? " (process-name process)))
-        (progn 
+        (progn
           (restart-process process)
           (revert-buffer)))))
 

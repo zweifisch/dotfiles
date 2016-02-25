@@ -1139,3 +1139,9 @@ wakeup-time() {
 last-modified() {
     find . -type f -exec stat --format '%Y :%y %n' "{}" \; | sort -nr | cut -d: -f2- | head
 }
+
+ssh-copy-pub() {
+    key=$1
+    host=$2
+    cat $key | ssh $host "mkdir -p ~/.ssh; cat >> ~/.ssh/authorized_keys"
+}
