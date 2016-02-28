@@ -198,7 +198,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package evil-surround :ensure t
   :config (global-evil-surround-mode 1))
 
-(use-package markdown-mode :ensure t)
+(use-package markdown-mode :ensure t
+  :mode (("\\.wiki$" . markdown-mode)))
+
 (use-package help-fns+ :ensure t)
 
 ; projectile
@@ -767,19 +769,21 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (compilation-ask-about-save nil))
     (compile "npm test" t)))
 
-(evil-set-initial-state 'term-mode 'emacs)
-(add-hook 'term-mode-hook
-  (lambda ()
-    (define-key term-raw-map (kbd "M-h") nil)
-    (define-key term-raw-map (kbd "M-l") nil)
-    (define-key term-raw-map (kbd "M-x") nil)
-    (define-key term-raw-map (kbd "C-a") nil)
-    (define-key term-raw-map (kbd "C-t") nil)))
+(use-package term
+  :config
+  (evil-set-initial-state 'term-mode 'emacs)
+  :bind (:map term-raw-map
+              ("M-h" . nil)
+              ("M-l" . nil)
+              ("M-x" . nil)
+              ("C-a" . nil)
+              ("C-t" . nil)))
 
 (use-package slime :ensure t)
 
-(use-package multi-term :ensure t)
-(setq multi-term-program "/bin/zsh")
+(use-package multi-term :ensure t
+  :config
+  (setq multi-term-program "/bin/zsh"))
 
 (require 'local-conf nil 'noerror)
 

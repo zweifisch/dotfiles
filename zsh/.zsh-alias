@@ -1128,6 +1128,11 @@ qiv-last() {
 
 last-shot() {
     count=${1:-1}
+    ls -t $HOME/.screenshots/* | head -$count
+}
+
+view-last-shot() {
+    count=${1:-1}
     ls -t $HOME/.screenshots/* | head -$count | qiv --fullscreen -i --file -
     # ls -t $HOME/.screenshots/* | head -$count | feh --filelist -
 }
