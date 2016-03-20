@@ -140,6 +140,7 @@ for_window [class="MuPDF"] floating enable, border none
 for_window [class="Firefox-dev"] border none
 for_window [class="Firefox"] border none
 for_window [class="chromium-browser"] border none
+for_window [class="Genymotion Player"] floating enable, border none
 
 bar {
     colors {

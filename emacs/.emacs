@@ -533,11 +533,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                 deft-use-filename-as-title t))
 (evil-set-initial-state 'deft-mode 'emacs)
 
-(use-package org :ensure t)
-
-(eval-after-load "org"
-  '(progn (define-key org-mode-map (kbd "M-h") nil)
-          (define-key org-mode-map (kbd "C-a") nil)))
+(use-package org :ensure t
+  :bind (:map org-mode-map
+              ("M-h" . nil)
+              ("C-a" . nil)))
 
 (defun my-eshell-mode-hook ()
   (rename-uniquely)
