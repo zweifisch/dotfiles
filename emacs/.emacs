@@ -549,32 +549,38 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; (setq ajb-bs-configuration "projectile")
 
-(autoload 'ghc-init "ghc" nil t)
-(autoload 'ghc-debug "ghc" nil t)
 
-(defun my-haskell-mode-hook ()
-  (add-to-list (make-local-variable'company-backends) 'company-ghc)
-  (ghc-init)
-  (custom-set-variables '(company-ghc-show-info t)
-                        '(haskell-process-type 'cabal-repl)))
 
-(eval-after-load "haskell-mode"
-  '(progn
-    (define-key haskell-mode-map (kbd "C-x C-d") nil)
-    (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
-    (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
-    (define-key haskell-mode-map (kbd "C-c C-b") 'haskell-interactive-switch)
-    (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
-    (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
-    (define-key haskell-mode-map (kbd "C-c M-.") nil)
-    (define-key haskell-mode-map (kbd "C-c C-d") nil)))
+(use-package haskell-mode
+  :ensure t
+  :bind (:map ("C-c C-l" . haskell-process-load-or-reload)))
+
+(add-hook 'haskell-mode-hook 'haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
+
+(setq haskell-process-type 'stack-ghci)
+(setq haskell-process-path-ghci "stack")
+(setq haskell-process-args-ghci "ghci")
 
 (eval-after-load "haskell-interactive-mode"
   '(progn
      (define-key haskell-interactive-mode-map (kbd "C-a") nil)
      (evil-define-key 'normal haskell-interactive-mode-map "^" 'haskell-interactive-mode-beginning)))
 
-(add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
+(use-package hindent :ensure t)
+(add-hook 'haskell-mode-hook #'hindent-mode)
+
+(use-package flycheck-haskell :ensure t)
+
+(add-hook 'haskell-mode-hook 'flycheck-mode)
+(add-hook 'flycheck-mode-hook 'flycheck-haskell-configure)
+
+;; (use-package company-ghci :ensure t)
+;; (push 'company-ghci company-backends)
+;; (add-hook 'haskell-mode-hook 'company-mode)
+
 
 (setq guide-key/guide-key-sequence t)
 (guide-key-mode 1)
@@ -789,3 +795,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-to-list 'comint-preoutput-filter-functions
              (lambda (output)
                (replace-regexp-in-string "\\[0G" "" output)))
+
+(use-package extempore-mode :ensure t)
+
+(use-package fsharp-mode :ensure t)

@@ -776,6 +776,14 @@ setup-otto() {
 	rm otto
 }
 
+setup-lfe() {
+    startdir=`pwd`
+    mkdir -p "$HOME/.setup"
+    git clone --depth 1 "https://github.com/rvirding/lfe.git" && \
+    cd lfe && make compile && sudo make install
+    cd $startdir
+}
+
 alias pip-install='pip install -r requirements.txt -i http://pypi.douban.com/simple'
 
 alias get-bing-image='curl $(curl "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1" | jq -r .images[0].url) > $(date -d now +%Y-%m-%d).jpg' 
@@ -1152,3 +1160,19 @@ ssh-copy-pub() {
 }
 
 alias wget-retry='wget -c --read-timeout 5 --tries 0'
+
+redis-batch-del (){
+    redis-cli keys "$1*" | awk '{print $1}' | xargs redis-cli del
+}
+
+alias paket='mono ~/.setup/paket.exe'
+alias nuget='mono ~/.setup/nuget.exe'
+
+alias setup-nuget='wget http://nuget.org/nuget.exe -O ~/.setup/nuget.exe'
+
+setup-paket() {
+    tempdir="$(mktemp -d)"
+    echo "$tempdir"
+    nuget install paket -OutputDirectory "$tempdir"
+    find "$tempdir" -name paket.exe -exec mv {} ~/.setup/paket.exe \;
+}
