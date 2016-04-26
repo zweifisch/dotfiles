@@ -762,6 +762,8 @@ setup-idea() {
 
 alias idea=~/.idea/bin/idea.sh
 
+alias android-studio=~/.setup/android-studio/bin/studio.sh
+
 setup-vagrant() {
 	version=1.7.4
 	wget -c https://dl.bintray.com/mitchellh/vagrant/vagrant_${version}_x86_64.deb

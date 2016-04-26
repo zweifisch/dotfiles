@@ -6,7 +6,6 @@
 	ci = commit
 	br = branch
 	co = checkout
-	dif = diff
 	amend = commit --amend -C HEAD
 	d = difftool
 	purr = pull --rebase

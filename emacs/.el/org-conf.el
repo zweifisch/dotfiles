@@ -8,6 +8,7 @@
 (use-package ob-ipython :ensure t)
 (use-package ob-lfe :ensure t)
 (use-package ob-elixir :ensure t)
+(use-package ob-coffee :ensure t)
 (use-package htmlize :ensure t)
 
 (use-package org-bullets :ensure t)
