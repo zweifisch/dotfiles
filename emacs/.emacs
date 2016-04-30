@@ -553,7 +553,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package haskell-mode
   :ensure t
-  :bind (:map ("C-c C-l" . haskell-process-load-or-reload)))
+  :bind (:map haskell-mode-map
+              ("C-c C-l" . haskell-process-load-or-reload)))
 
 (add-hook 'haskell-mode-hook 'haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
@@ -799,3 +800,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package extempore-mode :ensure t)
 
 (use-package fsharp-mode :ensure t)
+
+(use-package toml-mode :ensure t)

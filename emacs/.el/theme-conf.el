@@ -7,6 +7,7 @@
 ;; (use-package leuven-theme :ensure t)
 ;; (use-package twilight-bright-theme :ensure t)
 ;; (use-package monokai-theme :ensure t)
+;; (use-package darkokai-theme :ensure t)
 (load-theme 'material t)
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))

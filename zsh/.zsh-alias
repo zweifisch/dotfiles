@@ -125,7 +125,7 @@ which apt-get &> /dev/null
 if [ $? = 0 ]; then
     yaourt-install(){
         results="$(apt-cache search $1)"
-        echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
+        echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/"
         echo -n "===> "
         read num
         if [[ "$num" =~ ^[0-9]+$ ]]; then
@@ -136,7 +136,7 @@ if [ $? = 0 ]; then
     }
     yaourt-remove(){
         results="$(dpkg --get-selections | grep -i $1 | grep -v deinstall | cut -f 1)"
-        echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
+        echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/"
         echo -n "===> "
         read num
         if [[ "$num" =~ ^[0-9]+$ ]]; then
@@ -224,7 +224,7 @@ svn-export-changed()
         p=$(echo $i | sed -e 's{'$url/'{{');
         mkdir -p $(dirname $p);
         svn export $i $p;
-    done 
+    done
 }
 
 start-wicd(){
@@ -422,6 +422,10 @@ chpwd(){
     if [ -n "$INSIDE_EMACS" ]; then
         print -P "\033AnSiTc %d"
     fi
+
+    if [[ -f .nvmrc && -r .nvmrc ]]; then
+        nvm use
+    fi
 }
 
 duration(){
@@ -431,12 +435,12 @@ duration(){
 hourglass(){ trap 'tput cnorm' EXIT INT;local s=$(($SECONDS +$1));(tput civis;while [[ $SECONDS -lt $s ]];do for f in '|' '\' '-' '/';do echo -n "$f" && sleep .2s && echo -n $'\b';done;done;);tput cnorm;}
 
 uncommited(){
-    for gitdir in `find ./ -maxdepth 2 -name .git`; 
+    for gitdir in `find ./ -maxdepth 2 -name .git`;
     do
-        workdir=${gitdir%/*}; 
+        workdir=${gitdir%/*};
         echo;
-        echo $workdir; 
-        git --git-dir=$gitdir --work-tree=$workdir status; 
+        echo $workdir;
+        git --git-dir=$gitdir --work-tree=$workdir status;
     done
 }
 
@@ -599,7 +603,7 @@ urls()
     results="$(tmux capture-pane \; show-buffer -b0 \; delete-buffer -b0 \
         | grep -P -o '(?:https?://|\bwww\.)[a-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27,~#]*(\([a-zA-Z0-9\-\@;\/?:&=%\$_.+!*\x27,~#]*\)|[a-zA-Z0-9\-\@;\/?:&=%\$_+*~])+' \
         | sort | uniq)"
-    echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/" 
+    echo "$results" | nl -w 3 -s ': ' | sed -e "s/[0-9]\+:/\x1b[32m&\x1b[0m/"
     echo -n "===> "
     read num
     if [[ "$num" =~ ^[0-9]+$ ]]; then
@@ -643,7 +647,7 @@ _outputs(){
         secondary)
             compadd "$@" $(output-list | grep -v $words[2])
             ;;
-    esac 
+    esac
 }
 compdef _outputs output-dual
 
@@ -788,7 +792,7 @@ setup-lfe() {
 
 alias pip-install='pip install -r requirements.txt -i http://pypi.douban.com/simple'
 
-alias get-bing-image='curl $(curl "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1" | jq -r .images[0].url) > $(date -d now +%Y-%m-%d).jpg' 
+alias get-bing-image='curl $(curl "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1" | jq -r .images[0].url) > $(date -d now +%Y-%m-%d).jpg'
 
 qr() {
     content="$1"
@@ -1080,6 +1084,11 @@ function git-retag {
     git tag $1
     git push origin :refs/tags/$1
     git push --tags
+}
+
+git-deltag() {
+    git tag -d $1
+    git push origin :refs/tags/$1
 }
 
 alias android-platforms='ls $ANDROID_HOME/platforms'

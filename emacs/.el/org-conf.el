@@ -30,7 +30,6 @@
    (dot . t)
    (haskell . t)
    (mongo . t)
-   ;; (coffee . t)
    ; (hy . t)
    (redis . t)
    (http . t)
@@ -47,13 +46,16 @@
    (perl . t)
    (elixir . t)
    ;; (rust . t)
-   ;; (eukleides . t)
+   (eukleides . t)
    ;; (fomus . t)
    (mathomatic . t)
    ;; (ansible . t)
    ;; (elm . t)
    (ditaa . t)
    (clojure . t)))
+
+(setq org-eukleides-path "/usr/bin/eukleides"
+      org-eukleides-eps-to-raster "convert %s %s")
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
 (add-to-list 'org-src-lang-modes (quote ("shell". sh)))
