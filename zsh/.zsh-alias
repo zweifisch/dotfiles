@@ -1187,3 +1187,7 @@ setup-paket() {
     nuget install paket -OutputDirectory "$tempdir"
     find "$tempdir" -name paket.exe -exec mv {} ~/.setup/paket.exe \;
 }
+
+get-m4a(){
+    curl -sL $1 | sed -n "/\.m4a/p" | sed 's/[^"]*"//' | sed 's/"//'
+}

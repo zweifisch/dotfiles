@@ -55,7 +55,10 @@
    (clojure . t)))
 
 (setq org-eukleides-path "/usr/bin/eukleides"
-      org-eukleides-eps-to-raster "convert %s %s")
+      org-eukleides-eps-to-raster "convert %s -antialias %s")
+
+(add-to-list 'org-latex-packages-alist
+             '("" "tikz" t))
 
 (add-to-list 'org-src-lang-modes (quote ("dot". graphviz-dot)))
 (add-to-list 'org-src-lang-modes (quote ("shell". sh)))
