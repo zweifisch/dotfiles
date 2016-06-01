@@ -80,7 +80,8 @@
      (vc-mode vc-mode)
      " "
      ;; Major mode
-     "%m"))
+     "%m"
+     (:eval (if url-proxy-services " P"))))
 
 (setq-default mode-line-format nil)
 

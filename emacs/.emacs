@@ -631,6 +631,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'shell-switch)
 (require 'misc-conf)
 (require 'hydra-conf)
+(require 'eww-conf)
 
 (define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
 (define-key doc-view-mode-map (kbd "k") 'doc-view-previous-line-or-previous-page)
@@ -744,11 +745,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (use-package mediawiki :ensure t)
 
 (use-package nginx-mode :ensure t)
-
-(use-package eww-lnum :ensure t)
-(eval-after-load "eww"
-  '(progn (define-key eww-mode-map "f" 'eww-lnum-follow)
-          (define-key eww-mode-map "F" 'eww-lnum-universal)))
 
 (use-package ruby-mode :ensure t)
 (add-to-list 'auto-mode-alist '("\\.cr\\'" . ruby-mode))

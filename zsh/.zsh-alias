@@ -1191,3 +1191,27 @@ setup-paket() {
 get-m4a(){
     curl -sL $1 | sed -n "/\.m4a/p" | sed 's/[^"]*"//' | sed 's/"//'
 }
+
+git-cloc() {
+    tempdir="$(mktemp -d)"
+    git clone --depth 1 "$1" "$tempdir"
+    cloc "$tempdir"
+}
+
+wifi-password() {
+	sudo sed -n "s/psk=//p" /etc/NetworkManager/system-connections/$1
+}
+
+wifi-connections() {
+	ls /etc/NetworkManager/system-connections
+}
+
+_wifi-connections(){
+    _arguments ":::($(wifi-connections))"
+}
+compdef _wifi-connections wifi-password
+
+wifi-connect() {
+	sudo nmcli c up id "$1"
+}
+compdef _wifi-connections wifi-connect
