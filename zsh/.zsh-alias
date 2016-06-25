@@ -680,6 +680,11 @@ output-brightness() {
 }
 compdef _output output-brightness
 
+output-rotate() {
+    xrandr --output $1 --rotate left
+}
+compdef _output output-rotate
+
 upsidedown(){
     LD_PRELOAD=/usr/lib/i386-linux-gnu/libv4l/v4l1compat.so $*
 }
@@ -916,7 +921,7 @@ tcpdump-http() {
 mysql-create-db() {
     db=$1
     host=localhost
-    mysql -uroot -p -e "create database $db"
+    mysql -uroot -p -e "create database \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci"
 }
 
 mysql-create-user() {
@@ -1215,3 +1220,9 @@ wifi-connect() {
 	sudo nmcli c up id "$1"
 }
 compdef _wifi-connections wifi-connect
+
+alias npm-ls='npm ls --depth 0'
+
+trash () {
+    mv "$1" ~/.trash/
+}

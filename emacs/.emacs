@@ -798,3 +798,26 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package fsharp-mode :ensure t)
 
 (use-package toml-mode :ensure t)
+
+(use-package merlin :ensure t
+  :config (progn
+            (add-hook 'tuareg-mode-hook 'merlin-mode t)
+            (add-hook 'caml-mode-hook 'merlin-mode t)
+            (setq merlin-use-auto-complete-mode 'easy)
+            (setq merlin-command 'opam)))
+
+(use-package image+ :ensure t)
+
+(eval-after-load 'image+
+  `(when (require 'hydra nil t)
+     (defhydra imagex-sticky-binding (global-map "C-x C-i")
+       "Manipulating Image"
+       ("+" imagex-sticky-zoom-in "zoom in")
+       ("-" imagex-sticky-zoom-out "zoom out")
+       ("M" imagex-sticky-maximize "maximize")
+       ("O" imagex-sticky-restore-original "restore original")
+       ("S" imagex-sticky-save-image "save file")
+       ("r" imagex-sticky-rotate-right "rotate right")
+       ("l" imagex-sticky-rotate-left "rotate left"))))
+
+(eval-after-load 'image+ '(imagex-auto-adjust-mode 1))

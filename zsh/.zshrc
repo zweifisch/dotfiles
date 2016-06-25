@@ -96,6 +96,11 @@ if [ -f $HOME/.ppa ]; then
     uname -a | grep -i ubuntu > /dev/null && source $HOME/.ppa
 fi
 
+# OPAM configuration
+if [ -f $HOME/.opam/opam-init/init.zsh ]; then
+    source $HOME/.opam/opam-init/init.zsh
+fi
+
 export ELM_HOME=${NODE_PATH//:/}/elm/share
 
 source $HOME/.zsh-alias
@@ -107,7 +112,8 @@ if [ -f $HOME/.zshrc-local ]; then
 	source $HOME/.zshrc-local
 fi
 
-export GOPATH=$GOPATH:$HOME/.projects
-
-# OPAM configuration
-. /home/zf/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+if [ -n "$GOPATH" ]; then
+    export GOPATH=$GOPATH:$HOME/.projects
+else
+    export GOPATH=$HOME/.projects
+fi
