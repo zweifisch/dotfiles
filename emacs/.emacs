@@ -147,6 +147,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "A" 'org-agenda
 
   "g" 'helm-projectile-grep
+  "G" 'ag-project
   "o" 'browse-url
   "e" 'switch-to-shell-in-project
   "E" 'switch-to-shell
@@ -230,6 +231,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package helm-projectile
   :ensure t
   :config (helm-projectile-on))
+
+(use-package ag :ensure t)
 
 ; python
 ;; (use-package python-mode :ensure t)
@@ -468,16 +471,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-            (add-to-list 'auto-mode-alist '("\\.jsx\\'" . jsx-mode))))
-
-(use-package jsx-mode
-  :ensure t)
+            (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))))
 
 (display-time-mode 1)
 
 (setq-default TeX-engine 'xetex)
 
 (use-package js2-mode :ensure t)
+
+(setq js2-strict-missing-semi-warning nil)
+(setq js2-strict-trailing-comma-warning nil)
 
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
@@ -548,13 +551,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 
 ;; (setq ajb-bs-configuration "projectile")
-
-
-
-(use-package haskell-mode
-  :ensure t
-  :bind (:map haskell-mode-map
-              ("C-c C-l" . haskell-process-load-or-reload)))
 
 (add-hook 'haskell-mode-hook 'haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'haskell-indentation-mode)

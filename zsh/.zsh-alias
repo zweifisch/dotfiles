@@ -80,7 +80,7 @@ if [ -e /usr/bin/service ]; then
     reload(){ sudo service $1 reload }
 fi
 
-if [ -e /usr/bin/systemctl ]; then
+if [ -e /bin/systemctl ]; then
     alias start='sudo systemctl start'
     alias stop='sudo systemctl stop'
     alias status='sudo systemctl status'
@@ -517,6 +517,10 @@ rename-after-time(){
     target="$(dirname $1)/$(date -d now +%Y-%m-%d-%H-%M-%S).${1##*.}"
     mv "$1" "$target"
     echo "$target"
+}
+
+today(){
+    date -d now +%Y-%m-%d
 }
 
 shot(){
@@ -1078,7 +1082,7 @@ ssht() {
 }
 
 sshtpass() {
-    sshpass -p $1 ssh -t $2 "bash --rcfile /dev/fd/3 3< <(echo \"$(cat ~/.remote-bashrc)\")"
+    sshpass -p $1 ssh -t -p ${3:-22} $2 "bash --rcfile /dev/fd/3 3< <(echo \"$(cat ~/.remote-bashrc)\")"
 }
 
 zhihu-daily() {
@@ -1199,6 +1203,14 @@ get-m4a(){
     curl -sL $1 | sed -n "/\.m4a/p" | sed 's/[^"]*"//' | sed 's/"//'
 }
 
+get-href(){
+    curl -sL $1 | sed 's/.*href="\([^"]*\)".*/\1/'
+}
+
+get-rpm(){
+    get-href $1 | grep .rpm
+}
+
 git-cloc() {
     tempdir="$(mktemp -d)"
     git clone --depth 1 "$1" "$tempdir"
@@ -1223,8 +1235,31 @@ wifi-connect() {
 }
 compdef _wifi-connections wifi-connect
 
+wifi-setup() {
+    echo -n "name: "
+    read name
+    echo -n "password: "
+    read password
+    nmcli dev wifi con "$name" password "$password" name "$name"
+}
+
 alias npm-ls='npm ls --depth 0'
 
 trash () {
     mv "$1" ~/.trash/
 }
+
+vpn-start () {
+    sudo openvpn --cd ~/.vpns/$1 --config ~/.vpns/$1/config.ovpn
+}
+
+vpn-list() {
+    find ~/.vpns -mindepth 1 -maxdepth 1 -type d -exec basename {} \;
+}
+
+_vpn_list() {
+    _arguments ":::($(vpn-list))"
+}
+compdef _vpn_list vpn-start
+
+alias rn=react-native

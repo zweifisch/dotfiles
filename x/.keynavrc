@@ -1,4 +1,4 @@
-# This is a keynavrc file. Yours should live in 
+# This is a keynavrc file. Yours should live in
 # $HOME/.keynavrc
 #
 # Lines beginning with '#' are comments.
@@ -10,7 +10,7 @@
 #   (including the defaults)
 #   'daemonize' on a line by itself (no quotes) will make keynav background
 #   after parsing the configfile and having no critical errors.
-# 
+#
 # The 'start' command alone is handled specially, in that any key sequence
 # mapped to 'start' will be grabbed when keynav starts up so you can invoke it
 # to activate keynav. The remaining keys are only recognized while keynav is
@@ -44,7 +44,7 @@ shift+u move-right,move-up
 shift+b move-left,move-down
 shift+n move-right,move-down
 space warp,click 1,end
-semicolon warp,end
+semicolon warp,click 3,end
 1 click 1
 2 click 2
 3 click 3
@@ -95,7 +95,7 @@ a history-back
 #shift+k move-up .50
 #shift+l move-right .50
 
-### Example using a 2-row, 3-column grid, 
+### Example using a 2-row, 3-column grid,
 # mapped to Insert/Home/PageUp/etc...
 #6 grid 2x3
 #Insert cell-select 1x1

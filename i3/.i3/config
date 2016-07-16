@@ -135,17 +135,20 @@ for_window [class="Emacs"] border none
 for_window [class="qutebrowser"] border none
 for_window [class="feh"] floating enable, border none
 for_window [class="mpv"] floating enable, border none
-for_window [class="MuPDF"] floating enable, border none
+for_window [class="MuPDF"] border none
 # for_window [class="jetbrains-idea-ce"] border none
 for_window [class="Firefox-dev"] border none
 for_window [class="Firefox"] border none
 for_window [class="chromium-browser"] border none
 for_window [class="Genymotion Player"] floating enable, border none
 for_window [class="rdesktop"] border none
+for_window [class="Atom"] border none
+for_window [class="VirtualBox"] border none
 
 for_window [class="stterm-256color"] border none
 
 bar {
+    mode hide
     colors {
         background #000000
         statusline #00A5FF #that neon blue
