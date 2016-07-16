@@ -33,3 +33,7 @@ new-alias() {
   echo alias $1="'""$last_command""'" >> ~/.bash_profile
   . ~/.bash_profile
 }
+
+atw() {
+  df -h --total -P -l | grep ^/dev
+}

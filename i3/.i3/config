@@ -143,6 +143,8 @@ for_window [class="chromium-browser"] border none
 for_window [class="Genymotion Player"] floating enable, border none
 for_window [class="rdesktop"] border none
 
+for_window [class="stterm-256color"] border none
+
 bar {
     colors {
         background #000000

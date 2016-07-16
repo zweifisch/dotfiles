@@ -139,7 +139,7 @@ let g:solarized_underline=0
 syntax enable
 
 if empty($INSIDE_EMACS)
-	set background=dark
+	set background=light
 	colorscheme solarized
 	Bundle 'bling/vim-airline'
 	" Bundle 'itchyny/lightline.vim'
@@ -239,7 +239,7 @@ set title
 " encoding
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936,big5,iso-8859-1,utf-16
 
-set clipboard=unnamedplus 
+set clipboard=unnamedplus
 
 set incsearch
 set hlsearch
@@ -308,7 +308,7 @@ let g:ctrlp_working_path_mode = 0
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*.so,*.out,*.in,tags
 " }}}
 " dirdiff{{{
-let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.git,.hg" 
+let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.git,.hg"
 " }}}
 " haskell {{{
 let g:haddock_browser="/usr/bin/firefox"
@@ -332,7 +332,7 @@ let g:html_indent_style1 = "inc"
 
 " Set your grep program to always generate a file-name.
 " set grepprg=grep\ -nH\ $*
-" 
+"
 " type \ref{fig: and press <C-n> automatically cycle through all the figure labels
 " set iskeyword+=:
 
@@ -457,7 +457,7 @@ let tlist_php_settings = 'php;c:class;f:function'
 " vimim {{{
 let g:vimim_map='c-bslash'
 let g:vimim_map='no-gi'
-" let g:vimim_plugin = '~/.vim/plugin'  
+" let g:vimim_plugin = '~/.vim/plugin'
 " let g:vimim_cloud = -1
 " }}}
 " vim-markdown {{{
@@ -654,7 +654,7 @@ nmap ,ti a<C-R>=strftime("%H:%M:%S")<CR>
 au BufRead,BufNewFile *.go set ft=go
 au BufRead,BufNewFile *.kv set ft=kv
 au BufRead,BufNewFile *.as set ft=actionscript
-au BufRead,BufNewFile *.ldg,*.ledger set ft=ledger  
+au BufRead,BufNewFile *.ldg,*.ledger set ft=ledger
 au BufRead,BufNewFile *.md set ft=markdown
 au BufRead,BufNewFile *.json set ft=json
 au BufNewFile,BufRead *.cfdg set ft=cfdg

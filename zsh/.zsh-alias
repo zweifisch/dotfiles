@@ -20,8 +20,6 @@ alias erl='rlwrap -a erl'
 
 alias pull='git pull'
 alias push='git push'
-alias st='git status -sb'
-alias ci='git commit'
 
 datetime(){
     date -d@$1 +%Y-%m-%d\ %H:%M:%S
@@ -920,8 +918,8 @@ tcpdump-http() {
 
 mysql-create-db() {
     db=$1
-    host=localhost
-    mysql -uroot -p -e "create database \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci"
+    host=${2:-localhost}
+    mysql -uroot -p -h $host -e "create database \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci"
 }
 
 mysql-create-user() {
@@ -929,10 +927,14 @@ mysql-create-user() {
     read db
     echo -n "user: "
     read user
-    host=localhost
+    echo -n "host: "
+    read host
+    host=${host:-localhost}
     echo -n "password for $user: "
     read password
-    mysql -uroot -p -e "GRANT ALL PRIVILEGES ON $db.* TO $user@$host IDENTIFIED BY '$password'; FLUSH PRIVILEGES; SHOW GRANTS FOR $user@$host"
+    sql="GRANT ALL PRIVILEGES ON $db.* TO $user@'%' IDENTIFIED BY '$password'; FLUSH PRIVILEGES; SHOW GRANTS FOR $user@'%'"
+    echo $sql
+    mysql -uroot -h $host -p -e "$sql"
 }
 
 haxe-run() {
