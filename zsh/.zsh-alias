@@ -781,12 +781,14 @@ setup-vagrant() {
 	sudo dpkg -i vagrant_${version}_x86_64.deb
 }
 
-setup-otto() {
-	version=0.1.1
-	wget -c https://dl.bintray.com/mitchellh/otto/otto_${version}_linux_amd64.zip
-	unzip otto_${version}_linux_amd64.zip
-	sudo install otto /usr/sbin/
-	rm otto
+setup-watchman() {
+    git clone -- https://github.com/facebook/watchman.git
+    cd watchman
+    git checkout v4.6.0  # the latest stable release
+    ./autogen.sh
+    ./configure
+    make
+    sudo make install
 }
 
 setup-lfe() {
@@ -1263,3 +1265,5 @@ _vpn_list() {
 compdef _vpn_list vpn-start
 
 alias rn=react-native
+
+alias smtp-date="date '+%a, %d %b %Y %H:%M:%S %z'"

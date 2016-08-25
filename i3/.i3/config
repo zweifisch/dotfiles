@@ -119,7 +119,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-
 bindsym $mod+Up exec "amixer -q sset Master 5%+ unmute"
 bindsym $mod+Down exec "amixer -q sset Master 5%- unmute"
 
@@ -137,6 +136,7 @@ for_window [class="feh"] floating enable, border none
 for_window [class="mpv"] floating enable, border none
 for_window [class="MuPDF"] border none
 # for_window [class="jetbrains-idea-ce"] border none
+for_window [class="jetbrains-studio"] border none
 for_window [class="Firefox-dev"] border none
 for_window [class="Firefox"] border none
 for_window [class="chromium-browser"] border none
@@ -144,8 +144,19 @@ for_window [class="Genymotion Player"] floating enable, border none
 for_window [class="rdesktop"] border none
 for_window [class="Atom"] border none
 for_window [class="VirtualBox"] border none
+for_window [class="Lucidor"] border none
 
 for_window [class="stterm-256color"] border none
+
+for_window [title="qiv"] floating enable, border none
+
+for_window [title="avd"] floating enable, border none
+for_window [title="Emulator"] floating enable, border none
+
+for_window [class="^.*"] border pixel 0
+smart_gaps on
+gaps inner 10
+
 
 bar {
     mode hide

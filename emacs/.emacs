@@ -53,7 +53,7 @@
       mouse-yank-at-point t
       save-place-file (concat user-emacs-directory "places"))
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+; (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 
 (require 'package)

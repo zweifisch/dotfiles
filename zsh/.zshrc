@@ -14,7 +14,7 @@ ZSH_CUSTOM=$HOME/.zsh
 DISABLE_AUTO_UPDATE="true"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(vi-mode gnu-utils zsh-syntax-highlighting history-substring-search vagrant zaw docker)
+plugins=(vi-mode gnu-utils zsh-syntax-highlighting history-substring-search vagrant zaw docker zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all
