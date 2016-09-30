@@ -729,7 +729,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package ranger :ensure t)
 
-(evil-define-key 'normal helm-grep-mode
+(evil-define-key 'normal helm-grep-mode-map
   (kbd "RET") 'helm-grep-mode-jump-other-window)
 
 (use-package enlive :ensure t)
@@ -817,3 +817,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
        ("l" imagex-sticky-rotate-left "rotate left"))))
 
 (eval-after-load 'image+ '(imagex-auto-adjust-mode 1))
+
+(use-package processing-mode :ensure t
+  :config (progn
+            (setq processing-location "~/.processing/processing-java")
+            (setq processing-application-dir "~/.processing")
+            (setq processing-sketchbook-dir "~/sketchbook"))
+  :bind (:map processing-mode-map
+              ("C-c C-c" . processing-sketch-run)))

@@ -139,7 +139,7 @@ let g:solarized_underline=0
 syntax enable
 
 if empty($INSIDE_EMACS)
-	set background=light
+	set background=dark
 	colorscheme solarized
 	Bundle 'bling/vim-airline'
 	" Bundle 'itchyny/lightline.vim'

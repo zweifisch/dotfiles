@@ -1266,4 +1266,24 @@ compdef _vpn_list vpn-start
 
 alias rn=react-native
 
+find-apk() {
+    find -name "*.apk" | grep "release"
+}
+
+serve-on-port() {
+    port=${1:-8888}
+    access-port $port
+    which http-server
+    if [ $? = 0 ]; then
+        http-server -p $port
+    else
+        python -m SimpleHTTPServer $port
+    fi
+}
+
+access-port() {
+    ip_address=$(ip address show dev wlan0 | grep inet | grep -v inet6 | sed 's/[^0-9]*\([0-9.]\+\).*/\1/')
+    qrencode -t UTF8 http://$ip_address:${1:-8888}
+}
+
 alias smtp-date="date '+%a, %d %b %Y %H:%M:%S %z'"
