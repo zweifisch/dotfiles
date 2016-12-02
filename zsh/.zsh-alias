@@ -1283,6 +1283,7 @@ serve-on-port() {
 
 access-port() {
     ip_address=$(ip address show dev wlan0 | grep inet | grep -v inet6 | sed 's/[^0-9]*\([0-9.]\+\).*/\1/')
+    echo http://$ip_address:${1:-8888}
     qrencode -t UTF8 http://$ip_address:${1:-8888}
 }
 

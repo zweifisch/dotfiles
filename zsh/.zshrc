@@ -39,6 +39,8 @@ export REPORTTIME=30
 
 export VIDIR_EDITOR_ARGS='-c :set nolist | :set ft=vidir-ls'
 
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
+
 # tmuxp
 export DISABLE_AUTO_TITLE='true'
 

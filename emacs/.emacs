@@ -160,7 +160,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "v" 'persp-switch
   ;; "v" 'helm-projectile-switch-project
   "m" 'mu4e
-  "d" 'deft
+  "d" 'dictionary-search
   "D" 'vc-diff)
 
 (global-evil-leader-mode)
@@ -471,7 +471,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-            (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))))
+            (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+            (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))))
 
 (display-time-mode 1)
 
@@ -483,7 +484,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq js2-strict-trailing-comma-warning nil)
 
 (autoload 'js2-mode "js2-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; golang
 
@@ -767,6 +768,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (compilation-ask-about-save nil))
     (compile "npm test" t)))
 
+(defun npm-lint ()
+  "npm test"
+  (interactive)
+  (let ((compilation-save-buffers-predicate 'ignore)
+        (compilation-ask-about-save nil))
+    (compile "npm run lint" t)))
+
 (use-package term
   :config
   (evil-set-initial-state 'term-mode 'emacs)
@@ -825,3 +833,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (setq processing-sketchbook-dir "~/sketchbook"))
   :bind (:map processing-mode-map
               ("C-c C-c" . processing-sketch-run)))
+
+(setq dictionary-server "localhost")
+
+(use-package typescript-mode :ensure t)
