@@ -3,13 +3,13 @@ alias start='systemctl start'
 alias stop='systemctl stop'
 alias restart='systemctl restart'
 
-function rss {
-    systemctl restart \$1
-    echo \$1 restarted
-    sleep 1
-    systemctl status \$1
-    sleep 3
-    systemctl status \$1
+rss() {
+  systemctl restart \$1
+  echo \$1 restarted
+  sleep 1
+  systemctl status \$1
+  sleep 3
+  systemctl status \$1
 }
 
 alias rm='rm -i'

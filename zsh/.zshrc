@@ -125,3 +125,7 @@ if [ -d "$HOME/.linuxbrew" ]; then
     export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
     export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 fi
+
+if [ -d /usr/lib/jvm/java-1.8.0-openjdk-amd64 ]; then
+    JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+fi

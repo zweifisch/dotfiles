@@ -458,6 +458,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "Jump to Dired buffer corresponding to current buffer." t)
 (define-key evil-normal-state-map "-" 'dired-jump)
 (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
+(add-hook 'dired-mode-hook 'auto-revert-mode)
 ;; (setq dired-isearch-filenames t)
 
 (use-package coffee-mode
@@ -837,3 +838,5 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq dictionary-server "localhost")
 
 (use-package typescript-mode :ensure t)
+
+(use-package ponylang-mode :ensure t)

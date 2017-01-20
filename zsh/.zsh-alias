@@ -44,6 +44,8 @@ alias vbox='VBoxManage startvm'
 alias vbox-list="VBoxManage -nologo list vms"
 alias nb='newsbeuter'
 alias pb='podbeuter'
+
+alias dk='docker'
 alias docker-rm-all='docker rm $(docker ps -a -q)'
 alias docker-kill-all='docker kill $(docker ps -a -q)'
 alias get-docker="curl -sSL https://get.docker.com/ | sh"
@@ -167,7 +169,7 @@ if [ $? = 0 ]; then
 fi
 
 alias chrome='z chromium-browser --disk-cache-dir="/dev/shm/chrome/" &'
-alias chrome-proxy='z chromium-browser --disk-cache-dir="/dev/shm/chrome/" --proxy-server="socks5://localhost:7070" &'
+alias chrome-proxy='killall chromium-browser; z chromium-browser --disk-cache-dir="/dev/shm/chrome/" --proxy-server="socks5://localhost:7070" &'
 alias chrome-dev='z chromium-browser --disk-cache-dir="/dev/shm/chrome/" --allow-file-access-from-files  --disable-web-security --remote-debugging-port=9222 &'
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
@@ -330,13 +332,18 @@ ignore(){
     touch .gitignore
     cat >> .gitignore <<EOF
 *.pyc
-/venv/
-/node_modules/
-/npm-debug.log
-/vendor/
-bower_components/
+node_modules/
+*.log
 .lock.pid
 .module-cache/
+.gradle
+
+*.iws
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/vcs.xml
+
+/build/
 EOF
     $EDITOR .gitignore
 }
@@ -683,9 +690,22 @@ output-brightness() {
 compdef _output output-brightness
 
 output-rotate() {
-    xrandr --output $1 --rotate left
+    xrandr --output $1 --rotate $2
 }
-compdef _output output-rotate
+
+_output_rotate(){
+    _arguments '1: :->output' '2: :->orientation'
+    case $state in
+        output)
+            _arguments "1: :($(output-list))"
+            ;;
+        orientation)
+			_arguments "2: :(left right normal)"
+            ;;
+    esac
+}
+
+compdef _output_rotate output-rotate
 
 upsidedown(){
     LD_PRELOAD=/usr/lib/i386-linux-gnu/libv4l/v4l1compat.so $*
@@ -801,7 +821,7 @@ setup-lfe() {
 
 alias pip-install='pip install -r requirements.txt -i http://pypi.douban.com/simple'
 
-alias get-bing-image='curl $(curl "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1" | jq -r .images[0].url) > $(date -d now +%Y-%m-%d).jpg'
+alias get-bing-image='curl http://www.bing.com$(curl "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1" | jq -r .images[0].url) > $(date -d now +%Y-%m-%d).jpg'
 
 qr() {
     content="$1"
@@ -1288,3 +1308,15 @@ access-port() {
 }
 
 alias smtp-date="date '+%a, %d %b %Y %H:%M:%S %z'"
+
+# today's working directory
+twd() {
+    wd="$HOME/.twd/$(today)"
+    [ -d $wd ] || mkdir -p $wd
+    cd $wd
+}
+
+calendar-year() {
+    year=$(date +%Y)
+    task calendar $year
+}
