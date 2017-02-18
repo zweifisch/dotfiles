@@ -1284,6 +1284,19 @@ _vpn_list() {
 }
 compdef _vpn_list vpn-start
 
+ss-start () {
+    sslocal -c ~/.ss/$1
+}
+
+ss-list() {
+    ls ~/.ss
+}
+
+_ss_list() {
+    _arguments ":::($(ss-list))"
+}
+compdef _ss_list ss-start
+
 alias rn=react-native
 
 find-apk() {
