@@ -174,7 +174,7 @@ alias chrome-dev='z chromium-browser --disk-cache-dir="/dev/shm/chrome/" --allow
 
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias mpv='VDPAU_DRIVER=va_gl mpv'
-alias play='mplayer'
+alias play='mpv'
 alias play-shuffle='mplayer -shuffle -playlist <(find "$(pwd)" -name "*.mp3")'
 
 alias datafart='curl --data-binary @- datafart.com'
@@ -943,9 +943,15 @@ tcpdump-http() {
 }
 
 mysql-create-db() {
-    db=$1
-    host=${2:-localhost}
-    mysql -uroot -p -h $host -e "create database \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci"
+    echo -n "database: "
+    read db
+    sql="create database \`$db\` CHARACTER SET utf8 COLLATE utf8_general_ci;"
+    echo $sql
+    echo -n "continue? [Ny] "
+    read REPLY
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        sudo mysql -e "$sql"
+    fi
 }
 
 mysql-create-user() {
@@ -953,14 +959,15 @@ mysql-create-user() {
     read db
     echo -n "user: "
     read user
-    echo -n "host: "
-    read host
-    host=${host:-localhost}
     echo -n "password for $user: "
     read password
-    sql="GRANT ALL PRIVILEGES ON $db.* TO $user@'%' IDENTIFIED BY '$password'; FLUSH PRIVILEGES; SHOW GRANTS FOR $user@'%'"
+    sql="GRANT ALL PRIVILEGES ON $db.* TO $user@'%' IDENTIFIED BY '$password'; FLUSH PRIVILEGES; SHOW GRANTS FOR $user@'%';"
     echo $sql
-    mysql -uroot -h $host -p -e "$sql"
+    echo -n "continue? [Ny] "
+    read REPLY
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        sudo mysql -e "$sql"
+    fi
 }
 
 haxe-run() {
@@ -1153,7 +1160,7 @@ start-vncserver(){
 }
 
 mount-vfat() {
-    sudo mount -t vfat $1 $2 -o uid=$UID,gid=$GID
+    sudo mount -t vfat $1 $2 -o uid=$UID,gid=$GID,iocharset=utf8
 }
 
 dirdiff(){
@@ -1332,4 +1339,8 @@ twd() {
 calendar-year() {
     year=$(date +%Y)
     task calendar $year
+}
+
+redis-last-key() {
+    for key in $(redis-cli keys "$1" | awk '{print $1}'); do echo $(redis-cli ttl $key | awk '{print $1}') $key; done | sort -nr | head -1 | awk '{print $2}'
 }

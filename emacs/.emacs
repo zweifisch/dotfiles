@@ -460,6 +460,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal dired-mode-map "-" 'dired-up-directory)
 (add-hook 'dired-mode-hook 'auto-revert-mode)
 ;; (setq dired-isearch-filenames t)
+(setq dired-dwim-target t)
 
 (use-package coffee-mode
   :ensure t
