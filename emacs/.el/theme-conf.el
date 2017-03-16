@@ -21,7 +21,9 @@
 ;; (set-default-font "DejaVu Sans Mono-10")
 ;; (set-fontset-font nil 'chinese-gbk '"WenQuanYi Micro Hei Mono-12")
 
-(set-face-attribute 'default nil :font "Fira Code-10.5" :weight 'Light)
+(set-face-attribute 'default nil :font "Hack")
+
+;; (set-face-attribute 'default nil :font "Fira Code-10.5" :weight 'Light)
 (set-fontset-font nil 'chinese-gbk '"WenQuanYi Micro Hei Mono-12")
 
 ;; (set-frame-font "Hack-10")

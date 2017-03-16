@@ -161,4 +161,6 @@
 
 (require 'org-velocity)
 
+(use-package org-board :ensure t)
+
 (provide 'org-conf)

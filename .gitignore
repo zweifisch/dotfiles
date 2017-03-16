@@ -12,3 +12,4 @@ repos
 muttrc
 gitconfig
 bin/composer.phar
+.lein

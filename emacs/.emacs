@@ -143,6 +143,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "b" 'helm-projectile-switch-to-buffer
   "R" 'helm-recentf
   "r" 'helm-projectile-recentf
+  "j" 'helm-bookmarks
 
   "A" 'org-agenda
 
