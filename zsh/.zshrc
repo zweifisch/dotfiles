@@ -25,7 +25,7 @@ setopt NOCLOBBER
 export EDITOR="vim"
 
 export HISTIGNORE="&:ls:[bf]g:cd:..:mkdir"
-export HISTSIZE=25000
+export HISTSIZE=50000
 export HISTFILE=~/.zsh_history
 export SAVEHIST=10000
 setopt INC_APPEND_HISTORY

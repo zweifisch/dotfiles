@@ -530,6 +530,10 @@ today(){
     date -d now +%Y-%m-%d
 }
 
+yesterday(){
+    date -d "-1 day" +%Y-%m-%d
+}
+
 shot(){
     mplayer -vo jpeg -frames 2 tv:// &> /dev/null
     rm -f 00000001.jpg
@@ -1336,6 +1340,24 @@ twd() {
     cd $wd
 }
 
+prev() {
+    current=basename $(pwd)
+    wd="$HOME/.twd/$(date -d "$current -1 day" +%Y-%m-%d)"
+    cd $wd
+}
+
+next() {
+    current=basename $(pwd)
+    wd="$HOME/.twd/$(date -d "$current +1 day" +%Y-%m-%d)"
+    cd $wd
+}
+
+ywd() {
+    wd="$HOME/.twd/$(yesterday)"
+    [ -d $wd ] || mkdir -p $wd
+    cd $wd
+}
+
 calendar-year() {
     year=$(date +%Y)
     task calendar $year
@@ -1344,3 +1366,5 @@ calendar-year() {
 redis-last-key() {
     for key in $(redis-cli keys "$1" | awk '{print $1}'); do echo $(redis-cli ttl $key | awk '{print $1}') $key; done | sort -nr | head -1 | awk '{print $2}'
 }
+
+alias trim-conf="sed -e 's/^\s*#.*$//g' -e '/^$/d'"
