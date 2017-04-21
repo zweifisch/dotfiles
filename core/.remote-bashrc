@@ -37,3 +37,5 @@ new-alias() {
 atw() {
   df -h --total -P -l | grep ^/dev
 }
+
+alias trim-conf='sed -e "s/^\s*#.*$//g" -e "/^$/d"'

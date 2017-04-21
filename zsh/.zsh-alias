@@ -1333,26 +1333,26 @@ access-port() {
 
 alias smtp-date="date '+%a, %d %b %Y %H:%M:%S %z'"
 
-# today's working directory
-twd() {
+# working directory
+wd-today() {
     wd="$HOME/.twd/$(today)"
     [ -d $wd ] || mkdir -p $wd
     cd $wd
 }
 
-prev() {
+wd-prev() {
     current=basename $(pwd)
     wd="$HOME/.twd/$(date -d "$current -1 day" +%Y-%m-%d)"
     cd $wd
 }
 
-next() {
+wd-next() {
     current=basename $(pwd)
     wd="$HOME/.twd/$(date -d "$current +1 day" +%Y-%m-%d)"
     cd $wd
 }
 
-ywd() {
+wd-yesterday() {
     wd="$HOME/.twd/$(yesterday)"
     [ -d $wd ] || mkdir -p $wd
     cd $wd
@@ -1368,3 +1368,18 @@ redis-last-key() {
 }
 
 alias trim-conf="sed -e 's/^\s*#.*$//g' -e '/^$/d'"
+
+alias npm-deps="jq .dependencies < package.json"
+
+ssh-config-use() {
+    ln -srf ~/.ssh/config.d/$1 ~/.ssh/config
+}
+
+ssh-config-list() {
+    ls ~/.ssh/config.d
+}
+
+_ssh_config_list() {
+    _arguments ":::($(ssh-config-list))"
+}
+compdef _ssh_config_list ssh-config-use
