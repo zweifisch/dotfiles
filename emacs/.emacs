@@ -162,7 +162,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; "v" 'helm-projectile-switch-project
   "m" 'mu4e
   "d" 'dictionary-search
-  "D" 'vc-diff)
+  "D" 'bing-dict-at-point)
 
 (global-evil-leader-mode)
 (evil-leader/set-leader "|")
@@ -474,20 +474,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-            (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+            ;(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))))
 
 (display-time-mode 1)
 
 (setq-default TeX-engine 'xetex)
 
-(use-package js2-mode :ensure t)
-
-(setq js2-strict-missing-semi-warning nil)
-(setq js2-strict-trailing-comma-warning nil)
-
-(autoload 'js2-mode "js2-mode" nil t)
-;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(use-package js2-mode
+  :ensure t
+  :config (progn
+            (setq js2-strict-missing-semi-warning nil)
+            (setq js2-strict-trailing-comma-warning nil)
+            (setq js2-mode-assume-strict t)
+            (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))))
 
 ;; golang
 
@@ -845,3 +845,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package ob-async :ensure t
   :config (add-to-list 'org-ctrl-c-ctrl-c-hook 'ob-async-org-babel-execute-src-block))
+
+(use-package neotree :ensure t
+  :config (progn
+            (setq neo-theme 'arrow)
+            (add-hook 'neotree-mode-hook
+                      (lambda ()
+                        (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+                        (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
+                        (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+                        (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))))
+
+(use-package puppet-mode :ensure t)
+
+(use-package origami :ensure t)

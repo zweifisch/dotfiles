@@ -139,7 +139,7 @@ let g:solarized_underline=0
 syntax enable
 
 if empty($INSIDE_EMACS)
-	set background=light
+	set background=dark
 	colorscheme solarized
 	Bundle 'bling/vim-airline'
 	" Bundle 'itchyny/lightline.vim'
@@ -669,6 +669,8 @@ au BufRead,BufNewFile *.pl set ft=prolog
 au BufRead,BufNewFile *.conf set ft=dosini
 
 au BufReadCmd *.epub call zip#Browse(expand("<amatch>"))
+
+au BufRead *.yaml set fdm=indent
 
 " vim -b : edit binary using xxd-format!
 augroup Binary

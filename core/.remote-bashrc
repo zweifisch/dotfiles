@@ -12,6 +12,8 @@ rss() {
   systemctl status \$1
 }
 
+alias services='systemctl list-unit-files'
+
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -38,4 +40,6 @@ atw() {
   df -h --total -P -l | grep ^/dev
 }
 
-alias trim-conf='sed -e "s/^\s*#.*$//g" -e "/^$/d"'
+terse() {
+  sed -e 's/^\s*#.*$//g;/^$/d' < \$1 | vim -c 'set ft=dosini' -
+}
