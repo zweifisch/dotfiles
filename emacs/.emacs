@@ -846,16 +846,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package ob-async :ensure t
   :config (add-to-list 'org-ctrl-c-ctrl-c-hook 'ob-async-org-babel-execute-src-block))
 
-(use-package neotree :ensure t
-  :config (progn
-            (setq neo-theme 'arrow)
-            (add-hook 'neotree-mode-hook
-                      (lambda ()
-                        (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
-                        (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
-                        (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
-                        (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)))))
-
 (use-package puppet-mode :ensure t)
 
-(use-package origami :ensure t)
+(defun insert-image-from-url ()
+  (interactive)
+  (let* ((path (read-string "url: " (car kill-ring)))
+         (basename (concat (md5 path) "." (file-name-extension path)))
+         (img (expand-file-name basename
+               (file-name-directory buffer-file-name))))
+    (unless (file-exists-p img)
+      (url-copy-file path img))
+    (insert (concat "[[file:" basename "]]"))
+    (org-display-inline-images)))
