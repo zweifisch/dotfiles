@@ -157,22 +157,22 @@ for_window [class="^Chrome$" title=" - Chromium$"] border none
 
 for_window [class="^.*"] border pixel 0
 
-smart_gaps on
+# smart_gaps on
 gaps inner 16
-gaps outer 6
+gaps outer 5
 
-bar {
-    mode hide
-    colors {
-        background #000000
-        statusline #00A5FF #that neon blue
-        separator #666666
-
-        focused_workspace  #4c7899 #285577 #ffffff
-        active_workspace   #333333 #5f676a #ffffff
-        inactive_workspace #333333 #222222 #888888
-        urgent_workspace   #2f343a #900000 #ffffff
-    }
-    # position top
-    status_command i3status -c ~/.i3/i3status.conf
-}
+# bar {
+#     mode top
+#     colors {
+#         background #000000
+#         statusline #00A5FF #that neon blue
+#         separator #666666
+# 
+#         focused_workspace  #4c7899 #285577 #ffffff
+#         active_workspace   #333333 #5f676a #ffffff
+#         inactive_workspace #333333 #222222 #888888
+#         urgent_workspace   #2f343a #900000 #ffffff
+#     }
+#     # position top
+#     status_command i3status -c ~/.i3/i3status.conf
+# }

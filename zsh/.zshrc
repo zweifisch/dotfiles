@@ -44,9 +44,6 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=7'
 # tmuxp
 export DISABLE_AUTO_TITLE='true'
 
-bindkey '^R' zaw-history
-zstyle ':filter-select' max-lines 5
-
 bindkey '\e[A' history-substring-search-up
 bindkey '\e[B' history-substring-search-down
 
@@ -128,4 +125,10 @@ fi
 
 if [ -d /usr/lib/jvm/java-1.8.0-openjdk-amd64 ]; then
     JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+fi
+
+if [ -d "$HOME/.zaw" ]; then
+    source ~/.zaw/zaw.zsh
+    bindkey '^R' zaw-history
+    zstyle ':filter-select' max-lines 10
 fi

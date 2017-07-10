@@ -40,8 +40,6 @@ alias lauter='amixer -q -c 0 sset Master 5%+ unmute'
 
 alias total-play-time='bc <<< "$(find -name "*.mp3" -print0 | xargs -0 mp3info -p "%S\n" | paste -sd+ | bc) / 60" '
 
-alias vbox='VBoxManage startvm'
-alias vbox-list="VBoxManage -nologo list vms"
 alias nb='newsbeuter'
 alias pb='podbeuter'
 
@@ -1368,7 +1366,9 @@ redis-last-key() {
     for key in $(redis-cli keys "$1" | awk '{print $1}'); do echo $(redis-cli ttl $key | awk '{print $1}') $key; done | sort -nr | head -1 | awk '{print $2}'
 }
 
-alias trim-conf="sed -e 's/^\s*#.*$//g' -e '/^$/d'"
+terse() {
+  sed -e 's/^\s*#.*$//g;/^$/d' < $1 | vim -c 'set ft=dosini' -
+}
 
 alias npm-deps="jq .dependencies < package.json"
 
@@ -1384,3 +1384,31 @@ _ssh_config_list() {
     _arguments ":::($(ssh-config-list))"
 }
 compdef _ssh_config_list ssh-config-use
+
+swap-number-symbol() {
+  if [ "$(xmodmap -pk | grep ' 10 ' | awk '{print $3}')" = '(1)' ]; then
+	  xmodmap ~/.Xmodmap-unumber
+  else
+	  xmodmap ~/.Xmodmap-number
+  fi
+}
+
+alias soft-uptime='date -d@$(stat --printf="%Y" /proc/1) +%Y-%m-%d\ %H:%M:%S'
+
+vbox-start() {
+    vboxmanage startvm "$1"
+}
+
+vbox-start-headless() {
+    vboxheadless -s "$1"
+}
+
+vbox-list() {
+    vboxmanage list vms | awk -vFPAT='([^ ]*)|("[^"]+")' '{print $1}'
+}
+
+_vbox_list() {
+    _arguments ":::($(vbox-list))"
+}
+compdef _vbox_list vbox-start
+compdef _vbox_list vbox-start-headless

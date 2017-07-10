@@ -165,3 +165,5 @@
 (use-package org-board :ensure t)
 
 (provide 'org-conf)
+
+(setq org-hide-emphasis-markers t)

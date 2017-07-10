@@ -146,6 +146,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "j" 'helm-bookmarks
 
   "A" 'org-agenda
+  "h" 'helm-org-in-buffer-headings
+  "t" 'org-narrow-to-subtree
 
   "g" 'helm-projectile-grep
   "G" 'ag-project
@@ -220,6 +222,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :config
   (progn
     (use-package helm-config)
+    (setq helm-grep-file-path-style 'relative)
     (add-hook 'helm-before-initialize-hook
               (lambda ()
                 (add-to-list 'helm-boring-buffer-regexp-list  "\\*magit")

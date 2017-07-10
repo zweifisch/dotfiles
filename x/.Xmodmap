@@ -39,7 +39,3 @@ keycode 34 = braceleft bracketleft
 keycode 35 = braceright bracketright
 
 keycode 48 = quotedbl apostrophe
-
-! curleys
-! keycode  34 = braceleft bracketleft
-! keycode  35 = braceright bracketright
