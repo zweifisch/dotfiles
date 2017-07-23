@@ -158,8 +158,8 @@ for_window [class="^Chrome$" title=" - Chromium$"] border none
 for_window [class="^.*"] border pixel 0
 
 # smart_gaps on
-gaps inner 16
-gaps outer 5
+# gaps inner 16
+# gaps outer 5
 
 # bar {
 #     mode top
