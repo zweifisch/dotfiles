@@ -142,6 +142,7 @@ for_window [class="Firefox"] border none
 for_window [class="chromium-browser"] border none
 for_window [class="Genymotion Player"] floating enable, border none
 for_window [class="rdesktop"] border none
+for_window [class="Vncviewer"] floating enable, border none
 for_window [class="Atom"] border none
 for_window [class="VirtualBox"] border none
 for_window [class="Lucidor"] border none
@@ -158,8 +159,8 @@ for_window [class="^Chrome$" title=" - Chromium$"] border none
 for_window [class="^.*"] border pixel 0
 
 # smart_gaps on
-# gaps inner 16
-# gaps outer 5
+gaps inner 10
+gaps outer 5
 
 # bar {
 #     mode top

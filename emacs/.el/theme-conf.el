@@ -2,13 +2,16 @@
 (use-package helm-themes :ensure t)
 ;; (use-package zenburn-theme :ensure t)
 ;; (use-package color-theme-sanityinc-tomorrow :ensure t)
+
 ;; (use-package moe-theme :ensure t)
-(use-package material-theme :ensure t)
+;; (use-package material-theme :ensure t)
 ;; (use-package leuven-theme :ensure t)
 ;; (use-package twilight-bright-theme :ensure t)
 ;; (use-package monokai-theme :ensure t)
 ;; (use-package darkokai-theme :ensure t)
-(load-theme 'material t)
+(use-package subatomic-theme :ensure t)
+
+(load-theme 'subatomic t)
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
 

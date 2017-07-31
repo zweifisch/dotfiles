@@ -132,3 +132,5 @@ if [ -d "$HOME/.zaw" ]; then
     bindkey '^R' zaw-history
     zstyle ':filter-select' max-lines 10
 fi
+
+source <(kubectl completion zsh)

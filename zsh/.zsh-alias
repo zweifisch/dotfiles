@@ -1412,3 +1412,9 @@ _vbox_list() {
 }
 compdef _vbox_list vbox-start
 compdef _vbox_list vbox-start-headless
+
+vlan_add() {
+    ip link add link $1 name $1.$2 type vlan id $2
+}
+
+alias empty='truncate -s 0'
