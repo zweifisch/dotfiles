@@ -1418,3 +1418,7 @@ vlan_add() {
 }
 
 alias empty='truncate -s 0'
+
+setup-zaw(){
+    git clone --depth 1 https://github.com/zsh-users/zaw ~/.zaw
+}

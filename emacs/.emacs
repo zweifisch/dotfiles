@@ -152,8 +152,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "g" 'helm-projectile-grep
   "G" 'ag-project
   "o" 'browse-url
-  "e" 'switch-to-shell-in-project
-  "E" 'switch-to-shell
+  "e" 'eshell-here
+  "E" 'switch-to-shell-in-project
   ;; "i" 'ein:notebooklist-open
   "c" 'org-capture
   "s" 'magit-status
@@ -608,8 +608,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (use-package symon :ensure t)
 ;; (symon-mode)
 
-(use-package hydra :ensure t)
-
 (use-package discover :ensure t)
 (global-discover-mode t)
 
@@ -633,7 +631,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'theme-conf)
 (require 'shell-switch)
 (require 'misc-conf)
-(require 'hydra-conf)
 (require 'eww-conf)
 
 (define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
@@ -818,18 +815,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package image+ :ensure t)
 
-(eval-after-load 'image+
-  `(when (require 'hydra nil t)
-     (defhydra imagex-sticky-binding (global-map "C-x C-i")
-       "Manipulating Image"
-       ("+" imagex-sticky-zoom-in "zoom in")
-       ("-" imagex-sticky-zoom-out "zoom out")
-       ("M" imagex-sticky-maximize "maximize")
-       ("O" imagex-sticky-restore-original "restore original")
-       ("S" imagex-sticky-save-image "save file")
-       ("r" imagex-sticky-rotate-right "rotate right")
-       ("l" imagex-sticky-rotate-left "rotate left"))))
-
 (eval-after-load 'image+ '(imagex-auto-adjust-mode 1))
 
 (use-package processing-mode :ensure t
@@ -879,7 +864,25 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (insert (format "[[file:%s]]" imagename))
     (org-display-inline-images)))
 
-(use-package pdf-tools :ensure t)
+(use-package pdf-tools :ensure t
+  :config (progn
+            (evil-make-overriding-map pdf-view-mode-map 'normal)
+            (evil-define-key 'normal pdf-view-mode-map
+              "gg" 'pdf-view-first-page
+              "G" 'pdf-view-last-page
+              "h" 'pdf-view-previous-page-command
+              "j" (lambda () (interactive) (pdf-view-next-line-or-next-page 5))
+              "k" (lambda () (interactive) (pdf-view-previous-line-or-previous-page 5))
+              "l" 'pdf-view-next-page-command)
+              (kbd "C-o") 'pdf-history-backward
+              (kbd "C-i") 'pdf-history-forward
+              "m" 'pdf-view-position-to-register
+              "'" 'pdf-view-jump-to-register
+              "/" 'pdf-occur
+              "o" 'pdf-outline
+              "f" 'pdf-links-action-perform
+              "b" 'pdf-view-midnight-minor-mode))
+
 (pdf-tools-install)
 
 
@@ -899,6 +902,5 @@ directory to make multiple eshell windows easier."
     (rename-buffer (concat "*eshell: " name "*"))))
 
 (defun eshell/x ()
-  (insert "exit")
-  (eshell-send-input)
-  (delete-window))
+    (delete-window)
+    (eshell/exit))

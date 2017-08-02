@@ -72,7 +72,6 @@
       org-confirm-babel-evaluate nil)
 
 (setq org-image-actual-width 600)
-(setq org-image-actual-width nil)
 
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 

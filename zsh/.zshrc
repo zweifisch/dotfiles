@@ -129,8 +129,19 @@ fi
 
 if [ -d "$HOME/.zaw" ]; then
     source ~/.zaw/zaw.zsh
+
     bindkey '^R' zaw-history
-    zstyle ':filter-select' max-lines 10
+    bindkey '^X:' zaw
+
+    zstyle ':filter-select' max-lines $(($LINES / 2))
+    zstyle ':filter-select' case-insensitive yes
+    zstyle ':filter-select' extended-search yes
+
+    zstyle ':filter-select:highlight' selected standout,bold
+    zstyle ':filter-select:highlight' matched fg=magenta,underline
+    zstyle ':filter-select:highlight' marked fg=blue,standout
+    zstyle ':filter-select:highlight' title bold
+    zstyle ':filter-select:highlight' error fg=white,bg=red
 fi
 
 source <(kubectl completion zsh)
