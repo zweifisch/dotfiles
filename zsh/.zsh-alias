@@ -1422,3 +1422,10 @@ alias empty='truncate -s 0'
 setup-zaw(){
     git clone --depth 1 https://github.com/zsh-users/zaw ~/.zaw
 }
+
+open-port() {
+    iptables -A INPUT -p tcp --dport $1 -j ACCEPT
+}
+
+alias pretty-path='echo $PATH | tr ":" "\n"'
+

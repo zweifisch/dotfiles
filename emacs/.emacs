@@ -651,6 +651,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package groovy-mode :ensure t)
 
 (setq tramp-default-method "ssh")
+(setq tramp-default-user "root")
 
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 
@@ -904,3 +905,13 @@ directory to make multiple eshell windows easier."
 (defun eshell/x ()
     (delete-window)
     (eshell/exit))
+
+(defun dump-url-at-point ()
+  (interactive)
+  (save-excursion
+    (let ((url (read-string "url: " (thing-at-point 'url))))
+      (end-of-line)
+      (open-line 1)
+      (next-line 1)
+      (insert
+       (shell-command-to-string (format "w3m -dump '%s'" url))))))
