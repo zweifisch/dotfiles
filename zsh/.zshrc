@@ -87,7 +87,7 @@ if [ -z "$NVM_SOURCED" ]; then
 	fi
 fi
 
-if [ -f $HOME/.gvm/scripts/gvm ]; then
+if [ -z "$GVM_ROOT" -a -f $HOME/.gvm/scripts/gvm ]; then
     source $HOME/.gvm/scripts/gvm
 fi
 
