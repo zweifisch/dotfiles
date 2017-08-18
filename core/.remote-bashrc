@@ -1,45 +1,36 @@
-alias status='systemctl status'
-alias start='systemctl start'
-alias stop='systemctl stop'
-alias restart='systemctl restart'
-
-rss() {
-  systemctl restart \$1
-  echo \$1 restarted
-  sleep 1
-  systemctl status \$1
-  sleep 3
-  systemctl status \$1
-}
-
-alias services='systemctl list-unit-files'
-
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-
-alias ..='cd ..'
-alias ll='ls -alF'
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-
-unset HISTFILE
-PS1='\u@\h($(hostname -I|sed s/\ $//)):\w \n\t '
-
 set -o vi
+bind -m vi-insert "\C-l":clear-screen
 
-bind -m vi-insert '\\C-l':clear-screen
+PS1="\u@\h($(ip -o -f inet a | awk -F'[/ ]+' '! / lo /{printf $2"/"$4" "}' | sed 's/ $//')):\w \n\t "
 
-new-alias() {
-  local last_command=$(echo `history |tail -n2 |head -n1` | sed 's/[0-9]* //')
-  echo alias $1="'""$last_command""'" >> ~/.bash_profile
-  . ~/.bash_profile
-}
+alias status="systemctl status"
+alias start="systemctl start"
+alias stop="systemctl stop"
+alias restart="systemctl restart"
+alias services="systemctl list-unit-files"
+
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+alias ..="cd .."
+alias ll="ls -alF"
+alias ls="ls --color=auto"
+alias grep="grep --color=auto"
 
 atw() {
   df -h --total -P -l | grep ^/dev
 }
 
 terse() {
-  sed -e 's/^\s*#.*$//g;/^$/d' < \$1 | vim -c 'set ft=dosini' -
+  sed -e "s/^\s*#.*$//g;/^$/d" < $1 | vim -c "set ft=dosini" -
+}
+
+open-port() {
+    iptables -A INPUT -p tcp --dport $1 -j ACCEPT
+}
+
+ssht() {
+    RCL=$RCF
+    ssh -t $@ "RCF=\$(mktemp); echo '$(xxd -p $RCL)' | xxd -p -r > \$RCF; RCF=\$RCF bash --rcfile \$RCF"
 }

@@ -77,6 +77,52 @@
 
 (setq org-babel-clojure-backend 'cider)
 
+(setq org-src-fontify-natively t)  ; code block
+
+(setq org-directory "~/.org/")
+(setq org-agenda-files (list org-directory))
+
+(setq org-capture-templates
+      '(("t" "Tasks" entry (file+headline "todo.org" "Tasks")
+         "* TODO %?")
+        ("c" "Collection" entry (file+headline "collect.org" "Collections")
+         "* %x")
+        ("j" "Journal" entry (file+datetree "journal.org" "* %?\nEntered on %U\n  %i\n  %a"))))
+
+(setq calendar-week-start-day 1)
+
+(setq org-agenda-include-diary t)
+
+(setq org-todo-keywords
+      '((sequence "TODO" "NEXT" "|" "DONE" "ABORTED")))
+
+(evil-define-key 'normal org-mode-map
+  "gh" 'outline-up-heading
+  "gj" 'org-forward-heading-same-level
+  "gk" 'org-backward-heading-same-level
+  "gl" 'outline-next-visible-heading
+  "t" 'org-todo
+  "gt" 'org-show-todo-tree
+  "ge" 'org-edit-special
+  "$" 'org-end-of-line
+  "^" 'org-beginning-of-line
+  "<" 'org-metaleft
+  ">" 'org-metaright
+  "ga" 'org-agenda
+  " " 'org-toggle-inline-images
+  ;; "-" 'org-cycle-list-bullet
+  (kbd "TAB") 'org-cycle)
+
+(evil-define-key 'normal org-src-mode-map
+  "ge" 'org-edit-src-exit)
+
+(evil-define-key 'emacs org-agenda-mode-map
+  "j" 'org-agenda-next-line
+  "k" 'org-agenda-previous-line
+  (kbd "C-j") 'org-agenda-goto-date  ; "j"
+  "n" 'org-agenda-capture)           ; "k"
+
+
 (setq org-publish-project-alist
       '(("writing"
          :base-directory "~/notes/write"

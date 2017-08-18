@@ -1110,7 +1110,7 @@ setup-quicklisp() {
 }
 
 ssht() {
-    ssh -t $@ "bash --rcfile <(echo \"$(cat ~/.remote-bashrc)\")"
+    ssh -t $@ "RCF=\$(mktemp); echo '$(xxd -p ~/.remote-bashrc)' | xxd -p -r > \$RCF; RCF=\$RCF bash --rcfile \$RCF"
 }
 
 sshtpass() {
@@ -1429,3 +1429,43 @@ open-port() {
 
 alias pretty-path='echo $PATH | tr ":" "\n"'
 
+virt-vnc(){
+    virt_ip=$(grep -Eo '[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+' <<< $VIRT_URI)
+    port=$(virsh -c ${VIRT_URI:-qemu:///system} vncdisplay $1)
+    vncviewer -passwd ~/.vnc/passwd $virt_ip$port
+}
+
+virt-hard-reset(){
+    virsh -c ${VIRT_URI:-qemu:///system} destroy $1
+    virsh -c ${VIRT_URI:-qemu:///system} start $1
+}
+
+virt-list(){
+    virsh -c ${VIRT_URI:-qemu:///system} list | awk '/running/{print $2}'
+}
+_virt_list() {
+    _arguments ":::($(virt-list))"
+}
+compdef _virt_list virt-vnc
+compdef _virt_list virt-hard-reset
+
+virt() {
+    virsh -c ${VIRT_URI:-qemu:///system} $1 $2
+}
+
+_virt(){
+    _arguments '1: :->action' '2: :->domain'
+    case $state in
+        action)
+            _arguments "1: :(start suspend resume reset stop destory vncdisplay edit dumpxml domiflist)"
+            ;;
+        domain)
+            _arguments "2: :($(virt-list))"
+            ;;
+    esac
+}
+compdef _virt virt
+
+yaml2json() {
+    python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)'
+}
