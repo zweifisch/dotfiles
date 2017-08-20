@@ -111,7 +111,8 @@
   "ga" 'org-agenda
   " " 'org-toggle-inline-images
   ;; "-" 'org-cycle-list-bullet
-  (kbd "TAB") 'org-cycle)
+  (kbd "TAB") 'org-cycle
+  (kbd "RET") 'browse-url-xdg-open)
 
 (evil-define-key 'normal org-src-mode-map
   "ge" 'org-edit-src-exit)
