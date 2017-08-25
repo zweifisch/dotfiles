@@ -1432,7 +1432,7 @@ alias pretty-path='echo $PATH | tr ":" "\n"'
 virt-vnc(){
     virt_ip=$(grep -Eo '[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+' <<< $VIRT_URI)
     port=$(virsh -c ${VIRT_URI:-qemu:///system} vncdisplay $1)
-    vncviewer -passwd ~/.vnc/passwd $virt_ip$port
+    vncviewer -fullcolor -passwd ~/.vnc/passwd $virt_ip$port
 }
 
 virt-hard-reset(){

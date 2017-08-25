@@ -110,6 +110,9 @@
 
 (define-key evil-normal-state-map " " 'evil-toggle-fold)
 (define-key evil-normal-state-map ";" 'evil-ex)
+(define-key evil-normal-state-map (kbd "<up>") 'evil-scroll-line-up)
+(define-key evil-normal-state-map (kbd "<down>") 'evil-scroll-line-down)
+
 (define-key evil-visual-state-map
   (kbd "RET") 'append-to-buffer)
 
@@ -871,3 +874,5 @@ directory to make multiple eshell windows easier."
        (shell-command-to-string (format "w3m -dump '%s'" url))))))
 
 (use-package ansible-doc :ensure t)
+
+(use-package hackernews :ensure t)

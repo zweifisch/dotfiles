@@ -3,11 +3,7 @@ bind -m vi-insert "\C-l":clear-screen
 
 PS1="\u@\h($(ip -o -f inet a | awk -F'[/ ]+' '! / lo /{printf $2"/"$4" "}' | sed 's/ $//')):\w \n\t "
 
-alias status="systemctl status"
-alias start="systemctl start"
-alias stop="systemctl stop"
-alias restart="systemctl restart"
-alias services="systemctl list-unit-files"
+alias s=systemctl
 
 alias rm="rm -i"
 alias cp="cp -i"
@@ -27,10 +23,18 @@ terse() {
 }
 
 open-port() {
-    iptables -A INPUT -p tcp --dport $1 -j ACCEPT
+  iptables -A INPUT -p tcp --dport $1 -j ACCEPT
 }
 
 ssht() {
-    RCL=$RCF
-    ssh -t $@ "RCF=\$(mktemp); echo '$(xxd -p $RCL)' | xxd -p -r > \$RCF; RCF=\$RCF bash --rcfile \$RCF"
+  RCL=$RCF
+  ssh -t $@ "RCF=\$(mktemp); echo '$(xxd -p $RCL)' | xxd -p -r > \$RCF; RCF=\$RCF bash --rcfile \$RCF"
 }
+
+if [ -f /usr/share/bash-completion/completions/systemctl ]; then
+  . /usr/share/bash-completion/completions/systemctl
+  complete -F _systemctl s
+fi
+
+export TZ=Asia/Shanghai
+echo "$(date -d@$(stat --printf="%Y" /proc/1) +%Y-%m-%d\ %H:%M:%S) up"
