@@ -18,6 +18,7 @@
   (let* ((ssh (unless (assoc :local params) (cdr (assoc :ssh params))))
          (shell (or (cdr (assoc :shell params))
                  ob-shell:default-shell))
+         (default-directory (or (cdr (assoc :dir params)) default-directory))
          (tmp (org-babel-temp-file "shell-"))
          (result-params (cdr (assoc :result-params params)))
          (cmd (if ssh (format "ssh %s '%s -s' < %s" ssh shell tmp)

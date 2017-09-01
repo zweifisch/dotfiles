@@ -31,6 +31,13 @@ ssht() {
   ssh -t $@ "RCF=\$(mktemp); echo '$(xxd -p $RCL)' | xxd -p -r > \$RCF; RCF=\$RCF bash --rcfile \$RCF"
 }
 
+ssh-copy-authed-key() {
+    ssh $2 "echo '$(grep $1 ~/.ssh/authorized_keys)' >> ~/.ssh/authorized_keys"
+}
+ssh-list-authed-key() {
+    awk '{print $3}' < ~/.ssh/authorized_keys
+}
+
 if [ -f /usr/share/bash-completion/completions/systemctl ]; then
   . /usr/share/bash-completion/completions/systemctl
   complete -F _systemctl s

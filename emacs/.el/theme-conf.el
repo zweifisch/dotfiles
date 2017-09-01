@@ -25,15 +25,15 @@
 ;; (set-fontset-font nil 'chinese-gbk '"WenQuanYi Micro Hei Mono-12")
 
 ;; (set-face-attribute 'default nil :font "Hack")
-(set-face-attribute 'default nil :font "Fantasque Sans Mono")
+(set-face-attribute 'default nil :font "Fantasque Sans Mono-10")
 
 ;; (set-face-attribute 'default nil :font "Fira Code-10.5" :weight 'Light)
 ;; (set-fontset-font nil 'chinese-gbk '"WenQuanYi Micro Hei Mono-12")
 
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)
-                    charset (font-spec :family "WenQuanYi Micro Hei Mono-12"
-                                       :size 12)))
+                    charset (font-spec :family "WenQuanYi Micro Hei Mono-10"
+                                       :size 10)))
 
 ;; (set-frame-font "Hack-10")
 

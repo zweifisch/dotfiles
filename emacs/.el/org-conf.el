@@ -71,7 +71,9 @@
       org-src-fontify-natively t
       org-confirm-babel-evaluate nil)
 
-(setq org-image-actual-width 600)
+(setq org-image-actual-width nil)
+
+(add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
 
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 

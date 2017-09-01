@@ -876,3 +876,8 @@ directory to make multiple eshell windows easier."
 (use-package ansible-doc :ensure t)
 
 (use-package hackernews :ensure t)
+
+(use-package fcitx :ensure t
+  :config (progn
+            (fcitx-aggressive-setup)
+            (setq fcitx-use-dbus t)))
