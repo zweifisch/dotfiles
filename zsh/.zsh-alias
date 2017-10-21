@@ -1470,3 +1470,22 @@ compdef _virt virt
 yaml2json() {
     python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)'
 }
+
+tame-hhkb() {
+    cat <<EOF | xmodmap -
+keycode 9 =  asciitilde grave
+keycode 22 = bar backslash
+keycode 51 = BackSpace
+keycode 49 = BackSpace
+
+clear Lock
+EOF
+}
+
+restore-hhkb() {
+    cat <<EOF | xmodmap -
+keycode 22 = BackSpace
+keycode 51 = bar backslash
+keycode 49 =  asciitilde grave
+EOF
+}
