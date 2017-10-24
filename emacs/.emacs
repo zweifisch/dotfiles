@@ -80,7 +80,7 @@
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
 
-;; smart-tab mmm-mode
+;; smart-tab
 ;; emms dired-sort auto-dictionnary
 ;; autopair google-maps
 ;; sr-speedbar typopunct
@@ -432,10 +432,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :ensure t
   :config (progn
             (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-            (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
-            (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-            ;(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
-            (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))))
+            (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+            (setq-default web-mode-comment-formats (remove '("javascript" . "/*") web-mode-comment-formats))
+            (add-to-list 'web-mode-comment-formats '("javascript" . "//"))))
+
+;; (use-package vue-mode :ensure t)
 
 (display-time-mode 1)
 
@@ -543,8 +544,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (add-hook 'haskell-mode-hook 'company-mode)
 
 
-(setq guide-key/guide-key-sequence t)
-(guide-key-mode 1)
+;; (setq guide-key/guide-key-sequence t)
+;; (guide-key-mode 1)
 
 
 (evil-set-initial-state 'image-mode 'emacs)
@@ -881,3 +882,5 @@ directory to make multiple eshell windows easier."
   :config (progn
             (fcitx-aggressive-setup)
             (setq fcitx-use-dbus t)))
+
+(use-package dockerfile-mode :ensure t)

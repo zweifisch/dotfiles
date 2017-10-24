@@ -1489,3 +1489,24 @@ keycode 51 = bar backslash
 keycode 49 =  asciitilde grave
 EOF
 }
+
+docker-bash(){
+  docker exec -it $1 bash
+}
+
+docker-edit(){
+  tempfile=$(mktemp)
+  docker cp $1:$2 $tempfile
+  vi $tempfile
+  docker cp $tempfile $1:$2
+}
+
+_containers(){
+    _arguments ":::($(docker ps | awk '/Up/{print $1}'))"
+}
+compdef _containers docker-edit
+compdef _containers docker-bash
+
+alias dcp-upgrade='docker-compose up -d --build'
+alias dcp-reload='docker-compose up -d'
+alias dcp-restart='docker-compose restart'
