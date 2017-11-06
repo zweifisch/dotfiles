@@ -38,6 +38,22 @@ ssh-list-authed-key() {
     awk '{print $3}' < ~/.ssh/authorized_keys
 }
 
+docker-volume() {
+    cd $(docker inspect $1 | jq -r '.[0].Mountpoint')
+}
+
+_volumes()
+{
+    local cur_word volume_list
+    cur_word="${COMP_WORDS[COMP_CWORD]}"
+    volume_list=$(docker volume ls --format '{{.Name}}')
+    COMPREPLY=( $(compgen -W "${volume_list}" -- ${cur_word}) )
+    return 0
+}
+complete -F _volumes docker-volume
+
+. /etc/bash_completion
+
 if [ -f /usr/share/bash-completion/completions/systemctl ]; then
   . /usr/share/bash-completion/completions/systemctl
   complete -F _systemctl s

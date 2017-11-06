@@ -53,6 +53,7 @@
    ;; (ansible . t)
    ;; (elm . t)
    (ditaa . t)
+   (groovy . t)
    (clojure . t)))
 
 (setq org-eukleides-path "/usr/bin/eukleides"
