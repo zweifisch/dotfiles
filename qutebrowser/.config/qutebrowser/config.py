@@ -12,6 +12,12 @@ config.bind('b', 'set-cmd-text -s :buffer')
 
 config.bind('gi', 'hint inputs')
 
+config.bind('<Ctrl-i>', 'open-editor', mode='insert')
+# config.bind('<Ctrl-u>', 'rl-unix-line-discard', mode='insert')
+# config.bind('<Ctrl-a>', 'rl-beginning-of-line', mode='insert')
+# config.bind('<Ctrl-e>', 'rl-end-of-line', mode='insert')
+# config.bind('<Ctrl-w>', 'rl-end-word-rubout', mode='insert')
+
 c.content.proxy = 'socks://localhost:7070'
 
 c.url.searchengines = {

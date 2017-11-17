@@ -9,10 +9,10 @@
 ;; (use-package twilight-bright-theme :ensure t)
 ;; (use-package monokai-theme :ensure t)
 ;; (use-package darkokai-theme :ensure t)
-;; (use-package subatomic-theme :ensure t)
-(use-package gruvbox-theme :ensure t)
+(use-package subatomic-theme :ensure t)
+;; (use-package gruvbox-theme :ensure t)
 
-(load-theme 'gruvbox t)
+(load-theme 'subatomic t)
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
 

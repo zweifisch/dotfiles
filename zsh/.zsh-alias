@@ -46,7 +46,6 @@ alias pb='podbeuter'
 alias dk='docker'
 alias docker-rm-all='docker rm $(docker ps -a -q)'
 alias docker-kill-all='docker kill $(docker ps -a -q)'
-alias get-docker="curl -sSL https://get.docker.com/ | sh"
 
 alias curl-json="curl -H 'Content-Type: applicaiton/json' "
 alias curl-ajax="curl -H 'X-Requested-With: XMLHttpRequest' "
@@ -1510,3 +1509,13 @@ compdef _containers docker-bash
 alias dcp-upgrade='docker-compose up -d --build'
 alias dcp-reload='docker-compose up -d'
 alias dcp-restart='docker-compose restart'
+
+docker-volume() {
+    cd $(docker inspect $1 | jq -r '.[0].Mountpoint')
+}
+
+_volumes()
+{
+    _arguments ":::($(docker volume ls --format '{{.Name}}'))"
+}
+compdef _volumes docker-volume

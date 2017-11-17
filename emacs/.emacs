@@ -205,8 +205,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package evil-surround :ensure t
   :config (global-evil-surround-mode 1))
 
-(use-package markdown-mode :ensure t
-  :mode (("\\.wiki$" . markdown-mode)))
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.wiki$" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package help-fns+ :ensure t)
 

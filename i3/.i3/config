@@ -71,7 +71,7 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 # bindsym $mod+a focus parent
 
-bindsym $mod+a exec echo 45 | sudo tee /sys/class/backlight/mba6x_backlight/brightness
+# bindsym $mod+a exec echo 45 | sudo tee /sys/class/backlight/mba6x_backlight/brightness
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -119,8 +119,8 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-bindsym $mod+Up exec "amixer -q sset Master 5%+ unmute"
-bindsym $mod+Down exec "amixer -q sset Master 5%- unmute"
+bindsym $mod+q exec "amixer -q sset Master 5%+ unmute"
+bindsym $mod+a exec "amixer -q sset Master 5%- unmute"
 
 bindsym $mod+z exec scrot -e 'mv $f ~/.screenshots/'
 bindsym $mod+x exec scrot -u -e 'mv $f ~/.screenshots/'
@@ -150,6 +150,7 @@ for_window [class="Lucidor"] border none
 for_window [class="stterm-256color"] border none
 
 for_window [title="qiv"] floating enable, border none
+for_window [class="Gvim"] floating enable, border none
 
 for_window [title="avd"] floating enable, border none
 for_window [title="Emulator"] floating enable, border none

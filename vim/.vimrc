@@ -3,6 +3,9 @@ set nocompatible
 
 let mapleader = "|"
 
+set guioptions=
+set guifont=Fantasque\ Sans\ Mono\ 10
+
 " vundle {{{
 filetype off
 set rtp+=~/.vim/vundle/
