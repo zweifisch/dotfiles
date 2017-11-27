@@ -314,8 +314,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (evil-define-key 'visual cider-mode-map
               (kbd "RET") 'cider-eval-region)
             (setq nrepl-hide-special-buffers t
+                  cider-pprint-fn 'puget
                   cider-repl-pop-to-buffer-on-connect nil
                   cider-popup-stacktraces t
+                  cider-repl-use-pretty-printing t
                   cider-repl-popup-stacktraces t)))
 
 (use-package ac-cider :ensure t)

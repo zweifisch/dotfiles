@@ -786,10 +786,9 @@ setup-kotlin() {
 }
 
 setup-idea() {
-    version=14.1.5
-    wget -c http://download.jetbrains.com/idea/ideaIC-$version.tar.gz
+    wget -c https://download-cf.jetbrains.com/idea/ideaIC-2017.2.6-no-jdk.tar.gz -O idea.tar.gz
     mkdir -p ~/.idea
-    tar xaf ideaIC-$version.tar.gz --strip-components=1 -C ~/.idea
+    tar xaf idea.tar.gz --strip-components=1 -C ~/.idea
 }
 
 alias idea=~/.idea/bin/idea.sh
