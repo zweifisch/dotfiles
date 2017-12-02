@@ -193,11 +193,6 @@ ghc-run(){
     ghc --make $1 && "./${1%.*}"
 }
 
-whichweek(){
-    week=`date -d "now" +%U`
-    echo "$week + 1" | bc
-}
-
 svn-add-all(){
     svn st | grep '^?' | sed 's/^?[ \t]\+//' | xargs -i svn add {}
 }
@@ -786,7 +781,7 @@ setup-kotlin() {
 }
 
 setup-idea() {
-    wget -c https://download-cf.jetbrains.com/idea/ideaIC-2017.2.6-no-jdk.tar.gz -O idea.tar.gz
+    wget -c https://download-cf.jetbrains.com/idea/ideaIC-2017.3-no-jdk.tar.gz -O idea.tar.gz
     mkdir -p ~/.idea
     tar xaf idea.tar.gz --strip-components=1 -C ~/.idea
 }
@@ -1331,29 +1326,28 @@ access-port() {
 
 alias smtp-date="date '+%a, %d %b %Y %H:%M:%S %z'"
 
-# working directory
-wd-today() {
-    wd="$HOME/.twd/$(today)"
-    [ -d $wd ] || mkdir -p $wd
-    cd $wd
+whichweek(){
+    expr 1 + $(date -d now +%U) $@
 }
 
-wd-prev() {
-    current=basename $(pwd)
-    wd="$HOME/.twd/$(date -d "$current -1 day" +%Y-%m-%d)"
-    cd $wd
+ws() {
+    workspace="$HOME/.workspace/$(date +%Y)/week-$(whichweek $@)"
+    if [ ! -d $workspace ]; then
+        echo -n "workspace week-$(whichweek $@) not exist, create? [Ny] "
+        read REPLY
+        if [ $REPLY =~ ^[Yy]$ ]; then
+            mkdir -p $workspace
+        fi
+    fi
+    [ -d $workspace ] && cd $workspace
 }
 
-wd-next() {
-    current=basename $(pwd)
-    wd="$HOME/.twd/$(date -d "$current +1 day" +%Y-%m-%d)"
-    cd $wd
+prev() {
+    cd $(dirname $(pwd))/$(echo $(basename $(pwd))| sed -r 's/([^0-9]*)([0-9]+)([^0-9]*)/echo \1$(expr \2 - 1)\3/e')
 }
 
-wd-yesterday() {
-    wd="$HOME/.twd/$(yesterday)"
-    [ -d $wd ] || mkdir -p $wd
-    cd $wd
+next() {
+    cd $(dirname $(pwd))/$(echo $(basename $(pwd))| sed -r 's/([^0-9]*)([0-9]+)([^0-9]*)/echo \1$(expr \2 + 1)\3/e')
 }
 
 calendar-year() {
