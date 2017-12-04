@@ -15,7 +15,7 @@
 (use-package org-bullets :ensure t)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
-(setq org-log-done 'time)
+(setq org-log-done nil)
 (setq org-use-speed-commands t)
 
 (org-babel-do-load-languages

@@ -16,6 +16,7 @@
 
 (defun org-babel-execute:shell (body params)
   (let* ((ssh (unless (assoc :local params) (cdr (assoc :ssh params))))
+         (prefix (or (cdr (assoc :prefix params)) ""))
          (shell (or (cdr (assoc :shell params))
                  ob-shell:default-shell))
          (default-directory (or (cdr (assoc :dir params)) default-directory))
@@ -23,7 +24,7 @@
          (result-params (cdr (assoc :result-params params)))
          (cmd (if ssh (format "ssh %s '%s -s' < %s" ssh shell tmp)
                 (format "%s %s" shell tmp)))
-         (body (ob-shell-prep-files body)))
+         (body (format "%s %s" prefix (ob-shell-prep-files body))))
     (with-temp-file tmp (insert body))
     (if (assoc :async params)
         (ob-shell-execute-async cmd)
