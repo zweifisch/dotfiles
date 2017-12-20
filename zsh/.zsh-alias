@@ -1521,3 +1521,5 @@ with () {
     done
     echo
 }
+
+alias antlr='java -cp /usr/local/lib/antlr-4.7-complete.jar -Xmx500M org.antlr.v4.Tool'
