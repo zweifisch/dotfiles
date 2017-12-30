@@ -72,7 +72,6 @@
                       use-package
                       volatile-highlights
                       know-your-http-well
-                      company
                       bison-mode
                       ghc
                       company-ghc
@@ -320,15 +319,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                   cider-repl-use-pretty-printing t
                   cider-repl-popup-stacktraces t)))
 
-(use-package ac-cider :ensure t)
-(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
-(add-hook 'cider-mode-hook 'ac-cider-setup)
-(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
-(eval-after-load "auto-complete"
-  '(progn
-     (add-to-list 'ac-modes 'cider-mode)
-     (add-to-list 'ac-modes 'cider-repl-mode)))
-
 (use-package paredit
   :ensure t
   :config (progn (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
@@ -462,6 +452,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package go-mode :ensure t)
 (use-package go-eldoc :ensure t)
 (use-package company-go :ensure t)
+(exec-path-from-shell-copy-env "GOPATH")
 
 (defun my-go-mode-hook ()
   (add-to-list (make-local-variable 'company-backends) 'company-go)
@@ -478,8 +469,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
 
-(add-hook 'after-init-hook 'global-company-mode)
-
+(use-package company :ensure t
+  :config (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package perspective
   :ensure t
@@ -890,3 +881,5 @@ directory to make multiple eshell windows easier."
             (setq fcitx-use-dbus t)))
 
 (use-package dockerfile-mode :ensure t)
+
+(add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode))
