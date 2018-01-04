@@ -47,7 +47,7 @@
       (define-key eww-link-keymap "f" 'ace-link-eww)
       (define-key eww-mode-map "f" 'ace-link-eww))))
 
-(use-package ace-link
+(use-package ace-link :ensure t
     :init (ace-link-setup-default))
 
 (defun toggle-url-proxy ()

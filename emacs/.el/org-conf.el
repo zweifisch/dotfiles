@@ -1,5 +1,5 @@
 
-(use-package org-plus-contrib :ensure t)
+(use-package org :ensure org-plus-contrib)
 (use-package ob-http :ensure t)
 (use-package ob-cypher :ensure t)
 (use-package ob-kotlin :ensure t)
@@ -207,7 +207,7 @@
 
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
-(require 'org-mime)
+(use-package org-mime :ensure t)
 
 (require 'org-velocity)
 

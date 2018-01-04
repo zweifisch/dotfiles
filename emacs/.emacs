@@ -607,7 +607,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (add-to-list 'auto-mode-alist '("\\.kt\\'" . kotlin-mode))
 
 (use-package android-mode :ensure t)
-(custom-set-variables '(android-mode-sdk-dir "~/.android"))
 
 (use-package gradle-mode :ensure t
   :config (progn
