@@ -162,9 +162,9 @@ for_window [class="^Chrome$" title=" - Chromium$"] border none
 
 for_window [class="^.*"] border pixel 0
 
-# smart_gaps on
-gaps inner 10
-gaps outer 5
+smart_gaps on
+gaps inner 8
+gaps outer 0
 
 bar {
     colors {
@@ -177,6 +177,7 @@ bar {
         inactive_workspace #000000 #000000 #888888
         urgent_workspace   #2f343a #900000 #ffffff
     }
-    position top
+    mode hide
+    position bottom
     status_command i3status -c ~/.i3/i3status.conf
 }
