@@ -168,7 +168,7 @@ alias chrome-dev='z chromium-browser --disk-cache-dir="/dev/shm/chrome/" --allow
 alias play2='mplayer -ao alsa:device=hw=2.0'
 alias mpv='VDPAU_DRIVER=va_gl mpv'
 alias play='mpv'
-alias play-shuffle='mplayer -shuffle -playlist <(find "$(pwd)" -name "*.mp3")'
+alias play-shuffle='mpv --shuffle --playlist <(find "$(pwd)" -name "*.mp3")'
 
 alias datafart='curl --data-binary @- datafart.com'
 
@@ -1439,7 +1439,8 @@ alias pretty-path='echo $PATH | tr ":" "\n"'
 virt-vnc(){
     virt_ip=$(grep -Eo '[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+' <<< $VIRT_URI)
     port=$(virsh -c ${VIRT_URI:-qemu:///system} vncdisplay $1)
-    vncviewer -fullcolor -passwd ~/.vnc/passwd $virt_ip$port
+    echo $virt_ip:${port#*:}
+    vncviewer -fullcolor -passwd ~/.vnc/passwd $virt_ip:${port#*:}
 }
 
 virt-hard-reset(){

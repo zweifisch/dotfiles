@@ -52,7 +52,9 @@ _volumes()
 }
 complete -F _volumes docker-volume
 
-. /etc/bash_completion
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
 
 if [ -f /usr/share/bash-completion/completions/systemctl ]; then
   . /usr/share/bash-completion/completions/systemctl

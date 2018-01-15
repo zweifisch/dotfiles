@@ -90,7 +90,7 @@
          "* TODO %?")
         ("c" "Collection" entry (file+headline "collect.org" "Collections")
          "* %x")
-        ("j" "Journal" entry (file+datetree "journal.org" "* %?\nEntered on %U\n  %i\n  %a"))))
+        ("j" "Journal" entry (file+olp+datetree "journal.org"))))
 
 (setq calendar-week-start-day 1)
 

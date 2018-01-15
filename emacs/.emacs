@@ -787,8 +787,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package ponylang-mode :ensure t)
 
-(use-package ob-async :ensure t
-  :config (add-to-list 'org-ctrl-c-ctrl-c-hook 'ob-async-org-babel-execute-src-block))
+(use-package ob-async :ensure t)
 
 (use-package puppet-mode :ensure t)
 
