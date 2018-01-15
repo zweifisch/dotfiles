@@ -215,4 +215,18 @@
 
 (setq org-hide-emphasis-markers t)
 
+(defun org-hide-block-overlay ()
+  (interactive)
+  (save-excursion
+    (goto-char (point-max))
+    (while (re-search-backward "#\\+BEGIN_SRC\\|#\\+END_SRC" nil t)
+      (let ((overlay (make-overlay
+                      (line-beginning-position)
+                      (1+ (line-end-position)))))
+        (overlay-put overlay 'invisible t)))))
+
+(defun org-remove-block-overlay ()
+  (interactive)
+  (remove-overlays))
+
 (provide 'org-conf)

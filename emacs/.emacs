@@ -809,16 +809,23 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      (call-process "xclip" nil t nil "-selection" "clipboard" "-t" format "-o")
      (current-buffer)))
 
-(defun insert-image-from-cliboard-as-jpeg ()
-  (interactive)
+(defun insert-image-from-clipboard (mime ext)
   (let* ((dirname (file-name-directory buffer-file-name))
          (imagename
-          (with-current-buffer (get-content-from-clipboard "image/jpeg")
-            (let ((filename (format "%s.jpg" (md5 (current-buffer) nil nil 'no-conversion))))
+          (with-current-buffer (get-content-from-clipboard mime)
+            (let ((filename (format "%s.%s" (md5 (current-buffer) nil nil 'no-conversion) ext)))
               (write-region nil nil (format "%s/%s" dirname filename))
               filename))))
     (insert (format "[[file:%s]]" imagename))
     (org-display-inline-images)))
+
+(defun insert-image-from-clipbarod-as-jpeg ()
+  (interactive)
+  (insert-image-from-clipboard "image/jpeg" "jpg"))
+
+(defun insert-image-from-clipbarod-as-png ()
+  (interactive)
+  (insert-image-from-clipboard "image/png" "png"))
 
 (use-package pdf-tools :ensure t
   :config (progn
