@@ -11,6 +11,7 @@
 (use-package ob-coffee :ensure t)
 (use-package ob-swift :ensure t)
 (use-package htmlize :ensure t)
+(use-package ox-jira :ensure t)
 
 (use-package org-bullets :ensure t)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
@@ -38,6 +39,7 @@
    (racket . t)
    ; (cfdg . t)
    (kotlin . t)
+   (ansible . t)
    (ocaml . t)
    (ipython . t)
    ;; (haxe . t)
