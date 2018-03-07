@@ -27,6 +27,7 @@
    (js . t)
    (sh . t)
    (shell . t)
+   (go . t)
    (sql . t)
    (sqlite . t)
    (dot . t)
