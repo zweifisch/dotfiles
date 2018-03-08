@@ -889,3 +889,6 @@ directory to make multiple eshell windows easier."
 (use-package dockerfile-mode :ensure t)
 
 (add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode))
+
+(use-package protobuf-mode :ensure t)
+
