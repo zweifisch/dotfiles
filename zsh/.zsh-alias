@@ -1542,3 +1542,20 @@ with () {
 }
 
 alias antlr='java -cp /usr/local/lib/antlr-4.7-complete.jar -Xmx500M org.antlr.v4.Tool'
+
+docker-proxy () {
+    sudo mkdir -p /etc/systemd/system/docker.service.d
+    cat <<EOF | sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf
+[Service]
+Environment="HTTP_PROXY=http://127.0.0.1:8118/"
+Environment="NO_PROXY=127.0.0.1"
+EOF
+    sudo systemctl daemon-reload
+    sudo systemctl restart docker
+}
+
+no-docker-proxy() {
+    sudo rm /etc/systemd/system/docker.service.d/http-proxy.conf
+    sudo systemctl daemon-reload
+    sudo systemctl restart docker
+}
