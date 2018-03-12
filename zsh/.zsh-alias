@@ -1548,6 +1548,7 @@ docker-proxy () {
     cat <<EOF | sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf
 [Service]
 Environment="HTTP_PROXY=http://127.0.0.1:8118/"
+Environment="HTTPS_PROXY=https://127.0.0.1:8118/"
 Environment="NO_PROXY=127.0.0.1"
 EOF
     sudo systemctl daemon-reload
