@@ -890,6 +890,14 @@ swap-caps-esc() {
     [[ -n $(xmodmap -pk | awk '$1 == 66 && $3 == "(Escape)"') ]] || xmodmap ~/.Xmodmap
 }
 
+dump-xmodmap() {
+    xmodmap -pke > ~/.xmodmap-dump
+}
+
+restore-xmodmap() {
+    xmodmap ~/.xmodmap-dump
+}
+
 proxied-git () {
     export GIT_PROXY_COMMAND=/tmp/git-proxy;
 

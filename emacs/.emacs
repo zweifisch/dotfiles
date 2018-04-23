@@ -139,6 +139,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; "F" 'projectile-find-file
   "f" 'helm-projectile-find-file
   "F" 'helm-find-files
+  "z" 'helm-semantic-or-imenu
   ;; "B" 'ido-switch-buffer
   "B" 'helm-buffers-list
   ;; "b" 'projectile-switch-to-buffer
