@@ -1115,6 +1115,10 @@ sshtpass() {
     sshpass -p $1 ssh -t -p ${3:-22} $2 "bash --rcfile /dev/fd/3 3< <(echo \"$(cat ~/.remote-bashrc)\")"
 }
 
+sshs() {
+    tmux new-session "ssht $1" \; split-window "ssht $2" \; split-window "ssht $3" \; select-layout even-vertical \; set synchronize-panes
+}
+
 zhihu-daily() {
     html="$(curl -sL daily.zhihu.com)"
     paste -d ' ' <(echo $html | pup -c ".box a attr{href}" | awk '{print "http://daily.zhihu.com"$1}') <(echo $html | pup -c ".box .title text{}")
@@ -1280,7 +1284,8 @@ trash () {
 }
 
 vpn-start () {
-    sudo openvpn --cd ~/.vpns/$1 --config ~/.vpns/$1/config.ovpn
+    config_file_path=$(find ~/.vpns/$1 -name '*.ovpn')
+    sudo openvpn --cd ~/.vpns/$1 --config $config_file_path
 }
 
 vpn-list() {

@@ -23,7 +23,7 @@ terse() {
 }
 
 open-port() {
-  iptables -A INPUT -p tcp --dport $1 -j ACCEPT
+  iptables -I INPUT 1 -p tcp --dport $1 -j ACCEPT
 }
 
 ssht() {

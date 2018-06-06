@@ -25,9 +25,9 @@ setopt NOCLOBBER
 export EDITOR="vim"
 
 export HISTIGNORE="&:ls:[bf]g:cd:..:mkdir"
-export HISTSIZE=50000
+export HISTSIZE=500000
 export HISTFILE=~/.zsh_history
-export SAVEHIST=10000
+export SAVEHIST=100000
 setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
@@ -145,3 +145,5 @@ if [ -d "$HOME/.zaw" ]; then
 fi
 
 source <(kubectl completion zsh)
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

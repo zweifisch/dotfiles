@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ssh -t $@ "RCF=\$(mktemp); echo '$(xxd -p ~/.remote-bashrc)' | xxd -p -r > \$RCF; RCF=\$RCF bash --rcfile \$RCF"
