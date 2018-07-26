@@ -434,6 +434,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (setq-default web-mode-comment-formats (remove '("javascript" . "/*") web-mode-comment-formats))
             (add-to-list 'web-mode-comment-formats '("javascript" . "//"))))
 
+(add-hook 'web-mode-hook
+          (lambda ()
+            (if (equal web-mode-content-type "javascript")
+                (web-mode-set-content-type "jsx"))))
+
 ;; (use-package vue-mode :ensure t)
 
 (display-time-mode 1)
@@ -459,8 +464,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (add-to-list (make-local-variable 'company-backends) 'company-go)
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'gofmt-before-save)
-  (go-eldoc-setup))
+  (go-eldoc-setup)
 
+  (evil-define-key 'normal go-mode-map
+    "gd" 'godef-jump
+    "gD" 'godef-jump-other-window
+    "K" 'godef-describe)
+  (evil-define-key 'normal godoc-mode-map
+    "q" 'quit-window
+    "g?" 'describe-mode))
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 (setq custom-file "~/.emacs.d/custom.el")
