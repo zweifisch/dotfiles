@@ -117,6 +117,8 @@ else
     export GOPATH=$HOME/.projects
 fi
 
+export PATH=$HOME/.projects/bin:$PATH
+
 if [ -d "$HOME/.linuxbrew" ]; then
     export PATH="$HOME/.linuxbrew/bin:$PATH"
     export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"

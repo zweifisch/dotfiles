@@ -1119,6 +1119,11 @@ sshs() {
     tmux new-session "ssht $1" \; split-window "ssht $2" \; split-window "ssht $3" \; select-layout even-vertical \; set synchronize-panes
 }
 
+invade() {
+    ssh $1 mkdir -p /tmp/zf/bin
+    scp $(which jq) $(which jo) $1:/tmp/zf/bin/
+}
+
 zhihu-daily() {
     html="$(curl -sL daily.zhihu.com)"
     paste -d ' ' <(echo $html | pup -c ".box a attr{href}" | awk '{print "http://daily.zhihu.com"$1}') <(echo $html | pup -c ".box .title text{}")
@@ -1573,3 +1578,12 @@ no-docker-proxy() {
     sudo systemctl daemon-reload
     sudo systemctl restart docker
 }
+
+nx(){
+    PATH=node_modules/.bin:$PATH $@
+}
+_nx()
+{
+    _arguments ":::($(ls node_modules/.bin))"
+}
+compdef _nx nx

@@ -61,5 +61,7 @@ if [ -f /usr/share/bash-completion/completions/systemctl ]; then
   complete -F _systemctl s
 fi
 
+export PATH=/tmp/zf/bin:$PATH
+
 export TZ=Asia/Shanghai
 echo "$(date -d@$(stat --printf="%Y" /proc/1) +%Y-%m-%d\ %H:%M:%S) up"

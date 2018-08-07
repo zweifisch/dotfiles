@@ -905,3 +905,16 @@ directory to make multiple eshell windows easier."
 
 (use-package protobuf-mode :ensure t)
 
+(use-package lua-mode :ensure t)
+
+(defun format-query-at-point ()
+  (interactive)
+  (save-excursion
+    (let* ((url (read-string "url: " (thing-at-point 'sentence)))
+           (query (url-parse-query-string url)))
+      (end-of-line)
+      (open-line 1)
+      (next-line 1)
+      (insert
+       (string-join
+        (-map (lambda (x) (concat "|" (car x) "|" (cadr x) "|")) query) "\n")))))
