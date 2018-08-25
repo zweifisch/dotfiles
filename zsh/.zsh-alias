@@ -770,9 +770,9 @@ setup-cask() {
 }
 
 setup-kotlin() {
-    version=1.1.2-5
+    version=1.2.61
     wget -c https://github.com/JetBrains/kotlin/releases/download/v$version/kotlin-compiler-$version.zip
-    rm -rf ~/.ktlinc
+    rm -rf ~/.kotlinc
     unzip kotlin-compiler-$version.zip && mv kotlinc ~/.kotlinc && rm kotlin-compiler-$version.zip
 }
 
@@ -1027,9 +1027,19 @@ binary-clock() {
     perl -e 'for(;;sleep 1){printf"\r"."%.4b "x6,split"",`date +%H%M%S`}'
 }
 
-get-image-from-clipboard() {
-    xclip -selection clipboard -t image/png -o > $1
+cb-ls-targets() {
+    xclip -selection clipboard -t TARGETS -o
 }
+
+cb-get-content() {
+    xclip -selection clipboard -t $1 -o
+}
+
+_cb-get-content()
+{
+    _arguments ":::($(cb-ls-targets))"
+}
+compdef _cb-get-content cb-get-content
 
 setup-ipython() {
     sudo apt-get install gfortran libblas-dev liblapack-dev

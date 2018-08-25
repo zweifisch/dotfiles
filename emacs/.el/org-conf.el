@@ -232,4 +232,12 @@
   (interactive)
   (remove-overlays))
 
+(add-hook 'org-mode-hook 'set-org-mode-app-defaults)
+(defun set-org-mode-app-defaults ()
+  (setq org-file-apps
+	'(("pdf" . "mupdf %s")
+	  ("jpg" . "qiv %s")
+	  ("png" . "qiv %s")
+	  ("svg" . "qiv %s"))))
+
 (provide 'org-conf)
