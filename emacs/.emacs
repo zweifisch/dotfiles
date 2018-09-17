@@ -683,6 +683,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package focus :ensure t)
 
 (use-package rust-mode :ensure t)
+(use-package cargo :ensure t)
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+(use-package racer :ensure t)
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+(add-hook 'racer-mode-hook #'company-mode)
+
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
+
 
 (use-package emmet-mode :ensure t)
 (add-hook 'sgml-mode-hook 'emmet-mode)
