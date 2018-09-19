@@ -93,7 +93,9 @@
          "* TODO %?")
         ("c" "Collection" entry (file+headline "collect.org" "Collections")
          "* %x")
-        ("j" "Journal" entry (file+olp+datetree "journal.org"))))
+        ("j" "Journal" entry (file+olp+datetree "journal.org"))
+        ("v" "Vocabulary" entry (file+headline "vocabulary.org" "Vocabulary")
+         "* %^{The word} :drill:\n %t\n %^{Extended word (may be empty)} \n** Answer \n%^{The definition}")))
 
 (setq calendar-week-start-day 1)
 
@@ -239,5 +241,7 @@
 	  ("jpg" . "qiv %s")
 	  ("png" . "qiv %s")
 	  ("svg" . "qiv %s"))))
+
+(setq org-export-with-sub-superscripts nil)
 
 (provide 'org-conf)

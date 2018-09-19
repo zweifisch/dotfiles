@@ -167,7 +167,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; "v" 'helm-projectile-switch-project
   "m" 'mu4e
   "d" 'dictionary-search
-  "D" 'bing-dict-at-point)
+  "D"  'youdao-dictionary-search-at-point
+  ;; "D" 'bing-dict-at-point
+  )
 
 (global-evil-leader-mode)
 (evil-leader/set-leader "|")
@@ -805,6 +807,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
               ("C-c C-c" . processing-sketch-run)))
 
 (setq dictionary-server "localhost")
+
+(use-package youdao-dictionary :ensure t)
 
 (use-package typescript-mode :ensure t)
 
