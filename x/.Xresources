@@ -65,8 +65,7 @@ URxvt.cursorUnderline: false
 ! Pointer
 URxvt.pointerBlank: true
 
-! #include ".Xresources.d/solarized-light"
-#include ".Xresources.d/solarized-dark"
+#include ".Xresources-theme"
 
 !! font
 

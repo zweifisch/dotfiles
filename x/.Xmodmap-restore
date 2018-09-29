@@ -1,0 +1,16 @@
+keycode 10 = 1 exclam
+keycode 11 = 2 at
+keycode 12 = 3 numbersign
+keycode 13 = 4 dollar
+keycode 14 = 5 percent
+keycode 15 = 6 asciicircum
+keycode 16 = 7 ampersand
+keycode 17 = 8 asterisk
+keycode 18 = 9 parenleft
+keycode 19 = 0 parenright
+
+keycode 49 = grave asciitilde
+keycode 47 = semicolon colon
+keycode 51 = backslash bar
+keycode 34 = bracketleft braceleft
+keycode 35 = bracketright braceright

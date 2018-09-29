@@ -949,3 +949,29 @@ directory to make multiple eshell windows easier."
   (company-mode +1))
 
 (setq company-tooltip-align-annotations t)
+
+(defun rfc-at-point ()
+  (interactive)
+  (save-excursion
+    (let ((rfc (read-string
+                 "rfc: "
+                 (replace-regexp-in-string "[^0-9]*" "" (thing-at-point 'word)))))
+      (rfc-open rfc))))
+
+(defun rfc-view ()
+  (interactive)
+  (save-excursion
+    (let ((rfc (read-string "rfc: ")))
+      (rfc-open rfc))))
+
+(defun rfc-open (number)
+  (let* ((txt (format "/usr/share/doc/RFC/links/rfc%s.txt" rfc))
+         (gz (concat txt ".gz")))
+    (cond ((file-readable-p txt) (find-file txt))
+          ((file-readable-p gz) (find-file gz)))))
+
+(defun search-google-at-point ()
+  (interactive)
+  (save-excursion
+    (let ((keywords (thing-at-point 'line)))
+      (browse-url-xdg-open (concat "https://www.google.com/search?q=" keywords)))))

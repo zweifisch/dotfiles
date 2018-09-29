@@ -820,9 +820,9 @@ qr() {
         content="$(xclip -o)"
     fi
     if [ -n "$content" ]; then
-        qrencode -t UTF8 "$content"
-        # pth="$(mktemp)"
-        # qrencode -t png "$content" -o "$pth" -s 6 && qiv "$pth"
+        # qrencode -t UTF8 "$content"
+        pth="$(mktemp)"
+        qrencode -t png "$content" -o "$pth" -s 6 && qiv "$pth"
     else
         echo empty input
     fi
@@ -1420,12 +1420,20 @@ _ssh_config_list() {
 }
 compdef _ssh_config_list ssh-config-use
 
-swap-number-symbol() {
-  if [ "$(xmodmap -pk | grep ' 10 ' | awk '{print $3}')" = '(1)' ]; then
-	  xmodmap ~/.Xmodmap-unumber
-  else
-	  xmodmap ~/.Xmodmap-number
-  fi
+kbd-remap() {
+    xmodmap ~/.Xmodmap-remap
+}
+
+kbd-restore() {
+    xmodmap ~/.Xmodmap-restore
+}
+
+kbd-remap-hhkb() {
+    xmodmap ~/.Xmodmap-remap-hhkb
+}
+
+restore-hhkb() {
+    xmodmap ~/.Xmodmap-restore-hhkb
 }
 
 alias soft-uptime='date -d@$(stat --printf="%Y" /proc/1) +%Y-%m-%d\ %H:%M:%S'
@@ -1506,25 +1514,6 @@ yaml2json() {
     python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)'
 }
 
-tame-hhkb() {
-    cat <<EOF | xmodmap -
-keycode 9 =  asciitilde grave
-keycode 22 = bar backslash
-keycode 51 = BackSpace
-keycode 49 = BackSpace
-
-clear Lock
-EOF
-}
-
-restore-hhkb() {
-    cat <<EOF | xmodmap -
-keycode 22 = BackSpace
-keycode 51 = bar backslash
-keycode 49 =  asciitilde grave
-EOF
-}
-
 alias docker-rm-all='docker rm $(docker ps -a -q)'
 alias docker-kill-all='docker kill $(docker ps -a -q)'
 alias ds='docker service'
@@ -1600,4 +1589,35 @@ compdef _nx nx
 
 oxford() {
     curl -s https://en.oxforddictionaries.com/definition/$1 | pup '.ind text{}'
+}
+
+later() {
+    filename=$(echo "$1" | sed 's|\?.*||' | sed 's|/*$||' | sed 's|\.[^/]*$||' | awk -F '/' '{print $NF}')
+    w3m -dump $1 > ${filename}.txt
+}
+
+rfc() {
+    rfc_root=/usr/share/doc/RFC/links
+    if [ -f $rfc_root/rfc$1.txt ]; then
+        cat $rfc_root/rfc$1.txt | vi -
+    fi
+    if [ -f $rfc_root/rfc$1.txt.gz ]; then
+        zcat $rfc_root/rfc$1.txt.gz | vi -
+    fi
+}
+
+dark-theme() {
+    ln -nsf ~/.tmux-solarized-dark.conf ~/.tmux-solarized.conf
+    ln -nsf ~/.vim-theme-dark ~/.vim-theme
+    ln -nsf ~/.Xresources.d/solarized-dark ~/.Xresources-theme
+    tmux source ~/.tmux-solarized.conf
+    xrdb ~/.Xresources
+}
+
+light-theme() {
+    ln -nsf ~/.tmux-solarized-light.conf ~/.tmux-solarized.conf
+    ln -nsf ~/.vim-theme-light ~/.vim-theme
+    ln -nsf ~/.Xresources.d/solarized-light ~/.Xresources-theme
+    tmux source ~/.tmux-solarized.conf
+    xrdb ~/.Xresources
 }
