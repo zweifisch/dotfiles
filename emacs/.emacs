@@ -936,7 +936,7 @@ directory to make multiple eshell windows easier."
 
 (use-package tide :ensure t
   :config (progn
-            (add-hook 'before-save-hook 'tide-format-before-save)
+            ;; (add-hook 'before-save-hook 'tide-format-before-save)
             (add-hook 'typescript-mode-hook #'setup-tide-mode)))
 
 (defun setup-tide-mode ()
@@ -983,3 +983,30 @@ directory to make multiple eshell windows easier."
 (evil-define-key 'normal rfcview-mode-map
   (kbd "TAB") 'rfcview-next-button
   (kbd "RET") 'rfcview-maybe-goto-link)
+
+(defun floating-number-at-point ()
+  (when (search-backward-regexp "[^0-9.]" nil 'noerror)
+    (goto-char (match-end 0))
+    (search-forward-regexp "[0-9.]+" nil 'noerror)
+    (string-to-number
+     (match-string 0))))
+
+(defun deduct-number-at-point ()
+  (interactive)
+  (save-excursion
+    (let ((num (floating-number-at-point)))
+      (deduct-number num))))
+
+(defun deduct-number (num)
+  (end-of-line)
+  (open-line 1)
+  (next-line 1)
+  (insert "| 97% | 97.5% | 98% | 98.5% | 100% |\n")
+  (insert (format "| %0.4f | %0.4f | %0.4f | %0.4f | %0.4f |" (* num 0.97) (* num 0.975) (* num 0.98) (* num 0.985) num)))
+
+(defun calc-line-at-point ()
+  (interactive)
+  (save-excursion
+    (let ((expr (thing-at-point 'line)))
+      (end-of-line)
+      (insert (format " = %s" (calc-eval expr))))))
