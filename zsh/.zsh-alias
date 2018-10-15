@@ -821,8 +821,7 @@ qr() {
     fi
     if [ -n "$content" ]; then
         # qrencode -t UTF8 "$content"
-        pth="$(mktemp)"
-        qrencode -t png "$content" -o "$pth" -s 6 && qiv "$pth"
+        qrencode -t png "$content" -o - -s 6 | display
     else
         echo empty input
     fi
@@ -1325,6 +1324,12 @@ _ss_list() {
 }
 compdef _ss_list ss-start
 
+ss-share() {
+    echo ss://$(echo $(jq -r .method ~/.ss/$1):$(jq -r .password ~/.ss/$1) | base64 -)@$(jq -r .server ~/.ss/$1):$(jq -r .server_port ~/.ss/$1) | qrencode -t png -o - -s 6 | display
+}
+compdef _ss_list ss-share
+
+
 alias rn=react-native
 
 find-apk() {
@@ -1620,4 +1625,8 @@ light-theme() {
     ln -nsf ~/.Xresources.d/solarized-light ~/.Xresources-theme
     tmux source ~/.tmux-solarized.conf
     xrdb ~/.Xresources
+}
+
+ndeps() {
+    cat package.json | jq -r .dependencies
 }
