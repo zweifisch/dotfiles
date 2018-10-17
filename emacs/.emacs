@@ -1019,3 +1019,7 @@ directory to make multiple eshell windows easier."
                          nil buffer nil
                          "-t" "utf8" "-s" "6" "-o" "-")
     (switch-to-buffer buffer)))
+
+(use-package pinentry :ensure t)
+(setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
+(pinentry-start)
