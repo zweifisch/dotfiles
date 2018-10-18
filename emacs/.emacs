@@ -1010,3 +1010,12 @@ directory to make multiple eshell windows easier."
     (let ((expr (thing-at-point 'line)))
       (end-of-line)
       (insert (format " = %s" (calc-eval expr))))))
+
+(defun qr-encode-region (start end)
+  (interactive "r")
+  (let ((buffer "QR"))
+    (kill-buffer (get-buffer-create buffer))
+    (call-process-region start end "qrencode"
+                         nil buffer nil
+                         "-t" "utf8" "-s" "6" "-o" "-")
+    (switch-to-buffer buffer)))
