@@ -151,6 +151,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "A" 'org-agenda
   "h" 'helm-org-in-buffer-headings
   "t" 'org-narrow-to-subtree
+  "T" 'widen
 
   "g" 'helm-projectile-grep
   "G" 'ag-project
