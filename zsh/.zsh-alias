@@ -889,14 +889,6 @@ swap-caps-esc() {
     [[ -n $(xmodmap -pk | awk '$1 == 66 && $3 == "(Escape)"') ]] || xmodmap ~/.Xmodmap
 }
 
-dump-xmodmap() {
-    xmodmap -pke > ~/.xmodmap-dump
-}
-
-restore-xmodmap() {
-    xmodmap ~/.xmodmap-dump
-}
-
 proxied-git () {
     export GIT_PROXY_COMMAND=/tmp/git-proxy;
 
@@ -1429,7 +1421,7 @@ kbd-remap() {
     xmodmap ~/.Xmodmap-remap
 }
 
-kbd-restore() {
+kbd-unmap() {
     xmodmap ~/.Xmodmap-restore
 }
 
@@ -1437,8 +1429,16 @@ kbd-remap-hhkb() {
     xmodmap ~/.Xmodmap-remap-hhkb
 }
 
-restore-hhkb() {
+kbd-unmap-hhkb() {
     xmodmap ~/.Xmodmap-restore-hhkb
+}
+
+kbd-dump() {
+    xmodmap -pke >! ~/.xmodmap-dump
+}
+
+kbd-restore() {
+    xmodmap ~/.xmodmap-dump
 }
 
 alias soft-uptime='date -d@$(stat --printf="%Y" /proc/1) +%Y-%m-%d\ %H:%M:%S'
