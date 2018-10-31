@@ -25,7 +25,6 @@
    (scheme . t)
    (python . t)
    (js . t)
-   (sh . t)
    (shell . t)
    (go . t)
    (sql . t)

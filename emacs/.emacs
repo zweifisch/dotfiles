@@ -1,5 +1,8 @@
 (blink-cursor-mode -1)
 
+;; (setq url-gateway-method 'socks)
+;; (setq socks-server '("Default server" "127.0.0.1" 13659 5))
+
 (setq initial-scratch-message ""
       inhibit-startup-message t
       visible-bell t)
@@ -166,7 +169,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "V" 'projectile-persp-switch-project
   "v" 'persp-switch
   ;; "v" 'helm-projectile-switch-project
-  "m" 'mu4e
+  ;; "m" 'mu4e
   "d" 'dictionary-search
   "D"  'youdao-dictionary-search-at-point
   ;; "D" 'bing-dict-at-point
@@ -216,7 +219,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
          ("\\.wiki$" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(use-package help-fns+ :ensure t)
+; (use-package help-fns+ :ensure t)
 
 ; projectile
 (use-package projectile
@@ -573,15 +576,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package dictionary :ensure t)
 
 
-(use-package list-processes+ :ensure t)
+; (use-package list-processes+ :ensure t)
 
 (use-package elnode :ensure t)
 
 ;; (use-package symon :ensure t)
 ;; (symon-mode)
 
-(use-package discover :ensure t)
-(global-discover-mode t)
+;; (use-package discover :ensure t)
+;; (global-discover-mode t)
 
 (use-package winner
   :ensure t
@@ -598,15 +601,15 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (add-to-list 'load-path "~/.el")
 (require 'org-conf)
-(require 'mu4e-conf)
-(require 'scheme-conf)
+; (require 'mu4e-conf)
+; (require 'scheme-conf)
 (require 'theme-conf)
 (require 'shell-switch)
 (require 'misc-conf)
 (require 'eww-conf)
 
-(define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
-(define-key doc-view-mode-map (kbd "k") 'doc-view-previous-line-or-previous-page)
+; (define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
+; (define-key doc-view-mode-map (kbd "k") 'doc-view-previous-line-or-previous-page)
 
 ; (require 'cfdg-mode)
 
@@ -630,7 +633,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package tuareg :ensure t)
 
-(use-package clojure-cheatsheet :ensure t)
+; (use-package clojure-cheatsheet :ensure t)
 
 (use-package helm-orgcard :ensure t)
 
@@ -909,10 +912,10 @@ directory to make multiple eshell windows easier."
 
 (use-package hackernews :ensure t)
 
-(use-package fcitx :ensure t
-  :config (progn
-            (fcitx-aggressive-setup)
-            (setq fcitx-use-dbus t)))
+;; (use-package fcitx :ensure t
+;;   :config (progn
+;;             (fcitx-aggressive-setup)
+;;             (setq fcitx-use-dbus t)))
 
 (use-package dockerfile-mode :ensure t)
 
@@ -1024,3 +1027,5 @@ directory to make multiple eshell windows easier."
 (use-package pinentry :ensure t)
 (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
 (pinentry-start)
+
+(setq ring-bell-function 'ignore)
