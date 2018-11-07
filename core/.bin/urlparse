@@ -1,14 +1,12 @@
-#!/usr/bin/env coffee
+#!/usr/bin/env node
 
-url = require 'url'
+const url = require('url')
 
 process.stdin.resume()
-process.stdin.setEncoding 'utf8'
+process.stdin.setEncoding('utf8')
 
-input = ''
-process.stdin.on 'data', (chunk)->
-	input += chunk
+let input = ''
+process.stdin.on('data', chunk => input += chunk)
 
-process.stdin.on 'end', ->
-	console.log url.parse input,yes
+process.stdin.on('end', () => console.log(url.parse(input, true)))
 

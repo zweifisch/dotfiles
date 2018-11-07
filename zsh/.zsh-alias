@@ -12,6 +12,8 @@ alias rm-empty-dir='find . -type d -empty -delete'
 
 alias rm-last='rm -i "$(ls -t | head -1)"'
 
+which gdate 2>&1 > /dev/null && alias date=gdate
+
 alias timestamp='date +%s'
 
 # alias iex='rlwrap -a iex'
@@ -827,6 +829,8 @@ qr() {
     fi
 }
 
+alias qr-decode='zbarimg --raw ~/.screencapture 2>&1 | head -1'
+
 wlan-ip() {
     ifconfig | grep -A 1 wlan0 | tail -1 | awk '{print $2}' | cut -c6-
 }
@@ -1283,8 +1287,6 @@ wifi-setup() {
     nmcli dev wifi con "$name" password "$password" name "$name"
 }
 
-alias npm-ls='npm ls --depth 0'
-
 trash () {
     mv "$1" ~/.trash/
 }
@@ -1402,7 +1404,9 @@ terse() {
   sed -e 's/^\s*#.*$//g;/^$/d' < $1 | vim -c 'set ft=dosini' -
 }
 
+alias npm-ls='npm ls --depth 0'
 alias npm-deps="jq .dependencies < package.json"
+alias npm-scripts="jq .scripts < package.json"
 
 ssh-config-use() {
     ln -srf ~/.ssh/config.d/$1 ~/.ssh/config

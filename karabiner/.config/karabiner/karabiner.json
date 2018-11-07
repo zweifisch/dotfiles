@@ -68,6 +68,22 @@
                             {
                                 "type": "basic",
                                 "from": {
+                                    "key_code": "3",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "open -a Simulator.app"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "basic",
+                                "from": {
                                     "key_code": "1",
                                     "modifiers": {
                                         "mandatory": [
@@ -110,6 +126,22 @@
                                 "to": [
                                     {
                                         "shell_command": "open -a 'Google Chrome.app'"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "s",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "command"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "screencapture ~/.screencapture && zbarimg ~/.screencapture"
                                     }
                                 ]
                             },

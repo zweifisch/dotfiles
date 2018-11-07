@@ -1029,3 +1029,13 @@ directory to make multiple eshell windows easier."
 (pinentry-start)
 
 (setq ring-bell-function 'ignore)
+
+(defun zf/show-buffer-file-name ()
+  "full path of current buffer in minibuffer."
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (if file-name
+        (progn
+          (message file-name)
+          (kill-new file-name))
+      (error "Buffer not visiting a file"))))
