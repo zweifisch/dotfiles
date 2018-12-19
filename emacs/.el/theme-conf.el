@@ -9,8 +9,10 @@
 ;; (use-package twilight-bright-theme :ensure t)
 ;; (use-package monokai-theme :ensure t)
 ;; (use-package darkokai-theme :ensure t)
-(use-package subatomic-theme :ensure t)
+;; (use-package tao-theme :ensure t)
 ;; (use-package gruvbox-theme :ensure t)
+;; (use-package doom-themes :ensure t)
+(use-package subatomic-theme :ensure t)
 
 (load-theme 'subatomic t)
 
@@ -35,6 +37,11 @@
   (set-fontset-font (frame-parameter nil 'font)
                     charset (font-spec :family "WenQuanYi Micro Hei Mono-10"
                                        :size 10)))
+
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+  (set-fontset-font (frame-parameter nil 'font)
+                    charset (font-spec :family "华文黑体"
+                                       :size 11)))
 
 ;; (set-frame-font "Hack-10")
 

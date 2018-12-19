@@ -103,6 +103,9 @@ fi
 export ELM_HOME=${NODE_PATH//:/}/elm/share
 
 source $HOME/.zsh-alias
+if [ -f $HOME/.zsh-alias-`uname` ]; then
+    source $HOME/.zsh-alias-`uname`
+fi
 
 eval `dircolors ~/.dir_colors`
 

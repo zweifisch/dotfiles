@@ -54,9 +54,13 @@
    (mathomatic . t)
    ;; (ansible . t)
    ;; (elm . t)
+   (plantuml . t)
    (ditaa . t)
    (groovy . t)
    (clojure . t)))
+
+(setq org-plantuml-jar-path
+      (expand-file-name "~/.plantuml.jar"))
 
 (setq org-eukleides-path "/usr/bin/eukleides"
       org-eukleides-eps-to-raster "convert %s -antialias %s")

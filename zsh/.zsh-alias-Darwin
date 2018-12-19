@@ -1,0 +1,12 @@
+qr() {
+    content="$1"
+    if [ -z "$content" ]; then
+        content="$(pbpaste)"
+    fi
+    if [ -n "$content" ]; then
+        # qrencode -t UTF8 "$content"
+        qrencode -t png "$content" -o - -s 6 | open -a Preview.app -f
+    else
+        echo empty input
+    fi
+}

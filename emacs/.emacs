@@ -438,7 +438,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
             (setq-default web-mode-comment-formats (remove '("javascript" . "/*") web-mode-comment-formats))
+            (setq web-mode-markup-indent-offset 2)
+            (setq web-mode-code-indent-offset 2)
+            (setq web-mode-attr-indent-offset 2)
+            (setq web-mode-css-indent-offset 2)
             (add-to-list 'web-mode-comment-formats '("javascript" . "//"))))
+
 
 (add-hook 'web-mode-hook
           (lambda ()
@@ -457,6 +462,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (setq js2-strict-missing-semi-warning nil)
             (setq js2-strict-trailing-comma-warning nil)
             (setq js2-mode-assume-strict t)
+            (setq js2-basic-offset 2)
             (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))))
 
 ;; golang
@@ -521,7 +527,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package org :ensure t
   :bind (:map org-mode-map
               ("M-h" . nil)
-              ("C-a" . nil)))
+              ("C-a" . nil)
+              ("M-n" . 'outline-next-visible-heading)
+              ("M-p" . 'outline-previous-visible-heading)))
 
 (defun my-eshell-mode-hook ()
   (rename-uniquely)
@@ -995,18 +1003,19 @@ directory to make multiple eshell windows easier."
     (string-to-number
      (match-string 0))))
 
-(defun deduct-number-at-point ()
+(defun zf/deduct-number-at-point ()
   (interactive)
   (save-excursion
     (let ((num (floating-number-at-point)))
-      (deduct-number num))))
+      (zf/deduct-number num))))
 
-(defun deduct-number (num)
+(defun zf/deduct-number (num)
   (end-of-line)
   (open-line 1)
   (next-line 1)
-  (insert "| 97% | 97.5% | 98% | 98.5% | 100% |\n")
-  (insert (format "| %0.4f | %0.4f | %0.4f | %0.4f | %0.4f |" (* num 0.97) (* num 0.975) (* num 0.98) (* num 0.985) num)))
+  (insert "| 97% | 97.5% | 98% | 98.5% | 100% | 101.5% | 102% | 102.5% | 103% |\n")
+  (insert (format "| %0.4f | %0.4f | %0.4f | %0.4f | %0.4f | %0.4f | %0.4f | %0.4f | %0.4f |"
+                  (* num 0.97) (* num 0.975) (* num 0.98) (* num 0.985) num (* num 1.015) (* num 1.02) (* num 1.025) (* num 1.03))))
 
 (defun calc-line-at-point ()
   (interactive)
@@ -1039,3 +1048,18 @@ directory to make multiple eshell windows easier."
           (message file-name)
           (kill-new file-name))
       (error "Buffer not visiting a file"))))
+
+(setq require-final-newline nil)
+
+(defun zf/ob-copy-src-block ()
+  (interactive)
+  (org-edit-src-code)
+  (mark-whole-buffer)
+  (kill-ring-save 1 (point-max))
+  (org-edit-src-abort))
+
+(use-package plantuml-mode :ensure t
+  :config (progn
+            (setq plantuml-jar-path (expand-file-name "~/.plantuml.jar"))))
+
+(use-package string-inflection :ensure t)

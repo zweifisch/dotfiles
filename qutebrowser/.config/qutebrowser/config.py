@@ -19,6 +19,8 @@ config.bind('<Ctrl-i>', 'open-editor', mode='insert')
 # config.bind('<Ctrl-w>', 'rl-end-word-rubout', mode='insert')
 
 c.content.proxy = 'socks://localhost:13659'
+# c.content.proxy = 'socks://localhost:1086'
+# c.content.proxy = 'system'
 
 c.url.searchengines = {
     "DEFAULT": "https://www.google.com/search?q={}",
