@@ -48,8 +48,8 @@ Bundle 'fatih/vim-go'
 Bundle 'StanAngeloff/php.vim'
 " Bundle '2072/PHP-Indenting-for-VIm'
 Bundle 'elixir-lang/vim-elixir'
-Bundle 'Neurogami/mirah-vim'
-Bundle 'lambdatoast/elm.vim'
+" Bundle 'Neurogami/mirah-vim'
+" Bundle 'lambdatoast/elm.vim'
 " Bundle 'jimenezrick/vimerl'
 " Bundle 'b4winckler/vim-objc'
 Bundle 'digitaltoad/vim-jade'
@@ -61,6 +61,7 @@ Bundle 'vim-coffee-script'
 " Bundle 'tpope/vim-haml'
 " Bundle 'klen/python-mode'
 " Bundle 'pangloss/vim-javascript'
+Bundle 'ternjs/tern_for_vim'
 " Bundle 'johnhamelink/blade.vim'
 
 " Bundle 'VimClojure'
@@ -243,6 +244,7 @@ set title
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936,big5,iso-8859-1,utf-16
 
 set clipboard=unnamedplus
+set clipboard=unnamed
 
 set incsearch
 set hlsearch

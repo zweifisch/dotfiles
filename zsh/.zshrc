@@ -14,7 +14,7 @@ ZSH_CUSTOM=$HOME/.zsh
 DISABLE_AUTO_UPDATE="true"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(vi-mode gnu-utils zsh-syntax-highlighting history-substring-search vagrant zaw docker zsh-autosuggestions)
+plugins=(vi-mode gnu-utils zsh-syntax-highlighting history-substring-search vagrant zaw docker zsh-autosuggestions zsh-peco-history)
 source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all
@@ -52,6 +52,7 @@ export ANDROID_HOME=$HOME/.android-sdk-linux
 
 pathes=(
 $HOME/.bin
+$HOME/.local/bin
 $HOME/.cabal/bin
 $ANDROID_HOME/tools
 $ANDROID_HOME/platform-tools
@@ -152,3 +153,8 @@ fi
 source <(kubectl completion zsh)
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$HOME/.luarocks/bin:$PATH"
+
+# export ZPLUG_HOME=/usr/local/opt/zplug
+# source $ZPLUG_HOME/init.zsh
+
+# zplug "jimeh/zsh-peco-history"

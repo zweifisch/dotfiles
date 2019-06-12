@@ -305,6 +305,12 @@ git-sync() {
     git push
 }
 
+git-rebase-upstream() {
+  current_bf=$(git rev-parse --abbrev-ref HEAD)
+  git fetch origin ${current_bf%_*}
+  git rebase origin/${current_bf%_*}
+}
+
 min-and-gzipped() {
     uglifyjs $1 | gzip -c | wc -c
 }

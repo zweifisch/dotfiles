@@ -18,6 +18,8 @@
 
 (setq org-log-done nil)
 (setq org-use-speed-commands t)
+(setq org-catch-invisible-edits 'show-and-error)
+(setq org-cycle-separator-lines 0)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -123,7 +125,9 @@
   " " 'org-toggle-inline-images
   ;; "-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle
-  (kbd "RET") 'browse-url-xdg-open)
+  (kbd "DEL") 'org-mark-ring-goto
+  ;; (kbd "RET") 'browse-url-xdg-open
+  (kbd "RET") 'org-open-at-point)
 
 (evil-define-key 'normal org-src-mode-map
   "ge" 'org-edit-src-exit)
@@ -246,5 +250,10 @@
 	  ("svg" . "qiv %s"))))
 
 (setq org-export-with-sub-superscripts nil)
+
+(setq org-link-abbrev-alist
+  '(("google"    . "http://www.google.com/search?q=")))
+
+(require 'org-tempo)
 
 (provide 'org-conf)

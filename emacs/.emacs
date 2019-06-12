@@ -5,7 +5,7 @@
 
 (setq initial-scratch-message ""
       inhibit-startup-message t
-      visible-bell t)
+      visible-bell nil)
 
 ;; dangerous
 (setq enable-local-variables :all)
@@ -157,7 +157,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "T" 'widen
 
   "g" 'helm-projectile-grep
-  "G" 'ag-project
+  ;; "g" 'helm-projectile-rg
+  "G" 'rg-project
   "o" 'browse-url
   "e" 'eshell-here
   "E" 'switch-to-shell-in-project
@@ -232,6 +233,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
           projectile-remember-window-configs t
           projectile-use-git-grep 1)))
 
+(setq projectile-use-git-grep nil)
+
 (use-package helm :ensure t
   :config
   (progn
@@ -249,6 +252,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package helm-projectile
   :ensure t
   :config (helm-projectile-on))
+
+(use-package helm-rg :ensure t)
+
+(use-package rg :ensure t)
 
 (use-package ag :ensure t)
 
@@ -436,7 +443,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :ensure t
   :config (progn
             (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+            (add-to-list 'auto-mode-alist '("\\.axml\\'" . web-mode))
             (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
+            (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
             (setq-default web-mode-comment-formats (remove '("javascript" . "/*") web-mode-comment-formats))
             (setq web-mode-markup-indent-offset 2)
             (setq web-mode-code-indent-offset 2)
@@ -444,11 +453,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (setq web-mode-css-indent-offset 2)
             (add-to-list 'web-mode-comment-formats '("javascript" . "//"))))
 
+(setq css-indent-offset 2)
+
+(add-to-list 'auto-mode-alist '("\\.acss\\'" . css-mode))
+
 
 (add-hook 'web-mode-hook
           (lambda ()
             (if (equal web-mode-content-type "javascript")
                 (web-mode-set-content-type "jsx"))))
+
+(evil-define-key 'normal web-mode-map
+  (kbd "%") 'web-mode-navigate
+  (kbd "SPC") 'web-mode-fold-or-unfold)
 
 ;; (use-package vue-mode :ensure t)
 
@@ -822,7 +839,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package youdao-dictionary :ensure t)
 
-(use-package typescript-mode :ensure t)
+(use-package typescript-mode
+  :ensure t
+  :config (progn
+           (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))))
 
 (use-package ponylang-mode :ensure t)
 
@@ -956,6 +976,8 @@ directory to make multiple eshell windows easier."
   (tide-setup)
   (flycheck-mode +1)
   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (setq typescript-indent-level
+        (or (plist-get (tide-tsfmt-options) ':indentSize) 2))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
   (company-mode +1))
@@ -1063,3 +1085,10 @@ directory to make multiple eshell windows easier."
             (setq plantuml-jar-path (expand-file-name "~/.plantuml.jar"))))
 
 (use-package string-inflection :ensure t)
+
+
+(use-package graphql-mode :ensure t)
+
+(use-package focus :ensure t)
+
+(use-package racket-mode :ensure t)
