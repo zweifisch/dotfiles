@@ -25,4 +25,7 @@
     (with-temp-file tmp (insert body))
     (shell-command-to-string cmd)))
 
+(eval-after-load "org"
+  '(add-to-list 'org-src-lang-modes '("html" . "web")))
+
 (provide 'ob-html)

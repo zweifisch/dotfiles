@@ -137,6 +137,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
 (global-set-key [escape] 'evil-exit-emacs-state)
 
+(defun zf/open-in-tmux ()
+  "open current path in tmux"
+  (interactive)
+  (shell-command-to-string
+   (format "tmux new-window -c %s" default-directory)))
+
 ; evil-leader
 (evil-leader/set-key
   ;; "F" 'projectile-find-file
@@ -156,10 +162,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "t" 'org-narrow-to-subtree
   "T" 'widen
 
-  "g" 'helm-projectile-grep
+  ;; "g" 'helm-projectile-grep
+  "g" 'helm-projectile-ag
   ;; "g" 'helm-projectile-rg
-  "G" 'rg-project
-  "o" 'browse-url
+  "G" 'ag-project
+  "o" 'zf/open-in-tmux
   "e" 'eshell-here
   "E" 'switch-to-shell-in-project
   ;; "i" 'ein:notebooklist-open
@@ -181,6 +188,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal global-map
   "gj" 'avy-goto-word-or-subword-1
   "," 'evil-execute-in-god-state)
+
+(setq projectile-use-git-grep nil)
+(setq helm-ag-insert-at-point 'symbol)
+
+(defun zf/use-git-grep ()
+  (interactive)
+  (setq projectile-use-git-grep (if projectile-use-git-grep nil t)))
 
 (global-set-key (kbd "C-a") nil)
 (global-set-key (kbd "C-a |") 'evil-window-vsplit)
@@ -233,7 +247,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
           projectile-remember-window-configs t
           projectile-use-git-grep 1)))
 
-(setq projectile-use-git-grep nil)
+;; (setq projectile-use-git-grep nil)
 
 (use-package helm :ensure t
   :config
@@ -782,11 +796,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (compile "npm test" t)))
 
 (defun npm-lint ()
-  "npm test"
+  "npm lint"
   (interactive)
   (let ((compilation-save-buffers-predicate 'ignore)
         (compilation-ask-about-save nil))
     (compile "npm run lint" t)))
+
+(defun npm-compile ()
+  "npm compile"
+  (interactive)
+  (let ((compilation-save-buffers-predicate 'ignore)
+        (compilation-ask-about-save nil))
+    (compile "npm run compile" t)))
 
 (use-package term
   :config
@@ -1092,3 +1113,5 @@ directory to make multiple eshell windows easier."
 (use-package focus :ensure t)
 
 (use-package racket-mode :ensure t)
+
+(use-package feature-mode :ensure t)

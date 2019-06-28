@@ -189,7 +189,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "open -a 'Safari Technology Preview'"
+                    "shell_command": "open -a 'Safari'"
                   }
                 ]
               },

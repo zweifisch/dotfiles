@@ -13,3 +13,4 @@ muttrc
 gitconfig
 bin/composer.phar
 .lein
+ghci_history

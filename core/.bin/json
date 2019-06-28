@@ -1,0 +1,18 @@
+#!/usr/bin/env jq -jf
+[
+  [
+    paths(scalars)
+    | map(
+      if type == "number"
+      then "[" + tostring + "]"
+      else "." + .
+      end
+    ) | join("")
+  ],
+  [
+    .. | select(scalars) | @json
+  ]
+]
+| transpose
+| map(join(" = ") + "\n")
+| join("") 
