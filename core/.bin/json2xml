@@ -1,0 +1,29 @@
+#!/usr/bin/env node
+const vm = require('vm')
+const {read, run} = require('./util')
+
+const indent = (line, count) => ' '.repeat(count) + line
+
+const json2xml = (data, indentCount = 0) => {
+  const ret = []
+  for(const key of Reflect.ownKeys(data)) {
+    const type = typeof data[key]
+    if (Array.isArray(data[key])) {
+      ret.push(data[key].map(x => `  <${key}>
+${json2xml(x, indentCount +2)}
+  </${key}>`).join('\n'))
+    } else if (data[key] === null) {
+      ret.push(indent(`<${key}></${key}>`, indentCount + 2))
+    } else if (type === 'string' || type === 'number' || type === 'boolean') {
+      ret.push(indent(`<${key}>${data[key]}</${key}>`, indentCount + 2))
+    } else {
+      ret.push(`<${key}>
+${json2xml(data[key], indentCount + 2)}
+</${key}>`)
+    }
+  }
+  return ret.join('\n')
+}
+
+run(async () => json2xml(JSON.parse(await read())))
+

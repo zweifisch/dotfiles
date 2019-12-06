@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+const vm = require('vm')
+const {read} = require('./util')
+
+async function main(){
+  try {
+    console.log(JSON.stringify(vm.runInContext(`(${await read()})`, vm.createContext({})), null, 2))
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+main()
+

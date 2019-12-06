@@ -162,8 +162,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "t" 'org-narrow-to-subtree
   "T" 'widen
 
-  ;; "g" 'helm-projectile-grep
-  "g" 'helm-projectile-ag
+  "g" 'helm-projectile-grep
+  ;; "g" 'helm-projectile-ag
   ;; "g" 'helm-projectile-rg
   "G" 'ag-project
   "o" 'zf/open-in-tmux
@@ -189,7 +189,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gj" 'avy-goto-word-or-subword-1
   "," 'evil-execute-in-god-state)
 
-(setq projectile-use-git-grep nil)
+;; (setq projectile-use-git-grep nil)
+(setq projectile-use-git-grep t)
 (setq helm-ag-insert-at-point 'symbol)
 
 (defun zf/use-git-grep ()
@@ -809,6 +810,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (compilation-ask-about-save nil))
     (compile "npm run compile" t)))
 
+(defun npm-lint ()
+  "npm lint"
+  (interactive)
+  (let ((compilation-save-buffers-predicate 'ignore)
+        (compilation-ask-about-save nil))
+    (compile "npm run lint" t)))
+
 (use-package term
   :config
   (evil-set-initial-state 'term-mode 'emacs)
@@ -1001,7 +1009,10 @@ directory to make multiple eshell windows easier."
         (or (plist-get (tide-tsfmt-options) ':indentSize) 2))
   (eldoc-mode +1)
   (tide-hl-identifier-mode +1)
-  (company-mode +1))
+  (company-mode +1)
+  (evil-define-key 'normal tide-mode-map
+    "gd" 'tide-jump-to-definition
+    "gb" 'tide-jump-back))
 
 (setq company-tooltip-align-annotations t)
 

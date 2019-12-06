@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+process.stdin.resume()
+process.stdin.setEncoding('utf8')
+
+let input = ''
+process.stdin.on('data', chunk => input += chunk)
+
+const formatLine = (x) => {
+  const pairs = x.split('^')
+  const [head, ...rest] = pairs
+  return [head, ...rest.map(x => `  ${x}`)].join('\n')
+}
+
+process.stdin.on('end', () => {
+  console.log(input.split(',').map(formatLine).join('\n'))
+})
+

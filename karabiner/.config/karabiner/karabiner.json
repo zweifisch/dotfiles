@@ -180,7 +180,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "2",
+                  "key_code": "3",
                   "modifiers": {
                     "mandatory": [
                       "command"
@@ -212,7 +212,7 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "3",
+                  "key_code": "2",
                   "modifiers": {
                     "mandatory": [
                       "command"
@@ -237,7 +237,7 @@
                 },
                 "to": [
                   {
-                    "shell_command": "open -a Sketch"
+                    "shell_command": "open -a 'IntelliJ IDEA CE'"
                   }
                 ]
               },

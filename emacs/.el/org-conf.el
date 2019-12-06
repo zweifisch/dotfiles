@@ -13,6 +13,8 @@
 (use-package htmlize :ensure t)
 (use-package ox-jira :ensure t)
 
+(use-package jupyter :ensure t)
+
 (use-package org-bullets :ensure t)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
