@@ -757,7 +757,7 @@ setup-pyenv() {
 }
 
 setup-nvm() {
-    git clone https://github.com/creationix/nvm ~/.nvm
+    git clone https://github.com/nvm-sh/nvm.git ~/.nvm
 }
 
 setup-gvm() {
@@ -997,7 +997,7 @@ mba-kbd-backlight() {
 
 use-local-http-proxy() {
     export http_proxy=http://127.0.0.1:8123
-    export https_proxy=https://127.0.0.1:8123
+    export https_proxy=http://127.0.0.1:8123
     export no_proxy=127.0.0.0/8,192.168.0.0/16
 }
 
@@ -1602,6 +1602,14 @@ _nx()
 }
 compdef _nx nx
 
+co(){
+    git checkout $1
+}
+_co(){
+    _arguments "1: :($(git for-each-ref --sort=-committerdate --count=5 --format='%(refname:short)' refs/heads/))"
+}
+compdef _co co
+
 oxford() {
     curl -s https://en.oxforddictionaries.com/definition/$1 | pup '.ind text{}'
 }
@@ -1640,3 +1648,5 @@ light-theme() {
 ndeps() {
     cat package.json | jq -r .dependencies
 }
+
+alias rga='rg --no-ignore'

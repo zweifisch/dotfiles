@@ -88,11 +88,16 @@
 
 (defun use-local-http-proxy ()
   (interactive)
-  (setq url-proxy-services '(("http" . "localhost:8118"))))
+  (setq url-proxy-services '(("http" . "localhost:8123"))))
 
 (defun no-local-http-proxy ()
   (interactive)
   (setq url-proxy-services '()))
+
+(defun use-socks-proxy ()
+  (interactive)
+  (setq url-gateway-method 'socks)
+  (setq socks-server '("Default server" "127.0.0.1" 13659 5)))
 
 (defun browse-web-at-point ()
   (interactive)

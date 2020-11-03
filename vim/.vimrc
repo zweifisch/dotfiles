@@ -130,6 +130,7 @@ Bundle 'Valloric/MatchTagAlways.git'
 " css-color
 " yankering
 Bundle 'jdonaldson/vaxe'
+Bundle 'leafgarland/typescript-vim'
 
 filetype plugin indent on
 " }}}
@@ -214,7 +215,7 @@ set wildmode=list:longest,full
 
 set completeopt=longest,menu
 
-set foldenable
+set nofoldenable
 set fdm=syntax
 " set foldlevelstart=1
 

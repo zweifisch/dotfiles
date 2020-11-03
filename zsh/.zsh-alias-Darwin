@@ -10,3 +10,7 @@ qr() {
         echo empty input
     fi
 }
+
+free() {
+  ps -caxm -orss= | awk '{ sum += $1 } END { print "rss: " sum/1024/1024 " G" }'
+}

@@ -66,6 +66,7 @@
              '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
              '("org" . "http://orgmode.org/elpa/") t)
+
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -167,16 +168,18 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; "g" 'helm-projectile-rg
   "G" 'ag-project
   "o" 'zf/open-in-tmux
-  "e" 'eshell-here
-  "E" 'switch-to-shell-in-project
+  ;; "e" 'eshell-here
+  ;; "e" 'switch-to-shell-in-project
+  "e" 'multi-vterm-project
+  "E" 'multi-vterm-dedicated-toggle
   ;; "i" 'ein:notebooklist-open
   "c" 'org-capture
   "s" 'magit-status
   "a" 'avy-goto-word-or-subword-1
   ;; "v" 'wg-switch-to-workgroup
-  "V" 'projectile-persp-switch-project
+  ;; "V" 'projectile-persp-switch-project
   "v" 'persp-switch
-  ;; "v" 'helm-projectile-switch-project
+  "V" 'helm-projectile-switch-project
   ;; "m" 'mu4e
   "d" 'dictionary-search
   "D"  'youdao-dictionary-search-at-point
@@ -455,18 +458,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (setq coffee-indent-tabs-mode t)
 
 (use-package web-mode
-  :ensure t
-  :config (progn
-            (add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
-            (add-to-list 'auto-mode-alist '("\\.axml\\'" . web-mode))
-            (add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
-            (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
-            (setq-default web-mode-comment-formats (remove '("javascript" . "/*") web-mode-comment-formats))
-            (setq web-mode-markup-indent-offset 2)
-            (setq web-mode-code-indent-offset 2)
-            (setq web-mode-attr-indent-offset 2)
-            (setq web-mode-css-indent-offset 2)
-            (add-to-list 'web-mode-comment-formats '("javascript" . "//"))))
+  :mode (("\\.tsx$" . web-mode))
+  :init
+  (add-hook 'web-mode-hook 'variable-pitch-mode)
+  (add-hook 'web-mode-hook 'company-mode)
+  (add-hook 'web-mode-hook 'prettier-js-mode)
+  (add-hook 'web-mode-hook (lambda () (setq web-mode-markup-indent-offset 2
+                                            web-mode-code-indent-offset 2)))
+  (add-hook 'web-mode-hook (lambda () (pcase (file-name-extension buffer-file-name)
+                                        ("tsx" (lambda () (setup-tide-mode)
+                                                 (setq web-mode-markup-indent-offset 2)))))))
+
 
 (setq css-indent-offset 2)
 
@@ -563,6 +565,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
               ("M-n" . 'outline-next-visible-heading)
               ("M-p" . 'outline-previous-visible-heading)))
 
+(defun eshell/x ()
+    (delete-window)
+    (eshell/exit))
+
 (defun my-eshell-mode-hook ()
   (rename-uniquely)
   (define-key eshell-mode-map (kbd "C-a") nil)
@@ -645,8 +651,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; (require 'scheme-conf)
 (require 'theme-conf)
 (require 'shell-switch)
+(require 'shell-conf)
 (require 'misc-conf)
 (require 'eww-conf)
+(require 'npm-scripts)
 
 ; (define-key doc-view-mode-map (kbd "j") 'doc-view-next-line-or-next-page)
 ; (define-key doc-view-mode-map (kbd "k") 'doc-view-previous-line-or-previous-page)
@@ -789,34 +797,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package shell-pop :ensure t)
 
-(defun npm-test ()
-  "npm test"
-  (interactive)
-  (let ((compilation-save-buffers-predicate 'ignore)
-        (compilation-ask-about-save nil))
-    (compile "npm test" t)))
-
-(defun npm-lint ()
-  "npm lint"
-  (interactive)
-  (let ((compilation-save-buffers-predicate 'ignore)
-        (compilation-ask-about-save nil))
-    (compile "npm run lint" t)))
-
-(defun npm-compile ()
-  "npm compile"
-  (interactive)
-  (let ((compilation-save-buffers-predicate 'ignore)
-        (compilation-ask-about-save nil))
-    (compile "npm run compile" t)))
-
-(defun npm-lint ()
-  "npm lint"
-  (interactive)
-  (let ((compilation-save-buffers-predicate 'ignore)
-        (compilation-ask-about-save nil))
-    (compile "npm run lint" t)))
-
 (use-package term
   :config
   (evil-set-initial-state 'term-mode 'emacs)
@@ -933,27 +913,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
               "f" 'pdf-links-action-perform
               "b" 'pdf-view-midnight-minor-mode))
 
-(pdf-tools-install)
+;; (pdf-tools-install)
 
-
-(defun eshell-here ()
-  "Opens up a new shell in the directory associated with the
-current buffer's file. The eshell is renamed to match that
-directory to make multiple eshell windows easier."
-  (interactive)
-  (let* ((parent (if (buffer-file-name)
-                     (file-name-directory (buffer-file-name))
-                   default-directory))
-         (height (/ (window-total-height) 3))
-         (name   (car (last (split-string parent "/" t)))))
-    (split-window-vertically (- height))
-    (other-window 1)
-    (eshell "new")
-    (rename-buffer (concat "*eshell: " name "*"))))
-
-(defun eshell/x ()
-    (delete-window)
-    (eshell/exit))
 
 (defun dump-url-at-point ()
   (interactive)
@@ -997,7 +958,6 @@ directory to make multiple eshell windows easier."
 
 (use-package tide :ensure t
   :config (progn
-            ;; (add-hook 'before-save-hook 'tide-format-before-save)
             (add-hook 'typescript-mode-hook #'setup-tide-mode)))
 
 (defun setup-tide-mode ()
@@ -1011,8 +971,15 @@ directory to make multiple eshell windows easier."
   (tide-hl-identifier-mode +1)
   (company-mode +1)
   (evil-define-key 'normal tide-mode-map
+    "gr" 'tide-references
     "gd" 'tide-jump-to-definition
     "gb" 'tide-jump-back))
+
+(evil-define-key 'normal tide-references-mode-map
+  "j" 'tide-find-next-reference
+  "k" 'tide-find-previous-reference
+  "q" 'quit-window
+  (kbd "RET") 'tide-goto-reference)
 
 (setq company-tooltip-align-annotations t)
 
@@ -1112,9 +1079,33 @@ directory to make multiple eshell windows easier."
   (kill-ring-save 1 (point-max))
   (org-edit-src-abort))
 
+(defun zf/kill-all()
+    "Kill all other buffers."
+    (interactive)
+    (mapc 'kill-buffer 
+          (delq (current-buffer) 
+                (remove-if-not 'buffer-file-name (buffer-list)))))
+
+(defun zf/kill-buffers (regexp)
+  "Kill buffers matching REGEXP without asking for confirmation."
+  (interactive "sKill buffers matching this regular expression: ")
+  (flet ((kill-buffer-ask (buffer) (kill-buffer buffer)))
+    (kill-matching-buffers regexp)))
+
 (use-package plantuml-mode :ensure t
   :config (progn
             (setq plantuml-jar-path (expand-file-name "~/.plantuml.jar"))))
+
+(use-package purescript-mode :ensure t)
+
+(use-package psc-ide :ensure t
+  :config
+  (add-hook 'purescript-mode-hook
+            (lambda ()
+              (psc-ide-mode)
+              (company-mode)
+              (flycheck-mode)
+              (turn-on-purescript-indentation))))
 
 (use-package string-inflection :ensure t)
 
@@ -1126,3 +1117,64 @@ directory to make multiple eshell windows easier."
 (use-package racket-mode :ensure t)
 
 (use-package feature-mode :ensure t)
+
+(use-package dart-mode :ensure t)
+
+; (use-package org-roam :ensure t
+;   :hook
+;   (after-init . org-roam-mode)
+;   :custom
+;   (org-roam-directory (expand-file-name "~/notes/org"))
+;   :bind (:map org-roam-mode-map
+;               (("C-c n l" . org-roam)
+;                ("C-c n f" . org-roam-find-file)
+;                ("C-c n g" . org-roam-show-graph))
+;               :map org-mode-map
+;               (("C-c n i" . org-roam-insert))))
+(put 'narrow-to-region 'disabled nil)
+
+(use-package vterm :ensure t)
+
+(use-package deft
+  :ensure t
+  :config (setq deft-extension "org"
+                deft-directory org-directory
+                deft-text-mode 'org-mode
+                deft-use-filename-as-title t))
+(evil-set-initial-state 'deft-mode 'emacs)
+
+(use-package multi-vterm :ensure t)
+
+(use-package multi-vterm
+	:config
+	(add-hook 'vterm-mode-hook
+			(lambda ()
+			(setq-local evil-insert-state-cursor 'box)
+			(evil-insert-state)))
+	(define-key vterm-mode-map [return]                      #'vterm-send-return)
+    (unbind-key "C-a" vterm-mode-map)
+	(setq vterm-keymap-exceptions nil)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-v")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-b")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-w")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-u")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-n")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-m")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-p")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-j")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-k")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-t")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-g")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-c")      #'vterm--self-insert)
+	(evil-define-key 'insert vterm-mode-map (kbd "C-SPC")    #'vterm--self-insert)
+	(evil-define-key 'normal vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+	(evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
+	(evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
+	(evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
+	(evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))

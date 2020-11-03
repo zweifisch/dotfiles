@@ -109,13 +109,13 @@
 (setq org-agenda-include-diary t)
 
 (setq org-todo-keywords
-      '((sequence "TODO" "NEXT" "|" "DONE" "ABORTED")))
+      '((sequence "TODO" "NEXT" "HOLD" "|" "DONE" "ABORTED")))
 
 (evil-define-key 'normal org-mode-map
   "gh" 'outline-up-heading
   "gj" 'org-forward-heading-same-level
   "gk" 'org-backward-heading-same-level
-  "gl" 'outline-next-visible-heading
+  "gn" 'outline-next-visible-heading
   "t" 'org-todo
   "gt" 'org-show-todo-tree
   "ge" 'org-edit-special
@@ -125,6 +125,7 @@
   ">" 'org-metaright
   "ga" 'org-agenda
   " " 'org-toggle-inline-images
+  "gx" 'org-toggle-latex-fragment
   ;; "-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle
   (kbd "DEL") 'org-mark-ring-goto
@@ -243,13 +244,21 @@
   (interactive)
   (remove-overlays))
 
-(add-hook 'org-mode-hook 'set-org-mode-app-defaults)
-(defun set-org-mode-app-defaults ()
+(add-hook 'org-mode-hook 'set-org-mode-app-defaults-mac)
+
+(defun set-org-mode-app-defaults-linux ()
   (setq org-file-apps
 	'(("pdf" . "mupdf %s")
 	  ("jpg" . "qiv %s")
 	  ("png" . "qiv %s")
 	  ("svg" . "qiv %s"))))
+
+(defun set-org-mode-app-defaults-mac ()
+  (setq org-file-apps
+	'(("pdf" . "open %s")
+	  ("jpg" . "open %s")
+	  ("png" . "open %s")
+	  ("svg" . "open %s"))))
 
 (setq org-export-with-sub-superscripts nil)
 

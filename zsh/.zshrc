@@ -1,10 +1,4 @@
-if [ -n "$INSIDE_EMACS" ]; then
-	print -P "\033AnSiTu %n"
-	print -P "\033AnSiTc %d"
-	export TERM=xterm-color
-else
-	export TERM=screen-256color
-fi
+export TERM=screen-256color
 
 alias setup-zsh="git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh"
 
@@ -60,6 +54,8 @@ $HOME/.kotlinc/bin
 $HOME/.gradle/bin
 $HOME/.cask/bin
 $HOME/.swift/usr/bin
+$HOME/Library/Python/3.7/bin
+$HOME/.deno/bin
 )
 
 for p in $pathes; do
@@ -81,11 +77,9 @@ if [ -d $HOME/.pyenv ]; then
 	eval "$(pyenv init -)"
 fi
 
-if [ -z "$NVM_SOURCED" ]; then
-	# export NVM_SOURCED=1
-	if [ -d $HOME/.nvm ]; then
-		source $HOME/.nvm/nvm.sh
-	fi
+export NVM_DIR="$HOME/.nvm"
+if [ -f "$NVM_DIR/nvm.sh" ]; then
+    source "$NVM_DIR/nvm.sh" # This loads nvm
 fi
 
 if [ -f $HOME/.gvm/scripts/gvm ]; then
@@ -163,3 +157,5 @@ if [ -e /home/zf/.nix-profile/etc/profile.d/nix.sh ]; then . /home/zf/.nix-profi
 
 export PNPM_HOME="/home/zf/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
+
+[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
