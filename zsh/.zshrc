@@ -159,3 +159,10 @@ export PNPM_HOME="/home/zf/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
+
+# Wasmer
+export WASMER_DIR="/Users/zf/.wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+. "/Users/zf/.wasmedge/env"
+
+export LANG="en_US.UTF-8"

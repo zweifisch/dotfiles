@@ -1573,7 +1573,7 @@ with () {
     echo
 }
 
-alias antlr='java -cp /usr/local/lib/antlr-4.7-complete.jar -Xmx500M org.antlr.v4.Tool'
+# alias antlr='java -cp /usr/local/lib/antlr-4.7-complete.jar -Xmx500M org.antlr.v4.Tool'
 
 docker-proxy () {
     sudo mkdir -p /etc/systemd/system/docker.service.d
@@ -1650,3 +1650,5 @@ ndeps() {
 }
 
 alias rga='rg --no-ignore'
+
+alias reload='fc -R'

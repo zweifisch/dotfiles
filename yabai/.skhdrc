@@ -77,16 +77,16 @@
 # ############################################################### #
 
 # focus window
-# cmd - h : yabai -m window --focus west
-# cmd - l : yabai -m window --focus east
+cmd - j : yabai -m window --focus west
+cmd - k : yabai -m window --focus east
 
-cmd - h : yabai -m window --focus stack.next || yabai -m window --focus next || yabai -m window --focus first
-cmd - l : yabai -m window --focus stack.prev || yabai -m window --focus prev || yabai -m window --focus last
+# cmd - j : yabai -m window --focus stack.next || yabai -m window --focus next || yabai -m window --focus first
+# cmd - k : yabai -m window --focus stack.prev || yabai -m window --focus prev || yabai -m window --focus last
 
 # space
 
-cmd - j : yabai -m space  --focus next
-cmd - k : yabai -m space  --focus prev
+cmd - l : yabai -m space  --focus next
+cmd - h : yabai -m space  --focus prev
 
 alt - tab : yabai -m space --focus recent
 cmd - 0x12 : yabai -m space --focus 1
@@ -108,6 +108,10 @@ shift + cmd - 0x16 : yabai -m window --space 6; yabai -m space --focus 6
 shift + cmd - 0x1A : yabai -m window --space 7; yabai -m space --focus 7
 shift + cmd - 0x1C : yabai -m window --space 8; yabai -m space --focus 8
 shift + cmd - 0x19 : yabai -m window --space 9; yabai -m space --focus 9
+
+cmd - p : open -a Launchpad
+cmd - d : open -a Dingtalk
+cmd - q : yabai -m window --close
 
 # swap managed window
 # shift + alt - h : yabai -m window --swap north

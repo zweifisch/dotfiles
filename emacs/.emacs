@@ -119,6 +119,8 @@
 (define-key evil-visual-state-map
   (kbd "RET") 'append-to-buffer)
 
+(define-key minibuffer-local-completion-map (kbd "SPC") nil)
+
 (defun minibuffer-keyboard-quit ()
   "Abort recursive edit.
 In Delete Selection mode, if the mark is active, just deactivate it;
@@ -144,6 +146,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (shell-command-to-string
    (format "tmux new-window -c %s" default-directory)))
 
+(defun zf/open-project-in-tmux ()
+  "open current project in tmux"
+  (interactive)
+  (shell-command-to-string
+   (format "tmux new-window -c %s" (vc-root-dir))))
+
 ; evil-leader
 (evil-leader/set-key
   ;; "F" 'projectile-find-file
@@ -168,6 +176,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   ;; "g" 'helm-projectile-rg
   "G" 'ag-project
   "o" 'zf/open-in-tmux
+  "O" 'zf/open-project-in-tmux
   ;; "e" 'eshell-here
   ;; "e" 'switch-to-shell-in-project
   "e" 'multi-vterm-project
@@ -214,6 +223,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-a k") 'evil-window-up)
 (global-set-key (kbd "C-a H") 'winner-undo)
 (global-set-key (kbd "C-a L") 'winner-redo)
+(global-set-key (kbd "C-a L") 'winner-redo)
+(global-set-key (kbd "C-a f") 'switch-window)
 
 ; recentf
 (recentf-mode 1)
@@ -226,6 +237,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
      (define-key evil-visual-state-map "gc" 'evilnc-comment-operator)))
 
 (use-package evil-nerd-commenter :ensure t)
+
+(global-undo-tree-mode)
+(evil-set-undo-system 'undo-tree)
 
 (use-package evil-surround :ensure t
   :config (global-evil-surround-mode 1))
@@ -279,7 +293,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; python
 ;; (use-package python-mode :ensure t)
-(use-package flycheck :ensure t)
 (use-package elpy
   :ensure t
   :config (elpy-enable))
@@ -465,9 +478,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (add-hook 'web-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook (lambda () (setq web-mode-markup-indent-offset 2
                                             web-mode-code-indent-offset 2)))
-  (add-hook 'web-mode-hook (lambda () (pcase (file-name-extension buffer-file-name)
-                                        ("tsx" (lambda () (setup-tide-mode)
-                                                 (setq web-mode-markup-indent-offset 2)))))))
+  (add-hook 'web-mode-hook (lambda ()
+                             (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                               (setup-tide-mode)))))
+
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
 
 
 (setq css-indent-offset 2)
@@ -497,29 +512,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (setq js2-strict-trailing-comma-warning nil)
             (setq js2-mode-assume-strict t)
             (setq js2-basic-offset 2)
-            (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))))
+            (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+            (add-to-list 'auto-mode-alist '("\\.cjs\\'" . js2-mode))))
 
-;; golang
-
-(use-package go-mode :ensure t)
-(use-package go-eldoc :ensure t)
-(use-package company-go :ensure t)
-(exec-path-from-shell-copy-env "GOPATH")
-
-(defun my-go-mode-hook ()
-  (add-to-list (make-local-variable 'company-backends) 'company-go)
-  (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (go-eldoc-setup)
-
-  (evil-define-key 'normal go-mode-map
-    "gd" 'godef-jump
-    "gD" 'godef-jump-other-window
-    "K" 'godef-describe)
-  (evil-define-key 'normal godoc-mode-map
-    "q" 'quit-window
-    "g?" 'describe-mode))
-(add-hook 'go-mode-hook 'my-go-mode-hook)
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file t)
@@ -527,9 +522,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (require 'volatile-highlights)
 (volatile-highlights-mode t)
-
-(use-package company :ensure t
-  :config (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package perspective
   :ensure t
@@ -612,8 +604,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 
 (evil-set-initial-state 'image-mode 'emacs)
-
 (evil-set-initial-state 'process-menu-mode 'emacs)
+(evil-set-initial-state 'xref--xref-buffer-mode 'emacs)
 
 (setq doc-view-resolution 200)
 
@@ -736,16 +728,89 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package focus :ensure t)
 
-(use-package rust-mode :ensure t)
-(use-package cargo :ensure t)
-(add-hook 'rust-mode-hook 'cargo-minor-mode)
-(use-package racer :ensure t)
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-(add-hook 'racer-mode-hook #'company-mode)
 
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+
+
+(use-package flycheck
+  :ensure t
+  :hook (prog-mode . flycheck-mode))
+
+(use-package company :ensure t
+  :config )
+
+(use-package company
+  :ensure t
+  :hook (prog-mode . company-mode)
+  :config (progn
+            (setq company-tooltip-align-annotations t)
+            (setq company-minimum-prefix-length 1)
+            ;; (add-hook 'after-init-hook 'global-company-mode)
+            ))
+
+(use-package lsp-mode
+  :ensure t
+  :commands lsp)
+
+(use-package lsp-ui :ensure t)
+
+(yas-global-mode)
+
+
+
+(use-package rust-mode
+  :ensure t
+  :hook (rust-mode . lsp))
+
+;; Add keybindings for interacting with Cargo
+(use-package cargo
+  :ensure t
+  :hook (rust-mode . cargo-minor-mode)
+  :config (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
+
+(use-package flycheck-rust
+  :ensure t
+  :hook (flycheck-mode-hook . flycheck-rust-setup))
+
+;; (use-package racer :ensure t)
+;; (add-hook 'rust-mode-hook #'racer-mode)
+;; (add-hook 'racer-mode-hook #'eldoc-mode)
+;; (add-hook 'racer-mode-hook #'company-mode)
+;; (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/library")
+
 (setq company-tooltip-align-annotations t)
+
+
+
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 1)
+
+;; golang
+
+(use-package go-mode
+  :ensure t
+  :config (progn
+            (add-to-list (make-local-variable 'company-backends) 'company-go)
+            (setq gofmt-command "goimports")
+            (add-hook 'before-save-hook 'gofmt-before-save)
+            (go-eldoc-setup)
+            
+            (evil-define-key 'normal go-mode-map
+              "gd" 'godef-jump
+              "gD" 'godef-jump-other-window
+              "K" 'godef-describe)
+            (evil-define-key 'normal godoc-mode-map
+              "q" 'quit-window
+              "g?" 'describe-mode)))
+
+(use-package go-eldoc :ensure t)
+(use-package company-go :ensure t)
+(exec-path-from-shell-copy-env "GOPATH")
+
+;; go install golang.org/x/tools/gopls@latest
+(add-hook 'go-mode-hook #'lsp-deferred)
+(add-hook 'go-mode-hook #'yas-minor-mode)
+
+
 
 
 (use-package emmet-mode :ensure t)
@@ -819,6 +884,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
              (lambda (output)
                (replace-regexp-in-string "\\[0G" "" output)))
 
+(evil-set-initial-state 'comint-mode 'normal)
+
 (use-package extempore-mode :ensure t)
 
 (use-package fsharp-mode :ensure t)
@@ -848,10 +915,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package youdao-dictionary :ensure t)
 
-(use-package typescript-mode
-  :ensure t
-  :config (progn
-           (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))))
+(use-package typescript-mode :ensure t)
 
 (use-package ponylang-mode :ensure t)
 
@@ -935,6 +999,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;             (fcitx-aggressive-setup)
 ;;             (setq fcitx-use-dbus t)))
 
+(use-package rainbow-mode :ensure t)
+
 (use-package dockerfile-mode :ensure t)
 
 (add-to-list 'auto-mode-alist '("\\.g4\\'" . antlr-mode))
@@ -955,6 +1021,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
        (string-join
         (-map (lambda (x) (concat "|" (car x) "|" (cadr x) "|")) query) "\n")))))
 
+(use-package switch-window :ensure t
+  :config (progn
+            (setq switch-window-shortcut-style 'qwerty)))
 
 (use-package tide :ensure t
   :config (progn
@@ -971,7 +1040,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (tide-hl-identifier-mode +1)
   (company-mode +1)
   (evil-define-key 'normal tide-mode-map
-    "gr" 'tide-references
+    "gr" 'xref-find-references
     "gd" 'tide-jump-to-definition
     "gb" 'tide-jump-back))
 
@@ -1120,17 +1189,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package dart-mode :ensure t)
 
-; (use-package org-roam :ensure t
-;   :hook
-;   (after-init . org-roam-mode)
-;   :custom
-;   (org-roam-directory (expand-file-name "~/notes/org"))
-;   :bind (:map org-roam-mode-map
-;               (("C-c n l" . org-roam)
-;                ("C-c n f" . org-roam-find-file)
-;                ("C-c n g" . org-roam-show-graph))
-;               :map org-mode-map
-;               (("C-c n i" . org-roam-insert))))
+(use-package org-roam
+      :ensure t
+      :hook
+      (after-init . org-roam-mode)
+      :custom
+      (org-roam-directory "~/notes/org")
+      :bind (:map org-roam-mode-map
+              (("C-r C-r" . org-roam)
+               ("C-r C-f" . org-roam-find-file)
+               ("C-r C-g" . org-roam-graph))
+              :map org-mode-map
+              (("C-r C-i" . org-roam-insert))
+              (("C-r C-I" . org-roam-insert-immediate))))
+
 (put 'narrow-to-region 'disabled nil)
 
 (use-package vterm :ensure t)
@@ -1178,3 +1250,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 	(evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
 	(evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
 	(evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))
+
+(setq server-name "server")
+
+(require 'peg-mode)

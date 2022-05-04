@@ -5,7 +5,7 @@
 (use-package ob-kotlin :ensure t)
 (use-package inf-ruby :ensure t)
 (use-package ob-sml :ensure t)
-(use-package ob-ipython :ensure t)
+;; (use-package ob-ipython :ensure t)
 (use-package ob-lfe :ensure t)
 (use-package ob-elixir :ensure t)
 (use-package ob-coffee :ensure t)
@@ -13,10 +13,12 @@
 (use-package htmlize :ensure t)
 (use-package ox-jira :ensure t)
 
-(use-package jupyter :ensure t)
+;; (use-package jupyter :ensure t)
 
 (use-package org-bullets :ensure t)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
+(setq org-startup-folded t)
 
 (setq org-log-done nil)
 (setq org-use-speed-commands t)
@@ -25,9 +27,10 @@
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((ruby . t)
+ '((alda . t)
+   (ruby . t)
    (scheme . t)
-   (python . t)
+   ;; (python . t)
    (js . t)
    (shell . t)
    (go . t)
@@ -45,7 +48,7 @@
    (kotlin . t)
    (ansible . t)
    (ocaml . t)
-   (ipython . t)
+   ;; (ipython . t)
    ;; (haxe . t)
    ;; (go . t)
    (sml . t)
@@ -61,6 +64,7 @@
    (plantuml . t)
    (ditaa . t)
    (groovy . t)
+   (forth . t)
    (clojure . t)))
 
 (setq org-plantuml-jar-path
@@ -264,6 +268,8 @@
 
 (setq org-link-abbrev-alist
   '(("google"    . "http://www.google.com/search?q=")))
+
+(require 'ox-gfm)
 
 (require 'org-tempo)
 

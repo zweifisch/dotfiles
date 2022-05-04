@@ -14,6 +14,13 @@
 ;; (use-package doom-themes :ensure t)
 (use-package subatomic-theme :ensure t)
 
+(use-package kaolin-themes
+  :ensure t
+  :config
+  ;; (load-theme 'kaolin-dark t)
+  ;; (kaolin-treemacs-theme)
+  )
+
 (load-theme 'subatomic t)
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
@@ -40,8 +47,9 @@
 
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
   (set-fontset-font (frame-parameter nil 'font)
-                    charset (font-spec :family "华文黑体"
-                                       :size 11)))
+                    charset (font-spec
+                             ;; :family "华文黑体"
+                             :size 11)))
 
 ;; (set-frame-font "Hack-10")
 

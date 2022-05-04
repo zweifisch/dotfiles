@@ -11,14 +11,17 @@
   (interactive)
   (let ((compilation-save-buffers-predicate 'ignore)
         (compilation-ask-about-save nil))
-    (compile (concat "npm test " (buffer-file-name)) t)))
+    (compile
+     (cond ((equal current-prefix-arg 1) (concat "npm test " (buffer-file-name) " -- " " -u"))
+           (t (concat "npm test " (buffer-file-name))))
+     t)))
 
-(defun npm-lint ()
-  "npm lint"
+(defun npm-jest-current-file ()
+  "npm run jest"
   (interactive)
   (let ((compilation-save-buffers-predicate 'ignore)
         (compilation-ask-about-save nil))
-    (compile "npm run lint" t)))
+    (compile (concat "npm run jest " (buffer-file-name)) t)))
 
 (defun npm-compile ()
   "npm compile"

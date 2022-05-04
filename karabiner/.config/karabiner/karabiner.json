@@ -17,7 +17,7 @@
           {
             "manipulators": [
               {
-                "description": "swap command and option",
+                "description": "option -> gui",
                 "conditions": [
                   {"type": "device_if", "identifiers": [{"vendor_id": 1452}]}
                 ],
@@ -30,7 +30,7 @@
                 "type": "basic"
               },
               {
-                "description": "swap command and option",
+                "description": "gui -> option",
                 "conditions": [
                   {"type": "device_if", "identifiers": [{"vendor_id": 1452}]}
                 ],
@@ -39,6 +39,32 @@
                 },
                 "to": [{
                   "key_code": "left_option"
+                }],
+                "type": "basic"
+              },
+              {
+                "description": "option -> gui",
+                "conditions": [
+                  {"type": "device_if", "identifiers": [{"vendor_id": 1133}]}
+                ],
+                "from": {
+                  "key_code": "left_alt"
+                },
+                "to": [{
+                  "key_code": "left_gui"
+                }],
+                "type": "basic"
+              },
+              {
+                "description": "gui -> option",
+                "conditions": [
+                  {"type": "device_if", "identifiers": [{"vendor_id": 1133}]}
+                ],
+                "from": {
+                  "key_code": "left_gui"
+                },
+                "to": [{
+                  "key_code": "left_alt"
                 }],
                 "type": "basic"
               },
@@ -143,7 +169,7 @@
               },
               {
                 "conditions": [
-                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}]}
+                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}, {"vendor_id": 1133}]}
                 ],
                 "description": "Change control to escape when used alone",
                 "from": {
@@ -160,134 +186,6 @@
                   }
                 ],
                 "type": "basic"
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "8",
-                  "modifiers": {
-                    "mandatory": [
-                      "command"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "open -a Emacs"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "3",
-                  "modifiers": {
-                    "mandatory": [
-                      "command"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "open -a 'Safari'"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "6",
-                  "modifiers": {
-                    "mandatory": [
-                      "command"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "open -a DingTalk"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "2",
-                  "modifiers": {
-                    "mandatory": [
-                      "command"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "open -a Simulator"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "4",
-                  "modifiers": {
-                    "mandatory": [
-                      "command"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "open -a 'IntelliJ IDEA CE'"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "1",
-                  "modifiers": {
-                    "mandatory": [
-                      "command"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "open -a iTerm"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "9",
-                  "modifiers": {
-                    "mandatory": [
-                      "command"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "open -a qutebrowser"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "7",
-                  "modifiers": {
-                    "mandatory": [
-                      "command"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "open -a 'Google Chrome'"
-                  }
-                ]
               },
               {
                 "type": "basic",
