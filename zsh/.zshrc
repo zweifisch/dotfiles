@@ -158,3 +158,8 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$HOME/.
 # source $ZPLUG_HOME/init.zsh
 
 # zplug "jimeh/zsh-peco-history"
+
+if [ -e /home/zf/.nix-profile/etc/profile.d/nix.sh ]; then . /home/zf/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+export PNPM_HOME="/home/zf/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"

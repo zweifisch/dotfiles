@@ -160,11 +160,11 @@ for_window [title="Emulator"] floating enable, border none
 
 for_window [class="^Chrome$" title=" - Chromium$"] border none
 
-for_window [class="^.*"] border pixel 0
+# for_window [class="^.*"] border pixel 0
 
-smart_gaps on
-gaps inner 8
-gaps outer 0
+#smart_gaps on
+#gaps inner 8
+#gaps outer 0
 
 bar {
     colors {

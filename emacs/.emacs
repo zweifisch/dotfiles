@@ -332,28 +332,28 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (sit-for .01)
   (comment-region (line-beginning-position) (line-end-position)))
 
-(use-package cider
-  :ensure t
-  :config (progn
-            (evil-define-key 'normal cider-mode-map
-              (kbd "RET") 'cider-eval-last-sexp)
-            (evil-define-key 'normal cider-mode-map
-              (kbd "<C-return>") 'cider-eval-print-last-sexp-comment)
-            (evil-define-key 'visual cider-mode-map
-              (kbd "RET") 'cider-eval-region)
-            (setq nrepl-hide-special-buffers t
-                  cider-pprint-fn 'puget
-                  cider-repl-pop-to-buffer-on-connect nil
-                  cider-popup-stacktraces t
-                  cider-repl-use-pretty-printing t
-                  cider-repl-popup-stacktraces t)))
+; (use-package cider
+;   :ensure t
+;   :config (progn
+;             (evil-define-key 'normal cider-mode-map
+;               (kbd "RET") 'cider-eval-last-sexp)
+;             (evil-define-key 'normal cider-mode-map
+;               (kbd "<C-return>") 'cider-eval-print-last-sexp-comment)
+;             (evil-define-key 'visual cider-mode-map
+;               (kbd "RET") 'cider-eval-region)
+;             (setq nrepl-hide-special-buffers t
+;                   cider-pprint-fn 'puget
+;                   cider-repl-pop-to-buffer-on-connect nil
+;                   cider-popup-stacktraces t
+;                   cider-repl-use-pretty-printing t
+;                   cider-repl-popup-stacktraces t)))
 
 (use-package paredit
   :ensure t
   :config (progn (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
                  (add-hook 'scheme-mode-hook 'paredit-mode)))
 
-(use-package clj-refactor :ensure t)
+; (use-package clj-refactor :ensure t)
 (use-package rainbow-delimiters :ensure t)
 
 (defun my-clojure-mode-hook ()
@@ -548,13 +548,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
-(use-package deft
-  :ensure t
-  :config (setq deft-extension "org"
-                deft-directory org-directory
-                deft-text-mode 'org-mode
-                deft-use-filename-as-title t))
-(evil-set-initial-state 'deft-mode 'emacs)
+;; (use-package deft
+;;   :ensure t
+;;   :config (setq deft-extension "org"
+;;                 deft-directory org-directory
+;;                 deft-text-mode 'org-mode
+;;                 deft-use-filename-as-title t))
+;; (evil-set-initial-state 'deft-mode 'emacs)
 
 (use-package org :ensure t
   :bind (:map org-mode-map
