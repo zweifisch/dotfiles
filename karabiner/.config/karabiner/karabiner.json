@@ -190,22 +190,6 @@
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "s",
-                  "modifiers": {
-                    "mandatory": [
-                      "command"
-                    ]
-                  }
-                },
-                "to": [
-                  {
-                    "shell_command": "screencapture ~/.screencapture && zbarimg ~/.screencapture"
-                  }
-                ]
-              },
-              {
-                "type": "basic",
-                "from": {
                   "key_code": "caps_lock",
                   "modifiers": {
                     "mandatory": [

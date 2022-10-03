@@ -293,19 +293,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; python
 ;; (use-package python-mode :ensure t)
-(use-package elpy
-  :ensure t
-  :config (elpy-enable))
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args ""
-      python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-      python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-      python-shell-completion-setup-code
-      "from IPython.core.completerlib import module_completion"
-      python-shell-completion-module-string-code
-      "';'.join(module_completion('''%s'''))\n"
-      python-shell-completion-string-code
-      "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+;; (use-package elpy
+;;   :ensure t
+;;   :config (elpy-enable))
+;; (setq python-shell-interpreter "ipython"
+;;       python-shell-interpreter-args ""
+;;       python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+;;       python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+;;       python-shell-completion-setup-code
+;;       "from IPython.core.completerlib import module_completion"
+;;       python-shell-completion-module-string-code
+;;       "';'.join(module_completion('''%s'''))\n"
+;;       python-shell-completion-string-code
+;;       "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 ; python
 (evil-define-key 'visual python-mode-map
@@ -675,6 +675,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; (use-package clojure-cheatsheet :ensure t)
 
+(use-package helm-org :ensure t)
+
 (use-package helm-orgcard :ensure t)
 
 (use-package circe :ensure t)
@@ -704,6 +706,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (global-set-key (kbd "C-c C-p C-&") 'projectile-run-async-shell-command-in-root)
 (global-set-key (kbd "C-c C-p") nil)
+
 
 (use-package xkcd :ensure t)
 
@@ -747,13 +750,52 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             ;; (add-hook 'after-init-hook 'global-company-mode)
             ))
 
-(use-package lsp-mode
-  :ensure t
-  :commands lsp)
-
-(use-package lsp-ui :ensure t)
-
 (yas-global-mode)
+
+
+
+(use-package lsp-mode
+  :config
+  (setq lsp-idle-delay 0.5
+        lsp-enable-symbol-highlighting t
+        lsp-enable-snippet nil  ;; Not supported by company capf, which is the recommended company backend
+        lsp-pyls-plugins-flake8-enabled t)
+  (lsp-register-custom-settings
+   '(("pyls.plugins.pyls_mypy.enabled" t t)
+     ("pyls.plugins.pyls_mypy.live_mode" nil t)
+     ("pyls.plugins.pyls_black.enabled" t t)
+     ("pyls.plugins.pyls_isort.enabled" t t)
+
+     ;; Disable these as they're duplicated by flake8
+     ("pyls.plugins.pycodestyle.enabled" nil t)
+     ("pyls.plugins.mccabe.enabled" nil t)
+     ("pyls.plugins.pyflakes.enabled" nil t)))
+  :hook
+  ((python-mode . lsp)
+   (lsp-mode . lsp-enable-which-key-integration))
+  :bind (:map evil-normal-state-map
+              ("gh" . lsp-describe-thing-at-point)))
+
+(use-package lsp-ui
+  :config (setq lsp-ui-sideline-show-hover t
+                lsp-ui-sideline-delay 0.5
+                lsp-ui-doc-delay 5
+                lsp-ui-sideline-ignore-duplicates t
+                lsp-ui-doc-position 'bottom
+                lsp-ui-doc-alignment 'frame
+                lsp-ui-doc-header nil
+                lsp-ui-doc-include-signature t
+                lsp-ui-doc-use-childframe t)
+  :commands lsp-ui-mode
+  :bind (:map evil-normal-state-map
+              ("gd" . lsp-ui-peek-find-definitions)
+              ("gr" . lsp-ui-peek-find-references)))
+
+(use-package pyvenv
+  :demand t
+  :config
+  (setq pyvenv-workon "emacs")  ; Default venv
+  (pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
 
 
 
@@ -1025,9 +1067,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :config (progn
             (setq switch-window-shortcut-style 'qwerty)))
 
-(use-package tide :ensure t
-  :config (progn
-            (add-hook 'typescript-mode-hook #'setup-tide-mode)))
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . setup-tide-mode)))
 
 (defun setup-tide-mode ()
   (interactive)
@@ -1254,3 +1297,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq server-name "server")
 
 (require 'peg-mode)
+
+
+(defun zf/rustc-current-file ()
+  "rustc"
+  (interactive)
+  (let ((compilation-save-buffers-predicate 'ignore)
+        (compilation-ask-about-save nil))
+    (compile (concat "rustc -o tmp " (buffer-file-name) " && ./tmp") t)))
+
+(defun zf/rustc-expand-current-file ()
+  "rustc"
+  (interactive)
+  (let ((compilation-save-buffers-predicate 'ignore)
+        (compilation-ask-about-save nil))
+    (compile (concat "rustc -Zunpretty=expanded " (buffer-file-name)) t)))
+

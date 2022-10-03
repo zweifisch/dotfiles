@@ -21,7 +21,7 @@
   ;; (kaolin-treemacs-theme)
   )
 
-(load-theme 'subatomic t)
+;; (load-theme 'subatomic t)
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
 

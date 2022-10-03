@@ -166,3 +166,12 @@ export WASMER_DIR="/Users/zf/.wasmer"
 . "/Users/zf/.wasmedge/env"
 
 export LANG="en_US.UTF-8"
+
+# bun completions
+[ -s "/Users/zf/.bun/_bun" ] && source "/Users/zf/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/zf/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="$HOME/.poetry/bin:$PATH"

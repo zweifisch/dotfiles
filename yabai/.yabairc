@@ -1,13 +1,14 @@
 
-yabai -m rule --add app=Emacs manage=on space=3
+yabai -m rule --add app=Emacs manage=on space=8
 yabai -m rule --add app=iTerm2 manage=on space=1
 yabai -m rule --add app=Alacritty manage=on space=1
 
-yabai -m rule --add app=DingTalk manage=off
-yabai -m rule --add app=钉钉 manage=off
-yabai -m rule --add app=AliLang manage=off
+yabai -m rule --add app=iDingTalk manage=off space=7
+yabai -m rule --add app=AliLang manage=off space=7
 yabai -m rule --add app=阿里郎 manage=off
 yabai -m rule --add app=licecap manage=off
+
+yabai -m rule --add app=Chromium manage=off
 
 yabai -m space 2 --label shell
 yabai -m space 3 --label editor
