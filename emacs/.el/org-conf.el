@@ -1,5 +1,5 @@
 
-(use-package org :ensure org-plus-contrib)
+; (use-package org :ensure org-plus-contrib)
 (use-package ob-http :ensure t)
 (use-package ob-cypher :ensure t)
 (use-package ob-kotlin :ensure t)
@@ -56,7 +56,7 @@
    (perl . t)
    (elixir . t)
    ;; (rust . t)
-   (eukleides . t)
+   ;; (eukleides . t)
    ;; (fomus . t)
    (mathomatic . t)
    ;; (ansible . t)
@@ -70,8 +70,8 @@
 (setq org-plantuml-jar-path
       (expand-file-name "~/.plantuml.jar"))
 
-(setq org-eukleides-path "/usr/bin/eukleides"
-      org-eukleides-eps-to-raster "convert %s -antialias %s")
+;; (setq org-eukleides-path "/usr/bin/eukleides"
+;;       org-eukleides-eps-to-raster "convert %s -antialias %s")
 
 (add-to-list 'org-latex-packages-alist
              '("" "tikz" t))
@@ -228,7 +228,7 @@
 
 (use-package org-mime :ensure t)
 
-(require 'org-velocity)
+; (require 'org-velocity)
 
 (use-package org-board :ensure t)
 

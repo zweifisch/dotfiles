@@ -105,3 +105,4 @@ fi
 PATH=$PATH:~/.bin
 
 # ubuntu-server-tip
+. "$HOME/.cargo/env"

@@ -62,10 +62,14 @@
 (require 'package)
 ;(add-to-list 'package-archives
 ;             '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/") t)
+; (add-to-list 'package-archives
+;             '("melpa" . "http://melpa.org/packages/") t)
+; (add-to-list 'package-archives
+;              '("org" . "http://orgmode.org/elpa/") t)
+
+(setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
+			 ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
+			 ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")))
 
 (package-initialize)
 
@@ -77,8 +81,8 @@
                       volatile-highlights
                       know-your-http-well
                       bison-mode
-                      ghc
-                      company-ghc
+                      ; ghc
+                      ; company-ghc
                       guide-key))
 (dolist (p my-packages)
   (when (not (package-installed-p p)) (package-install p)))
@@ -238,6 +242,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package evil-nerd-commenter :ensure t)
 
+(use-package undo-tree :ensure t)
+(setq undo-tree-auto-save-history nil)
 (global-undo-tree-mode)
 (evil-set-undo-system 'undo-tree)
 
@@ -529,6 +535,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :bind (("M-l" . persp-next)
          ("M-h" . persp-prev)))
 
+;; (setq persp-mode-prefix-key )
+
 (use-package persp-projectile
   :ensure t)
 
@@ -631,8 +639,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package cypher-mode :ensure t)
 
 (use-package yaml-mode :ensure t)
-(use-package jade-mode :ensure t)
-(use-package stylus-mode :ensure t)
+; (use-package jade-mode :ensure t)
+; (use-package stylus-mode :ensure t)
 
 (use-package paradox :ensure t)
 
@@ -731,9 +739,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package focus :ensure t)
 
-
-
-
 (use-package flycheck
   :ensure t
   :hook (prog-mode . flycheck-mode))
@@ -809,15 +814,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :hook (rust-mode . cargo-minor-mode)
   :config (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common))
 
-(use-package flycheck-rust
-  :ensure t
-  :hook (flycheck-mode-hook . flycheck-rust-setup))
-
-;; (use-package racer :ensure t)
-;; (add-hook 'rust-mode-hook #'racer-mode)
-;; (add-hook 'racer-mode-hook #'eldoc-mode)
-;; (add-hook 'racer-mode-hook #'company-mode)
-;; (setq racer-rust-src-path "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/library")
+;; (use-package flycheck-rust
+;;   :ensure t
+;;   :hook (flycheck-mode-hook . flycheck-rust-setup))
 
 (setq company-tooltip-align-annotations t)
 
@@ -1248,7 +1247,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (put 'narrow-to-region 'disabled nil)
 
-(use-package vterm :ensure t)
+; (use-package vterm :ensure t)
 
 (use-package deft
   :ensure t
@@ -1258,7 +1257,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                 deft-use-filename-as-title t))
 (evil-set-initial-state 'deft-mode 'emacs)
 
-(use-package multi-vterm :ensure t)
+; (use-package multi-vterm :ensure t)
 
 (use-package multi-vterm
 	:config

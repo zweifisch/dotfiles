@@ -8,7 +8,7 @@ ZSH_CUSTOM=$HOME/.zsh
 DISABLE_AUTO_UPDATE="true"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(vi-mode gnu-utils zsh-syntax-highlighting history-substring-search vagrant zaw docker zsh-autosuggestions zsh-peco-history)
+plugins=(vi-mode gnu-utils zsh-syntax-highlighting history-substring-search vagrant docker zsh-peco-history)
 source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all
@@ -158,12 +158,14 @@ if [ -e /home/zf/.nix-profile/etc/profile.d/nix.sh ]; then . /home/zf/.nix-profi
 export PNPM_HOME="/home/zf/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 
+export PATH="/opt/homebrew/bin:$PATH"
+
 [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
 
 # Wasmer
-export WASMER_DIR="/Users/zf/.wasmer"
-[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
-. "/Users/zf/.wasmedge/env"
+# export WASMER_DIR="/Users/zf/.wasmer"
+# [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+# . "/Users/zf/.wasmedge/env"
 
 export LANG="en_US.UTF-8"
 

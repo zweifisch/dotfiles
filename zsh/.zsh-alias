@@ -1652,3 +1652,15 @@ ndeps() {
 alias rga='rg --no-ignore'
 
 alias reload='fc -R'
+
+setup-zsh-peco-history() {
+    git clone https://github.com/jimeh/zsh-peco-history.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-peco-history
+}
+
+to-image() {
+  convert -background 'rgb(28,27,33)' -fill 'rgb(236,224,195)' -font PingFang-SC-Thin -size 1200x -pointsize 64 \
+    -interline-spacing 64 \
+    -border 80x64 -bordercolor 'rgb(28,27,33)' \
+    caption:"$1" \
+    out.png
+}

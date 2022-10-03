@@ -18,9 +18,9 @@ config.bind('<Ctrl-i>', 'open-editor', mode='insert')
 # config.bind('<Ctrl-e>', 'rl-end-of-line', mode='insert')
 # config.bind('<Ctrl-w>', 'rl-end-word-rubout', mode='insert')
 
-c.content.proxy = 'socks://localhost:13659'
+# c.content.proxy = 'socks://localhost:13659'
 # c.content.proxy = 'socks://localhost:1086'
-# c.content.proxy = 'system'
+c.content.proxy = 'system'
 
 c.url.searchengines = {
     "g": "https://www.google.com/search?q={}",
@@ -43,4 +43,4 @@ c.aliases['readability'] = 'spawn --userscript readability-js'
 
 c.colors.webpage.darkmode.enabled = True
 
-
+c.load_autoconfig(False)
