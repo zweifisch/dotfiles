@@ -5,6 +5,7 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias mkdir='mkdir -p'
 alias lt='tree -L 1'
+alias ls='ls --color=auto'
 
 alias ls-empty='find . -type f -empty -exec ls -l {} \;'
 alias rm-empty='find . -type f -empty -delete'

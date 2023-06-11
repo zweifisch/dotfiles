@@ -35,7 +35,8 @@ c.auto_save.session = True
 
 # c.content.headers.user_agent = 'Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/99.0'
 # c.content.headers.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.0.0 Safari/537.36'
-c.content.headers.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) (KHTML, like Gecko) Chrome/83.0.0.0'
+c.content.headers.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36'
+
 c.tabs.show = 'never'
 c.tabs.background = True
 
@@ -45,4 +46,4 @@ c.aliases['readability'] = 'spawn --userscript readability-js'
 
 c.colors.webpage.darkmode.enabled = True
 
-c.load_autoconfig(False)
+# c.load_autoconfig(False)

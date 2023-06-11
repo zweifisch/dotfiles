@@ -111,6 +111,7 @@ shift + cmd - 0x19 : yabai -m window --space 9; yabai -m space --focus 9
 
 cmd - p : open -a Launchpad
 cmd - i : open -a iDingtalk
+
 cmd - d : open -a Dictionary
 cmd - q : yabai -m window --close
 
