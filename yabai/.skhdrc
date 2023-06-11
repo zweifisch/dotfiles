@@ -110,7 +110,8 @@ shift + cmd - 0x1C : yabai -m window --space 8; yabai -m space --focus 8
 shift + cmd - 0x19 : yabai -m window --space 9; yabai -m space --focus 9
 
 cmd - p : open -a Launchpad
-cmd - d : open -a iDingtalk
+cmd - i : open -a iDingtalk
+cmd - d : open -a Dictionary
 cmd - q : yabai -m window --close
 
 # swap managed window
@@ -162,11 +163,11 @@ shift + cmd - space : yabai -m space --balance
 # alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
-# alt - e : yabai -m window --toggle split
+cmd - space : yabai -m window --toggle split
 
 # float / unfloat window and center on screen
-# alt - t : yabai -m window --toggle float;\
-#           yabai -m window --grid 4:4:1:1:2:2
+# cmd - space : yabai -m window --toggle float;\
+#               yabai -m window --grid 4:4:1:1:2:2
 
 # toggle sticky(+float), topmost, picture-in-picture
 # alt - p : yabai -m window --toggle sticky;\

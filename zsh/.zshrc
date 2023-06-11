@@ -177,3 +177,4 @@ export BUN_INSTALL="/Users/zf/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"

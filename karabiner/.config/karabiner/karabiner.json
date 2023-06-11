@@ -71,7 +71,7 @@
               {
                 "description": "hhkb fix backspace",
                 "conditions": [
-                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}]}
+                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}, {"vendor_id": 1155}]}
                 ],
                 "from": {
                   "key_code": "grave_accent_and_tilde",
@@ -121,7 +121,7 @@
               {
                 "description": "hhkb fix tilde",
                 "conditions": [
-                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}]}
+                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}, {"vendor_id": 1155}]}
                 ],
                 "from": {
                   "key_code": "escape"
@@ -134,7 +134,7 @@
               {
                 "description": "hhkb fix grave",
                 "conditions": [
-                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}]}
+                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}, {"vendor_id": 1155}]}
                 ],
                 "from": {
                   "key_code": "escape",

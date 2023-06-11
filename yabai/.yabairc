@@ -1,14 +1,14 @@
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
 
 yabai -m rule --add app=Emacs manage=on space=8
 yabai -m rule --add app=iTerm2 manage=on space=1
 yabai -m rule --add app=Alacritty manage=on space=1
 
-yabai -m rule --add app=iDingTalk manage=off space=7
-yabai -m rule --add app=AliLang manage=off space=7
+yabai -m rule --add app=阿里钉 manage=off
 yabai -m rule --add app=阿里郎 manage=off
 yabai -m rule --add app=licecap manage=off
-
-yabai -m rule --add app=Chromium manage=off
+yabai -m rule --add app=词典 manage=off grid=2:3:2:1:1:1 opacity=0.9
 
 yabai -m space 2 --label shell
 yabai -m space 3 --label editor
@@ -19,3 +19,4 @@ yabai -m config layout bsp
 yabai -m config window_gap 20
 
 yabai -m config auto_balance on
+

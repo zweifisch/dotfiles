@@ -71,6 +71,11 @@
 			 ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
 			 ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")))
 
+;; (add-to-list 'package-archives
+;;              '("melpa" . "http://melpa.org/packages/") t)
+;; (add-to-list 'package-archives
+;;              '("org" . "http://orgmode.org/elpa/") t)
+
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -183,8 +188,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "O" 'zf/open-project-in-tmux
   ;; "e" 'eshell-here
   ;; "e" 'switch-to-shell-in-project
-  "e" 'multi-vterm-project
-  "E" 'multi-vterm-dedicated-toggle
+
+  ;; "e" 'multi-vterm-project
+  ;; "E" 'multi-vterm-dedicated-toggle
+
   ;; "i" 'ein:notebooklist-open
   "c" 'org-capture
   "s" 'magit-status
@@ -246,6 +253,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq undo-tree-auto-save-history nil)
 (global-undo-tree-mode)
 (evil-set-undo-system 'undo-tree)
+(setq undo-tree-history-directory-alist '(("." . "~/tmp/undo")))
 
 (use-package evil-surround :ensure t
   :config (global-evil-surround-mode 1))
@@ -651,7 +659,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ; (require 'scheme-conf)
 (require 'theme-conf)
 (require 'shell-switch)
-(require 'shell-conf)
+;; (require 'shell-conf)
 (require 'misc-conf)
 (require 'eww-conf)
 (require 'npm-scripts)
@@ -1259,39 +1267,39 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ; (use-package multi-vterm :ensure t)
 
-(use-package multi-vterm
-	:config
-	(add-hook 'vterm-mode-hook
-			(lambda ()
-			(setq-local evil-insert-state-cursor 'box)
-			(evil-insert-state)))
-	(define-key vterm-mode-map [return]                      #'vterm-send-return)
-    (unbind-key "C-a" vterm-mode-map)
-	(setq vterm-keymap-exceptions nil)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-v")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-b")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-w")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-u")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-n")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-m")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-p")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-j")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-k")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-t")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-g")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-c")      #'vterm--self-insert)
-	(evil-define-key 'insert vterm-mode-map (kbd "C-SPC")    #'vterm--self-insert)
-	(evil-define-key 'normal vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
-	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
-	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
-	(evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
-	(evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
-	(evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
-	(evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))
+;; (use-package multi-vterm
+;; 	:config
+;; 	(add-hook 'vterm-mode-hook
+;; 			(lambda ()
+;; 			(setq-local evil-insert-state-cursor 'box)
+;; 			(evil-insert-state)))
+;; 	(define-key vterm-mode-map [return]                      #'vterm-send-return)
+;;     (unbind-key "C-a" vterm-mode-map)
+;; 	(setq vterm-keymap-exceptions nil)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-e")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-f")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-v")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-b")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-w")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-u")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-n")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-m")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-p")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-j")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-k")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-r")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-t")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-g")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-c")      #'vterm--self-insert)
+;; 	(evil-define-key 'insert vterm-mode-map (kbd "C-SPC")    #'vterm--self-insert)
+;; 	(evil-define-key 'normal vterm-mode-map (kbd "C-d")      #'vterm--self-insert)
+;; 	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+;; 	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+;; 	(evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)
+;; 	(evil-define-key 'normal vterm-mode-map (kbd "i")        #'evil-insert-resume)
+;; 	(evil-define-key 'normal vterm-mode-map (kbd "o")        #'evil-insert-resume)
+;; 	(evil-define-key 'normal vterm-mode-map (kbd "<return>") #'evil-insert-resume))
 
 (setq server-name "server")
 
@@ -1303,7 +1311,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (interactive)
   (let ((compilation-save-buffers-predicate 'ignore)
         (compilation-ask-about-save nil))
-    (compile (concat "rustc -o tmp " (buffer-file-name) " && ./tmp") t)))
+    (compile (concat "rustc -o tmp --edition 2021 " (buffer-file-name) " && ./tmp") t)))
 
 (defun zf/rustc-expand-current-file ()
   "rustc"
