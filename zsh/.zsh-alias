@@ -1650,14 +1650,14 @@ dark() {
   ln -nsf ~/.tmux-solarized-dark.conf ~/.tmux-solarized.conf
   ln -nsf ~/.vim-theme-dark ~/.vim-theme
   tmux source-file ~/.tmux-solarized-dark.conf
-  sed -i 's/light/dark/' ~/.alacritty.toml
+  gsed -i --follow-symlinks 's/light/dark/' ~/.alacritty.toml
 }
 
 light() {
   ln -nsf ~/.tmux-solarized-light.conf ~/.tmux-solarized.conf
   ln -nsf ~/.vim-theme-light ~/.vim-theme
   tmux source-file ~/.tmux-solarized-light.conf
-  sed -i 's/dark/light/' ~/.alacritty.toml
+  gsed -i --follow-symlinks 's/dark/light/' ~/.alacritty.toml
 }
 
 ndeps() {
