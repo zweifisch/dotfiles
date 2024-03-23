@@ -144,13 +144,13 @@ let g:solarized_underline=0
 syntax enable
 
 if empty($INSIDE_EMACS)
-    source ~/.vim-theme
-	colorscheme solarized
-	Bundle 'bling/vim-airline'
-	" Bundle 'itchyny/lightline.vim'
-	" Bundle 'edkolev/tmuxline.vim'
+  source ~/.vim-theme
+  colorscheme solarized
+  Bundle 'bling/vim-airline'
+  " Bundle 'itchyny/lightline.vim'
+  " Bundle 'edkolev/tmuxline.vim'
 else
-	" pass
+  " pass
 endif
 
 " colorscheme vividchalk

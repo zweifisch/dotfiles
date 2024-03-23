@@ -75,7 +75,7 @@ if [ -e /usr/bin/service ]; then
     status(){ sudo service $1 status }
     stop(){ sudo service $1 stop }
     restart(){ sudo service $1 restart }
-    reload(){ sudo service $1 reload }
+    # reload(){ sudo service $1 reload }
 fi
 
 if [ -e /bin/systemctl ]; then
@@ -1644,6 +1644,20 @@ light-theme() {
     ln -nsf ~/.Xresources.d/solarized-light ~/.Xresources-theme
     tmux source ~/.tmux-solarized.conf
     xrdb ~/.Xresources
+}
+
+dark() {
+  ln -nsf ~/.tmux-solarized-dark.conf ~/.tmux-solarized.conf
+  ln -nsf ~/.vim-theme-dark ~/.vim-theme
+  tmux source-file ~/.tmux-solarized-dark.conf
+  sed -i 's/light/dark/' ~/.alacritty.toml
+}
+
+light() {
+  ln -nsf ~/.tmux-solarized-light.conf ~/.tmux-solarized.conf
+  ln -nsf ~/.vim-theme-light ~/.vim-theme
+  tmux source-file ~/.tmux-solarized-light.conf
+  sed -i 's/dark/light/' ~/.alacritty.toml
 }
 
 ndeps() {

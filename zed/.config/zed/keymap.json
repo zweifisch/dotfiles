@@ -1,0 +1,40 @@
+[
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "| f": "file_finder::Toggle",
+      "| r": "file_finder::Toggle",
+      "| F": "file_finder::Toggle",
+      "g c c": "editor::ToggleComments",
+      "| g": "project_symbols::Toggle",
+      "ctrl-a |": "pane::SplitRight",
+      "ctrl-a -": "pane::SplitDown",
+      "| t": "terminal_panel::ToggleFocus",
+      "| V": "projects::OpenRecent",
+      "ctrl-a h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-a l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-a j": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-a k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-a x": "pane::CloseActiveItem",
+      "ctrl-a X": "pane::CloseCleanItems",
+      "L": "pane::ActivateNextItem",
+      "H": "pane::ActivatePrevItem"
+    }
+  },
+  {
+    "context": "editor && vim_mode == visual",
+    "bindings": {
+      "g c": "editor::ToggleComments"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-a h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-a l": ["workspace::ActivatePaneInDirection", "Right"],
+      "ctrl-a j": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-a k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-a x": "terminal_panel::ToggleFocus"
+    }
+  }
+]

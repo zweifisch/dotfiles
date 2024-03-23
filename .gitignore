@@ -16,3 +16,4 @@ bin/composer.phar
 .lein
 ghci_history
 .emacs.d/
+/core/.bin/

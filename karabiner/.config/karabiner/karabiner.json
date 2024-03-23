@@ -19,7 +19,7 @@
               {
                 "description": "option -> gui",
                 "conditions": [
-                  {"type": "device_if", "identifiers": [{"vendor_id": 1452}]}
+                  {"type": "device_if", "identifiers": [{"vendor_id": 1452}, {"vendor_id": 1155}, {"vendor_id": 2131}]}
                 ],
                 "from": {
                   "key_code": "left_option"
@@ -32,7 +32,7 @@
               {
                 "description": "gui -> option",
                 "conditions": [
-                  {"type": "device_if", "identifiers": [{"vendor_id": 1452}]}
+                  {"type": "device_if", "identifiers": [{"vendor_id": 1452}, {"vendor_id": 1155}, {"vendor_id": 2131}]}
                 ],
                 "from": {
                   "key_code": "left_gui"

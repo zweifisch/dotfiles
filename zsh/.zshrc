@@ -8,7 +8,7 @@ ZSH_CUSTOM=$HOME/.zsh
 DISABLE_AUTO_UPDATE="true"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
-plugins=(vi-mode gnu-utils zsh-syntax-highlighting history-substring-search vagrant docker zsh-peco-history)
+plugins=(vi-mode gnu-utils zsh-syntax-highlighting history-substring-search vagrant docker zsh-peco-history conda)
 source $ZSH/oh-my-zsh.sh
 
 unsetopt correct_all
@@ -178,3 +178,21 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.poetry/bin:$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+# export PATH="/opt/homebrew/anaconda3/bin:$PATH"  # commented out by conda initialize
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/opt/homebrew/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/opt/homebrew/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/opt/homebrew/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
