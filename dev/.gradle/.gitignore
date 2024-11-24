@@ -1,4 +1,9 @@
-caches/
-daemon/
-native/
-wrapper/
+/.tmp/
+/caches/
+/daemon/
+/native/
+/wrapper/
+/android/
+/jdks/
+/kotlin-profile/
+/notifications/

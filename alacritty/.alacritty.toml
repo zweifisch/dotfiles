@@ -8,7 +8,7 @@ import = [
 size = 12
 
 [font.normal]
-family = "Fira Code"
+# family = "Fira Code"
 
 [[keyboard.bindings]]
 chars = "\u001Bj"

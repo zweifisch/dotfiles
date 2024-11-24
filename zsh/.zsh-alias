@@ -1698,3 +1698,18 @@ cpimg() {
     echo "Failed to copy image to clipboard."
   fi
 }
+
+transcribe() {
+  base_name=$(basename "$1" | sed 's/\.[^.]*$//')
+  ffmpeg -i $1 -vn -acodec pcm_s16le -ar 16000 -ac 1 "${base_name}.wav"
+  GGML_METAL_PATH_RESOURCES="$(brew --prefix whisper-cpp)/share/whisper-cpp" whisper-cpp -osrt -f "${base_name}.wav" -m ~/Downloads/ggml-model-whisper-medium.en-q5_0.bin
+}
+
+crun() {
+  [ "$#" -eq 0 ] && echo "Usage: crun <c_file> [compiler_options]" && return 1
+
+  local src="$1"
+  shift
+
+  cc "$src" -o a.out "$@" && ./a.out
+}

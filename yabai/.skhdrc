@@ -174,3 +174,9 @@ cmd - space : yabai -m window --toggle split
 # alt - p : yabai -m window --toggle sticky;\
 #           yabai -m window --toggle topmost;\
 #           yabai -m window --toggle pip
+
+# im-select
+ctrl - space : /usr/local/bin/im-select org.sil.ukelele.keyboardlayout.zf2.zf
+alt - space : /usr/local/bin/im-select org.sil.ukelele.keyboardlayout.zf2.zf
+alt - p : /usr/local/bin/im-select com.apple.inputmethod.SCIM.ITABC
+alt - n : /usr/local/bin/im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese
