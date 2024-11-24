@@ -14,6 +14,8 @@
 ;; (use-package doom-themes :ensure t)
 (use-package subatomic-theme :ensure t)
 
+(use-package spacemacs-theme :ensure t)
+
 (use-package kaolin-themes
   :ensure t
   :config
@@ -21,7 +23,7 @@
   ;; (kaolin-treemacs-theme)
   )
 
-;; (load-theme 'subatomic t)
+;; (load-theme 'spacemacs-theme-dark t)
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
 
@@ -61,6 +63,6 @@
 ;; (setq powerline-default-separator 'wave)
 ;; (powerline-default-theme)
 
-(require 'mode-line-conf)
+;; (require 'mode-line-conf)
 
 (provide 'theme-conf)

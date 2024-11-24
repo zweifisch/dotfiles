@@ -7,15 +7,22 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "theme": "One Dark Pro",
+  "theme": "One Dark",
   "ui_font_size": 15,
   "buffer_font_size": 14,
   "vim_mode": true,
   "assistant": {
+    "default_model": {
+      "provider": "openai",
+      "model": "gpt-4o"
+    },
+    "version": "2",
     "provider": {
-      "type": "openai",
-      "api_url": "http://localhost:11434/v1",
-      "default_model": "gpt-4-1106-preview"
+      "name": "ollama",
+      //"type": "openai",
+      "default_model": "llama3",
+      //"api_url": "http://localhost:11434/v1",
+      "low_speed_timeout_in_seconds": 60
     }
   }
 }

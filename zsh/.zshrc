@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/Users/zf/.zsh/completions:"* ]]; then export FPATH="/Users/zf/.zsh/completions:$FPATH"; fi
 export TERM=screen-256color
 
 alias setup-zsh="git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh ~/.oh-my-zsh"
@@ -41,7 +43,7 @@ export DISABLE_AUTO_TITLE='true'
 bindkey '\e[A' history-substring-search-up
 bindkey '\e[B' history-substring-search-down
 
-export ANDROID_HOME=$HOME/.android-sdk-linux
+# export ANDROID_HOME=$HOME/.android-sdk-linux
 
 
 pathes=(
@@ -127,6 +129,8 @@ if [ -d /usr/lib/jvm/java-1.8.0-openjdk-amd64 ]; then
     JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 fi
 
+export JAVA_HOME=$(/usr/libexec/java_home)
+
 if [ -d "$HOME/.zaw" ]; then
     source ~/.zaw/zaw.zsh
 
@@ -196,3 +200,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+eval "$(mise activate zsh)"
+# Initialize zsh completions (added by deno install script)
+autoload -Uz compinit
+compinit

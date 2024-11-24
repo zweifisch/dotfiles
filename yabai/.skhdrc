@@ -110,7 +110,7 @@ shift + cmd - 0x1C : yabai -m window --space 8; yabai -m space --focus 8
 shift + cmd - 0x19 : yabai -m window --space 9; yabai -m space --focus 9
 
 cmd - p : open -a Launchpad
-cmd - i : open -a iDingtalk
+cmd - i : open -a wechat
 
 cmd - d : open -a Dictionary
 cmd - q : yabai -m window --close

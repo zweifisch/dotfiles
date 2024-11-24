@@ -284,7 +284,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package helm :ensure t
   :config
   (progn
-    (use-package helm-config)
+    ;; (use-package helm-config)
     (setq helm-grep-file-path-style 'relative)
     (add-hook 'helm-before-initialize-hook
               (lambda ()
@@ -362,21 +362,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (sit-for .01)
   (comment-region (line-beginning-position) (line-end-position)))
 
-; (use-package cider
-;   :ensure t
-;   :config (progn
-;             (evil-define-key 'normal cider-mode-map
-;               (kbd "RET") 'cider-eval-last-sexp)
-;             (evil-define-key 'normal cider-mode-map
-;               (kbd "<C-return>") 'cider-eval-print-last-sexp-comment)
-;             (evil-define-key 'visual cider-mode-map
-;               (kbd "RET") 'cider-eval-region)
-;             (setq nrepl-hide-special-buffers t
-;                   cider-pprint-fn 'puget
-;                   cider-repl-pop-to-buffer-on-connect nil
-;                   cider-popup-stacktraces t
-;                   cider-repl-use-pretty-printing t
-;                   cider-repl-popup-stacktraces t)))
+(use-package cider
+  :ensure t
+  :config (progn
+            (evil-define-key 'normal cider-mode-map
+              "gd" 'cider-find-var
+              "gn" 'cider-find-ns
+              "gb" 'cider-pop-back
+              (kbd "RET") 'cider-eval-last-sexp)
+            (evil-define-key 'normal cider-mode-map
+              (kbd "<C-return>") 'cider-eval-print-last-sexp-comment)
+            (evil-define-key 'visual cider-mode-map
+              (kbd "RET") 'cider-eval-region)
+            (setq nrepl-hide-special-buffers t
+                  cider-pprint-fn 'puget
+                  cider-repl-pop-to-buffer-on-connect nil
+                  cider-popup-stacktraces t
+                  cider-repl-use-pretty-printing t
+                  cider-repl-popup-stacktraces t)))
 
 (use-package paredit
   :ensure t
@@ -539,11 +542,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package perspective
   :ensure t
-  :config (persp-mode)
-  :bind (("M-l" . persp-next)
-         ("M-h" . persp-prev)))
-
-;; (setq persp-mode-prefix-key )
+  :init (persp-mode)
+  :custom
+  (persp-mode-prefix-key (kbd "C-c M-p"))
+  ;; :bind (("M-l" . persp-next)
+         ;; ("M-h" . persp-prev))
+  )
 
 (use-package persp-projectile
   :ensure t)
@@ -557,6 +561,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (global-set-key (kbd "C-+") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
+
+(global-set-key (kbd "M-l") 'windmove-swap-states-right)
+(global-set-key (kbd "M-h") 'windmove-swap-states-left)
 
 ;; (use-package deft
 ;;   :ensure t
@@ -763,6 +770,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             ;; (add-hook 'after-init-hook 'global-company-mode)
             ))
 
+
+
+yas-snippet-dirs
+
 (yas-global-mode)
 
 
@@ -789,6 +800,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :bind (:map evil-normal-state-map
               ("gh" . lsp-describe-thing-at-point)))
 
+(setq lsp-deferred t)  ; Defer LSP server start until a Python file is opened
+
 (use-package lsp-ui
   :config (setq lsp-ui-sideline-show-hover t
                 lsp-ui-sideline-delay 0.5
@@ -804,10 +817,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
               ("gd" . lsp-ui-peek-find-definitions)
               ("gr" . lsp-ui-peek-find-references)))
 
+(setenv "WORKON_HOME" "/opt/homebrew/anaconda3/envs")
+
 (use-package pyvenv
   :demand t
   :config
-  (setq pyvenv-workon "emacs")  ; Default venv
   (pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
 
 
@@ -1319,4 +1333,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   (let ((compilation-save-buffers-predicate 'ignore)
         (compilation-ask-about-save nil))
     (compile (concat "rustc -Zunpretty=expanded " (buffer-file-name)) t)))
+
+
+;; (use-package beacon
+;;   :ensure t)
+
+;; (beacon-mode 1)
 

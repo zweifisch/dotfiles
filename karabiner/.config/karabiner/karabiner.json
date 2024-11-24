@@ -169,7 +169,7 @@
               },
               {
                 "conditions": [
-                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}, {"vendor_id": 1133}]}
+                  {"type": "device_if", "identifiers": [{"vendor_id": 2131}, {"vendor_id": 1133}, {"vendor_id": 13364}]}
                 ],
                 "description": "Change control to escape when used alone",
                 "from": {

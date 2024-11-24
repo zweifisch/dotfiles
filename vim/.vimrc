@@ -61,7 +61,7 @@ Bundle 'vim-coffee-script'
 " Bundle 'tpope/vim-haml'
 " Bundle 'klen/python-mode'
 " Bundle 'pangloss/vim-javascript'
-Bundle 'ternjs/tern_for_vim'
+" Bundle 'ternjs/tern_for_vim'
 " Bundle 'johnhamelink/blade.vim'
 
 " Bundle 'VimClojure'

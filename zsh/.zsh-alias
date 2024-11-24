@@ -1679,3 +1679,22 @@ to-image() {
     caption:"$1" \
     out.png
 }
+
+cycle-count() {
+  ioreg -l | grep '"CycleCount" =' | grep -oE \\d+
+}
+
+cpimg() {
+  if [[ ! -f "$1" ]]; then
+    echo "File does not exist: $1"
+    return 1
+  fi
+
+  osascript -e 'set the clipboard to (read (POSIX file "'"$1"'") as picture)'
+  
+  if [[ $? -eq 0 ]]; then
+    echo "Image copied to clipboard successfully!"
+  else
+    echo "Failed to copy image to clipboard."
+  fi
+}

@@ -1,3 +1,4 @@
+config.load_autoconfig(False)
 
 config.bind('t', 'set-cmd-text -s :open -t')
 
@@ -46,4 +47,4 @@ c.aliases['readability'] = 'spawn --userscript readability-js'
 
 c.colors.webpage.darkmode.enabled = True
 
-# c.load_autoconfig(False)
+config.bind(',b','hint links spawn mpv --profile=360p  {hint-url}')
