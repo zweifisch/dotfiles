@@ -6,122 +6,120 @@ let mapleader = "|"
 set guioptions=
 set guifont=Fantasque\ Sans\ Mono\ 10
 
-" vundle {{{
-filetype off
-set rtp+=~/.vim/vundle/
-call vundle#rc()
+" plug {{{
+call plug#begin()
 
-" Bundle 'gmarik/vundle'
+" Plug 'gmarik/vundle'
 
-" Bundle 'tpope/vim-vinegar'
-" Bundle 'goldfeld/vim-seek'
-" Bundle 'mhinz/vim-signify'
+" Plug 'tpope/vim-vinegar'
+" Plug 'goldfeld/vim-seek'
+" Plug 'mhinz/vim-signify'
 
-Bundle 'ctrlp.vim'
-Bundle 'bufexplorer.zip'
-" Bundle 'troydm/easybuffer.vim'
-Bundle 'vimwiki'
-Bundle 'benmills/vimux'
-" Bundle 'epeli/slimux'
+Plug 'kien/ctrlp.vim'
+" Plug 'bufexplorer.zip'
+" Plug 'troydm/easybuffer.vim'
+Plug 'vimwiki/vimwiki'
+Plug 'benmills/vimux'
+" Plug 'epeli/slimux'
 
-Bundle 'vim-indent-object'
-" Bundle 'terryma/vim-multiple-cursors'
-" Bundle 'Valloric/YouCompleteMe'
-" Bundle 'maxbrunsfeld/vim-yankstack'
-Bundle 'blueyed/vim-colors-solarized'
-" Bundle 'mhinz/vim-startify'
-" Bundle 'sotte/presenting.vim'
-" Bundle 'itchyny/thumbnail.vim'
-Bundle 'zweifisch/pipe2eval'
+Plug 'michaeljsmith/vim-indent-object'
+" Plug 'terryma/vim-multiple-cursors'
+" Plug 'Valloric/YouCompleteMe'
+" Plug 'maxbrunsfeld/vim-yankstack'
+Plug 'blueyed/vim-colors-solarized'
+" Plug 'mhinz/vim-startify'
+" Plug 'sotte/presenting.vim'
+" Plug 'itchyny/thumbnail.vim'
+Plug 'zweifisch/pipe2eval'
 
-Bundle 'katono/rogue.vim'
+Plug 'katono/rogue.vim'
 
-" Bundle 'rfc-syntax'
-" Bundle 'dag/vim2hs'
-Bundle 'lukerandall/haskellmode-vim'
-Bundle 'wting/rust.vim'
-Bundle 'avakhov/vim-yaml'
-" Bundle 'juvenn/mustache.vim'
-" Bundle 'jnwhiteh/vim-golang'
-Bundle 'fatih/vim-go'
-" Bundle 'shawncplus/phpcomplete.vim'
-Bundle 'StanAngeloff/php.vim'
-" Bundle '2072/PHP-Indenting-for-VIm'
-Bundle 'elixir-lang/vim-elixir'
-" Bundle 'Neurogami/mirah-vim'
-" Bundle 'lambdatoast/elm.vim'
-" Bundle 'jimenezrick/vimerl'
-" Bundle 'b4winckler/vim-objc'
-Bundle 'digitaltoad/vim-jade'
-Bundle 'vim-stylus'
-" Bundle 'tpope/vim-markdown'
-Bundle 'plasticboy/vim-markdown'
-" Bundle 'nelstrom/vim-markdown-folding'
-Bundle 'vim-coffee-script'
-" Bundle 'tpope/vim-haml'
-" Bundle 'klen/python-mode'
-" Bundle 'pangloss/vim-javascript'
-" Bundle 'ternjs/tern_for_vim'
-" Bundle 'johnhamelink/blade.vim'
+" Plug 'rfc-syntax'
+" Plug 'dag/vim2hs'
+Plug 'lukerandall/haskellmode-vim'
+Plug 'wting/rust.vim'
+Plug 'avakhov/vim-yaml'
+" Plug 'juvenn/mustache.vim'
+" Plug 'jnwhiteh/vim-golang'
+Plug 'fatih/vim-go'
+" Plug 'shawncplus/phpcomplete.vim'
+Plug 'StanAngeloff/php.vim'
+" Plug '2072/PHP-Indenting-for-VIm'
+Plug 'elixir-lang/vim-elixir'
+" Plug 'Neurogami/mirah-vim'
+" Plug 'lambdatoast/elm.vim'
+" Plug 'jimenezrick/vimerl'
+" Plug 'b4winckler/vim-objc'
+Plug 'digitaltoad/vim-jade'
+" Plug 'vim-stylus'
+" Plug 'tpope/vim-markdown'
+Plug 'plasticboy/vim-markdown'
+" Plug 'nelstrom/vim-markdown-folding'
+" Plug 'vim-coffee-script'
+" Plug 'tpope/vim-haml'
+" Plug 'klen/python-mode'
+" Plug 'pangloss/vim-javascript'
+" Plug 'ternjs/tern_for_vim'
+" Plug 'johnhamelink/blade.vim'
 
-" Bundle 'VimClojure'
-" Bundle 'tpope/vim-fireplace'
-" Bundle 'tpope/vim-classpath'
-" Bundle 'guns/vim-clojure-static'
-Bundle 'kien/rainbow_parentheses.vim'
+" Plug 'VimClojure'
+" Plug 'tpope/vim-fireplace'
+" Plug 'tpope/vim-classpath'
+" Plug 'guns/vim-clojure-static'
+Plug 'kien/rainbow_parentheses.vim'
 
-" Bundle 'derekwyatt/vim-scala.git'
-" Bundle 'timcharper/textile.vim'
-Bundle 'nginx.vim'
+" Plug 'derekwyatt/vim-scala.git'
+" Plug 'timcharper/textile.vim'
+" Plug 'nginx.vim'
 
-" Bundle 'tpope/vim-dispatch'
-" Bundle 'nelstrom/vim-visual-star-search'
+" Plug 'tpope/vim-dispatch'
+" Plug 'nelstrom/vim-visual-star-search'
 
-" Bundle 'terryma/vim-expand-region'
-" Bundle 'airblade/vim-gitgutter'
-" Bundle 'ehamberg/vim-cute-python'
-" Bundle 'foldsearch'
-" Bundle 'mru.vim'
-" Bundle 'SirVer/ultisnips'
-Bundle 'Tagbar'
-Bundle 'delimitMate.vim'
-Bundle 'vimoutliner/vimoutliner'
-" Bundle 'Gundo'
-" Bundle 'paster.vim'
-" Bundle 'bufkill.vim'
-Bundle 'NrrwRgn'
-" Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'mattn/emmet-vim'
-Bundle 'godlygeek/tabular.git'
-Bundle 'tomtom/tcomment_vim.git'
-" Bundle 'git://repo.or.cz/vcscommand'
-" Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-unimpaired'
-" Bundle 'tpope/vim-vividchalk'
-" Bundle 'speeddating.vim'
-Bundle 'ervandew/supertab.git'
-Bundle 'scrooloose/syntastic.git'
-" Bundle 'DrawIt'
-" Bundle 'gnupg.vim'
-Bundle 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
-" Bundle 'jslint.vim'
-" Bundle 'nathanaelkane/vim-indent-guides'
-" Bundle 'gregsexton/gitv'
-" Bundle 'slimv.vim'
-" Bundle 'spolu/dwm.vim'
-" Bundle 'roman/golden-ratio'
-" Bundle 'VimIM'
-" Bundle 'DirDiff.vim'
-Bundle 'matchit.zip'
-" Bundle 'AnsiEsc.vim'
-Bundle 'Valloric/MatchTagAlways.git'
-" Bundle 'AndrewRadev/switch.vim.git'
-" Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'scrooloose/nerdtree.git'
-" Bundle 'scrooloose/nerdcommenter'
+" Plug 'terryma/vim-expand-region'
+" Plug 'airblade/vim-gitgutter'
+" Plug 'ehamberg/vim-cute-python'
+" Plug 'foldsearch'
+" Plug 'mru.vim'
+" Plug 'SirVer/ultisnips'
+" Plug 'Tagbar'
+" Plug 'delimitMate.vim'
+Plug 'vimoutliner/vimoutliner'
+" Plug 'Gundo'
+" Plug 'paster.vim'
+" Plug 'bufkill.vim'
+" Plug 'NrrwRgn'
+" Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plug 'mattn/emmet-vim'
+" Plug 'godlygeek/tabular.git'
+" Plug 'tomtom/tcomment_vim.git'
+" Plug 'git://repo.or.cz/vcscommand'
+" Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+" Plug 'tpope/vim-vividchalk'
+" Plug 'speeddating.vim'
+" Plug 'ervandew/supertab.git'
+" Plug 'scrooloose/syntastic.git'
+" Plug 'DrawIt'
+" Plug 'gnupg.vim'
+" Plug 'git://gitorious.org/vim-gnupg/vim-gnupg.git'
+" Plug 'jslint.vim'
+" Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'gregsexton/gitv'
+" Plug 'slimv.vim'
+" Plug 'spolu/dwm.vim'
+" Plug 'roman/golden-ratio'
+" Plug 'VimIM'
+" Plug 'DirDiff.vim'
+" Plug 'matchit.zip'
+" Plug 'AnsiEsc.vim'
+" Plug 'Valloric/MatchTagAlways.git'
+" Plug 'AndrewRadev/switch.vim.git'
+" Plug 'Lokaltog/vim-easymotion'
+" Plug 'scrooloose/nerdtree.git'
+" Plug 'scrooloose/nerdcommenter'
 " eunuch
 " clam
 " ragtag
@@ -129,8 +127,8 @@ Bundle 'Valloric/MatchTagAlways.git'
 " vimroom
 " css-color
 " yankering
-Bundle 'jdonaldson/vaxe'
-Bundle 'leafgarland/typescript-vim'
+Plug 'jdonaldson/vaxe'
+Plug 'leafgarland/typescript-vim'
 
 filetype plugin indent on
 " }}}
@@ -145,10 +143,10 @@ syntax enable
 
 if empty($INSIDE_EMACS)
   source ~/.vim-theme
-  colorscheme solarized
-  Bundle 'bling/vim-airline'
-  " Bundle 'itchyny/lightline.vim'
-  " Bundle 'edkolev/tmuxline.vim'
+  " colorscheme solarized
+  Plug 'bling/vim-airline'
+  " Plug 'itchyny/lightline.vim'
+  " Plug 'edkolev/tmuxline.vim'
 else
   " pass
 endif
@@ -301,7 +299,7 @@ let g:netrw_liststyle= 1
 " }}}
 
 " }}}1
-" Plugin Settings {{{1
+" Plug Settings {{{1
 " bufexplorer {{{
 let g:bufExplorerDetailedHelp=0
 " }}}
@@ -772,3 +770,5 @@ endfun
 map <leader>rg :call RangerChooser()<CR>
 "}}}
 "}}}1
+
+call plug#end()

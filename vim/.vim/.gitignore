@@ -1,4 +1,4 @@
 *.swp
 .netrwhist
 doc/*
-bundle
+plugged
