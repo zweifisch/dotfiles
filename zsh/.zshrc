@@ -173,6 +173,8 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 export LANG="en_US.UTF-8"
 
+eval "$(direnv hook zsh)"
+
 # bun completions
 [ -s "/Users/zf/.bun/_bun" ] && source "/Users/zf/.bun/_bun"
 

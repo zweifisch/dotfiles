@@ -23,7 +23,7 @@
   ;; (kaolin-treemacs-theme)
   )
 
-;; (load-theme 'spacemacs-theme-dark t)
+(load-theme 'spacemacs-dark t)
 
 (setq projectile-mode-line '(:eval (format " [%s]" (projectile-project-name))))
 

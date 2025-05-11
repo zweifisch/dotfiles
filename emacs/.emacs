@@ -177,8 +177,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
   "A" 'org-agenda
   "h" 'helm-org-in-buffer-headings
-  "t" 'org-narrow-to-subtree
-  "T" 'widen
+
+  ;; "t" 'org-narrow-to-subtree
+  ;; "T" 'widen
+  "t" 'lsp-treemacs-symbols
+  "T" 'treemacs
+
+  "i" 'helm-imenu
 
   "g" 'helm-projectile-grep
   ;; "g" 'helm-projectile-ag
@@ -451,7 +456,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package elixir-mode
   :ensure t)
 
-; global evil key
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook ((elixir-mode . lsp-deferred))
+  :custom
+  (lsp-elixir-server-command '("~/.elixir-ls/release/language_server.sh"))
+  (lsp-elixir-mix-env "dev")
+  (lsp-keymap-prefix "C-c l"))
+
+;; (add-hook 'elixir-mode-hook
+;;           (lambda ()
+;;             (add-hook 'before-save-hook #'elixir-format nil t)))
+
+                                        ; global evil key
 ;; (define-key evil-normal-state-map "L" 'helm-projectile-switch-to-buffer)
 ;; (define-key evil-normal-state-map "L" 'ido-switch-buffer)
 (define-key evil-normal-state-map "L" 'helm-mini)
@@ -763,7 +781,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (use-package company
   :ensure t
-  :hook (prog-mode . company-mode)
+  :hook ((prog-mode . company-mode)
+         (elixir-mode . company-mode))
   :config (progn
             (setq company-tooltip-align-annotations t)
             (setq company-minimum-prefix-length 1)
@@ -815,14 +834,16 @@ yas-snippet-dirs
   :commands lsp-ui-mode
   :bind (:map evil-normal-state-map
               ("gd" . lsp-ui-peek-find-definitions)
+              ("gb" . pop-global-mark)
               ("gr" . lsp-ui-peek-find-references)))
 
 (setenv "WORKON_HOME" "/opt/homebrew/anaconda3/envs")
 
-(use-package pyvenv
-  :demand t
-  :config
-  (pyvenv-tracking-mode 1))  ; Automatically use pyvenv-workon via dir-locals
+;; (use-package pyvenv
+;;   :demand t
+;;   :config
+;;   (pyvenv-tracking-mode 1))
+                                        ; Automatically use pyvenv-workon via dir-locals
 
 
 
@@ -1062,7 +1083,7 @@ yas-snippet-dirs
 ;;             (fcitx-aggressive-setup)
 ;;             (setq fcitx-use-dbus t)))
 
-(use-package rainbow-mode :ensure t)
+; (use-package rainbow-mode :ensure t)
 
 (use-package dockerfile-mode :ensure t)
 
@@ -1187,9 +1208,9 @@ yas-snippet-dirs
                          "-t" "utf8" "-s" "6" "-o" "-")
     (switch-to-buffer buffer)))
 
-(use-package pinentry :ensure t)
+; (use-package pinentry :ensure t)
 (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
-(pinentry-start)
+; (pinentry-start)
 
 (setq ring-bell-function 'ignore)
 
@@ -1340,3 +1361,32 @@ yas-snippet-dirs
 
 ;; (beacon-mode 1)
 
+
+(use-package envrc
+  :ensure t
+  :config (envrc-global-mode))
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :config
+  (setq treemacs-width 60)
+  (setq treemacs-display-icons-p nil)
+  (setq treemacs-header-icons-p nil)
+  )
+
+;; :bind (:map treemacs-mode-map (("j" . treemacs-next-line) ("k" . treemacs-previous-line)))
+
+(use-package treemacs-evil
+  :ensure t)
+
+;; Optional: Integrate with lsp-mode for symbol outline
+(use-package lsp-treemacs
+  :after (lsp treemacs)
+  :ensure t
+  :config
+  (lsp-treemacs-sync-mode 1))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
