@@ -791,8 +791,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 
 
-yas-snippet-dirs
-
 (yas-global-mode)
 
 
@@ -1338,7 +1336,7 @@ yas-snippet-dirs
 
 (setq server-name "server")
 
-(require 'peg-mode)
+;; (require 'peg-mode)
 
 
 (defun zf/rustc-current-file ()
@@ -1390,3 +1388,29 @@ yas-snippet-dirs
 (use-package treemacs-projectile
   :after (treemacs projectile)
   :ensure t)
+
+(use-package gptel
+  :ensure t)
+
+(defun zf/use-ollama ()
+  "use ollama"
+  (interactive)
+  (setq
+   gptel-backend (gptel-make-ollama "Ollama"
+                   :host "localhost:11434"
+                   :stream t
+                   :models '(deepseek-r1:14b))))
+
+(defun zf/use-gemini ()
+  "use gemini"
+  (interactive)
+  (message
+   (getenv "GEMINI_API_KEY"))
+  (setq
+   gptel-model 'gemini-2.5-flash-preview-04-17
+   gptel-backend (gptel-make-gemini "Gemini"
+                   :key (getenv "GEMINI_API_KEY")
+                   :stream t)))
+
+
+(use-package valign :ensure t)

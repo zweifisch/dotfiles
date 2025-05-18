@@ -14,3 +14,5 @@ qr() {
 free() {
   ps -caxm -orss= | awk '{ sum += $1 } END { print "rss: " sum/1024/1024 " G" }'
 }
+
+alias e="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
