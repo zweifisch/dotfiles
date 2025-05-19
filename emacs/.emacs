@@ -506,11 +506,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (setq coffee-indent-tabs-mode t)
 
 (use-package web-mode
-  :mode (("\\.tsx$" . web-mode))
+  :mode (("\\.tsx$" . web-mode)
+         ("\\.vue\\'" . web-mode))
+  :ensure t
   :init
   (add-hook 'web-mode-hook 'variable-pitch-mode)
   (add-hook 'web-mode-hook 'company-mode)
-  (add-hook 'web-mode-hook 'prettier-js-mode)
+  ;; (add-hook 'web-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook (lambda () (setq web-mode-markup-indent-offset 2
                                             web-mode-code-indent-offset 2)))
   (add-hook 'web-mode-hook (lambda ()
@@ -518,6 +520,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                                (setup-tide-mode)))))
 
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . web-mode))
 
 
 (setq css-indent-offset 2)
@@ -1414,3 +1417,26 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 
 (use-package valign :ensure t)
+
+
+(defun zf/copy-markdown-code-block ()
+  "Copy the content of the markdown code block at point to the kill ring."
+  (interactive)
+  (save-excursion
+    (let (start end content)
+      ;; Search backward for the beginning of a code block
+      (when (not (looking-at "```"))
+        (if (re-search-backward "^```" nil t)
+            (forward-line 1)  ; Move to the line after the opening backticks
+          (error "No code block found before point")))
+      ;; Mark the start
+      (setq start (point))
+      ;; Search forward for the end of the code block
+      (if (re-search-forward "^```" nil t)
+          (progn
+            (beginning-of-line)  ; Move to the beginning of the closing backticks
+            (setq end (point))
+            (setq content (buffer-substring-no-properties start end))
+            (kill-new content)
+            (message "Copied to kill ring (%d characters)" (length content)))
+        (error "No closing code block found")))))

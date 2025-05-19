@@ -23,6 +23,9 @@ alias erl='rlwrap -a erl'
 
 alias pull='git pull'
 alias push='git push'
+rb(){
+  git checkout $(git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short)' | fzf)
+}
 
 datetime(){
     date -d@$1 +%Y-%m-%d\ %H:%M:%S

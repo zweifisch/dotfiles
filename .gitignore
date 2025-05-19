@@ -17,3 +17,4 @@ bin/composer.phar
 ghci_history
 .emacs.d/
 /core/.bin/
+.envrc

@@ -39,7 +39,8 @@
 ;; (set-face-attribute 'default nil :font "Hack")
 ;;  (set-face-attribute 'default nil :font "Fantasque Sans Mono-10")
 
-;; (set-face-attribute 'default nil :font "Fira Code-10.5" :weight 'Light)
+(set-face-attribute 'default nil :font "Fira Code-12" :weight 'Normal)
+
 ;; (set-fontset-font nil 'chinese-gbk '"WenQuanYi Micro Hei Mono-12")
 
 (dolist (charset '(kana han symbol cjk-misc bopomofo))
