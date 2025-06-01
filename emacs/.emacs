@@ -168,7 +168,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "F" 'helm-find-files
   "z" 'helm-semantic-or-imenu
   ;; "B" 'ido-switch-buffer
-  "B" 'helm-buffers-list
+  ;; "B" 'helm-buffers-list
+  "B" 'helm-mini
   ;; "b" 'projectile-switch-to-buffer
   "b" 'helm-projectile-switch-to-buffer
   "R" 'helm-recentf
@@ -239,7 +240,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-a k") 'evil-window-up)
 (global-set-key (kbd "C-a H") 'winner-undo)
 (global-set-key (kbd "C-a L") 'winner-redo)
-(global-set-key (kbd "C-a L") 'winner-redo)
 (global-set-key (kbd "C-a f") 'switch-window)
 
 ; recentf
@@ -269,7 +269,12 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.wiki$" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
+  :config
+  (setq markdown-fontify-code-blocks-natively t)
+  :bind (:map markdown-mode-map
+              ("C-c C-c" . zf/exec-line-as-sh-fenced))
+  :init
+  (setq markdown-command "multimarkdown"))
 
 ; (use-package help-fns+ :ensure t)
 
@@ -472,12 +477,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
                                         ; global evil key
 ;; (define-key evil-normal-state-map "L" 'helm-projectile-switch-to-buffer)
 ;; (define-key evil-normal-state-map "L" 'ido-switch-buffer)
-(define-key evil-normal-state-map "L" 'helm-mini)
 (define-key evil-normal-state-map "H" 'projectile-project-buffers-other-buffer)
 ;; (define-key evil-normal-state-map "H" 'previous-buffer)
 ;; (define-key evil-normal-state-map "L" 'next-buffer)
-
-; (define-key evil-insert-state-map (kbd "RET") 'newline-and-indent)
 
 (setq evil-default-cursor '("DodgerBlue1" box)
       evil-normal-state-cursor '("gray" box)
@@ -1215,7 +1217,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq ring-bell-function 'ignore)
 
-(defun zf/show-buffer-file-name ()
+(defun zf/copy-path ()
   "full path of current buffer in minibuffer."
   (interactive)
   (let ((file-name (buffer-file-name)))
@@ -1440,3 +1442,85 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
             (kill-new content)
             (message "Copied to kill ring (%d characters)" (length content)))
         (error "No closing code block found")))))
+
+
+(defun zf/exec-line-as-sh ()
+  "Run the text of the current line as a shell command"
+  (interactive)
+  (let* ((line (buffer-substring (line-beginning-position) (line-end-position))))
+    (end-of-line)
+    (newline)
+    (insert (shell-command-to-string line))))
+
+(defun zf/exec-line-as-sh-fenced ()
+  "Run the current line as a shell command and insert the output in a fenced code block."
+  (interactive)
+  (let ((line (string-trim (buffer-substring-no-properties
+                            (line-beginning-position)
+                            (line-end-position)))))
+    (if (string-empty-p line)
+        (message "No command to run on this line.")
+      (save-excursion
+        (forward-line)
+        (end-of-line)
+        (newline)
+        (insert "```")
+        (newline)
+        (insert (string-trim-right (shell-command-to-string line)))
+        (newline)
+        (insert "```")))))
+
+(defun zf/find-file-at-point-in-right-window ()
+  "Open the file at point in a window to the right.
+If no window exists to the right, one is created.
+If no filename is found at point, a message is displayed."
+  (interactive)
+  (require 'ffap)
+  (let ((filename (ffap-file-at-point)))
+    (if filename
+        (progn
+          (select-window (or (window-in-direction 'right)
+                             (split-window-right)))
+          (find-file filename))
+      (message "No filename found at point."))))
+
+(defvar ffap-string-at-point-region)
+(defun zf/find-file-at-point-with-line-in-right-window ()
+  "Open the file at point in a window to the right, and go to position if present.
+Supports positions in the following formats: \"path:line path(line)\",
+\"path:line:col\" and \"path(line,col)\"."
+  (interactive)
+  (require 'ffap)
+  (let ((fname (ffap-file-at-point)))
+    (unless fname
+      (user-error "File does not exist."))
+    (let* ((line-number-pattern ":\\([0-9]+\\)\\=" ) ; path:line format
+           (line-number-pattern-alt "\\=(\\([0-9]+\\))") ; path(line) format
+           (line-and-column-numbers-pattern ":\\([0-9]+\\):\\([0-9]+\\)\\=") ; path:line:col format
+           (line-and-column-numbers-pattern-alt "\\=(\\([0-9]+\\),\\([0-9]+\\))") ; file(line,col) format
+           (get-number (lambda (pattern match-number backward)
+                         (save-excursion
+                           (goto-char (cadr ffap-string-at-point-region))
+                           (and (if backward
+                                    (re-search-backward pattern (line-beginning-position) t)
+                                  (re-search-forward pattern (line-end-position) t))
+                                (string-to-number (match-string match-number))))))
+           (line-number (or (funcall get-number line-and-column-numbers-pattern 1 t)
+                            (funcall get-number line-and-column-numbers-pattern-alt 1 nil)
+                            (funcall get-number line-number-pattern 1 t)
+                            (funcall get-number line-number-pattern-alt 1 nil)))
+           (column-number (or (funcall get-number line-and-column-numbers-pattern 2 t)
+                              (funcall get-number line-and-column-numbers-pattern-alt 2 nil))))
+      (evil-echo "%s, %s"
+                 (if line-number (format "line: %s" line-number) "no line")
+                 (if column-number (format "column: %s" column-number) "no column"))
+      (select-window (or (window-in-direction 'right)
+                         (split-window-right)))
+      (find-file-at-point fname)
+      (when line-number
+        (goto-char (point-min))
+        (forward-line (1- line-number))
+        (when column-number
+          (move-to-column (1- column-number)))))))
+
+(define-key evil-normal-state-map "gF" 'zf/find-file-at-point-with-line-in-right-window)
