@@ -1218,13 +1218,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq ring-bell-function 'ignore)
 
 (defun zf/copy-path ()
-  "full path of current buffer in minibuffer."
+  "copy full path of current buffer."
   (interactive)
   (let ((file-name (buffer-file-name)))
     (if file-name
         (progn
           (message file-name)
           (kill-new file-name))
+      (error "Buffer not visiting a file"))))
+
+(defun zf/copy-path-with-line-number ()
+  "Copy full path of current buffer with current line number."
+  (interactive)
+  (let ((file-name (buffer-file-name))
+        (line-number (line-number-at-pos)))
+    (if file-name
+        (let ((full-path (format "%s:%d" file-name line-number)))
+          (message full-path)
+          (kill-new full-path))
       (error "Buffer not visiting a file"))))
 
 (setq require-final-newline nil)
@@ -1494,7 +1505,8 @@ Supports positions in the following formats: \"path:line path(line)\",
   (let ((fname (ffap-file-at-point)))
     (unless fname
       (user-error "File does not exist."))
-    (let* ((line-number-pattern ":\\([0-9]+\\)\\=" ) ; path:line format
+    (let* ((fullname (expand-file-name fname))
+           (line-number-pattern ":\\([0-9]+\\)\\=" ) ; path:line format
            (line-number-pattern-alt "\\=(\\([0-9]+\\))") ; path(line) format
            (line-and-column-numbers-pattern ":\\([0-9]+\\):\\([0-9]+\\)\\=") ; path:line:col format
            (line-and-column-numbers-pattern-alt "\\=(\\([0-9]+\\),\\([0-9]+\\))") ; file(line,col) format
@@ -1516,7 +1528,7 @@ Supports positions in the following formats: \"path:line path(line)\",
                  (if column-number (format "column: %s" column-number) "no column"))
       (select-window (or (window-in-direction 'right)
                          (split-window-right)))
-      (find-file-at-point fname)
+      (find-file-at-point fullname)
       (when line-number
         (goto-char (point-min))
         (forward-line (1- line-number))
@@ -1524,3 +1536,83 @@ Supports positions in the following formats: \"path:line path(line)\",
           (move-to-column (1- column-number)))))))
 
 (define-key evil-normal-state-map "gF" 'zf/find-file-at-point-with-line-in-right-window)
+
+(defun zf/cd-to-path-at-point ()
+  "Change `default-directory` to the directory at point if it exists."
+  (interactive)
+  (let ((path (thing-at-point 'filename t)))
+    (if (and path (file-directory-p path))
+        (progn
+          (setq default-directory (file-name-as-directory (expand-file-name path)))
+          (message "Changed directory to: %s" default-directory))
+      (message "No valid directory at point."))))
+
+(defun zf/cd-to-project-root ()
+  "Change `default-directory` to the root of the project containing the current buffer file."
+  (interactive)
+  (if buffer-file-name
+      (let* ((proj (project-current nil (file-name-directory buffer-file-name))))
+        (if proj
+            (let ((root (project-root proj)))
+              (setq default-directory root)
+              (message "Changed directory to project root: %s" root))
+          (message "No project found for this buffer.")))
+    (message "Current buffer is not visiting a file.")))
+
+
+(defun zf/utc-to-local-time (utc-string)
+  "Convert UTC-STRING to local time string."
+  (format-time-string "%Y-%m-%d %H:%M:%S %Z"
+                      (encode-time (parse-time-string utc-string))))
+
+(defun zf/build-helm-pr-source (command)
+  "Build helm candidates from COMMAND."
+  (let* ((output (shell-command-to-string command))
+         (reviews (json-parse-string output :array-type 'list :object-type 'alist))
+         (col-title (- (window-width) (+ 6 60 23 3))))
+    (mapcar (lambda (review)
+              (format (format "%%-6s %%-%ds %%-60s %%-23s" col-title)
+                      (alist-get 'number review)
+                      (truncate-string-to-width (alist-get 'title review) col-title 0 nil t)
+                      (truncate-string-to-width (alist-get 'headRefName review) 60 0 nil t)
+                      (zf/utc-to-local-time (alist-get 'createdAt review))))
+            reviews)))
+
+(defun zf/view-pr (candidate)
+  "Open CANDIDATE pr in browser."
+  (let ((pr-number (car (split-string candidate "|"))))
+    (shell-command (format "gh pr view --web %s" pr-number))))
+
+(defun zf/checkout-pr (candidate)
+  "Checkout CANDIDATE pr."
+  (let ((pr-number (car (split-string candidate "|"))))
+    (shell-command (format "gh pr checkout %s" pr-number))))
+
+(defun zf/helm-github-prs ()
+  "Helm interface for GitHub PRs."
+  (interactive)
+  (helm :sources
+        (list
+         (helm-build-sync-source "Review Requests"
+           :candidates (zf/build-helm-pr-source "gh pr list --search review-requested:@me --json number,title,headRefName,createdAt,author")
+           :action '(("View PR" . zf/view-pr)
+                     ("Checkout Branch" . zf/checkout-pr)))
+         (helm-build-sync-source "My PRs"
+           :candidates (zf/build-helm-pr-source "gh pr list --author @me --json number,title,headRefName,createdAt")
+           :action '(("View PR" . zf/view-pr)
+                     ("Checkout Branch" . zf/checkout-pr)))
+         (helm-build-sync-source "All Open PRs"
+           :candidates (zf/build-helm-pr-source "gh pr list --json number,title,headRefName,createdAt")
+           :action '(("View PR" . zf/view-pr)
+                     ("Checkout Branch" . zf/checkout-pr))))
+        :buffer "*helm github prs*"))
+
+(defun zf/gh-pr-view-at-point ()
+  "Run 'gh pr view --web' on the number at point."
+  (interactive)
+  (let ((number (number-at-point)))
+    (if number
+        (let ((command (format "gh pr view --web %d" number)))
+          (message "Running: %s" command)
+          (start-process "gh-pr-view" nil "gh" "pr" "view" "--web" (number-to-string number)))
+      (message "No number found at point"))))
