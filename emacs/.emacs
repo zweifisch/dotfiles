@@ -1495,40 +1495,45 @@ If no filename is found at point, a message is displayed."
           (find-file filename))
       (message "No filename found at point."))))
 
-(defvar ffap-string-at-point-region)
+(defun zf/file-at-point ()
+  (let* ((fname (thing-at-point 'filename t))
+        (start (car (bounds-of-thing-at-point 'filename)))
+        (clean-fname (and fname (replace-regexp-in-string "[:].*$" "" fname)))
+        (end (and clean-fname (+ start (length clean-fname)))))
+    (list clean-fname end)))
+
 (defun zf/find-file-at-point-with-line-in-right-window ()
   "Open the file at point in a window to the right, and go to position if present.
 Supports positions in the following formats: \"path:line path(line)\",
 \"path:line:col\" and \"path(line,col)\"."
   (interactive)
-  (require 'ffap)
-  (let ((fname (ffap-file-at-point)))
+  (let* ((file (zf/file-at-point))
+         (fname (car file))
+         (end (cadr file))
+         (full-name (expand-file-name fname (org-entry-get nil "pwd"))))
     (unless fname
       (user-error "File does not exist."))
-    (let* ((fullname (expand-file-name fname))
-           (line-number-pattern ":\\([0-9]+\\)\\=" ) ; path:line format
-           (line-number-pattern-alt "\\=(\\([0-9]+\\))") ; path(line) format
-           (line-and-column-numbers-pattern ":\\([0-9]+\\):\\([0-9]+\\)\\=") ; path:line:col format
-           (line-and-column-numbers-pattern-alt "\\=(\\([0-9]+\\),\\([0-9]+\\))") ; file(line,col) format
-           (get-number (lambda (pattern match-number backward)
+    (let* ((line-number-pattern ":\\([0-9]+\\)" ) ; path:line format
+           (line-number-pattern-alt "(\\([0-9]+\\))") ; path(line) format
+           (line-and-column-numbers-pattern ":\\([0-9]+\\):\\([0-9]+\\)") ; path:line:col format
+           (line-and-column-numbers-pattern-alt "(\\([0-9]+\\),\\([0-9]+\\))") ; file(line,col) format
+           (get-number (lambda (pattern match-number)
                          (save-excursion
-                           (goto-char (cadr ffap-string-at-point-region))
-                           (and (if backward
-                                    (re-search-backward pattern (line-beginning-position) t)
-                                  (re-search-forward pattern (line-end-position) t))
+                           (goto-char end)
+                           (and (re-search-forward pattern (line-end-position) t)
                                 (string-to-number (match-string match-number))))))
-           (line-number (or (funcall get-number line-and-column-numbers-pattern 1 t)
-                            (funcall get-number line-and-column-numbers-pattern-alt 1 nil)
-                            (funcall get-number line-number-pattern 1 t)
-                            (funcall get-number line-number-pattern-alt 1 nil)))
-           (column-number (or (funcall get-number line-and-column-numbers-pattern 2 t)
-                              (funcall get-number line-and-column-numbers-pattern-alt 2 nil))))
+           (line-number (or (funcall get-number line-and-column-numbers-pattern 1)
+                            (funcall get-number line-and-column-numbers-pattern-alt 1)
+                            (funcall get-number line-number-pattern 1)
+                            (funcall get-number line-number-pattern-alt 1)))
+           (column-number (or (funcall get-number line-and-column-numbers-pattern 2)
+                              (funcall get-number line-and-column-numbers-pattern-alt 2))))
       (evil-echo "%s, %s"
                  (if line-number (format "line: %s" line-number) "no line")
                  (if column-number (format "column: %s" column-number) "no column"))
       (select-window (or (window-in-direction 'right)
                          (split-window-right)))
-      (find-file-at-point fullname)
+      (find-file full-name)
       (when line-number
         (goto-char (point-min))
         (forward-line (1- line-number))
