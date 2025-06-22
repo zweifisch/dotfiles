@@ -240,6 +240,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key (kbd "C-a k") 'evil-window-up)
 (global-set-key (kbd "C-a H") 'winner-undo)
 (global-set-key (kbd "C-a L") 'winner-redo)
+(global-set-key (kbd "C-a =") 'balance-windows)
 (global-set-key (kbd "C-a f") 'switch-window)
 
 ; recentf
@@ -1238,6 +1239,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
           (kill-new full-path))
       (error "Buffer not visiting a file"))))
 
+(defun zf/copy-relative-path-with-line-number ()
+  "Copy the path of the current buffer relative to the project root
+with the current line number. If not in a project, copy the full
+path."
+  (interactive)
+  (let ((file-name (buffer-file-name))
+        (line-number (line-number-at-pos)))
+    (if file-name
+        (let* ((project-root (when (fboundp 'projectile-project-root)
+                               (projectile-project-root)))
+               (path-to-copy (if project-root
+                                 (file-relative-name file-name project-root)
+                               file-name))
+               (full-path (format "%s:%d" path-to-copy line-number)))
+          (message full-path)
+          (kill-new full-path))
+      (error "Buffer not visiting a file"))))
+
 (setq require-final-newline nil)
 
 (defun zf/ob-copy-src-block ()
@@ -1510,9 +1529,9 @@ Supports positions in the following formats: \"path:line path(line)\",
   (let* ((file (zf/file-at-point))
          (fname (car file))
          (end (cadr file))
-         (full-name (expand-file-name fname (org-entry-get nil "pwd"))))
+         (full-name (expand-file-name fname (org-entry-get nil "pwd" t))))
     (unless fname
-      (user-error "File does not exist."))
+      (user-error "File does not exist"))
     (let* ((line-number-pattern ":\\([0-9]+\\)" ) ; path:line format
            (line-number-pattern-alt "(\\([0-9]+\\))") ; path(line) format
            (line-and-column-numbers-pattern ":\\([0-9]+\\):\\([0-9]+\\)") ; path:line:col format
@@ -1585,12 +1604,12 @@ Supports positions in the following formats: \"path:line path(line)\",
 
 (defun zf/view-pr (candidate)
   "Open CANDIDATE pr in browser."
-  (let ((pr-number (car (split-string candidate "|"))))
+  (let ((pr-number (car (split-string candidate " "))))
     (shell-command (format "gh pr view --web %s" pr-number))))
 
 (defun zf/checkout-pr (candidate)
   "Checkout CANDIDATE pr."
-  (let ((pr-number (car (split-string candidate "|"))))
+  (let ((pr-number (car (split-string candidate " "))))
     (shell-command (format "gh pr checkout %s" pr-number))))
 
 (defun zf/helm-github-prs ()
@@ -1608,6 +1627,17 @@ Supports positions in the following formats: \"path:line path(line)\",
                      ("Checkout Branch" . zf/checkout-pr)))
          (helm-build-sync-source "All Open PRs"
            :candidates (zf/build-helm-pr-source "gh pr list --json number,title,headRefName,createdAt")
+           :action '(("View PR" . zf/view-pr)
+                     ("Checkout Branch" . zf/checkout-pr))))
+        :buffer "*helm github prs*"))
+
+(defun zf/helm-github-my-prs ()
+  "Helm interface for GitHub PRs."
+  (interactive)
+  (helm :sources
+        (list
+         (helm-build-sync-source "My PRs"
+           :candidates (zf/build-helm-pr-source "gh pr list --author @me -s all --json number,title,headRefName,createdAt")
            :action '(("View PR" . zf/view-pr)
                      ("Checkout Branch" . zf/checkout-pr))))
         :buffer "*helm github prs*"))
