@@ -61,7 +61,7 @@
    (mathomatic . t)
    ;; (ansible . t)
    ;; (elm . t)
-   (llm. t)
+   (llm . t)
    (plantuml . t)
    (ditaa . t)
    (groovy . t)
