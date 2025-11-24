@@ -1442,7 +1442,7 @@ path."
   (message
    (getenv "GEMINI_API_KEY"))
   (setq
-   gptel-model 'gemini-2.5-flash-preview-04-17
+   gptel-model 'gemini-2.5-flash
    gptel-backend (gptel-make-gemini "Gemini"
                    :key (getenv "GEMINI_API_KEY")
                    :stream t)))
