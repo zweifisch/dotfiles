@@ -30,7 +30,7 @@ Use %s to insert SQL raw (dangerous unless already quoted/escaped)."
     cmd))
 
 (defun org-sqlx--property-cmd ()
-  "Return cmd property from the current Org context, if any."
+  "Return SQLX_CMD property from the current Org context, if any."
   (when (derived-mode-p 'org-mode)
     (org-entry-get (point) "cmd" 'inherit)))
 
@@ -45,16 +45,15 @@ Use %s to insert SQL raw (dangerous unless already quoted/escaped)."
   (let* ((template (org-sqlx--cmd params))
          (_ (unless (and template (stringp template)
                          (string-match-p "%[sS]" template))
-              (error "sqlx requires cmd property containing %%S or %%s")))
+              (error "sqlx requires :cmd TEMPLATE (or SQLX_CMD property) containing %%S or %%s")))
          (sql (org-sqlx--expand-body body params))
          ;; Trim trailing whitespace but keep newlines inside SQL
          (sql (replace-regexp-in-string "\\`[ \t\n\r]+" "" sql))
          (sql (replace-regexp-in-string "[ \t\n\r]+\\'" "" sql))
          (cmd (org-sqlx--template template sql))
          (result (org-babel-eval cmd "")))
-    (org-babel-result-cond (cdr (assq :result-params params))
       result
-      (org-babel-read result))))
+      ))
 
 ;;;###autoload
 (defun org-babel-prep-session:sqlx (_session _params)

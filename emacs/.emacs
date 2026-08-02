@@ -62,14 +62,16 @@
 (require 'package)
 ;(add-to-list 'package-archives
 ;             '("marmalade" . "http://marmalade-repo.org/packages/"))
-; (add-to-list 'package-archives
-;             '("melpa" . "http://melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 ; (add-to-list 'package-archives
 ;              '("org" . "http://orgmode.org/elpa/") t)
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu"   . "https://elpa.gnu.org/packages/")))
 
-(setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
-			 ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
-			 ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")))
+;; (setq package-archives '(("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
+;; 			 ("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
+;; 			 ("nongnu" . "http://mirrors.ustc.edu.cn/elpa/nongnu/")))
 
 ;; (add-to-list 'package-archives
 ;;              '("melpa" . "http://melpa.org/packages/") t)
@@ -126,7 +128,7 @@
 (define-key evil-normal-state-map (kbd "<down>") 'evil-scroll-line-down)
 
 (define-key evil-visual-state-map
-  (kbd "RET") 'append-to-buffer)
+            (kbd "RET") 'append-to-buffer)
 
 (define-key minibuffer-local-completion-map (kbd "SPC") nil)
 
@@ -179,9 +181,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "A" 'org-agenda
   "h" 'helm-org-in-buffer-headings
 
-  ;; "t" 'org-narrow-to-subtree
+  "t" 'org-narrow-to-subtree
   ;; "T" 'widen
-  "t" 'lsp-treemacs-symbols
+  ;; "t" 'lsp-treemacs-symbols
   "T" 'treemacs
 
   "i" 'helm-imenu
@@ -456,11 +458,11 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-set-initial-state 'magit-revision-mode 'emacs)
 
 ; elixir
-(use-package alchemist
-  :ensure t)
+;; (use-package alchemist
+;;   :ensure t)
 
-(use-package elixir-mode
-  :ensure t)
+;; (use-package elixir-mode
+;;   :ensure t)
 
 (use-package lsp-mode
   :ensure t
@@ -474,6 +476,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (add-hook 'elixir-mode-hook
 ;;           (lambda ()
 ;;             (add-hook 'before-save-hook #'elixir-format nil t)))
+
+
 
                                         ; global evil key
 ;; (define-key evil-normal-state-map "L" 'helm-projectile-switch-to-buffer)
@@ -1260,18 +1264,19 @@ path."
 (setq require-final-newline nil)
 
 (defun zf/ob-copy-src-block ()
+  "Copy current org src block contents to clipboard."
   (interactive)
-  (org-edit-src-code)
-  (mark-whole-buffer)
-  (kill-ring-save 1 (point-max))
-  (org-edit-src-abort))
+  (let ((info (org-babel-get-src-block-info 'light)))
+    (when info
+      (kill-new (nth 1 info))
+      (message "Src block copied to clipboard"))))
 
 (defun zf/kill-all()
-    "Kill all other buffers."
-    (interactive)
-    (mapc 'kill-buffer 
-          (delq (current-buffer) 
-                (remove-if-not 'buffer-file-name (buffer-list)))))
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer 
+        (delq (current-buffer) 
+              (remove-if-not 'buffer-file-name (buffer-list)))))
 
 (defun zf/kill-buffers (regexp)
   "Kill buffers matching REGEXP without asking for confirmation."
@@ -1434,7 +1439,10 @@ path."
    gptel-backend (gptel-make-ollama "Ollama"
                    :host "localhost:11434"
                    :stream t
-                   :models '(deepseek-r1:14b))))
+                   :models
+                   ;; '(deepseek-r1:14b)
+                   '(gemma3:14b)
+                   )))
 
 (defun zf/use-gemini ()
   "use gemini"
@@ -1651,3 +1659,88 @@ Supports positions in the following formats: \"path:line path(line)\",
           (message "Running: %s" command)
           (start-process "gh-pr-view" nil "gh" "pr" "view" "--web" (number-to-string number)))
       (message "No number found at point"))))
+
+(use-package diff-hl
+  :ensure t
+  :config
+  (global-diff-hl-mode)
+  (diff-hl-flydiff-mode)
+  (evil-define-key 'normal 'global
+    (kbd "g n") #'diff-hl-next-hunk
+    (kbd "g p") #'diff-hl-previous-hunk)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
+(defun zf/json-prettify-current-line ()
+  "Extract JSON from the current line, pretty-print it, and show in a separate buffer.
+If the line contains a JSON object/array substring, use that; otherwise use the whole line."
+  (interactive)
+  (let* ((line (buffer-substring-no-properties
+                (line-beginning-position)
+                (line-end-position)))
+         ;; Try to extract first {...} or [...] substring from the line.
+         (json-str
+          (or
+           (when (string-match "\\({.*}\\|\\[.*\\]\\)" line)
+             (match-string 0 line))
+           (string-trim line)))
+         (buf (get-buffer-create "*JSON Pretty*")))
+    (condition-case err
+        (let* ((obj (json-read-from-string json-str))
+               (pretty (with-temp-buffer
+                         (insert (json-encode obj))
+                         (json-pretty-print-buffer)
+                         (buffer-string))))
+          (with-current-buffer buf
+            (setq buffer-read-only nil)
+            (erase-buffer)
+            (insert pretty)
+            (goto-char (point-min))
+            ;; Use our special viewer mode
+            (zf/json-pretty-mode))
+          (pop-to-buffer buf))
+      (error
+       (user-error "Could not parse JSON from line: %s"
+                   (error-message-string err))))))
+
+(define-derived-mode zf/json-pretty-mode special-mode "JSON-Pretty"
+  "Mode for viewing prettified JSON."
+  (setq buffer-read-only t))
+
+(defun zf/kill-buffer-and-window ()
+  (interactive)
+  (kill-this-buffer)
+  (when (window-parent)
+    (delete-window)))
+
+(define-key zf/json-pretty-mode-map (kbd "q") #'zf/kill-buffer-and-window)
+
+(with-eval-after-load 'evil
+  (evil-define-key 'normal zf/json-pretty-mode-map
+    (kbd "q") #'zf/kill-buffer-and-window))
+
+(setq evil-symbol-word-search t)
+
+(defun zf/diff-last-commit ()
+  (interactive)
+  ;; (diff-hl-set-reference-rev "HEAD~1")
+  (diff-hl-set-reference-rev-in-project "HEAD~1"))
+
+(defun zf/diff-last-n-commits (n)
+  "Prompt for N commits back and set diff-hl reference revision."
+  (interactive
+   (list (read-number "Compare against HEAD~N (default 1): " 1)))
+  (diff-hl-set-reference-rev-in-project
+   (format "HEAD~%d" n)))
+
+(defun zf/diff-reset ()
+  (interactive)
+  ;; (diff-hl-reset-reference-rev)
+  (diff-hl-reset-reference-rev-in-project))
+
+(defun zf/elixir-fix-ampersand-syntax ()
+  "Make `&` punctuation in Elixir buffers so Evil `*` won't grab it."
+  (let ((st (copy-syntax-table (syntax-table))))
+    (modify-syntax-entry ?& "." st)
+    (set-syntax-table st)))
+
+;; (add-hook 'elixir-mode-hook #'feng/elixir-fix-ampersand-syntax)

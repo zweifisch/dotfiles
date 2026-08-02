@@ -50,6 +50,7 @@
    (kotlin . t)
    (ansible . t)
    (ocaml . t)
+   (sqlx . t)
    ;; (ipython . t)
    ;; (haxe . t)
    ;; (go . t)
@@ -116,7 +117,7 @@
 (setq org-agenda-include-diary t)
 
 (setq org-todo-keywords
-      '((sequence "TODO" "NEXT" "HOLD" "|" "DONE" "ABORTED")))
+      '((sequence "TODO" "NEXT" "BLOCKED" "HOLD" "|" "DONE" "ABORTED")))
 
 (evil-define-key 'normal org-mode-map
   "gh" 'outline-up-heading

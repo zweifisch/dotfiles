@@ -21,6 +21,7 @@ alias timestamp='date +%s'
 alias pry='rlwrap -a pry'
 alias erl='rlwrap -a erl'
 
+alias g='git'
 alias pull='git pull'
 alias push='git push'
 rb(){
@@ -1633,12 +1634,19 @@ rfc() {
     fi
 }
 
+zellij-theme() {
+    if command -v zellij > /dev/null; then
+        zellij action set-$1-theme 2> /dev/null
+    fi
+}
+
 dark-theme() {
     ln -nsf ~/.tmux-solarized-dark.conf ~/.tmux-solarized.conf
     ln -nsf ~/.vim-theme-dark ~/.vim-theme
     ln -nsf ~/.Xresources.d/solarized-dark ~/.Xresources-theme
     tmux source ~/.tmux-solarized.conf
     xrdb ~/.Xresources
+    zellij-theme dark
 }
 
 light-theme() {
@@ -1647,6 +1655,7 @@ light-theme() {
     ln -nsf ~/.Xresources.d/solarized-light ~/.Xresources-theme
     tmux source ~/.tmux-solarized.conf
     xrdb ~/.Xresources
+    zellij-theme light
 }
 
 dark() {
@@ -1654,6 +1663,7 @@ dark() {
   ln -nsf ~/.vim-theme-dark ~/.vim-theme
   tmux source-file ~/.tmux-solarized-dark.conf
   gsed -i --follow-symlinks 's/light/dark/' ~/.alacritty.toml
+  zellij-theme dark
 }
 
 light() {
@@ -1661,6 +1671,7 @@ light() {
   ln -nsf ~/.vim-theme-light ~/.vim-theme
   tmux source-file ~/.tmux-solarized-light.conf
   gsed -i --follow-symlinks 's/dark/light/' ~/.alacritty.toml
+  zellij-theme light
 }
 
 ndeps() {
@@ -1715,4 +1726,85 @@ crun() {
   shift
 
   cc "$src" -o a.out "$@" && ./a.out
+}
+
+pod-name() {
+  kubectl -n $1 get pods -o name | grep $2 | awk -F / '{print $2}'
+}
+
+kube-cp (){
+  kubectl -n $1 cp $3 $(pod-name $1 $2):$4
+}
+
+kube-log (){
+  kubectl -n $1 logs -f $(pod-name $1 $2)
+}
+
+kube-exec () {
+  kubectl -n $1 exec -it $(pod-name $1 $2) -- $@[3,-1]
+}
+
+mitm-on () {
+  iface=$(networksetup -listallnetworkservices | fzf)
+  sudo networksetup -setwebproxy "$iface" 127.0.0.1 8080
+  sudo networksetup -setsecurewebproxy "$iface" 127.0.0.1 8080
+}
+mitm-off () {
+  iface=$(networksetup -listallnetworkservices | fzf)
+  sudo networksetup -setwebproxystate "$iface" off
+  sudo networksetup -setsecurewebproxystate "$iface" off
+}
+
+mix-test-changed () {
+  mix test $(git status --short | grep test | awk '{print $2}')
+}
+
+mix-test-last-commit () {
+  mix test $(git show --name-only --pretty="" HEAD | grep test)
+}
+
+codex-current() {
+  if [ -L "$HOME/.codex" ]; then
+    readlink "$HOME/.codex"
+  else
+    echo "~/.codex is not a symlink"
+  fi
+}
+
+codex-use() {
+  target="$1"
+
+  if [ ! -d "$HOME/.codex-$target" ]; then
+    echo "Config ~/.codex-$target does not exist"
+    return 1
+  fi
+
+  ln -nsf "$HOME/.codex-$target" "$HOME/.codex"
+
+  echo "Switched Codex to: $target"
+  codex-current
+}
+
+codex-init-account() {
+  name="$1"
+
+  if [ -z "$name" ]; then
+    echo "Usage: codex-init-account <name>"
+    return 1
+  fi
+
+  mkdir -p "$HOME/.codex-$name"
+
+  echo "Login will store credentials in ~/.codex-$name"
+  ln -sfn "$HOME/.codex-$name" "$HOME/.codex"
+
+  codex login
+}
+
+pr-download() {
+  gh pr view --json body --template '{{.body}}' >! pr.md
+}
+
+pr-upload() {
+  gh pr edit --body-file pr.md
 }

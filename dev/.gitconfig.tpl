@@ -3,6 +3,7 @@
     name = #{fullname}
 [alias]
     st = status -sb
+    u = add -u
     ci = commit
     br = branch
     co = checkout

@@ -109,8 +109,9 @@ shift + cmd - 0x1A : yabai -m window --space 7; yabai -m space --focus 7
 shift + cmd - 0x1C : yabai -m window --space 8; yabai -m space --focus 8
 shift + cmd - 0x19 : yabai -m window --space 9; yabai -m space --focus 9
 
-cmd - p : open -a Launchpad
-cmd - i : open -a wechat
+cmd - p : open -a Raycast
+# cmd - i : open -a wechat
+cmd - i : open -a Slack
 
 cmd - d : open -a Dictionary
 cmd - q : yabai -m window --close
@@ -176,7 +177,7 @@ cmd - space : yabai -m window --toggle split
 #           yabai -m window --toggle pip
 
 # im-select
-ctrl - space : /usr/local/bin/im-select org.sil.ukelele.keyboardlayout.zf2.zf
-alt - space : /usr/local/bin/im-select org.sil.ukelele.keyboardlayout.zf2.zf
-alt - p : /usr/local/bin/im-select com.apple.inputmethod.SCIM.ITABC
-alt - n : /usr/local/bin/im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese
+ctrl - space : /opt/homebrew/bin/im-select org.sil.ukelele.keyboardlayout.zf2.zf
+alt - space : /opt/homebrew/bin/im-select org.sil.ukelele.keyboardlayout.zf2.zf
+alt - p : /opt/homebrew/bin/im-select com.apple.inputmethod.SCIM.ITABC
+alt - n : /opt/homebrew/bin/im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese
