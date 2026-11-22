@@ -1,0 +1,81 @@
+# Migrated from yabai/.skhdrc and yabai/.yabairc.
+# Install from ~/.dotfiles with: stow aerospace
+# AeroSpace 0.21.3+; https://nikitabobko.github.io/AeroSpace/guide
+config-version = 2
+start-at-login = true
+persistent-workspaces = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+key-mapping.preset = 'qwerty'
+
+# Preserve yabai's global `layout float`. Remove this first callback to
+# tile new windows by default. The app-specific floating rules below remain.
+on-window-detected = [
+    { run = 'layout floating', check-further-callbacks = true },
+    { if = "test '%{app-name}' = Emacs", run = 'move-node-to-workspace 8' },
+    { if = "test '%{app-name}' = iTerm2 || test '%{app-name}' = Alacritty", run = 'move-node-to-workspace 1' },
+    { if = "test '%{app-name}' ~= '^(阿里钉|阿里郎|licecap|WeChat|词典|Dictionary|Chromium)$'", run = 'layout floating' },
+]
+
+[gaps]
+inner.horizontal = 6
+inner.vertical = 6
+outer.left = 0
+outer.bottom = 0
+outer.top = 0
+outer.right = 0
+
+[mode.main.binding]
+# Window focus: j/k deliberately retain your west/east mapping.
+cmd-j = 'focus left'
+cmd-k = 'focus right'
+
+# Workspaces replace native macOS Spaces. Stop at the first/last workspace,
+# matching the original next/prev bindings (no wrap-around).
+cmd-h = 'workspace prev'
+cmd-l = 'workspace next'
+alt-tab = 'workspace-back-and-forth'
+
+# skhd's physical keycodes 0x12..0x19 map to the number row 1..9.
+cmd-1 = 'workspace 1'
+cmd-2 = 'workspace 2'
+cmd-3 = 'workspace 3'
+cmd-4 = 'workspace 4'
+cmd-5 = 'workspace 5'
+cmd-6 = 'workspace 6'
+cmd-7 = 'workspace 7'
+cmd-8 = 'workspace 8'
+cmd-9 = 'workspace 9'
+
+cmd-shift-1 = 'move-node-to-workspace --focus-follows-window 1'
+cmd-shift-2 = 'move-node-to-workspace --focus-follows-window 2'
+cmd-shift-3 = 'move-node-to-workspace --focus-follows-window 3'
+cmd-shift-4 = 'move-node-to-workspace --focus-follows-window 4'
+cmd-shift-5 = 'move-node-to-workspace --focus-follows-window 5'
+cmd-shift-6 = 'move-node-to-workspace --focus-follows-window 6'
+cmd-shift-7 = 'move-node-to-workspace --focus-follows-window 7'
+cmd-shift-8 = 'move-node-to-workspace --focus-follows-window 8'
+cmd-shift-9 = 'move-node-to-workspace --focus-follows-window 9'
+
+# App launchers.
+cmd-p = 'exec-and-forget open -a Raycast'
+cmd-i = 'exec-and-forget open -a Messages'
+cmd-o = 'exec-and-forget open -a ChatGPT'
+cmd-d = 'exec-and-forget open -a Doubao'
+cmd-m = 'exec-and-forget open -a NeteaseMusic'
+
+# Close the window, as in skhd, rather than quitting the application.
+cmd-q = 'close'
+cmd-shift-space = 'balance-sizes'
+# Closest equivalent to yabai's toggle split: toggle the tiled container's
+# orientation. These two layout commands apply to tiled windows.
+cmd-space = 'layout tiles horizontal vertical'
+# Additional migration shortcut: opt a window into/out of tiling.
+cmd-shift-f = 'layout floating tiling'
+
+# Input sources (preserve the existing im-select path and identifiers).
+ctrl-space = 'exec-and-forget /opt/homebrew/bin/im-select org.sil.ukelele.keyboardlayout.zf2.zf'
+alt-space = 'exec-and-forget /opt/homebrew/bin/im-select org.sil.ukelele.keyboardlayout.zf2.zf'
+alt-p = 'exec-and-forget /opt/homebrew/bin/im-select com.apple.inputmethod.SCIM.ITABC'
+alt-n = 'exec-and-forget /opt/homebrew/bin/im-select com.apple.inputmethod.Kotoeri.RomajiTyping.Japanese'
